@@ -255,6 +255,22 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <id>Juanmagc99</id>
+            <name>Juan Manuel</name>
+            <email>juanma101099@gmail.com</email>
+            <url>https://github.com/Juanmagc99</url>
+            <roles>
+                <role>developer</role>
+            </roles>
+            <properties>
+                <picUrl>
+                    https://avatars0.githubusercontent.com/u/61785593?s=460&u=7febdb91f77b80828eef719390e3bf9eb4f09de3&v=4
+                </picUrl>
+            </properties>
+        </developer>
+    </developers>
 
 
 </project>
