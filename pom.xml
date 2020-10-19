@@ -246,6 +246,23 @@
             </plugin>
         </plugins>
     </build>
+    
+	<developers>
+		<developer>
+			<id>ferhidagu</id>
+			<name>Fernando Hidalgo</name>
+			<email>ferhidagu@ev.us</email>
+			<url>http://www.tmht.com/fernan</url>
+			<roles>
+				<role>limpiabotas</role>
+			</roles>
+			<properties>
+				<picUrl>
+					https://pbs.twimg.com/media/Eh4n9GhUMAAdO8x?format=jpg
+				</picUrl>
+			</properties>
+		</developer>
+	</developers>
 
     <!-- Apache 2 license -->
     <licenses>
