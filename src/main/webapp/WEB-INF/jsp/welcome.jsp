@@ -7,6 +7,10 @@
 
 <petclinic:layout pageName="home">
     <h2><fmt:message key="welcome"/></h2>
+    <div class="col-md-12">
+    	<spring:url value="/resources/images/logoUS.png" htmlEscape="true" var="USImage"/>
+    	<img class="img-responsive" src="${USImage}"/>
+    </div>
     <div class="row">
     <h2>Project G2-07</h2>
     <p><h2>Group G2-07</h2></p>
