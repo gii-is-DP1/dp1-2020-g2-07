@@ -32,23 +32,6 @@
         <spring-format.version>0.0.19</spring-format.version>
 
     </properties>
-    
-    <developers>
- 		<developer>
- 		<id>javramarr1</id>
- 		<name>Javier</name>
- 		<email>jramosarrondo@gmail.com</email>
- 		<url>http://www.tmht.com/javi</url>
- 		<roles>
- 			<role>leader</role>
- 		</roles>
-		<properties>
- 			<picUrl>
-				https://pbs.twimg.com/media/Eh4n9GhUMAAdO8x
-			</picUrl>
- 		</properties>
- 		</developer>
-	</developers>
 
     <dependencies>
         <!-- Spring and Spring Boot dependencies -->
@@ -265,47 +248,5 @@
         </plugins>
     </build>
     
-	<developers>
-		<developer>
-			<id>ferhidagu</id>
-			<name>Fernando Hidalgo</name>
-			<email>ferhidagu@ev.us</email>
-			<url>http://www.tmht.com/fernan</url>
-			<roles>
-				<role>limpiabotas</role>
-			</roles>
-			<properties>
-				<picUrl>
-					https://pbs.twimg.com/media/Eh4n9GhUMAAdO8x?format=jpg
-				</picUrl>
-			</properties>
-		</developer>
-	</developers>
-
-    <!-- Apache 2 license -->
-    <licenses>
-        <license>
-            <name>Apache License, Version 2.0</name>
-            <url>https://www.apache.org/licenses/LICENSE-2.0</url>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <id>Juanmagc99</id>
-            <name>Juan Manuel</name>
-            <email>juanma101099@gmail.com</email>
-            <url>https://github.com/Juanmagc99</url>
-            <roles>
-                <role>developer</role>
-            </roles>
-            <properties>
-                <picUrl>
-                    https://avatars0.githubusercontent.com/u/61785593?s=460&u=7febdb91f77b80828eef719390e3bf9eb4f09de3&v=4
-                </picUrl>
-            </properties>
-        </developer>
-    </developers>
-
 
 </project>
