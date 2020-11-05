@@ -17,12 +17,15 @@ public class Cliente extends Usuario{
     @Column(name = "IBAN")
     @Setter private String IBAN;
 
-    @Column(name = "subscripcion")
-    @Setter private SubType subscripcion;
+    @Column(name = "suscripcion")
+    @Setter private SubType suscripcion;
 
-    @Column(name = "alCorriente")
-    @Setter private Boolean alCorriente;
+
 
     @OneToMany
     private List<Pago> pagos;
+
+    public void addPago(Pago p){
+        pagos.add(p);
+    }
 }
