@@ -9,8 +9,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
 
-@Entity
-@Data
+
 @MappedSuperclass
 public class Usuario extends BaseEntity {
 
@@ -26,10 +25,13 @@ public class Usuario extends BaseEntity {
     @NotEmpty
     private String apellidos;
 
+    @Column(name = "direccion")
+    @NotEmpty
+    private String direccion;
+
     @Column(name = "categoria")
     @NotEmpty
     private Categoria categoria;
-
 
 }
 
