@@ -11,6 +11,7 @@ import javax.validation.constraints.NotEmpty;
 
 
 @MappedSuperclass
+@Data
 public class Usuario extends BaseEntity {
 
     @Column(name = "nick")

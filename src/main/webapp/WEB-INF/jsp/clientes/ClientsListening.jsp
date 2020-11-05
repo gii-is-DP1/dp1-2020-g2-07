@@ -19,7 +19,7 @@
         <c:forEach items="${clientes}" var="cliente">
             <tr>
                 <td>
-                    <c:out value="${cliente.}"/>
+                    <c:out value="${cliente.nombre}"/>
                 </td>
             </tr>
         </c:forEach>
