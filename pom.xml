@@ -146,6 +146,11 @@
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+            <version>2.2.3</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -247,6 +252,5 @@
             </plugin>
         </plugins>
     </build>
-    
 
 </project>
