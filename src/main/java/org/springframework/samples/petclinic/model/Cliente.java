@@ -4,10 +4,7 @@ import lombok.Data;
 import lombok.Setter;
 import lombok.extern.apachecommons.CommonsLog;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
@@ -18,6 +15,7 @@ public class Cliente extends Usuario{
     @Setter private String IBAN;
 
     @Column(name = "suscripcion")
+    @Enumerated(EnumType.ORDINAL)
     @Setter private SubType suscripcion;
 
 

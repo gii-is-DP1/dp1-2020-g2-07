@@ -3,10 +3,7 @@ package org.springframework.samples.petclinic.model;
 
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
 
@@ -32,6 +29,7 @@ public class Usuario extends BaseEntity {
 
     @Column(name = "categoria")
     @NotEmpty
+    @Enumerated(EnumType.ORDINAL)
     private Categoria categoria;
 
 }
