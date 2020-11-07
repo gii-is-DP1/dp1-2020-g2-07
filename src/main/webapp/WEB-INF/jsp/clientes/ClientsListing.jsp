@@ -40,6 +40,16 @@
                 <td>
                     <c:out value="${cliente.suscripcion}"/>
                 </td>
+                <td>
+                    <a href="/clientes/${cliente.id}/edit">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </a>
+                </td>
+                <td>
+                    <a href="/clientes/${cliente.id}/delete">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                    </a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>

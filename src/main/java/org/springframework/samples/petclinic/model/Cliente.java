@@ -15,7 +15,7 @@ public class Cliente extends Usuario{
     @Setter private String IBAN;
 
     @Column(name = "suscripcion")
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     @Setter private SubType suscripcion;
 
 
