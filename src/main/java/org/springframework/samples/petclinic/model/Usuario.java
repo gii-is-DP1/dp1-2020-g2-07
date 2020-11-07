@@ -28,7 +28,6 @@ public class Usuario extends BaseEntity {
     private String direccion;
 
     @Column(name = "categoria")
-    @NotEmpty
     @Enumerated(EnumType.ORDINAL)
     private Categoria categoria;
 
