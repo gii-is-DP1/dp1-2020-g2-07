@@ -1,5 +1,8 @@
 package org.springframework.samples.petclinic.model;
+
+
 import lombok.Data;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
@@ -25,7 +28,7 @@ public class Usuario extends BaseEntity {
     private String direccion;
 
     @Column(name = "categoria")
-    //@NotEmpty
+    @NotEmpty
     @Enumerated(EnumType.ORDINAL)
     private Categoria categoria;
 
