@@ -23,10 +23,7 @@
         <c:forEach items="${clientes}" var="cliente">
             <tr>
                 <td>
-                	 <spring:url value="/clientes/{clienteId}" var="clienteUrl">
-                        <spring:param name="clienteId" value="${cliente.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(clienteUrl)}"><c:out value="${cliente.nick}"/></a>
+                    <c:out value="${cliente.nick}"/>
                 </td>
                 <td>
                     <c:out value="${cliente.nombre}"/>
@@ -47,5 +44,4 @@
         </c:forEach>
         </tbody>
     </table>
-    
 </petclinic:layout>
