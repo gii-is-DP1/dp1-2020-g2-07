@@ -32,7 +32,7 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editDisease(@PathVariable("id") int id, ModelMap model) {
+    public String editCliente(@PathVariable("id") int id, ModelMap model) {
         Optional<Cliente> cliente = clientService.findById(id);
         if(cliente.isPresent()) {
             model.addAttribute("cliente",cliente.get());
@@ -44,7 +44,7 @@ public class ClienteController {
     }
 
     @PostMapping("/{id}/edit")
-    public String editDisease(@PathVariable("id") int id, @Valid Cliente modifiedClient, BindingResult binding, ModelMap model) {
+    public String editCliente(@PathVariable("id") int id, @Valid Cliente modifiedClient, BindingResult binding, ModelMap model) {
         Optional<Cliente> cliente = clientService.findById(id);
         if(binding.hasErrors()) {
             return CLIENTS_FORM;
