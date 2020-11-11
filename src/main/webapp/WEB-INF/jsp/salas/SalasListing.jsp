@@ -13,7 +13,7 @@
         <tr>
             <th>Nombre</th>
             <th width= 15%>Horario</th>
-            <th>Empleado encargado</th>
+            <th>Empleado</th>
             <th>Aforo</th>
             <th>Descripción</th>
             <th></th>
@@ -53,4 +53,9 @@
         </c:forEach>
         </tbody>
     </table>
+    <div class="form-group">
+    	<div>
+    	    <button type="submit" class="btn btn-default">Añadir nueva sala</button>
+   		</div>
+	</div>
 </petclinic:layout>
