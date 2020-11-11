@@ -11,6 +11,7 @@ INSERT INTO authorities(id,username,authority) VALUES (3,'vet1','veterinarian');
 INSERT INTO users(username,password,enabled) VALUES ('juanma','hola',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (4,'juanma','owner');
 
+
 INSERT INTO vets VALUES (1, 'James', 'Carter');
 INSERT INTO vets VALUES (2, 'Helen', 'Leary');
 INSERT INTO vets VALUES (3, 'Linda', 'Douglas');
@@ -47,7 +48,6 @@ INSERT INTO owners VALUES (9, 'David', 'Schroeder', '2749 Blackhawk Trail', 'Mad
 INSERT INTO owners VALUES (10, 'Carlos', 'Estaban', '2335 Independence La.', 'Waunakee', '6085555487', 'owner1');
 INSERT INTO owners VALUES (11, 'Juan Manuel', 'Garcia Criado', '24 Mordor', 'Tierra Media', '0123456789', 'owner1');
 
-
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (1, 'Leo', '2010-09-07', 1, 1);
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (2, 'Basil', '2012-08-06', 6, 2);
 INSERT INTO pets(id,name,birth_date,type_id,owner_id) VALUES (3, 'Rosy', '2011-04-17', 2, 3);
@@ -71,3 +71,6 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04',
 INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, suscripcion) VALUES(1, 'juanma', 'Juan Manuel', 'García Criado', 'C/ Pedro Sanchez', 0, 'ES72 2923 9043 2575 5091', 'MAÑANA');
 INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, suscripcion) VALUES(2, 'faker', 'Pepe', 'Diaz Oslo', 'Sevilla C/Inventada 2',0, 'ES72 2223 2334 3422', 'TARDE');
 INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, suscripcion) VALUES(3, 'mgc99', 'Manuel', 'Osuna Moreno', 'Sevilla C/Tangana 1º A',0, 'ES72 6789 4839 3928 2143', 'PREMIUM');
+
+
+INSERT INTO salas(id, name, horario, empleado, aforo, descripcion) VALUES(1, 'Jacuzzi', 'De 9 a 14', 'Francisco', 5, 'Bañera a la que se le ha agregado un sistema que libera aire a presión en el agua caliente, lo que resulta en un masaje placentero con múltiples beneficios demostrados por científicos y expertos. La hidroterapia se conoce y utiliza desde la antigüedad.');
