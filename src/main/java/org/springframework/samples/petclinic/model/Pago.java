@@ -15,6 +15,6 @@ public class Pago extends BaseEntity{
     @Column(name = "fechEmision")
     @Setter private LocalDateTime fechEmision;
 
-    @Column(name = "precio")
-    @Setter private Integer precio;
+    @Column(name = "cantidad")
+    @Setter private Integer cantidad;
 }

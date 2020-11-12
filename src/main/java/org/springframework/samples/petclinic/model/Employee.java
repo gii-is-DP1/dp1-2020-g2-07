@@ -2,21 +2,20 @@ package org.springframework.samples.petclinic.model;
 
 import lombok.Data;
 import lombok.Setter;
-import lombok.extern.apachecommons.CommonsLog;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @Entity
 @Data
-@Table(name = "clientes")
-public class Cliente extends Usuario{
+@Table(name = "employees")
+public class Employee extends Usuario{
 
-    @Column(name = "suscripcion")
+    @Column(name = "profession")
     @Enumerated(EnumType.STRING)
-    @Setter private SubType suscripcion;
-
-
+    @NotEmpty
+    @Setter private Profession profession;
 
     @OneToMany
     private List<Pago> pagos;

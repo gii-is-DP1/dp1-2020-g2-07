@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import org.apache.tomcat.util.codec.binary.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cliente;
@@ -12,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.beans.Encoder;
 import java.util.Collection;
 import java.util.Optional;
 

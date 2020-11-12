@@ -7,9 +7,9 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<petclinic:layout pageName="owners">
+<petclinic:layout pageName="employees">
     <h2>
-        <c:if test="${cliente['new']}">New </c:if> Cliente
+        <c:if test="${employee['new']}">New </c:if> Cliente
     </h2>
     <form:form modelAttribute="cliente" class="form-horizontal" id="add-cliente-form">
         <div class="form-group has-feedback">
