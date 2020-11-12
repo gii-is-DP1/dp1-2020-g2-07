@@ -73,4 +73,15 @@ INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, su
 INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, suscripcion) VALUES(3, 'mgc99', 'Manuel', 'Osuna Moreno', 'Sevilla C/Tangana 1º A',0, 'ES72 6789 4839 3928 2143', 'PREMIUM');
 
 
-INSERT INTO salas(id, name, horario, empleado, aforo, descripcion) VALUES(1, 'Jacuzzi', 'De 9 a 14', 'Francisco', 5, 'Bañera a la que se le ha agregado un sistema que libera aire a presión en el agua caliente, lo que resulta en un masaje placentero con múltiples beneficios demostrados por científicos y expertos. La hidroterapia se conoce y utiliza desde la antigüedad.');
+
+INSERT INTO salas(id, name, horario, empleado, aforo, descripcion) VALUES(1, 'Avani ', 'De 9 a 14', 'Francisco', 7, 'Bañera a la que se le ha agregado un sistema que libera aire a presión en el agua caliente, lo que resulta en un masaje placentero con múltiples beneficios demostrados por científicos y expertos. La hidroterapia se conoce y utiliza desde la antigüedad.');
+INSERT INTO salas(id, name, horario, empleado, aforo, descripcion) VALUES(2, 'Sha ', 'De 11 a 14', 'Tomas', 15, 'Piscina climatizada para relajarte.');
+INSERT INTO salas(id, name, horario, empleado, aforo, descripcion) VALUES(3, 'Ananda  ', 'De 10 a 14', 'Javi', 5, 'Sauna.');
+INSERT INTO salas(id, name, horario, empleado, aforo, descripcion) VALUES(4, 'Varua  ', 'De 9 a 14', 'Francisco', 3, 'Bañera con musica');
+INSERT INTO circuitos(id, name, aforo, empleado, descripcion) VALUES(1, 'Circuito1 ',7 , 'Francisco', 'Bañera a la que se le ha agregado un sistema que libera aire a presión en el agua caliente, lo que resulta en un masaje placentero con múltiples beneficios demostrados por científicos y expertos. La hidroterapia se conoce y utiliza desde la antigüedad.');
+INSERT INTO circuitos(id, name, aforo, empleado ,descripcion) VALUES(2, 'Circuito2 ',  15,'Tomas' , 'Piscina climatizada para relajarte.');
+INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(1,1);
+INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(1,2);
+INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(2,2);
+INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(1,3);
+INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(2,3);
