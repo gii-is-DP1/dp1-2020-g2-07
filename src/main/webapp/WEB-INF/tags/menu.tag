@@ -46,6 +46,12 @@
                     <span>Clients</span>
                 </petclinic:menuItem>
 
+				<petclinic:menuItem active="${name eq 'toallas'}" url="/toallas"
+                    title="toallas">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Toallas</span>
+                </petclinic:menuItem>
+
                 <petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
