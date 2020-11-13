@@ -5,12 +5,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="owners">
+<petclinic:layout pageName="toallas">
 	<h2>Toallas</h2>
 	    <table id="toallasTable" class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 20%;">Cantidad</th>          
+            <th style="width: 20%;">Cantidad</th>       
+            <th></th>   
         </tr>
         </thead>
         <tbody>
@@ -19,7 +20,11 @@
                 <td>                    
                     <c:out value="${toalla.cantidad}"/>
                 </td>              
-
+                <td>
+                	<a href="/toallas/${toalla.id}/delete">
+                		<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                	</a>
+                </td>
             </tr>
         </c:forEach>
         </tbody>
