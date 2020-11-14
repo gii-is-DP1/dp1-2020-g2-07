@@ -7,29 +7,29 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 
-<petclinic:layout pageName="owners">
+<petclinic:layout pageName="employees">
     <h2>
-        <c:if test="${cliente['new']}">New </c:if> Cliente
+        <c:if test="${employee['new']}">New </c:if> Employee
     </h2>
-    <form:form modelAttribute="cliente" class="form-horizontal" id="add-cliente-form">
+    <form:form modelAttribute="employee" class="form-horizontal" id="add-employee-form">
         <div class="form-group has-feedback">
             <petclinic:inputField label="Nick" name="nick"/>
             <petclinic:inputField label="Nombre" name="nombre"/>
             <petclinic:inputField label="Apellidos" name="apellidos"/>
             <petclinic:inputField label="Direccion" name="direccion"/>
             <petclinic:inputField label="IBAN" name="IBAN"/>
-            <div class="suscription-group">
-                <petclinic:selectField name="suscripcion" label="Suscripcion" names="${['MATINAL', 'VESPERTINO', 'PREMIUM']}" size="1"/>
+            <div class="profession-group">
+                <petclinic:selectField name="profession" label="Profession" names="${['LIFE_GUARD', 'CLEANER', 'MASSAGIST']}" size="1"/>
             </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
-                    <c:when test="${cliente['new']}">
-                        <button class="btn btn-default" type="submit">Add Client</button>
+                    <c:when test="${employee['new']}">
+                        <button class="btn btn-default" type="submit">add Employee</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Update Client</button>
+                        <button class="btn btn-default" type="submit">Update Employee</button>
                     </c:otherwise>
                 </c:choose>
             </div>
