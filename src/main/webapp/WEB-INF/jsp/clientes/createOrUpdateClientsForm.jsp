@@ -19,7 +19,7 @@
             <petclinic:inputField label="Direccion" name="direccion"/>
             <petclinic:inputField label="IBAN" name="IBAN"/>
             <div class="suscription-group">
-                <petclinic:selectField name="suscripcion" label="Suscripcion" names="${['DIURNO', 'VESPERTINO', 'PREMIUM']}" size="1"/>
+                <petclinic:selectField name="suscripcion" label="Suscripcion" names="${['MATINAL', 'VESPERTINO', 'PREMIUM']}" size="1"/>
             </div>
         </div>
         <div class="form-group">

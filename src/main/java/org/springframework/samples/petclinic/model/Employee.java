@@ -18,10 +18,7 @@ public class Employee extends Usuario{
     @Enumerated(EnumType.STRING)
     @Setter private Profession profession;
 
-    @OneToMany
-    private List<Pago> pagos;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee", fetch = FetchType.EAGER)
+    private List<EmployeeRevenue> pagos;
 
-    public void addPago(Pago p){
-        pagos.add(p);
-    }
 }

@@ -72,6 +72,8 @@ INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, su
 INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, suscripcion) VALUES(2, 'faker', 'Pepe', 'Díaz Oslo', 'Sevilla C/Inventada 2',0, 'ES72 2223 2334 3422', 'VESPERTINO');
 INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, suscripcion) VALUES(3, 'mgc99', 'Manuel', 'Osuna Moreno', 'Sevilla C/Tangana 1º A',0, 'ES72 6789 4839 3928 2143', 'PREMIUM');
 
+INSERT INTO pagos(id, f_emision, cantidad, cliente_id) VALUES(1, NULL, 28, 1);
+
 INSERT INTO employees(id, nick, nombre, apellidos, direccion, categoria, IBAN, profession) VALUES(1, 'em1', 'Jhon', 'Smith', 'Sevilla C/Tangana 1º A',1, 'ES72 6789 4839 3928 2143', 'LIFE_GUARD');
 INSERT INTO employees(id, nick, nombre, apellidos, direccion, categoria, IBAN, profession) VALUES(2, 'em2', 'Izan', 'Brent', 'Sevilla C/Ej 23',1, 'ES72 8009 1129 1089 27401', 'LIFE_GUARD');
 INSERT INTO employees(id, nick, nombre, apellidos, direccion, categoria, IBAN, profession) VALUES(3, 'em3', 'Jessica', 'Wilde', 'Sevilla C/Torneo 19 3º I',1, 'ES72 0329 4543 3990 6543', 'LIFE_GUARD');

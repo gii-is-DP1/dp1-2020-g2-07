@@ -6,6 +6,7 @@ import lombok.extern.apachecommons.CommonsLog;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Data
@@ -17,11 +18,6 @@ public class Cliente extends Usuario{
     @Setter private SubType suscripcion;
 
 
-
-    @OneToMany
-    private List<Pago> pagos;
-
-    public void addPago(Pago p){
-        pagos.add(p);
-    }
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente", fetch = FetchType.EAGER)
+    private Set<Pago> pagos;
 }
