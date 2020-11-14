@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.model;
 
 
 import lombok.Data;
+import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -31,5 +32,8 @@ public class Usuario extends BaseEntity {
     @Enumerated(EnumType.ORDINAL)
     private Categoria categoria;
 
+    @Column(name = "IBAN")
+    @Setter
+    private String IBAN;
 }
 

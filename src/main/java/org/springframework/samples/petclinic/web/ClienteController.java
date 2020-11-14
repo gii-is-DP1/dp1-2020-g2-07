@@ -1,15 +1,14 @@
 package org.springframework.samples.petclinic.web;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Cliente;
-import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.model.SubType;
+import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.service.ClienteService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.beans.Encoder;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -47,7 +46,8 @@ public class ClienteController {
         if(binding.hasErrors()) {
             return CLIENTS_FORM;
         }else {
-            BeanUtils.copyProperties(modifiedClient, cliente.get(), "{id,categoria}");
+            BeanUtils.copyProperties(modifiedClient, cliente.get(), "{id}");
+            cliente.get().setCategoria(Categoria.CLIENTE);
             clientService.save(cliente.get());
             model.addAttribute("message","Se ha modificado el cliente");
             return listClients(model);
@@ -66,5 +66,24 @@ public class ClienteController {
             return listClients(model);
         }
     }
+
+    @GetMapping("/new")
+    public String editNewClient(ModelMap model) {
+        model.addAttribute("cliente",new Cliente());
+        return CLIENTS_FORM;
+    }
+
+    @PostMapping("/new")
+    public String saveNewEmployee(@Valid Cliente cliente, BindingResult binding,ModelMap model) {
+        if(binding.hasErrors()) {
+            return CLIENTS_FORM;
+        }else {
+            cliente.setCategoria(Categoria.EMPLEADO);
+            clientService.save(cliente);
+            model.addAttribute("message", "The client was created successfully!");
+            return listClients(model);
+        }
+    }
+
 
 }
