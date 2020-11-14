@@ -54,4 +54,7 @@
         </c:forEach>
         </tbody>
     </table>
+    <p>
+        <a href="/employees/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add employee</a>
+    </p>
 </petclinic:layout>

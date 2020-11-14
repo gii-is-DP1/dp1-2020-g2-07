@@ -18,7 +18,9 @@
             <petclinic:inputField label="Apellidos" name="apellidos"/>
             <petclinic:inputField label="Direccion" name="direccion"/>
             <petclinic:inputField label="IBAN" name="IBAN"/>
-            <petclinic:inputField label="Suscripcion" name="suscripcion"/>
+            <div class="suscription-group">
+                <petclinic:selectField name="suscripcion" label="Suscripcion" names="${['DIURNO', 'VESPERTINO', 'PREMIUM']}" size="1"/>
+            </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

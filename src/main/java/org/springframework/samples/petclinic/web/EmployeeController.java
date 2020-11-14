@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.web;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.service.EmployeeService;
@@ -20,7 +21,7 @@ import java.util.Optional;
 @RequestMapping("/employees")
 public class EmployeeController {
     public static final String EMPLOYEES_LISTING = "employees/employeesListing";
-    public static final String EMPLOYEES_FORM = "employees/createOrUpdateEmployeesForm";
+    public static final String EMPLOYEES_FORM = "employees/createOrUpdateEmployeeForm";
 
     @Autowired
     EmployeeService employeeService;
@@ -49,7 +50,8 @@ public class EmployeeController {
         if(binding.hasErrors()){
             return EMPLOYEES_FORM;
         }else{
-            BeanUtils.copyProperties(modifiedEmployee, employee.get(), "{id, categoria}");
+            BeanUtils.copyProperties(modifiedEmployee, employee.get());
+            employee.get().setCategoria(Categoria.EMPLEADO);
             employeeService.save(employee.get());
             model.addAttribute("message", "Employee updated succesfully!!");
             return listEmployees(model);
@@ -65,6 +67,24 @@ public class EmployeeController {
             return listEmployees(model);
         }else {
             model.addAttribute("message", "Cant find the employee you are looking for");
+            return listEmployees(model);
+        }
+    }
+
+    @GetMapping("/new")
+    public String editNewEmployee(ModelMap model) {
+        model.addAttribute("employee",new Employee());
+        return EMPLOYEES_FORM;
+    }
+
+    @PostMapping("/new")
+    public String saveNewEmployee(@Valid Employee employee, BindingResult binding,ModelMap model) {
+        if(binding.hasErrors()) {
+            return EMPLOYEES_FORM;
+        }else {
+            employee.setCategoria(Categoria.EMPLEADO);
+            employeeService.save(employee);
+            model.addAttribute("message", "The employee was created successfully!");
             return listEmployees(model);
         }
     }

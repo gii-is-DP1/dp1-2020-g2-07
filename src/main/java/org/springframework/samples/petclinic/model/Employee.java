@@ -5,6 +5,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.xml.bind.annotation.XmlEnum;
+import javax.xml.bind.annotation.XmlEnumValue;
 import java.util.List;
 
 @Entity
@@ -14,7 +16,6 @@ public class Employee extends Usuario{
 
     @Column(name = "profession")
     @Enumerated(EnumType.STRING)
-    @NotEmpty
     @Setter private Profession profession;
 
     @OneToMany

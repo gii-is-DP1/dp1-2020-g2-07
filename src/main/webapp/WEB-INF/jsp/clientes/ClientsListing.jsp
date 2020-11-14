@@ -54,4 +54,7 @@
         </c:forEach>
         </tbody>
     </table>
+    <p>
+        <a href="/clientes/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add client</a>
+    </p>
 </petclinic:layout>
