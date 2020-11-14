@@ -1,9 +1,10 @@
 package org.springframework.samples.petclinic.model;
 import lombok.Data;
 import lombok.Setter;
+import lombok.extern.apachecommons.CommonsLog;
 import javax.persistence.*;
 import java.util.List;
-import lombok.extern.apachecommons.CommonsLog;
+
 
 @Entity
 @Data
