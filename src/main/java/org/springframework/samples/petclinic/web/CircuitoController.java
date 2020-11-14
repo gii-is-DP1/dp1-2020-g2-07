@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/circuitos")
 public class CircuitoController {
 	
-	public static final String CIRCUITOS_FORM ="/circuitos/CreateOrUpdateCircuitosForm";
+	public static final String CIRCUITOS_FORM ="/circuitos/createOrUpdateCircuitosForm";
 	public static final String CIRCUITOS_LISTING ="/circuitos/CircuitosListing";
 	
 	@Autowired

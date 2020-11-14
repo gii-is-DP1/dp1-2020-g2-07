@@ -51,6 +51,11 @@
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Salas</span>
                 </petclinic:menuItem>
+                <petclinic:menuItem active="${name eq 'circuitos'}" url="/circuitos"
+                    title="circuitos">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Circuitos</span>
+                </petclinic:menuItem>
 			</ul>
 
 

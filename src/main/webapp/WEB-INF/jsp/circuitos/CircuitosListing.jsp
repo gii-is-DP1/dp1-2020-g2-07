@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -15,8 +13,8 @@
         <tr>
             <th>Nombre</th>
             <th>Aforo</th>
-            <th>Descripción</th>
             <th>Empleado</th>
+            <th>Descripción</th>
         </tr>
         </thead>
         <tbody>
@@ -29,10 +27,10 @@
                     <c:out value="${circuito.aforo}"/>
                 </td>
                 <td>
-                    <c:out value="${circuito.descripcion}"/>
+                    <c:out value="${circuito.empleado}"/>
                 </td>
                 <td>
-                    <c:out value="${cliente.empleado}"/>
+                    <c:out value="${circuito.descripcion}"/>
                 </td>
 
                 <td>
@@ -41,7 +39,7 @@
                     </a>
                 </td>
                 <td>
-                    <a href="/circuitos/${circuitos.id}/delete">
+                    <a href="/circuitos/${circuito.id}/delete">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </a>
                 </td>
@@ -53,5 +51,6 @@
     	<div>
     	    <button type="submit" class="btn btn-default">Añadir nuevo circuito</button>
    		</div>
+
 	</div>
 </petclinic:layout>

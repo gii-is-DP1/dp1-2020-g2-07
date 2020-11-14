@@ -82,6 +82,6 @@ INSERT INTO circuitos(id, name, aforo, empleado, descripcion) VALUES(1, 'Circuit
 INSERT INTO circuitos(id, name, aforo, empleado ,descripcion) VALUES(2, 'Circuito2 ',  15,'Tomas' , 'Piscina climatizada para relajarte.');
 INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(1,1);
 INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(1,2);
-INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(2,2);
 INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(1,3);
+INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(2,2);
 INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(2,3);

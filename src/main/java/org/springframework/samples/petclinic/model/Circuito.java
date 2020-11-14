@@ -47,6 +47,7 @@ public class Circuito extends NamedEntity {
 	@Column(name = "descripcion")
 	private String descripcion;
 	
+	
 	protected List<Sala> getSalasInternal() {
 		if (this.salas == null) {
 			this.salas = new ArrayList<Sala>();
