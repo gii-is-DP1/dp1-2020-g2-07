@@ -3,6 +3,7 @@ import lombok.Data;
 import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
+import lombok.extern.apachecommons.CommonsLog;
 
 @Entity
 @Data

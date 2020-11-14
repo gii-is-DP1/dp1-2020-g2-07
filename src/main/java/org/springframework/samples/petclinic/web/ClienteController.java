@@ -7,6 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.SubType;
+import java.util.Collection;
 import javax.validation.Valid;
 import java.util.Optional;
 
