@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/circuitos")
@@ -68,6 +69,26 @@ public class CircuitoController {
 			return cicuitosListing(model);
 		}
 	}
+	@GetMapping("/new")
+	public String editNewCircuito(ModelMap model) {
+		model.addAttribute("circuito",new Circuito());
+		return CIRCUITOS_FORM;
+	}
+	
+	@PostMapping("/new")
+	public String saveNewCircuito(@Valid Circuito circuito, BindingResult binding,ModelMap model) {
+		if(binding.hasErrors()) {
+			return CIRCUITOS_FORM;
+			
+		}else {
+			circuitosServices.save(circuito);
+			model.addAttribute("message", "The circuit was created successfully");
+			return cicuitosListing(model);
+			
+		}
+	}
+
+	
 	
 	
 

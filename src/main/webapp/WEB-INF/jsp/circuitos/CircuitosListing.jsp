@@ -21,7 +21,7 @@
         <c:forEach items="${circuitos}" var="circuito">
             <tr>
                 <td>
-                    <c:out value="${circuito.name}"/>
+                    <c:out value="${circuito.name} "/>
                 </td>
                 <td>
                     <c:out value="${circuito.aforo}"/>
@@ -47,10 +47,7 @@
         </c:forEach>
         </tbody>
     </table>
-     <div class="form-group">
-    	<div>
-    	    <button type="submit" class="btn btn-default">Añadir nuevo circuito</button>
-   		</div>
-
-	</div>
+     <p>
+        <a href="/circuitos/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add circuit</a>
+    </p>
 </petclinic:layout>

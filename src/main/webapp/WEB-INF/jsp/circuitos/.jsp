@@ -8,24 +8,23 @@
 
 <petclinic:layout pageName="circuitos">
     <h2>
-        <c:if test="${circuito['new']}">New </c:if> Circuito
+        <c:if test="${circuito['new']}">Nuevo </c:if> Circuito
     </h2>
     <form:form modelAttribute="circuito" class="form-horizontal" id="add-circuito-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Nombre " name="name"/>
+            <petclinic:inputField label="Nombre" name="name"/>
             <petclinic:inputField label="Aforo" name="aforo"/>
             <petclinic:inputField label="Empleado" name="empleado"/>
-            <petclinic:inputField label="Descripción" name="descripcion"/>
+            <petclinic:inputField label="Descripcion" name="descripcion"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${circuito['new']}">
-                        <button class="btn btn-default" type="submit">Add Circuit</button>
+                        <button class="btn btn-default" type="submit">Añadir Circuito</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Update Circuit</button>
-                         <button class="btn btn-default" type="submit">Add Sala</button>
+                        <button class="btn btn-default" type="submit">Actualizar Circuito</button>
                     </c:otherwise>
                 </c:choose>
             </div>
