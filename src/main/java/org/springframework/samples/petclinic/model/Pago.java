@@ -13,14 +13,26 @@ import java.util.Objects;
 @Table(name = "pagos")
 public class Pago extends BaseEntity{
     @Column(name = "f_emision")
-    @Setter private String fEmision;
+    private String fEmision;
 
     @Column(name = "cantidad")
-    @Setter private Integer cantidad;
+    private Integer cantidad;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
-    @Setter private Cliente cliente;
+    private Cliente cliente;
+
+    public void setfEmision(String fEmision) {
+        this.fEmision = fEmision;
+    }
+
+    public void setCantidad(Integer cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
 
     public String getfEmision(){ return this.fEmision; }
     public Integer getCantidad(){ return this.cantidad; }
