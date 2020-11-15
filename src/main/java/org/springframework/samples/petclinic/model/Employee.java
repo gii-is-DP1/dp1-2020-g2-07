@@ -10,15 +10,29 @@ import javax.xml.bind.annotation.XmlEnumValue;
 import java.util.List;
 
 @Entity
-@Data
 @Table(name = "employees")
 public class Employee extends Usuario{
 
     @Column(name = "profession")
     @Enumerated(EnumType.STRING)
-    @Setter private Profession profession;
+    private Profession profession;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee", fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     private List<EmployeeRevenue> pagos;
 
+    public Profession getProfession() {
+        return profession;
+    }
+
+    public void setProfession(Profession profession) {
+        this.profession = profession;
+    }
+
+    public List<EmployeeRevenue> getPagos() {
+        return pagos;
+    }
+
+    public void setPagos(List<EmployeeRevenue> pagos) {
+        this.pagos = pagos;
+    }
 }
