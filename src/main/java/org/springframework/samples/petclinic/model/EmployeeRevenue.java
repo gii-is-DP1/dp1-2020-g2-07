@@ -15,16 +15,36 @@ public class EmployeeRevenue extends BaseEntity{
     private Employee employee;
 
     @Column(name = "date_start")
-    @Setter private LocalDateTime dateStart;
+    private LocalDateTime dateStart;
 
     @Column(name = "date_end")
-    @Setter private LocalDateTime dateEnd;
+    private LocalDateTime dateEnd;
 
     @Column(name = "hours_worked")
-    @Setter private Integer hoursWorked;
+    private Integer hoursWorked;
 
     @Column(name = "cuantity")
-    @Setter private Integer cuantity;
+    private Integer cuantity;
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public void setDateStart(LocalDateTime dateStart) {
+        this.dateStart = dateStart;
+    }
+
+    public void setDateEnd(LocalDateTime dateEnd) {
+        this.dateEnd = dateEnd;
+    }
+
+    public void setHoursWorked(Integer hoursWorked) {
+        this.hoursWorked = hoursWorked;
+    }
+
+    public void setCuantity(Integer cuantity) {
+        this.cuantity = cuantity;
+    }
 
     public Employee getEmployee() {
         return employee;
