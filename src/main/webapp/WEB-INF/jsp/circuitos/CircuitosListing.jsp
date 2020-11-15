@@ -5,48 +5,41 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="clientes">
-    <h2>Clientes</h2>
+<petclinic:layout pageName="circuitos">
+    <h2>Circuitos</h2>
 
-    <table id="clientesTable" class="table table-striped">
+    <table id="circuitosTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Nick</th>
             <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>Direccion</th>
-            <th>IBAN</th>
-            <th>Suscripcion</th>
+            <th>Aforo</th>
+            <th>Empleado</th>
+            <th>Descripción</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${clientes}" var="cliente">
+        <c:forEach items="${circuitos}" var="circuito">
             <tr>
                 <td>
-                    <c:out value="${cliente.nick}"/>
+                    <c:out value="${circuito.name} "/>
                 </td>
                 <td>
-                    <c:out value="${cliente.nombre}"/>
+                    <c:out value="${circuito.aforo}"/>
                 </td>
                 <td>
-                    <c:out value="${cliente.apellidos}"/>
+                    <c:out value="${circuito.empleado}"/>
                 </td>
                 <td>
-                    <c:out value="${cliente.direccion}"/>
+                    <c:out value="${circuito.descripcion}"/>
                 </td>
+
                 <td>
-                    <c:out value="${cliente.IBAN}"/>
-                </td>
-                <td>
-                    <c:out value="${cliente.suscripcion}"/>
-                </td>
-                <td>
-                    <a href="/clientes/${cliente.id}/edit">
+                    <a href="/circuitos/${circuito.id}/edit">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </a>
                 </td>
                 <td>
-                    <a href="/clientes/${cliente.id}/delete">
+                    <a href="/circuitos/${circuito.id}/delete">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </a>
                 </td>
@@ -54,7 +47,7 @@
         </c:forEach>
         </tbody>
     </table>
-    <p>
-        <a href="/clientes/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add client</a>
+     <p>
+        <a href="/circuitos/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add circuit</a>
     </p>
 </petclinic:layout>
