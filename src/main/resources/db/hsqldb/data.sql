@@ -74,6 +74,9 @@ INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, su
 
 
 
+INSERT INTO salas(id, name, horario, empleado, aforo, descripcion) VALUES(1, 'Jacuzzi', 'De 9 a 14', 'Francisco', 5, 'Bañera a la que se le ha agregado un sistema que libera aire a presión en el agua caliente, lo que resulta en un masaje placentero con múltiples beneficios demostrados por científicos y expertos. La hidroterapia se conoce y utiliza desde la antigüedad.');
+
+
 
 INSERT INTO salas(id, name, horario, empleado, aforo, descripcion) VALUES(1, 'Avani ', 'De 9 a 14', 'Francisco', 7, 'Bañera a la que se le ha agregado un sistema que libera aire a presión en el agua caliente, lo que resulta en un masaje placentero con múltiples beneficios demostrados por científicos y expertos. La hidroterapia se conoce y utiliza desde la antigüedad.');
 INSERT INTO salas(id, name, horario, empleado, aforo, descripcion) VALUES(2, 'Sha ', 'De 11 a 14', 'Tomas', 15, 'Piscina climatizada para relajarte.');
@@ -95,4 +98,5 @@ INSERT INTO employees(id, nick, nombre, apellidos, direccion, categoria, IBAN, p
 
 
 INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, cuantity) VALUES(1, 1, NULL, NULL , 34, 2374);
+
 

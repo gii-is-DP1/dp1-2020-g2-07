@@ -1,11 +1,13 @@
 package org.springframework.samples.petclinic.web;
 
+import java.util.Map;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Sala;
 import org.springframework.samples.petclinic.service.SalaService;
 import org.springframework.stereotype.Controller;
@@ -67,6 +69,25 @@ public class SalaController {
 			return salasListing(model);
 		}else {
 			model.addAttribute("message", "No pudimos encontrar la sala que intentas eliminar.");
+			return salasListing(model);
+		}
+	}
+	
+	@GetMapping(value = "/new")
+	public String initCreationForm(ModelMap model) {
+		Sala sala = new Sala();
+		model.addAttribute("sala", sala);
+		return SALAS_FORM;
+	}
+
+	@PostMapping(value = "/new")
+	public String processCreationForm(@Valid Sala sala, BindingResult result, ModelMap model) {
+		if (result.hasErrors()) {
+			return SALAS_FORM;
+		}
+		else {
+			this.salasServices.save(sala);
+			model.addAttribute("message", "La sala se añadió correctamente.");
 			return salasListing(model);
 		}
 	}
