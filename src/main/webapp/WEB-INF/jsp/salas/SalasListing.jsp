@@ -54,8 +54,8 @@
         </tbody>
     </table>
     <div class="form-group">
-    	<div>
-    	    <button type="submit" class="btn btn-default">Añadir nueva sala</button>
-   		</div>
+   	    <p>
+       		<a href="/salas/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add sala</a>
+    	</p>
 	</div>
 </petclinic:layout>

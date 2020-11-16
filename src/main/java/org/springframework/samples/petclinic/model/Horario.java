@@ -24,10 +24,10 @@ public class Horario extends BaseEntity{
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate fecha;
 	
-	@Column(name = "hora")
-	@DateTimeFormat(iso = ISO.TIME, pattern = "HH:mm:ss.SSSXXX")
-//	para hacer un horario debería ser una lista de horas disponibles en el día
-	private List<LocalTime> hora;
+//	@Column(name = "hora")
+//	@DateTimeFormat(iso = ISO.TIME, pattern = "HH:mm:ss.SSSXXX")
+////	para hacer un horario debería ser una lista de horas disponibles en el día
+//	private List<LocalTime> hora;
 	
 //	@OneToMany(Optional = false)
 //	@JoinColumn(name = "empleado_id")

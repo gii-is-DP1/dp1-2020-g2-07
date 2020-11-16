@@ -15,6 +15,7 @@
             <th>Aforo</th>
             <th>Empleado</th>
             <th>Descripción</th>
+            <th>Salas</th>
         </tr>
         </thead>
         <tbody>
@@ -32,6 +33,11 @@
                 <td>
                     <c:out value="${circuito.descripcion}"/>
                 </td>
+                <td>
+                <c:forEach items="${circuito.salas}" var="salas">
+                    <c:out value="${salas.name}"/>
+                </c:forEach>
+                </td>         
 
                 <td>
                     <a href="/circuitos/${circuito.id}/edit">
