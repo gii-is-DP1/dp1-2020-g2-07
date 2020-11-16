@@ -14,8 +14,12 @@
         <div class="form-group has-feedback">
             <petclinic:inputField label="Nombre " name="name"/>
             <petclinic:inputField label="Aforo" name="aforo"/>
-            <petclinic:inputField label="Empleado" name="empleado"/>
             <petclinic:inputField label="Descripción" name="descripcion"/>
+             <c:forEach items="${salas}" var="sala">
+			<div class="control-group">
+                    <petclinic:selectField name="Salas" label="Salas " names="${sala.name}" size="5"/>
+               </div>
+               </c:forEach>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
@@ -25,7 +29,6 @@
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-default" type="submit">Update Circuit</button>
-                         <button class="btn btn-default" type="submit">Add Sala</button>
                     </c:otherwise>
                 </c:choose>
             </div>

@@ -39,10 +39,7 @@ public class Circuito extends NamedEntity {
 	@NotNull
 	private Integer aforo;
 	
-	@Column(name = "empleado")
-	@NotEmpty
-	//private Empleado empleado
-	private String empleado;
+	
 	
 	@Column(name = "descripcion")
 	private String descripcion;

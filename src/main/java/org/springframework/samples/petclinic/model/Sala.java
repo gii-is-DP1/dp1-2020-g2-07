@@ -37,6 +37,8 @@ public class Sala extends NamedEntity{
 	
 	@ManyToMany(mappedBy="salas")
 	private List<Circuito> circuitos;
+	
+
 		
 
 }
