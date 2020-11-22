@@ -6,22 +6,74 @@ import lombok.Data;
 import lombok.Setter;
 
 @Entity
-@Data
-@Table(name = "balance")
+@Table(name = "balances")
 public class Balance extends BaseEntity{
-	@Column(name = "mes")
-    @Setter private String mes;
+	@Column(name = "month")
+    private String month;
 	
-	@Column(name = "anyo")
-    @Setter private String anyo;
+	@Column(name = "year")
+    private String year;
+	
+	@Column(name = "subs")
+    private Integer subs;
 	
 	@Column(name = "bonos")
-    @Setter private Integer bonos;
+    private Integer bonos;
 	
-	@Column(name = "sueldos")
-    @Setter private Integer sueldos;
-	
+	@Column(name = "salaries")
+    private Integer salaries;
+
 	@Column(name = "mante")
-    @Setter private Integer mante;
+    private Integer mante;
+
+	public String getMonth() {
+		return month;
+	}
+
+	public void setMonth(String month) {
+		this.month = month;
+	}
+
+	public String getYear() {
+		return year;
+	}
+
+	public void setYear(String year) {
+		this.year = year;
+	}
+
+	public Integer getBonos() {
+		return bonos;
+	}
+
+	public void setBonos(Integer bonos) {
+		this.bonos = bonos;
+	}
+
+	public Integer getSalaries() {
+		return salaries;
+	}
+
+	public void setSalaries(Integer salaries) {
+		this.salaries = salaries;
+	}
+
+	public Integer getMante() {
+		return mante;
+	}
+
+	public void setMante(Integer mante) {
+		this.mante = mante;
+	}
+	
+	public Integer getSubs() {
+		return subs;
+	}
+
+	public void setSubs(Integer subs) {
+		this.subs = subs;
+	}
+	
+	
 	
 }
