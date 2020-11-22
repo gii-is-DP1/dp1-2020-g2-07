@@ -6,16 +6,16 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="salas">
-    <h2>Salas</h2>
+    <h2>Rooms</h2>
 
     <table id="salasTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Nombre</th>
+            <th>Name</th>
             <th width= 15%>Horario</th>
-            <th>Empleado</th>
-            <th>Aforo</th>
-            <th>Descripción</th>
+            <th>Employee</th>
+            <th>Capacity</th>
+            <th>Description</th>
             <th></th>
             <th></th>
         </tr>
@@ -55,7 +55,7 @@
     </table>
     <div class="form-group">
    	    <p>
-       		<a href="/salas/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add sala</a>
+       		<a href="/salas/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add room</a>
     	</p>
 	</div>
 </petclinic:layout>

@@ -50,12 +50,12 @@
                 <petclinic:menuItem active="${name eq 'salas'}" url="/salas"
                     title="salas activas del spa">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Salas</span>
+                    <span>Rooms</span>
                 </petclinic:menuItem>
                 <petclinic:menuItem active="${name eq 'circuitos'}" url="/circuitos"
-                    title="circuitos">
+                    title="Circuits">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Circuitos</span>
+                    <span>Circuits</span>
                 </petclinic:menuItem>
 
                 <petclinic:menuItem active="${name eq 'employees'}" url="/employees" title="employees">

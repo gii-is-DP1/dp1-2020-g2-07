@@ -8,24 +8,24 @@
 
 <petclinic:layout pageName="salas">
     <h2>
-        <c:if test="${sala['new']}">Nueva </c:if> Sala
+        <c:if test="${sala['new']}">New </c:if> Room
     </h2>
     <form:form modelAttribute="sala" class="form-horizontal" id="add-sala-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Nombre" name="name"/>
+            <petclinic:inputField label="Name" name="name"/>
             <petclinic:inputField label="Horario" name="horario"/>
-            <petclinic:inputField label="Empleado" name="empleado"/>
-            <petclinic:inputField label="Aforo" name="aforo"/>
-            <petclinic:inputField label="Descripción" name="descripcion"/>
+            <petclinic:inputField label="Employee" name="empleado"/>
+            <petclinic:inputField label="Capacity" name="aforo"/>
+            <petclinic:inputField label="Description" name="descripcion"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${sala['new']}">
-                        <button class="btn btn-default" type="submit">Añadir sala</button>
+                        <button class="btn btn-default" type="submit">Add room</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Actualizar sala</button>
+                        <button class="btn btn-default" type="submit">Update room</button>
                     </c:otherwise>
                 </c:choose>
             </div>

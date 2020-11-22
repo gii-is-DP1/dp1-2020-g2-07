@@ -6,16 +6,17 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="circuitos">
-    <h2>Circuitos</h2>
+    <h2>Circuits</h2>
 
     <table id="circuitosTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Nombre</th>
-            <th>Aforo</th>
-            <th>Empleado</th>
-            <th>Descripción</th>
-            <th>Salas</th>
+            <th>Name</th>
+            <th>Capacity</th>
+            <th>Description</th>
+            <th>Rooms</th>
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -28,15 +29,15 @@
                     <c:out value="${circuito.aforo}"/>
                 </td>
                 <td>
-                    <c:out value="${circuito.empleado}"/>
-                </td>
-                <td>
                     <c:out value="${circuito.descripcion}"/>
                 </td>
                 <td>
-                <c:forEach items="${circuito.salas}" var="salas">
-                    <c:out value="${salas.name}"/>
-                </c:forEach>
+                	<ul>
+                		<c:forEach items="${circuito.salas}" var="Sala">
+                    		<li>${Sala.name}</li>
+                		</c:forEach>
+                	</ul>
+                
                 </td>         
 
                 <td>

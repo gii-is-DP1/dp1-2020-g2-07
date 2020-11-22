@@ -54,6 +54,7 @@ public class SalaController {
 			return SALAS_FORM;
 		}else {
 			BeanUtils.copyProperties(modifiedSala, sala.get(),"id");
+			this.salasServices.save(modifiedSala);
 			model.addAttribute("sala", modifiedSala);
 			model.addAttribute("message", "La sala se actualizó correctamente.");
 			return salasListing(model);

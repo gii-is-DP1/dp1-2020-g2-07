@@ -8,16 +8,23 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Circuito;
-import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Sala;
 import org.springframework.samples.petclinic.repository.CircuitoRepository;
+import org.springframework.samples.petclinic.repository.SalaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CircuitoService {
 	
+	
+	private CircuitoRepository circuitoRepo;
+	
 	@Autowired
-	CircuitoRepository circuitoRepo;
+	public CircuitoService(CircuitoRepository circuitoRepo) {
+		this.circuitoRepo = circuitoRepo;
+
+	}
 	
 	public Collection<Circuito> findAll(){
         return circuitoRepo.findAll();
@@ -49,5 +56,6 @@ public class CircuitoService {
     	circuitoRepo.save(c);
     }
     
+
 
 }
