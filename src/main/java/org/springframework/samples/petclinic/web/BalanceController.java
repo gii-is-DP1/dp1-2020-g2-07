@@ -1,9 +1,7 @@
 package org.springframework.samples.petclinic.web;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Balance;
 import org.springframework.samples.petclinic.service.BalanceService;
@@ -22,31 +20,34 @@ public class BalanceController {
     
     @GetMapping
     public String listClients(ModelMap model){
-    	if(balanceService.diaDeBalance()) {
-    		createBalance();
+    	LocalDate day_one = balanceService.getPrimerDiaMesPrevio();
+    	String month = balanceService.getNombreMes(day_one);
+    	String year = balanceService.getAnyo(day_one);
+    	
+    	if(balanceService.diaDeBalance() && !balanceService.balanceExists(month, year)) {
+    		createBalance(day_one,month,year);
     	}
         model.addAttribute("balances", balanceService.findAll());
         return BALANCE_LISTING;
     }
     
-    public void createBalance() {
-    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-    	LocalDate day_one = balanceService.getPrimerDiaMesPrevio();
+    public void createBalance(LocalDate day_one, String month, String year) {
     	LocalDate day_last = balanceService.getUltimoDiaMes(day_one);
+   
+    	LocalDateTime localDateTime1 = day_one.atStartOfDay();
+    	LocalDateTime localDateTime2 = day_last.atStartOfDay();
+    	
+    	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     	String day_one_string = formatter.format(day_one);
     	String day_last_string = formatter.format(day_last);
-    	String month = balanceService.getNombreMes(day_one);
-    	String year = balanceService.getAnyo(day_one);
     	
     	Balance b = new Balance();
     	b.setMonth(month);
     	b.setYear(year);
     	b.setSubs(balanceService.getSubs(day_one_string, day_last_string));
     	b.setBonos(100);
-    	b.setSalaries(500);
+    	b.setSalaries(balanceService.getSalaries(localDateTime1, localDateTime2));
     	b.setMante(100);
     	balanceService.save(b);
     }
-    
-
 }

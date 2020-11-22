@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.service;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,6 +13,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Balance;
+import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.model.Pago;
 import org.springframework.samples.petclinic.repository.BalanceRepository;
 import org.springframework.stereotype.Service;
@@ -86,6 +88,25 @@ public class BalanceService {
         while (iterator.hasNext()) {
         	res = res + iterator.next().getCantidad();
         }
+		return res;
+	}
+	
+	public Integer getSalaries(LocalDateTime init, LocalDateTime last) {
+		Collection<EmployeeRevenue> total = balanceRepo.findSalariesByMonth(init, last);
+		Iterator<EmployeeRevenue> iterator = total.iterator();
+		int res = 0;
+        while (iterator.hasNext()) {
+        	res = res + iterator.next().getCuantity();
+        }
+		return res;
+	}
+	
+	public Boolean balanceExists (String month, String year) {
+		Integer x = balanceRepo.findBalanceExists(month, year);
+		Boolean res = false;
+		if(x==1) {
+			res=true;
+		}
 		return res;
 	}
 
