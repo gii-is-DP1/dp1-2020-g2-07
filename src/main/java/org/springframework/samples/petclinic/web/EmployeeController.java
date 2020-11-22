@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.Optional;
@@ -50,8 +51,7 @@ public class EmployeeController {
         if(binding.hasErrors()){
             return EMPLOYEES_FORM;
         }else{
-            BeanUtils.copyProperties(modifiedEmployee, employee.get());
-            employee.get().setCategoria(Categoria.EMPLEADO);
+            BeanUtils.copyProperties(modifiedEmployee, employee.get(), "categoria");
             employeeService.save(employee.get());
             model.addAttribute("message", "Employee updated succesfully!!");
             return listEmployees(model);
@@ -89,4 +89,10 @@ public class EmployeeController {
         }
     }
 
+    @GetMapping("/{employeeId}")
+    public ModelAndView showEmployee(@PathVariable("employeeId") int employeeId) {
+        ModelAndView mav = new ModelAndView("employees/employeeDetails");
+        mav.addObject(this.employeeService.findById(employeeId).get());
+        return mav;
+    }
 }
