@@ -7,5 +7,4 @@ import org.springframework.samples.petclinic.model.Bono;
 
 public interface BonoRepository extends CrudRepository<Bono, Integer> {
 	Collection<Bono> findAll();
-
 }
