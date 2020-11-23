@@ -1,6 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -90,7 +89,7 @@ public class CircuitoController {
 	}
 	
 	@PostMapping("/new")
-	public String saveNewCircuito(@Valid Circuito circuito, BindingResult binding,ModelMap model) {
+	public String saveNewCircuito(Circuito circuito, BindingResult binding,ModelMap model) {
 		if(binding.hasErrors()) {
 			return CIRCUITOS_FORM;
 			

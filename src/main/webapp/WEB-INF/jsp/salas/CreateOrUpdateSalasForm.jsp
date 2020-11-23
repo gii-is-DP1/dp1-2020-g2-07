@@ -13,7 +13,6 @@
     <form:form modelAttribute="sala" class="form-horizontal" id="add-sala-form">
         <div class="form-group has-feedback">
             <petclinic:inputField label="Name" name="name"/>
-            <petclinic:inputField label="Horario" name="horario"/>
             <petclinic:inputField label="Capacity" name="aforo"/>
             <petclinic:inputField label="Description" name="descripcion"/>
         </div>
