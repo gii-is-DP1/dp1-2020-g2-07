@@ -23,11 +23,6 @@ public class Sala extends NamedEntity{
 	//private Horario horario
 	private String horario;
 	
-	@Column(name = "empleado")
-	@NotEmpty
-	//private Empleado empleado
-	private String empleado;
-	
 	@Column(name = "aforo")
 	@NotNull
 	private Integer aforo;
