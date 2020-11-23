@@ -41,7 +41,7 @@ public class SalaController {
 			model.addAttribute("sala", sala.get());
 			return SALAS_FORM;
 		}else {
-			model.addAttribute("message", "¡No pudimos encontrar la sala que buscas!");
+			model.addAttribute("message", "We could not find the room you are trying to edit.");
 			return SALAS_LISTING;
 		}
 	}
@@ -56,7 +56,7 @@ public class SalaController {
 			BeanUtils.copyProperties(modifiedSala, sala.get(),"id");
 			this.salasServices.save(modifiedSala);
 			model.addAttribute("sala", modifiedSala);
-			model.addAttribute("message", "La sala se actualizó correctamente.");
+			model.addAttribute("message", "The room was updated successfully.");
 			return salasListing(model);
 		}
 	}
@@ -66,10 +66,10 @@ public class SalaController {
 		Optional<Sala> sala = salasServices.findById(id);
 		if(sala.isPresent()) {
 			salasServices.delete(sala.get());
-			model.addAttribute("message", "La sala se eliminó correctamente.");
+			model.addAttribute("message", "The room was deleted successfully.");
 			return salasListing(model);
 		}else {
-			model.addAttribute("message", "No pudimos encontrar la sala que intentas eliminar.");
+			model.addAttribute("message", "We could not find the room you are trying to delete.");
 			return salasListing(model);
 		}
 	}
@@ -88,7 +88,7 @@ public class SalaController {
 		}
 		else {
 			this.salasServices.save(sala);
-			model.addAttribute("message", "La sala se añadió correctamente.");
+			model.addAttribute("message", "The room was created successfully.");
 			return salasListing(model);
 		}
 	}

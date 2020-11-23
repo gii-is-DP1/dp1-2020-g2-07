@@ -1,18 +1,16 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Circuito;
 import org.springframework.samples.petclinic.model.Sala;
 import org.springframework.samples.petclinic.repository.CircuitoRepository;
-import org.springframework.samples.petclinic.repository.SalaRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CircuitoService {
@@ -33,20 +31,6 @@ public class CircuitoService {
 	public Optional<Circuito> findById(int id){
     	return circuitoRepo.findById(id);
     }
-//	@Transactional(readOnly = true)
-//	public Circuito findCircuitoById(int id) {
-//		return circuitoRepo.findById(id);
-//	}
-//	@Transactional
-//	public void saveCircuito(Circuito circuito) throws DataAccessException {
-//		//creating circuito
-//		circuitoRepo.save(circuito);		
-//		//creating user
-//		userService.saveUser(owner.getUser());
-//		//creating authorities
-//		authoritiesService.saveAuthorities(owner.getUser().getUsername(), "owner");
-//	}		
-
 	
 	public void delete(Circuito c) {
 		circuitoRepo.deleteById(c.getId());
@@ -56,6 +40,22 @@ public class CircuitoService {
     	circuitoRepo.save(c);
     }
     
+    
+    public Integer getAforo(Circuito c) {
+    	List<Sala> s = c.getSalas();
+    	return aforoCircuito(s);
+    }
+
+	private Integer aforoCircuito(List<Sala> salas) {
+		Integer min = salas.get(0).getAforo();
+		for(int i=1; i< salas.size();i++) {
+			Integer aforo = salas.get(i).getAforo();
+			if(aforo<min) {
+				min = aforo;
+			}
+		}
+		return min;
+	}
 
 
 }

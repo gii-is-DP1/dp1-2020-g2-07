@@ -37,46 +37,35 @@ public class Circuito extends NamedEntity {
 	@ManyToMany
 	private List<Sala> salas;
 	
-	@Column(name="aforo")
-	@NotNull
+//	@Column(name="aforo")
+//	@NotNull
 	private Integer aforo;
 	
 	@Size(min = 10, max = 1024)
 	@Column(name = "descripcion", length=1024)
 	private String descripcion;
-//	
-//	private Integer aforoCircuito(List<Sala> salas) {
-//		Integer min = salas.get(0).getAforo();
-//		for(int i=1; i< salas.size();i++) {
-//			Integer aforo = salas.get(i).getAforo();
-//			if(aforo<min) {
-//				min = aforo;
-//			}
+		
+	
+//	protected List<Sala> getSalasInternal() {
+//		if (this.salas == null) {
+//			this.salas = new ArrayList<Sala>();
 //		}
-//		return min;
+//		return this.salas;
 //	}
-	
-	
-	protected List<Sala> getSalasInternal() {
-		if (this.salas == null) {
-			this.salas = new ArrayList<Sala>();
-		}
-		return this.salas;
-	}
-//	protected void setSalassInternal(List<Sala> salas) {
+//	protected void setSalasInternal(List<Sala> salas) {
 //		this.salas = salas;
 //	}
-//	
-	public List<Sala> getSalas() {
-		List<Sala> salas = new ArrayList<>(getSalasInternal());
-		PropertyComparator.sort(salas, new MutableSortDefinition("name", true, true));
-		return Collections.unmodifiableList(salas);
-	}
-//	
+	
+//	public List<Sala> getSalas() {
+//		List<Sala> salas = new ArrayList<>(getSalasInternal());
+//		PropertyComparator.sort(salas, new MutableSortDefinition("name", true, true));
+//		return Collections.unmodifiableList(salas);
+//	}
+
 	public Sala getSala(String name) {
 		return getSala(name);
 	}
-//
+
 	public void addSala(Sala s){
         salas.add(s);
     }
@@ -85,19 +74,5 @@ public class Circuito extends NamedEntity {
         salas.addAll(s);
     }
 	
-//	public boolean removeSala(Sala sala) {
-//		return getSalasInternal().remove(sala);
-//	}
-//	
-//	public Sala getSalawithIdDifferent(String name,Integer id) {
-//		name = name.toLowerCase();
-//		for (Sala sala : getSalasInternal()) {
-//			String compName = sala.getName();
-//			compName = compName.toLowerCase();
-//			if (compName.equals(name) && sala.getId()!=id) {
-//				return sala;
-//			}
-//		}
-//		return null;
-//	}
+		
 }
