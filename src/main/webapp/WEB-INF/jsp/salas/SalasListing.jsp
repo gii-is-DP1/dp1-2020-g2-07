@@ -13,7 +13,6 @@
         <tr>
             <th>Name</th>
             <th width= 15%>Horario</th>
-            <th>Employee</th>
             <th>Capacity</th>
             <th>Description</th>
             <th></th>
@@ -28,9 +27,6 @@
                 </td>
                 <td>
                     <c:out value="${sala.horario}"/>
-                </td>
-                <td>
-                    <c:out value="${sala.empleado}"/>
                 </td>
                 <td>
                     <c:out value="${sala.aforo}"/>
