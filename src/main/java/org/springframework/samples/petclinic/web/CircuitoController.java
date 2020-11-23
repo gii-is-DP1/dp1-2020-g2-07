@@ -9,9 +9,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Circuito;
 import org.springframework.samples.petclinic.service.CircuitoService;
-
-
-
 import org.springframework.samples.petclinic.service.SalaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
