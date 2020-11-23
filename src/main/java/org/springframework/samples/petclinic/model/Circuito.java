@@ -36,11 +36,6 @@ public class Circuito extends NamedEntity {
 	@NotNull
 	private Integer aforo;
 	
-	@Column(name = "empleado")
-	@NotEmpty
-	//private Empleado empleado
-	private String empleado;
-	
 	@Size(min = 10, max = 1024)
 	@Column(name = "descripcion", length=1024)
 	private String descripcion;
