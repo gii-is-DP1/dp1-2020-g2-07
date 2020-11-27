@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Toallas;
 import org.springframework.samples.petclinic.repository.ToallasRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.dao.DataAccessException;
 
 @Service
 public class ToallasService {
@@ -27,4 +29,9 @@ public class ToallasService {
 		toallasRepo.deleteById(toalla.getId());
 
 	}
+
+	@Transactional(readOnly = true)	
+	public Collection<Toallas> findToallas() throws DataAccessException {
+		return toallasRepo.findAll();
+	}	
 }

@@ -10,7 +10,7 @@
 	    <table id="toallasTable" class="table table-striped">
         <thead>
         <tr>
-            <th style="width: 20%;">Cantidad</th>       
+            <th style="width: 20%;">Amount</th>       
             <th></th>   
         </tr>
         </thead>

@@ -71,3 +71,5 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04',
 INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, suscripcion) VALUES(1, 'juanma', 'Juan Manuel', 'García Criado', 'C/ Pedro Sanchez', 0, 'ES72 2923 9043 2575 5091', 'MAÑANA');
 INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, suscripcion) VALUES(2, 'faker', 'Pepe', 'Diaz Oslo', 'Sevilla C/Inventada 2',0, 'ES72 2223 2334 3422', 'TARDE');
 INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, suscripcion) VALUES(3, 'mgc99', 'Manuel', 'Osuna Moreno', 'Sevilla C/Tangana 1º A',0, 'ES72 6789 4839 3928 2143', 'PREMIUM');
+
+INSERT INTO toallas(cantidad) VALUES(1);
