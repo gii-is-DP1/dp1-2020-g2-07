@@ -66,6 +66,9 @@
                     title="toallas">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Toallas</span>
+                <petclinic:menuItem active="${name eq 'employees'}" url="/employees" title="employees">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Employees</span>
                 </petclinic:menuItem>
 
                 <petclinic:menuItem active="${name eq 'error'}" url="/oups"
