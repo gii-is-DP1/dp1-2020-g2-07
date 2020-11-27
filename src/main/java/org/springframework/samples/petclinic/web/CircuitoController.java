@@ -74,7 +74,11 @@ public class CircuitoController {
 			return CIRCUITOS_FORM;
 		}else {
 			modifiedCircuito.setAforo(circuitosServices.getAforo(modifiedCircuito));
+<<<<<<< HEAD
 			BeanUtils.copyProperties(modifiedCircuito, circuito.get(),"id");	
+=======
+			BeanUtils.copyProperties(modifiedCircuito, circuito.get(),"id");
+>>>>>>> origin/master
 			circuitosServices.save(modifiedCircuito);
 			model.addAttribute("circuito", modifiedCircuito);
 			model.addAttribute("message", "The circuit was updated successfully.");
