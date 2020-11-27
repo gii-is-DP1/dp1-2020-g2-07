@@ -28,8 +28,15 @@
         </tr>
     </table>
 
-        <a href="/employees/${employee.id}/edit" class="btn btn-default">Edit</a>
-        <a href="/employees/${employee.id}/delete" class="btn btn-default">Delete</a>
+    <spring:url value="{employeeId}/edit" var="editUrl">
+        <spring:param name="employeeId" value="${employee.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit</a>
+
+    <spring:url value="{employeeId}/delete" var="deleteUrl">
+        <spring:param name="employeeId" value="${employee.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(deleteUrl)}" class="btn btn-default">Delete</a>
 
     <br/>
     <br/>
@@ -64,4 +71,32 @@
             </c:forEach>
         </tbody>
     </table>
+
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <c:choose>
+                <c:when test="${revenue['new']}">
+                    <form:form modelAttribute="revenue" id="add-revenue-form">
+                        <div class="form-group has-feedback">
+                            <petclinic:inputField label="Date Start" name="revenue.dateStart"/>
+                            <petclinic:inputField label="hours worked" name="revenue.dateEnd"/>
+                            <petclinic:inputField label="hours worked" name="revenue.hoursWorked"/>
+                            <petclinic:inputField label="cuantity" name="revenue.cuantity"/>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-default" type="submit">add Salary</button>
+                        </div>
+                    </form:form>
+                </c:when>
+                <c:otherwise>
+                    <spring:url value="{employeeId}/newSalary" var="employeeSalaryUrl">
+                        <spring:param name="employeeId" value="${employee.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(employeeSalaryUrl)}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>New Salary</a>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </div>
 </petclinic:layout>

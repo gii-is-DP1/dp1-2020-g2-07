@@ -5,14 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Employee;
+import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.service.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
@@ -54,7 +52,7 @@ public class EmployeeController {
             BeanUtils.copyProperties(modifiedEmployee, employee.get(), "categoria");
             employeeService.save(employee.get());
             model.addAttribute("message", "Employee updated succesfully!!");
-            return listEmployees(model);
+            return "redirect:/employees/" + employee.get().getId();
         }
     }
 
@@ -71,6 +69,13 @@ public class EmployeeController {
         }
     }
 
+    @GetMapping("/{employeeId}")
+    public ModelAndView showEmployee(@PathVariable("employeeId") int employeeId) {
+        ModelAndView mav = new ModelAndView("employees/employeeDetails");
+        mav.addObject(this.employeeService.findById(employeeId).get());
+        return mav;
+    }
+
     @GetMapping("/new")
     public String editNewEmployee(ModelMap model) {
         model.addAttribute("employee",new Employee());
@@ -85,14 +90,28 @@ public class EmployeeController {
             employee.setCategoria(Categoria.EMPLEADO);
             employeeService.save(employee);
             model.addAttribute("message", "The employee was created successfully!");
-            return listEmployees(model);
+            return "redirect:/employees/" + employee.getId();
         }
     }
 
-    @GetMapping("/{employeeId}")
-    public ModelAndView showEmployee(@PathVariable("employeeId") int employeeId) {
+    @GetMapping("/{employeeId}/newSalary")
+    public ModelAndView addSalary(@PathVariable("employeeId") int employeeId) {
         ModelAndView mav = new ModelAndView("employees/employeeDetails");
         mav.addObject(this.employeeService.findById(employeeId).get());
+        mav.addObject("revenue", new EmployeeRevenue());
         return mav;
+    }
+
+    @PostMapping("/{employeeId}/newSalary")
+    public ModelAndView addSalary(@PathVariable("employeeId") int employeeId, @Valid @ModelAttribute("revenue") EmployeeRevenue revenue, BindingResult binding){
+        ModelAndView mav = new ModelAndView("employees/employeeDetails");
+        mav.addObject(this.employeeService.findById(employeeId).get());
+        if(binding.hasErrors()){
+            mav.addObject("message", "new salary add succesfully");
+            return mav;
+        }else{
+            employeeService.addSalaryToEmployee(employeeId, revenue);
+            return mav;
+        }
     }
 }

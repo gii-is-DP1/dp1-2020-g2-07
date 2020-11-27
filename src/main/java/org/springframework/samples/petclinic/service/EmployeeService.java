@@ -3,6 +3,7 @@ package org.springframework.samples.petclinic.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Employee;
+import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.model.Profession;
 import org.springframework.samples.petclinic.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
@@ -38,6 +39,10 @@ public class EmployeeService {
 
     public void delete(Employee employee) {
         employeeRepo.deleteById(employee.getId());
+    }
+
+    public void addSalaryToEmployee(int id, EmployeeRevenue salary){
+        employeeRepo.findById(id).get().addSalary(salary);
     }
 
 }

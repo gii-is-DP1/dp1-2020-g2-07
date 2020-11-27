@@ -35,4 +35,8 @@ public class Employee extends Usuario{
     public void setSalaries(List<EmployeeRevenue> salaries) {
         this.salaries = salaries;
     }
+
+    public void addSalary(EmployeeRevenue e){
+        salaries.add(e);
+    }
 }
