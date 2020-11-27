@@ -12,20 +12,6 @@
     </h2>
     <form:form modelAttribute="circuito" class="form-horizontal" id="add-circuito-form">
         <div class="form-group has-feedback">
-
-
-            <petclinic:inputField label="Nombre " name="name"/>
-            <petclinic:inputField label="Aforo" name="aforo"/>
-            <petclinic:inputField label="Descripción" name="descripcion"/>
-             <c:forEach items="${salas}" var="sala">
-			<div class="control-group">
-                    <petclinic:selectField name="Salas" label="Salas " names="${sala.name}" size="5"/>
-               </div>
-               </c:forEach>
-
-            <petclinic:inputField label="Name " name="name"/>
-            <petclinic:inputField label="Capacity" name="aforo"/>
-
             <petclinic:inputField label="Name " name="name"/>                
             <div class="form-group">
                     <label class="col-sm-2 control-label">Capacity</label>
@@ -33,9 +19,7 @@
                         <c:out value="${circuito.aforo}"/>
                     </div>
                 </div>
-
             <petclinic:inputField label="Description" name="descripcion"/>
- 
 			<div class="formGroup">            
             	<div class="col-sm-10">
             	<label>Rooms in the circuit:</label>

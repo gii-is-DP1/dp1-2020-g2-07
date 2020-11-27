@@ -74,16 +74,13 @@ INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, su
 
 
 
-INSERT INTO salas(id, name, horario, empleado, aforo, descripcion) VALUES(1, 'Jacuzzi', 'De 9 a 14', 'Francisco', 5, 'Bañera a la que se le ha agregado un sistema que libera aire a presión en el agua caliente, lo que resulta en un masaje placentero con múltiples beneficios demostrados por científicos y expertos. La hidroterapia se conoce y utiliza desde la antigüedad.');
 
-
-
-INSERT INTO salas(id, name, horario, empleado, aforo, descripcion) VALUES(1, 'Avani ', 'De 9 a 14', 'Francisco', 7, 'Bañera a la que se le ha agregado un sistema que libera aire a presión en el agua caliente, lo que resulta en un masaje placentero con múltiples beneficios demostrados por científicos y expertos. La hidroterapia se conoce y utiliza desde la antigüedad.');
-INSERT INTO salas(id, name, horario, empleado, aforo, descripcion) VALUES(2, 'Sha ', 'De 11 a 14', 'Tomas', 15, 'Piscina climatizada para relajarte.');
-INSERT INTO salas(id, name, horario, empleado, aforo, descripcion) VALUES(3, 'Ananda  ', 'De 10 a 14', 'Javi', 5, 'Sauna.');
-INSERT INTO salas(id, name, horario, empleado, aforo, descripcion) VALUES(4, 'Varua  ', 'De 9 a 14', 'Francisco', 3, 'Bañera con musica');
-INSERT INTO circuitos(id, name, aforo, descripcion) VALUES(1, 'Circuito1 ',7 ,  'Bañera a la que se le ha agregado un sistema que libera aire a presión en el agua caliente, lo que resulta en un masaje placentero con múltiples beneficios demostrados por científicos y expertos. La hidroterapia se conoce y utiliza desde la antigüedad.');
-INSERT INTO circuitos(id, name, aforo ,descripcion) VALUES(2, 'Circuito2 ',  15, 'Piscina climatizada para relajarte.');
+INSERT INTO salas(id, name, aforo, descripcion) VALUES(1, 'Jacuzzi', 7, 'A large circular bath which is fitted with a device that makes the water move around.');
+INSERT INTO salas(id, name, aforo, descripcion) VALUES(2, 'Relax pool', 15, 'Indoor heated pool where you can relax');
+INSERT INTO salas(id, name, aforo, descripcion) VALUES(3, 'Sauna', 5, 'A Finnish steam bath in which the steam is provided by water thrown on hot stones');
+INSERT INTO salas(id, name, aforo, descripcion) VALUES(4, 'Musical jacuzzi', 3, 'Have a wonderful bath in a jacuzzi while you listen to music.');
+INSERT INTO circuitos(id, name, descripcion) VALUES(1, 'Circuito1 ', 'Water circuit');
+INSERT INTO circuitos(id, name,descripcion) VALUES(2, 'Circuito2 ', 'Series of pools');
 INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(1,1);
 INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(1,2);
 INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(1,3);

@@ -20,12 +20,9 @@ public class Sala extends NamedEntity{
 	@Column(name = "descripcion")
 	private String descripcion;
 	
-	@ManyToMany(mappedBy="salas", cascade = CascadeType.ALL)
+	@ManyToMany(mappedBy="salas",cascade = CascadeType.ALL)
 	private List<Circuito> circuitos;
-<<<<<<< HEAD
-	
 
-=======
 
 	public Integer getAforo() {
 		return aforo;
@@ -50,9 +47,7 @@ public class Sala extends NamedEntity{
 	public void setCircuitos(List<Circuito> circuitos) {
 		this.circuitos = circuitos;
 	}
-	
-	
->>>>>>> origin/javramarr1
+
 		
 
 }

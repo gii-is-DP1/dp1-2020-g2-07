@@ -42,10 +42,6 @@ public class Circuito extends NamedEntity {
 	private Integer aforo;
 	
 
-	
-	
-//	@Column(name = "descripcion")
-
 	@Size(min = 10, max = 1024)
 	@Column(name = "descripcion", length=1024)
 

@@ -11,12 +11,6 @@
     <table id="circuitosTable" class="table table-striped">
         <thead>
         <tr>
-
-            <th>Nombre</th>
-            <th>Aforo</th>
-            <th>Descripción</th>
-            <th>Salas</th>
-
             <th>Name</th>
             <th>Capacity</th>
             <th>Description</th>
@@ -31,25 +25,11 @@
                 <td>
                     <c:out value="${circuito.name} "/>
                 </td>
-                
                 <td>
                     <c:out value="${circuito.aforo}"/>
                 </td>
-              
                 <td>
                     <c:out value="${circuito.descripcion}"/>
-
-                </td>
-                
-                <td>
-               
-                <c:forEach items="${salas}" var="sala">
-                <c:if test="${circuito.id==circuito.salas.id}"> </c:if> 
-                <c:out value="${sala.name}"/>
-               
-                </c:forEach>
-                
-
                 </td>
                 <td>
                 	<ul>
