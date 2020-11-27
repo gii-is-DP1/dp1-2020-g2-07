@@ -60,7 +60,7 @@ public class BalanceService {
 		SimpleDateFormat formatter= new SimpleDateFormat("dd");
 		Date hoy_millis = new Date(System.currentTimeMillis());
 		String hoy = formatter.format(hoy_millis);
-		if(hoy.equals("22")) {
+		if(hoy.equals("27")) {
 			tocaBalance = true;
 		}
 		return tocaBalance;
