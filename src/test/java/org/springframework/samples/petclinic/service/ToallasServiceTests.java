@@ -77,7 +77,7 @@ class ToallasServiceTests {
 	void shouldFindToallas() {
 		Collection<Toallas> toallas = this.toallasService.findToallas();
 
-		Toallas toalla = EntityUtils.getById(toallas, Toallas.class, 3);
+		Toallas toalla = EntityUtils.getById(toallas, Toallas.class, 1);
 		assertThat(toalla.getCantidad()).isEqualTo(1);
 	}
 
