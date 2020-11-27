@@ -1,12 +1,5 @@
 package org.springframework.samples.petclinic.model;
-
-import lombok.Data;
-import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
