@@ -98,4 +98,4 @@ INSERT INTO employees(id, nick, nombre, apellidos, direccion, categoria, IBAN, p
 INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, cuantity) VALUES(1, 1, '2020-10-04', '2020-10-15' , 34, 2374);
 INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, cuantity) VALUES(2, 1, '2020-10-16', '2020-10-20' , 34, 1000);
 
-INSERT INTO toallas(id, cantidad) VALUES (1,1);
+INSERT INTO toallas(cantidad) VALUES (1);
