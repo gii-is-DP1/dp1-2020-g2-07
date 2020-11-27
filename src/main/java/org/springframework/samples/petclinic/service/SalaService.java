@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -11,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Sala;
 import org.springframework.samples.petclinic.repository.SalaRepository;
 import org.springframework.stereotype.Service;
-
 
 @Service
 public class SalaService {
@@ -23,7 +23,11 @@ public class SalaService {
         return salaRepo.findAll();
     }
     
-    public Optional<Sala> findById(int id){
+    public Optional<Sala> findById(Integer id){
+    	return salaRepo.findById(id);
+    }
+    
+    public List<Sala> findByIdLista(int id){
     	return salaRepo.findById(id);
     }
     

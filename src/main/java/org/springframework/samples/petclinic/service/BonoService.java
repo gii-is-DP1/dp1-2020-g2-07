@@ -42,5 +42,4 @@ public class BonoService {
 	public Collection<Bono> findBonos() throws DataAccessException{
 		return bonorepository.findAll();
 	}
-	
 }

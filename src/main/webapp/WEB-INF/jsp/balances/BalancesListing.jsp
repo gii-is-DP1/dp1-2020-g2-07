@@ -8,6 +8,8 @@
 <%@ page import="java.util.*" %>
 <%@ page import="com.google.gson.Gson"%>
 <%@ page import="com.google.gson.JsonObject"%>
+           
+           
 
 <%
 Gson gsonObj = new Gson();
@@ -21,7 +23,9 @@ map = new HashMap<Object,Object>(); map.put("label", "Family"); map.put("y", 5);
 map = new HashMap<Object,Object>(); map.put("label", "Real Estate"); map.put("y", 7); list.add(map);
  
 String dataPoints = gsonObj.toJson(list);
-%>                            
+%>           
+           
+                  
 <petclinic:layout pageName="clientes">
     <h2>Balances</h2>
     <table id="clientesTable" class="table table-striped">
@@ -62,6 +66,7 @@ String dataPoints = gsonObj.toJson(list);
     </table>
 </petclinic:layout>
 
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -97,3 +102,5 @@ window.onload = function() {
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 </html>  
+
+

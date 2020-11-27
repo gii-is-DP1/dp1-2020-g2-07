@@ -43,4 +43,32 @@ public class Bono extends  BaseEntity {
 	public String getCodigo() {
 		return this.codigo;
 	}
+	
+	public void setCodigo(String codigo) {
+		this.codigo=codigo;
+	}
+	
+	public Integer getPrecio() {
+		return this.precio;		
+	}
+	
+	public void setPrecio(Integer precio) {
+		this.precio=precio;
+	}
+	
+	public LocalDate getDuracion() {
+		return this.duracion;
+	}
+	
+	public void setDuracion(LocalDate duracion) {
+		this.duracion=duracion;
+	}
+	
+	public String getDescripcion() {
+		return this.descripcion;
+	}
+	
+	public void setDescripcion(String descripcion) {
+		this.descripcion=descripcion;
+	}
 }

@@ -1,11 +1,10 @@
 package org.springframework.samples.petclinic.service;
 
 import static org.junit.Assert.assertEquals;
-
-
 import static org.junit.Assert.assertFalse;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -14,39 +13,42 @@ import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.samples.petclinic.model.Bono;
+import org.springframework.samples.petclinic.model.Circuito;
+import org.springframework.samples.petclinic.model.Sala;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 @TestInstance(Lifecycle.PER_CLASS)
-public class BonoServiceTests {
+public class SalaServiceTest {
+
 	@Autowired
-	protected BonoService bonoservice;
+	protected SalaService salaservice;
 	
 	@Test
 	@Transactional
-	void insertBono() {
-		Bono bono = new Bono();
-		bono.setCodigo("QWERT1");
-		bono.setDescripcion("Soy una descripción");
-		bono.setDuracion(LocalDate.of(2021, 02, 01));
-		bono.setId(1);
-		bono.setPrecio(2);
-		bonoservice.save(bono);
+	void insertarSala() {
+		Sala sala = new Sala();
+		List<Circuito> circuitos = new ArrayList<Circuito>();
+		sala.setAforo(12);
+		sala.setCircuitos(circuitos);
+		sala.setDescripcion("Soy una sala");
+		sala.setId(1);
+		sala.setName("Piscina");
+		salaservice.save(sala);
 	}
 	
 	@Test
-	void mostrarListaConBonos() {
-		List<Bono> bonos = (List<Bono>) bonoservice.findAll();
-		assertEquals(2, bonos.size());
+	void mostrarListaConSalas() {
+		Collection<Sala> salas = salaservice.findAll();
+		assertEquals(4, salas.size());
 	}
 	
 	@Test
-	void mostrarBonosPorId() {
+	void mostrarSalasPorId() {
 		Integer id = 1;
-		List<Bono> bonos = bonoservice.findByIdLista(id);
-		assertFalse(bonos.size() == 0);
+		List<Sala> salas = salaservice.findByIdLista(id);
+		assertFalse(salas.size() == 0);
 	}
 	
 }

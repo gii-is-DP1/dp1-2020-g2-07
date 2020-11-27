@@ -33,9 +33,6 @@ public class BalanceController {
     
     public void createBalance(LocalDate day_one, String month, String year) {
     	LocalDate day_last = balanceService.getUltimoDiaMes(day_one);
-   
-    	LocalDateTime localDateTime1 = day_one.atStartOfDay();
-    	LocalDateTime localDateTime2 = day_last.atStartOfDay();
     	
     	DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     	String day_one_string = formatter.format(day_one);
@@ -46,7 +43,7 @@ public class BalanceController {
     	b.setYear(year);
     	b.setSubs(balanceService.getSubs(day_one_string, day_last_string));
     	b.setBonos(100);
-    	b.setSalaries(balanceService.getSalaries(localDateTime1, localDateTime2));
+    	b.setSalaries(balanceService.getSalaries(day_one, day_last));
     	b.setMante(100);
     	balanceService.save(b);
     }
