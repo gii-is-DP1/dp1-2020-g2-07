@@ -36,7 +36,7 @@ public class CircuitoService {
 		circuitoRepo.deleteById(c.getId());
     }
     
-    public void save(@Valid Circuito c) {
+    public void save(@Valid Circuito c){
     	circuitoRepo.save(c);
     }
     
