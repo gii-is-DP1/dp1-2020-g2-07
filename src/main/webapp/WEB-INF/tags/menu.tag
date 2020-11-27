@@ -46,6 +46,18 @@
                     <span>Clients</span>
                 </petclinic:menuItem>
 
+
+                <petclinic:menuItem active="${name eq 'salas'}" url="/salas"
+                    title="salas activas del spa">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Rooms</span>
+                </petclinic:menuItem>
+                <petclinic:menuItem active="${name eq 'circuitos'}" url="/circuitos"
+                    title="Circuits">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Circuits</span>
+                </petclinic:menuItem>
+
                 <petclinic:menuItem active="${name eq 'employees'}" url="/employees" title="employees">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Employees</span>
@@ -56,6 +68,7 @@
 					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
 					<span>Error</span>
 				</petclinic:menuItem>
+
 			</ul>
 
 
