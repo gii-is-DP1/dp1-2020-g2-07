@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -21,7 +22,7 @@ public class BonoService {
 		return bonorepository.findAll();
 	}
 	
-	public Optional<Bono> findById(int id){
+	public List<Bono> findByIdLista(int id){
 		return bonorepository.findById(id);
 	}
 	
@@ -33,7 +34,7 @@ public class BonoService {
 		bonorepository.save(bono);
 	}
 	
-	public Optional<Bono> findByIdTest(Integer id) {
+	public Optional<Bono> findById(Integer id) {
 		return bonorepository.findById(id);
 	}
 	

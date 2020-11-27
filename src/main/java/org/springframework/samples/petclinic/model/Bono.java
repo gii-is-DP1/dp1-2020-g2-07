@@ -31,10 +31,16 @@ public class Bono extends  BaseEntity {
 	 
 	 
 	 @Column(name = "duracion")
+	 @NotEmpty
 	 @DateTimeFormat(pattern = "yyyy-MM-dd")
 		private LocalDate duracion;
 	 
 	 @Column(name = "descripcion")
 	 @NotEmpty
 	 @Setter private String descripcion;
+
+
+	public String getCodigo() {
+		return this.codigo;
+	}
 }
