@@ -47,6 +47,7 @@
                 </petclinic:menuItem>
 
 
+
                 <petclinic:menuItem active="${name eq 'salas'}" url="/salas"
                     title="salas activas del spa">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
@@ -64,10 +65,16 @@
                 </petclinic:menuItem>
 
                 <petclinic:menuItem active="${name eq 'error'}" url="/oups"
-					title="trigger a RuntimeException to see how it is handled">
-					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-					<span>Error</span>
-				</petclinic:menuItem>
+					          title="trigger a RuntimeException to see how it is handled">
+                    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+					          <span>Error</span>
+				      </petclinic:menuItem>
+              
+              <petclinic:menuItem active="${name eq 'bonos'}" url="/bonos"
+					        title="bonos">
+					        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+					        <span>Bonos</span>
+				      </petclinic:menuItem>
 
 			</ul>
 
