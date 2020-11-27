@@ -23,15 +23,6 @@ public class SalaService {
         return salaRepo.findAll();
     }
     
-    public Collection<String> findSalaByName(){
-    	Collection<Sala> salas = salaRepo.findAll();
-    	Collection<String> salaString = new ArrayList<String>(); 
-    	for(Sala s:salas) {
-    		salaString.add(s.getName());    		    		
-    	}
-    	return salaString;
-    }
-    
     public Optional<Sala> findById(int id){
     	return salaRepo.findById(id);
     }

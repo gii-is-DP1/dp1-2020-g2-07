@@ -21,8 +21,8 @@
             <th>Capacity</th>
             <th>Description</th>
             <th>Rooms</th>
-            <th></th>
-            <th></th>
+            <th width=2%></th>
+            <th width=2%></th>
         </tr>
         </thead>
         <tbody>

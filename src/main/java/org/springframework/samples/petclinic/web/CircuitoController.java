@@ -9,14 +9,12 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Circuito;
-import org.springframework.samples.petclinic.model.Sala;
 import org.springframework.samples.petclinic.service.CircuitoService;
 import org.springframework.samples.petclinic.service.SalaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,7 +43,11 @@ public class CircuitoController {
 
 	@GetMapping
 	public String cicuitosListing(ModelMap model) {
-		model.addAttribute("circuitos",circuitosServices.findAll());
+		Collection<Circuito> c = circuitosServices.findAll();
+		for(Circuito i:c) {
+			i.setAforo(circuitosServices.getAforo(i));
+		}
+		model.addAttribute("circuitos",c);
 		return CIRCUITOS_LISTING;
 	}
 	
@@ -53,11 +55,13 @@ public class CircuitoController {
 	public String editCircuito(@PathVariable("id") int id,ModelMap model ) {
 		Optional<Circuito> circuito = circuitosServices.findById(id);
 		if(circuito.isPresent()) {
-			model.addAttribute("circuito",circuito.get());
+			Circuito c = circuito.get();
+			c.setAforo(circuitosServices.getAforo(c));
+			model.addAttribute("circuito",c);
 			model.addAttribute("salas", salasServices.findAll());
 			return CIRCUITOS_FORM;
 		}else {
-			model.addAttribute("message","No pudimos encontrar el circuito que buscas");
+			model.addAttribute("message","We could not find the circuit you are trying to edit.");
 			return CIRCUITOS_LISTING;
 		}
 	}
@@ -69,9 +73,10 @@ public class CircuitoController {
 		if(binding.hasErrors()) {
 			return CIRCUITOS_FORM;
 		}else {
-			BeanUtils.copyProperties(modifiedCircuito, circuito.get(),"id");
+			modifiedCircuito.setAforo(circuitosServices.getAforo(modifiedCircuito));
+			BeanUtils.copyProperties(modifiedCircuito, circuito.get(),"id");			
 			model.addAttribute("circuito", modifiedCircuito);
-			model.addAttribute("message", "El circuito se actualizó correctamente.");
+			model.addAttribute("message", "The circuit was updated successfully.");
 			return cicuitosListing(model);
 		}
 	}
@@ -81,10 +86,10 @@ public class CircuitoController {
 		Optional<Circuito> circuito = circuitosServices.findById(id);
 		if(circuito.isPresent()) {
 			circuitosServices.delete(circuito.get());
-			model.addAttribute("message", "El circuito se eliminó correctamente.");
+			model.addAttribute("message", "The circuit was deleted successfully.");
 			return cicuitosListing(model);
 		}else {
-			model.addAttribute("message", "No pudimos encontrar el circuito que intentas eliminar.");
+			model.addAttribute("message", "We could not find the circuit you are trying to delete.");
 			return cicuitosListing(model);
 		}
 	}
@@ -92,18 +97,18 @@ public class CircuitoController {
 	public String editNewCircuito(ModelMap model) {
 		model.addAttribute("circuito",new Circuito());
 		model.addAttribute("salas", salasServices.findAll());
-//		model.addAttribute("salas", salasServices.findSalaByName());
 		return CIRCUITOS_FORM;
 	}
 	
 	@PostMapping("/new")
-	public String saveNewCircuito(@Valid Circuito circuito, BindingResult binding,ModelMap model) {
+	public String saveNewCircuito(Circuito circuito, BindingResult binding,ModelMap model) {
 		if(binding.hasErrors()) {
 			return CIRCUITOS_FORM;
 			
 		}else {
+			circuito.setAforo(circuitosServices.getAforo(circuito));
 			circuitosServices.save(circuito);
-			model.addAttribute("message", "The circuit was created successfully");
+			model.addAttribute("message", "The circuit was created successfully.");
 			return cicuitosListing(model);
 			
 		}

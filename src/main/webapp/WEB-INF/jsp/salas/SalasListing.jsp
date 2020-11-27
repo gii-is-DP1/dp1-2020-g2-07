@@ -12,11 +12,10 @@
         <thead>
         <tr>
             <th>Name</th>
-            <th width= 15%>Horario</th>
             <th>Capacity</th>
             <th>Description</th>
-            <th></th>
-            <th></th>
+            <th width=2%></th>
+            <th width=2%></th>
         </tr>
         </thead>
         <tbody>
@@ -24,9 +23,6 @@
             <tr>
                 <td>
                     <c:out value="${sala.name}"/>
-                </td>
-                <td>
-                    <c:out value="${sala.horario}"/>
                 </td>
                 <td>
                     <c:out value="${sala.aforo}"/>

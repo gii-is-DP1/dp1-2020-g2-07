@@ -13,6 +13,7 @@
     <form:form modelAttribute="circuito" class="form-horizontal" id="add-circuito-form">
         <div class="form-group has-feedback">
 
+
             <petclinic:inputField label="Nombre " name="name"/>
             <petclinic:inputField label="Aforo" name="aforo"/>
             <petclinic:inputField label="Descripción" name="descripcion"/>
@@ -24,6 +25,15 @@
 
             <petclinic:inputField label="Name " name="name"/>
             <petclinic:inputField label="Capacity" name="aforo"/>
+
+            <petclinic:inputField label="Name " name="name"/>                
+            <div class="form-group">
+                    <label class="col-sm-2 control-label">Capacity</label>
+                    <div class="col-sm-10">
+                        <c:out value="${circuito.aforo}"/>
+                    </div>
+                </div>
+
             <petclinic:inputField label="Description" name="descripcion"/>
  
 			<div class="formGroup">            
