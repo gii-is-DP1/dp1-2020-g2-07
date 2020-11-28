@@ -2,7 +2,6 @@ package org.springframework.samples.petclinic.service;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -66,7 +65,7 @@ public class BalanceService {
 		SimpleDateFormat formatter= new SimpleDateFormat("dd");
 		Date hoy_millis = new Date(System.currentTimeMillis());
 		String hoy = formatter.format(hoy_millis);
-		if(hoy.equals("27")) {
+		if(hoy.equals("28")) {
 			tocaBalance = true;
 		}
 		return tocaBalance;
@@ -114,6 +113,11 @@ public class BalanceService {
 			res=true;
 		}
 		return res;
+	}
+	
+	public Balance getBalanceById (Integer id) {
+		Balance b = balanceRepo.findBalanceById(id);
+		return b;
 	}
 
 }
