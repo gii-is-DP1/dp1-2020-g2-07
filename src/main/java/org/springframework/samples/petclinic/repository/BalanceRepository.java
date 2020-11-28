@@ -24,4 +24,7 @@ public interface BalanceRepository  extends Repository<Balance,Integer>,  CrudRe
     
     @Query("SELECT COUNT(*) FROM Balance balance WHERE balance.month = :month and balance.year = :year")
 	public Integer findBalanceExists(@Param("month") String month,@Param("year") String year);
+    
+    @Query("SELECT balance FROM Balance balance WHERE balance.id =:id")
+	public Balance findBalanceById(@Param("id") int id);
 }
