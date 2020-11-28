@@ -33,6 +33,7 @@ public class BonoServiceTests {
 		bono.setDuracion(LocalDate.of(2021, 02, 01));
 		bono.setId(1);
 		bono.setPrecio(2);
+		bono.setUsado(true);
 		bonoservice.save(bono);
 	}
 	

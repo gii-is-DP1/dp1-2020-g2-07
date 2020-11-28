@@ -50,6 +50,7 @@ public class BonoController {
 		if(binding.hasErrors()) {
 			return BONOS_FORM;
 		}else {
+			modifiedBono.setCodigo();
 			BeanUtils.copyProperties(modifiedBono, bono.get(),"id");
 			bonoservice.save(bono.get());
 			model.addAttribute("message", "Bono ha sido actualizado");
@@ -81,6 +82,7 @@ public class BonoController {
 		if(binding.hasErrors()) {			
 			return BONOS_FORM;
 		}else {
+			bono.setCodigo();
 			bonoservice.save(bono);
 			model.addAttribute("message", "El Bono ha sido creado");			
 			return listBonos(model);

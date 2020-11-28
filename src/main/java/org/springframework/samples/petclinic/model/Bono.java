@@ -1,18 +1,18 @@
 package org.springframework.samples.petclinic.model;
 
 
-import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.sun.istack.NotNull;
 
 import lombok.Data;
 import lombok.Setter;
@@ -21,6 +21,16 @@ import lombok.Setter;
 @Data
 @Table(name = "bonos")
 public class Bono extends  BaseEntity {
+	
+	 @JoinTable(
+		        name = "rel_bonos_salas",
+		        joinColumns = @JoinColumn(name="FK_Bono"),
+		        inverseJoinColumns = @JoinColumn(name="FK_Sala")
+		    )
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+    private Set<Sala> salas;
+	
 	@Column(name = "codigo")
 	 @Setter private String codigo;
 	
@@ -34,14 +44,40 @@ public class Bono extends  BaseEntity {
 	 
 	 @Column(name = "descripcion")
 	 @Setter private String descripcion;
+	 
+	 @Column(name = "usado")
+	 @Setter private Boolean usado;
 
-
+	 public Boolean getUsado() {
+		return this.usado;
+	}
+		
+	public void setUsado(Boolean usado) {
+		this.usado=usado;
+	}
+	 
 	public String getCodigo() {
 		return this.codigo;
 	}
 	
-	public void setCodigo(String codigo) {
-		this.codigo=codigo;
+	public void setCodigo() {
+	    this.codigo= getAlphaNumericString(8);
+	}
+
+	private String getAlphaNumericString(int n) { 
+	    String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	                                + "0123456789"
+	                                + "abcdefghijklmnopqrstuvxyz"; 
+	  
+	    StringBuilder sb = new StringBuilder(n); 
+	  
+	    for (int i = 0; i < n; i++) { 
+	        int index  = (int)(AlphaNumericString.length() * Math.random()); 
+	  
+	    	sb.append(AlphaNumericString.charAt(index)); 
+		} 
+	  
+	    return sb.toString(); 
 	}
 	
 	public Integer getPrecio() {
