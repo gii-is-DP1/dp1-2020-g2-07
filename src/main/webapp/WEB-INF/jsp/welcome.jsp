@@ -13,17 +13,11 @@
     </div>
     <div class="row">
     <h2>Project G2-07</h2>
-    <p><h2>Group G2-07</h2></p>
+    <p><h2>Group G2-07</h2>
     <p><ul>
     <c:forEach items="${persons}" var="person">
     	<li>${person.firstName}  ${person.lastName}</li>
     </c:forEach>
-    </ul></p>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <spring:url value="/resources/images/pets.png" htmlEscape="true" var="petsImage"/>
-            <img class="img-responsive" src="${petsImage}"/>
-        </div>
+    </ul>
     </div>
 </petclinic:layout>

@@ -27,35 +27,54 @@
 					<span class="glyphicon glyphicon-home" aria-hidden="true"></span>
 					<span>Home</span>
 				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
-					title="find owners">
-					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Find owners</span>
-				</petclinic:menuItem>
-
-				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
-					title="veterinarians">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Veterinarians</span>
-				</petclinic:menuItem>
-
-                <petclinic:menuItem active="${name eq 'clients'}" url="/clientes"
+				
+				<petclinic:menuItem active="${name eq 'Clients'}" url="/clientes"
                     title="clients">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Clients</span>
                 </petclinic:menuItem>
+				
+				<petclinic:menuItem active="${name eq 'Income Statements'}" url="/balances"
+					title="Income Statements">
+					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					<span>Income Statements</span>
+				</petclinic:menuItem>
+        
+                <petclinic:menuItem active="${name eq 'Rooms'}" url="/salas"
+                    title="salas activas del spa">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Rooms</span>
+                </petclinic:menuItem>
+                <petclinic:menuItem active="${name eq 'Circuits'}" url="/circuitos"
+                    title="Circuits">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Circuits</span>
+                </petclinic:menuItem>
 
+                <petclinic:menuItem active="${name eq 'Employees'}" url="/employees" title="employees">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Employees</span>
+				<petclinic:menuItem active="${name eq 'toallas'}" url="/toallas"
+                    title="toallas">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Toallas</span>
                 <petclinic:menuItem active="${name eq 'employees'}" url="/employees" title="employees">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Employees</span>
                 </petclinic:menuItem>
 
                 <petclinic:menuItem active="${name eq 'error'}" url="/oups"
-					title="trigger a RuntimeException to see how it is handled">
-					<span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-					<span>Error</span>
-				</petclinic:menuItem>
+					          title="trigger a RuntimeException to see how it is handled">
+                    <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+					          <span>Error</span>
+				      </petclinic:menuItem>
+              
+              <petclinic:menuItem active="${name eq 'bonos'}" url="/bonos"
+					        title="bonos">
+					        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+					        <span>Bonos</span>
+				      </petclinic:menuItem>
+
 			</ul>
 
 
