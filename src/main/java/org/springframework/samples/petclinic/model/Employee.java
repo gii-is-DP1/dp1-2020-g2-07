@@ -18,7 +18,7 @@ public class Employee extends Usuario{
     private Profession profession;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
-    private List<EmployeeRevenue> salaries;
+    private List<EmployeeRevenue> pagos;
 
     public Profession getProfession() {
         return profession;
@@ -28,15 +28,11 @@ public class Employee extends Usuario{
         this.profession = profession;
     }
 
-    public List<EmployeeRevenue> getSalaries() {
-        return salaries;
+    public List<EmployeeRevenue> getPagos() {
+        return pagos;
     }
 
-    public void setSalaries(List<EmployeeRevenue> salaries) {
-        this.salaries = salaries;
-    }
-
-    public void addSalary(EmployeeRevenue e){
-        this.salaries.add(e);
+    public void setPagos(List<EmployeeRevenue> pagos) {
+        this.pagos = pagos;
     }
 }

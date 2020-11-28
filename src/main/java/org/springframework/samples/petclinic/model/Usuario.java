@@ -11,22 +11,18 @@ import javax.validation.constraints.NotEmpty;
 @MappedSuperclass
 public class Usuario extends BaseEntity {
 
-    @NotEmpty
     @Column(name = "nick")
     @NotEmpty
     private String nick;
 
-    @NotEmpty
     @Column(name = "nombre")
     @NotEmpty
     private String nombre;
 
-    @NotEmpty
     @Column(name = "apellidos")
     @NotEmpty
     private String apellidos;
 
-    @NotEmpty
     @Column(name = "direccion")
     @NotEmpty
     private String direccion;
@@ -35,7 +31,6 @@ public class Usuario extends BaseEntity {
     @Enumerated(EnumType.ORDINAL)
     private Categoria categoria;
 
-    @NotEmpty
     @Column(name = "IBAN")
     private String IBAN;
 
