@@ -1,17 +1,24 @@
 package org.springframework.samples.petclinic.model;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "salas")
 public class Sala extends NamedEntity{
+	
+	@ManyToMany(mappedBy = "salas")
+    private Set<Bono> bonos;
+	
+
 	
 	@Column(name = "aforo")
 	@NotNull
