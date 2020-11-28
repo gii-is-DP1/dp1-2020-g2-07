@@ -18,14 +18,13 @@ public class Cliente extends Usuario{
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private List<Pago> pagos;
-
+    private Set<Pago> pagos;
 
     public SubType getSuscripcion() {
         return suscripcion;
     }
 
-    public List<Pago> getPagos() {
+    public Set<Pago> getPagos() {
         return pagos;
     }
 
@@ -33,12 +32,8 @@ public class Cliente extends Usuario{
         this.suscripcion = suscripcion;
     }
 
-    public void setPagos(List<Pago> pagos) {
+    public void setPagos(Set<Pago> pagos) {
         this.pagos = pagos;
-    }
-
-    public void addPay(Pago p){
-        this.getPagos().add(p);
     }
 
     @Override

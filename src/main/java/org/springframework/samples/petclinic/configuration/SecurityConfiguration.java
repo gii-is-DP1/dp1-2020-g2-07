@@ -52,9 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 // ataques de tipo csrf y habilitar los framesets si su contenido
                 // se sirve desde esta misma página.
                 http.csrf().ignoringAntMatchers("/h2-console/**");
-
-                http.csrf().disable();
-        http.headers().frameOptions().sameOrigin();
+                http.headers().frameOptions().sameOrigin();
 	}
 
 	@Override
