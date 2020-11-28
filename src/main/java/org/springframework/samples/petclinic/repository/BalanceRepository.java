@@ -1,5 +1,5 @@
 package org.springframework.samples.petclinic.repository;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Collection;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -15,8 +15,11 @@ public interface BalanceRepository  extends CrudRepository<Balance,Integer>{
 	public Collection<Pago> findSubsByMonth(@Param("init_date") String init_date,@Param("last_date") String last_date);
     
     @Query("SELECT revenue FROM EmployeeRevenue revenue WHERE revenue.dateStart >= :init_date and revenue.dateEnd <= :last_date")
-	public Collection<EmployeeRevenue> findSalariesByMonth(@Param("init_date") LocalDateTime init_date,@Param("last_date") LocalDateTime last_date);
+	public Collection<EmployeeRevenue> findSalariesByMonth(@Param("init_date") LocalDate init_date,@Param("last_date") LocalDate last_date);
     
     @Query("SELECT COUNT(*) FROM Balance balance WHERE balance.month = :month and balance.year = :year")
 	public Integer findBalanceExists(@Param("month") String month,@Param("year") String year);
+    
+    @Query("SELECT balance FROM Balance balance WHERE balance.id =:id")
+	public Balance findBalanceById(@Param("id") int id);
 }

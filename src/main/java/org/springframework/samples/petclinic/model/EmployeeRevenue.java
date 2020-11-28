@@ -1,10 +1,6 @@
 package org.springframework.samples.petclinic.model;
-
-import lombok.Data;
-import lombok.Setter;
-
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
@@ -15,10 +11,10 @@ public class EmployeeRevenue extends BaseEntity{
     private Employee employee;
 
     @Column(name = "date_start")
-    private LocalDateTime dateStart;
+    private LocalDate dateStart;
 
     @Column(name = "date_end")
-    private LocalDateTime dateEnd;
+    private LocalDate dateEnd;
 
     @Column(name = "hours_worked")
     private Integer hoursWorked;
@@ -30,11 +26,11 @@ public class EmployeeRevenue extends BaseEntity{
         this.employee = employee;
     }
 
-    public void setDateStart(LocalDateTime dateStart) {
+    public void setDateStart(LocalDate dateStart) {
         this.dateStart = dateStart;
     }
 
-    public void setDateEnd(LocalDateTime dateEnd) {
+    public void setDateEnd(LocalDate dateEnd) {
         this.dateEnd = dateEnd;
     }
 
@@ -50,11 +46,11 @@ public class EmployeeRevenue extends BaseEntity{
         return employee;
     }
 
-    public LocalDateTime getDateStart() {
+    public LocalDate getDateStart() {
         return dateStart;
     }
 
-    public LocalDateTime getDateEnd() {
+    public LocalDate getDateEnd() {
         return dateEnd;
     }
 
