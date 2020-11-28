@@ -103,8 +103,8 @@ INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantit
 INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantity) VALUES(3, 1, '2013-01-01', '2013-01-28', 40, 530);
 INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantity) VALUES(4, 1, '2013-01-05', '2013-01-27', 78, 900);
 
-INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, cuantity) VALUES(1, 1, '2020-10-04', '2020-10-15' , 34, 2374);
-INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, cuantity) VALUES(2, 1, '2020-10-16', '2020-10-20' , 34, 1000);
+INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantity) VALUES(5, 1, '2020-10-04', '2020-10-15' , 34, 2374);
+INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantity) VALUES(6, 1, '2020-10-16', '2020-10-20' , 34, 1000);
 
 INSERT INTO toallas(cantidad) VALUES (1);
 
