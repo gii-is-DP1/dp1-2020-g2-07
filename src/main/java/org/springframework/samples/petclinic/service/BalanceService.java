@@ -101,7 +101,7 @@ public class BalanceService {
 		Iterator<EmployeeRevenue> iterator = total.iterator();
 		int res = 0;
         while (iterator.hasNext()) {
-        	res = res + iterator.next().getQuantity();
+        	res = res + iterator.next().getCuantity();
         }
 		return res;
 	}

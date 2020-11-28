@@ -11,7 +11,9 @@ import org.springframework.samples.petclinic.model.Cliente;
 public interface ClienteRepository extends Repository<Cliente,Integer>, CrudRepository<Cliente, Integer> {
     Collection<Cliente> findAll();
 
-    Optional<Cliente> findById(int id);
+    Optional<Cliente> findById(Integer id);
 
     void deleteById(Integer id);
+    
+    List<Cliente> findById( int id);
 }
