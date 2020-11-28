@@ -12,9 +12,8 @@
         <thead>
         <tr>
             <th>Nick</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>Direccion</th>
+            <th>Name & Surnames</th>
+            <th>Address</th>
             <th>IBAN</th>
             <th>Profession</th>
         </tr>
@@ -23,13 +22,13 @@
         <c:forEach items="${employees}" var="employee">
             <tr>
                 <td>
-                    <c:out value="${employee.nick}"/>
+                    <spring:url value="/employees/{employeeId}" var="employeeUrl">
+                        <spring:param name="employeeId" value="${employee.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(employeeUrl)}"><c:out value="${employee.nick}"/></a>
                 </td>
                 <td>
-                    <c:out value="${employee.nombre}"/>
-                </td>
-                <td>
-                    <c:out value="${employee.apellidos}"/>
+                    <c:out value="${employee.nombre} ${employee.apellidos}"/>
                 </td>
                 <td>
                     <c:out value="${employee.direccion}"/>
@@ -40,17 +39,6 @@
                 <td>
                     <c:out value="${employee.profession}"/>
                 </td>
-                <td>
-                    <a href="/employees/${employee.id}/edit">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    </a>
-                </td>
-                <td>
-                    <a href="/employees/${employee.id}/delete">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    </a>
-                </td>
-            </tr>
         </c:forEach>
         </tbody>
     </table>
