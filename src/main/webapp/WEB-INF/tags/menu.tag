@@ -50,17 +50,15 @@
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Circuits</span>
                 </petclinic:menuItem>
-
+                
                 <petclinic:menuItem active="${name eq 'Employees'}" url="/employees" title="employees">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Employees</span>
-				<petclinic:menuItem active="${name eq 'toallas'}" url="/toallas"
-                    title="toallas">
+                </petclinic:menuItem>
+                
+                <petclinic:menuItem active="${name eq 'Towels'}" url="/toallas" title="Towels">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Toallas</span>
-                <petclinic:menuItem active="${name eq 'employees'}" url="/employees" title="employees">
-                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Employees</span>
+                    <span>Towels</span>
                 </petclinic:menuItem>
 
                 <petclinic:menuItem active="${name eq 'error'}" url="/oups"
@@ -69,10 +67,10 @@
 					          <span>Error</span>
 				      </petclinic:menuItem>
               
-              <petclinic:menuItem active="${name eq 'bonos'}" url="/bonos"
-					        title="bonos">
-					        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
-					        <span>Bonos</span>
+              <petclinic:menuItem active="${name eq 'Tokens'}" url="/bonos"
+					        title="Tokens">
+					        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+					        <span>Tokens</span>
 				      </petclinic:menuItem>
 
 			</ul>

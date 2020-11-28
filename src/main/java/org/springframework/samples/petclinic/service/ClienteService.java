@@ -1,13 +1,8 @@
 package org.springframework.samples.petclinic.service;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Bono;
 import org.springframework.samples.petclinic.model.Cliente;
-import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.model.SubType;
 import org.springframework.samples.petclinic.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
