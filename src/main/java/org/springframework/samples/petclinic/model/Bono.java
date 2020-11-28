@@ -60,28 +60,25 @@ public class Bono extends  BaseEntity {
 		return this.codigo;
 	}
 	
-	   public void setCodigo() {
-	        this.codigo= getAlphaNumericString(8);
-	    }
+	public void setCodigo() {
+	    this.codigo= getAlphaNumericString(8);
+	}
 
-	    private String getAlphaNumericString(int n) { 
-	        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-	                                    + "0123456789"
-	                                    + "abcdefghijklmnopqrstuvxyz"; 
+	private String getAlphaNumericString(int n) { 
+	    String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	                                + "0123456789"
+	                                + "abcdefghijklmnopqrstuvxyz"; 
 	  
-	        StringBuilder sb = new StringBuilder(n); 
+	    StringBuilder sb = new StringBuilder(n); 
 	  
-	        for (int i = 0; i < n; i++) { 
-	            int index 
-	                = (int)(AlphaNumericString.length() 
-	                        * Math.random()); 
+	    for (int i = 0; i < n; i++) { 
+	        int index  = (int)(AlphaNumericString.length() * Math.random()); 
 	  
-	            sb.append(AlphaNumericString 
-	                          .charAt(index)); 
-	        } 
+	    	sb.append(AlphaNumericString.charAt(index)); 
+		} 
 	  
-	        return sb.toString(); 
-	    }
+	    return sb.toString(); 
+	}
 	
 	public Integer getPrecio() {
 		return this.precio;		
