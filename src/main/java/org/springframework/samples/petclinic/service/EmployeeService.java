@@ -23,7 +23,7 @@ public class EmployeeService {
         return employeeRepo.findAll();
     }
 
-    public Optional<Employee> findById(int id){
+    public Optional<Employee> findById(Integer id){
         return employeeRepo.findById(id);
     }
 
@@ -39,5 +39,9 @@ public class EmployeeService {
     public void delete(Employee employee) {
         employeeRepo.deleteById(employee.getId());
     }
+
+	public List<Employee> findByIdLista(int id) {
+		return employeeRepo.findById(id);
+	}
 
 }

@@ -8,10 +8,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Balance;
+import org.springframework.samples.petclinic.model.Bono;
 import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.model.Pago;
 import org.springframework.samples.petclinic.repository.BalanceRepository;
@@ -26,7 +28,7 @@ public class BalanceService {
         return balanceRepo.findAll();
     }
 
-    public Optional<Balance> findById(int id){
+    public Optional<Balance> findById(Integer id){
         return balanceRepo.findById(id);
     }
 
@@ -37,6 +39,10 @@ public class BalanceService {
     public void save(@Valid Balance balance){
     	balanceRepo.save(balance);
     }
+    
+    public List<Balance> findByIdLista(int id) {
+		return balanceRepo.findById(id);
+	}
     
     //-----------------------------------------------------//
 

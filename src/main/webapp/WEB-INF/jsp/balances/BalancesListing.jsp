@@ -6,7 +6,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
-                        
+
 <petclinic:layout pageName="clientes">
     <h2>Income Statements</h2>
     <table id="clientesTable" class="table table-striped">
@@ -51,36 +51,3 @@
         </tbody>
     </table>
 </petclinic:layout>
-
-
-<script type="text/javascript">
-window.onload = function() { 
-	
-	var chart = new CanvasJS.Chart("chartContainer", {	
-		animationEnabled: true,
-		title:{
-			text: "Income Statement, 2020"
-		},
-		axisX:{
-			labelMaxWidth: 75
-		},
-		axisY: {
-			prefix: "$",
-			includeZero: true
-		},	
-		data: [{
-			type: "waterfall",
-			yValueFormatString: "$#,##0",
-			indexLabel: "{y}",
-			risingColor: "#50cdc8",
-			fallingColor: "#ff6969",
-			dataPoints: ${dataPoints}
-		}]
-	});
-	chart.render();
-	 
-	}
-	
-</script>
-<div id="chartContainer" style="height: 370px; width: 80%;"></div>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
