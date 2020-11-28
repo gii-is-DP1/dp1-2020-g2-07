@@ -1,18 +1,17 @@
 package org.springframework.samples.petclinic.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.samples.petclinic.model.Employee;
-import org.springframework.samples.petclinic.model.EmployeeRevenue;
-import org.springframework.samples.petclinic.model.Profession;
-import org.springframework.samples.petclinic.repository.EmployeeRepository;
-import org.springframework.stereotype.Service;
-
-import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Employee;
+import org.springframework.samples.petclinic.model.Profession;
+import org.springframework.samples.petclinic.repository.EmployeeRepository;
+import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeService {
@@ -24,7 +23,7 @@ public class EmployeeService {
         return employeeRepo.findAll();
     }
 
-    public Optional<Employee> findById(int id){
+    public Optional<Employee> findById(Integer id){
         return employeeRepo.findById(id);
     }
 
@@ -41,9 +40,8 @@ public class EmployeeService {
         employeeRepo.deleteById(employee.getId());
     }
 
-    public void addSalaryToEmployee(int id, EmployeeRevenue salary){
-        employeeRepo.findById(id).get().addSalary(salary);
-        this.save(employeeRepo.findById(id).get());
-    }
+	public List<Employee> findByIdLista(int id) {
+		return employeeRepo.findById(id);
+	}
 
 }

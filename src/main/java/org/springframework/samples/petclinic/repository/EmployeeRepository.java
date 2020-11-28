@@ -1,26 +1,16 @@
 package org.springframework.samples.petclinic.repository;
 
-import org.springframework.dao.DataAccessException;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.query.Param;
-import org.springframework.samples.petclinic.model.Employee;
-import org.springframework.samples.petclinic.model.EmployeeRevenue;
-
-import javax.validation.Valid;
 import java.util.Collection;
-import java.util.Optional;
+import java.util.List;
 
-public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.Repository;
+import org.springframework.samples.petclinic.model.Employee;
+
+public interface EmployeeRepository extends Repository<Employee,Integer>, CrudRepository<Employee, Integer> {
     Collection<Employee> findAll();
-
-    Optional<Employee> findById(int id);
 
     Collection<Employee> findEmployeeByProfession(String prefession);
 
-    @Query("SELECT revenue FROM EmployeeRevenue revenue WHERE revenue.employee.id = :employee_id")
-    public Collection<EmployeeRevenue> getSalariesByEmployee(@Param("employee_id") int employee_id);
-
-
-
+    List<Employee> findById(int id);
 }

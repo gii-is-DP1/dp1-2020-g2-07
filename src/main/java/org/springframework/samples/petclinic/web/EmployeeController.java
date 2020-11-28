@@ -5,16 +5,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Employee;
-import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.service.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller
@@ -50,10 +50,11 @@ public class EmployeeController {
         if(binding.hasErrors()){
             return EMPLOYEES_FORM;
         }else{
-            BeanUtils.copyProperties(modifiedEmployee, employee.get(), "categoria");
+            BeanUtils.copyProperties(modifiedEmployee, employee.get());
+            employee.get().setCategoria(Categoria.EMPLEADO);
             employeeService.save(employee.get());
             model.addAttribute("message", "Employee updated succesfully!!");
-            return "redirect:/employees/" + employee.get().getId();
+            return listEmployees(model);
         }
     }
 
@@ -70,13 +71,6 @@ public class EmployeeController {
         }
     }
 
-    @GetMapping("/{employeeId}")
-    public ModelAndView showEmployee(@PathVariable("employeeId") int employeeId) {
-        ModelAndView mav = new ModelAndView("employees/employeeDetails");
-        mav.addObject(this.employeeService.findById(employeeId).get());
-        return mav;
-    }
-
     @GetMapping("/new")
     public String editNewEmployee(ModelMap model) {
         model.addAttribute("employee",new Employee());
@@ -91,28 +85,8 @@ public class EmployeeController {
             employee.setCategoria(Categoria.EMPLEADO);
             employeeService.save(employee);
             model.addAttribute("message", "The employee was created successfully!");
-            return "redirect:/employees/" + employee.getId();
+            return listEmployees(model);
         }
     }
 
-    @GetMapping("/{employeeId}/newSalary")
-    public String addSalary(@PathVariable("employeeId") int employeeId, ModelMap model) {
-        model.addAttribute("employee",employeeService.findById(employeeId).get());
-        model.addAttribute("revenue",new EmployeeRevenue());
-        return "salary/salaryForm";
-    }
-
-    @PostMapping("/{employeeId}/newSalary")
-    public String saveSalary(@PathVariable("employeeId") int employeeId,@Valid @ModelAttribute("revenue") EmployeeRevenue revenue, BindingResult binding, ModelMap model){
-        model.addAttribute("employee",employeeService.findById(employeeId).get());
-        if(binding.hasErrors()){
-            model.addAttribute("message", "hay un error capo");
-            return "salary/salaryForm";
-        }else{
-            revenue.setEmployee(employeeService.findById(employeeId).get());
-            employeeService.addSalaryToEmployee(employeeId, revenue);
-
-            return "redirect:/employees/" + String.valueOf(employeeId);
-        }
-    }
 }
