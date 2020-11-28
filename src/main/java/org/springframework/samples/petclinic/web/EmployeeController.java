@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller
@@ -95,23 +96,23 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}/newSalary")
-    public ModelAndView addSalary(@PathVariable("employeeId") int employeeId) {
-        ModelAndView mav = new ModelAndView("employees/employeeDetails");
-        mav.addObject(this.employeeService.findById(employeeId).get());
-        mav.addObject("revenue", new EmployeeRevenue());
-        return mav;
+    public String addSalary(@PathVariable("employeeId") int employeeId, ModelMap model) {
+        model.addAttribute("employee",employeeService.findById(employeeId).get());
+        model.addAttribute("revenue",new EmployeeRevenue());
+        return "salary/salaryForm";
     }
 
     @PostMapping("/{employeeId}/newSalary")
-    public ModelAndView addSalary(@PathVariable("employeeId") int employeeId, @Valid @ModelAttribute("revenue") EmployeeRevenue revenue, BindingResult binding){
-        ModelAndView mav = new ModelAndView("employees/employeeDetails");
-        mav.addObject(this.employeeService.findById(employeeId).get());
+    public String saveSalary(@PathVariable("employeeId") int employeeId,@Valid @ModelAttribute("revenue") EmployeeRevenue revenue, BindingResult binding, ModelMap model){
+        model.addAttribute("employee",employeeService.findById(employeeId).get());
         if(binding.hasErrors()){
-            mav.addObject("message", "new salary add succesfully");
-            return mav;
+            model.addAttribute("message", "hay un error capo");
+            return "salary/salaryForm";
         }else{
+            revenue.setEmployee(employeeService.findById(employeeId).get());
             employeeService.addSalaryToEmployee(employeeId, revenue);
-            return mav;
+
+            return "redirect:/employees/" + String.valueOf(employeeId);
         }
     }
 }

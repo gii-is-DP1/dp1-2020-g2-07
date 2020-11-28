@@ -37,6 +37,6 @@ public class Employee extends Usuario{
     }
 
     public void addSalary(EmployeeRevenue e){
-        salaries.add(e);
+        this.salaries.add(e);
     }
 }

@@ -1,14 +1,10 @@
 package org.springframework.samples.petclinic.model;
 
-import lombok.Data;
-import lombok.Setter;
+import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Entity
 @Table(name = "revenue")
@@ -17,17 +13,23 @@ public class EmployeeRevenue extends BaseEntity{
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
+    @NotNull
     @Column(name = "date_start")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateStart;
 
+    @NotNull
     @Column(name = "date_end")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateEnd;
 
+    @NotNull
     @Column(name = "hours_worked")
     private Integer hoursWorked;
 
-    @Column(name = "cuantity")
-    private Integer cuantity;
+    @NotNull
+    @Column(name = "quantity")
+    private Integer quantity;
 
     public Employee getEmployee() {
         return employee;
@@ -61,11 +63,11 @@ public class EmployeeRevenue extends BaseEntity{
         this.hoursWorked = hoursWorked;
     }
 
-    public Integer getCuantity() {
-        return cuantity;
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    public void setCuantity(Integer cuantity) {
-        this.cuantity = cuantity;
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }

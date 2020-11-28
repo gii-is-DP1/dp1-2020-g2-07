@@ -43,6 +43,7 @@ public class EmployeeService {
 
     public void addSalaryToEmployee(int id, EmployeeRevenue salary){
         employeeRepo.findById(id).get().addSalary(salary);
+        this.save(employeeRepo.findById(id).get());
     }
 
 }

@@ -45,58 +45,35 @@
     <h3>Salaries of <c:out value="${employee.nombre} ${employee.apellidos}"/></h3>
     <table id="employeesSalaries" class="table table-striped">
         <thead>
-            <tr>
-                <th>Date Start</th>
-                <th>Date End</th>
-                <th>Hours Worked</th>
-                <th>Cuantity(Euros)</th>
-            </tr>
+        <tr>
+            <th>Date Start</th>
+            <th>Date End</th>
+            <th>Hours Worked</th>
+            <th>Quantity(Euros)</th>
+        </tr>
         </thead>
         <tbody>
-            <c:forEach items="${employee.salaries}" var="salarie">
-                <tr>
-                    <td>
-                        <c:out value="${salarie.dateStart}"/>
-                    </td>
-                    <td>
-                        <c:out value="${salarie.dateEnd}"/>
-                    </td>
-                    <td>
-                        <c:out value="${salarie.hoursWorked}"/>
-                    </td>
-                    <td>
-                        <c:out value="${salarie.cuantity}"/>
-                    </td>
-                </tr>
-            </c:forEach>
+        <c:forEach items="${employee.salaries}" var="salarie">
+            <tr>
+                <td>
+                    <c:out value="${salarie.dateStart}"/>
+                </td>
+                <td>
+                    <c:out value="${salarie.dateEnd}"/>
+                </td>
+                <td>
+                    <c:out value="${salarie.hoursWorked}"/>
+                </td>
+                <td>
+                    <c:out value="${salarie.quantity}"/>
+                </td>
+            </tr>
+        </c:forEach>
         </tbody>
     </table>
-
-
-
-    <div class="form-group">
-        <div class="col-sm-offset-2 col-sm-10">
-            <c:choose>
-                <c:when test="${revenue['new']}">
-                    <form:form modelAttribute="revenue" id="add-revenue-form">
-                        <div class="form-group has-feedback">
-                            <petclinic:inputField label="Date Start" name="revenue.dateStart"/>
-                            <petclinic:inputField label="hours worked" name="revenue.dateEnd"/>
-                            <petclinic:inputField label="hours worked" name="revenue.hoursWorked"/>
-                            <petclinic:inputField label="cuantity" name="revenue.cuantity"/>
-                        </div>
-                        <div class="form-group">
-                            <button class="btn btn-default" type="submit">add Salary</button>
-                        </div>
-                    </form:form>
-                </c:when>
-                <c:otherwise>
-                    <spring:url value="{employeeId}/newSalary" var="employeeSalaryUrl">
-                        <spring:param name="employeeId" value="${employee.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(employeeSalaryUrl)}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>New Salary</a>
-                </c:otherwise>
-            </c:choose>
-        </div>
-    </div>
+    <spring:url value="/employees/{employeeId}/newSalary" var="employeeSalaryUrl">
+        <spring:param name="employeeId" value="${employee.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(employeeSalaryUrl)}"><span class="glyphicon glyphicon-plus"
+                                                       aria-hidden="true"></span>New Salary</a>
 </petclinic:layout>
