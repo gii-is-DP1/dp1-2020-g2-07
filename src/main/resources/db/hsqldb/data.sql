@@ -83,6 +83,7 @@ INSERT INTO salas(id, name, aforo, descripcion) VALUES(1, 'Jacuzzi', 7, 'A large
 INSERT INTO salas(id, name, aforo, descripcion) VALUES(2, 'Relax pool', 15, 'Indoor heated pool where you can relax');
 INSERT INTO salas(id, name, aforo, descripcion) VALUES(3, 'Sauna', 5, 'A Finnish steam bath in which the steam is provided by water thrown on hot stones');
 INSERT INTO salas(id, name, aforo, descripcion) VALUES(4, 'Musical jacuzzi', 3, 'Have a wonderful bath in a jacuzzi while you listen to music.');
+INSERT INTO salas(id, name, aforo, descripcion) VALUES(5, 'Hot water pool', 7, 'Hot water');
 INSERT INTO circuitos(id, name, descripcion) VALUES(1, 'Circuito1 ', 'Water circuit');
 INSERT INTO circuitos(id, name,descripcion) VALUES(2, 'Circuito2 ', 'Series of pools');
 INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(1,1);

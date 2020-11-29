@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.model;
 import java.time.LocalDate;
 import java.util.Set;
 import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -30,16 +31,16 @@ public class Bono extends  BaseEntity {
 	@Column(name = "precio")
 	private Integer precio;
 	 
-	 
 	 @Column(name = "duracion")
 	 @DateTimeFormat(pattern = "yyyy-MM-dd")
 		private LocalDate duracion;
 	 
 	 @Column(name = "descripcion")
 	 private String descripcion;
-	 
+
 	 @Column(name = "usado")
 	 private Boolean usado;
+
 
 	 public Boolean getUsado() {
 		return this.usado;
