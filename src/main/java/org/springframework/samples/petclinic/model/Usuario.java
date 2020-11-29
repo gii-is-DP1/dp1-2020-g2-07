@@ -1,9 +1,4 @@
 package org.springframework.samples.petclinic.model;
-
-
-import lombok.Data;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 

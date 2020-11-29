@@ -1,9 +1,7 @@
 package org.springframework.samples.petclinic.web;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Categoria;
-import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.service.EmployeeService;
@@ -12,9 +10,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.Optional;
 
 @Controller

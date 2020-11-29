@@ -1,13 +1,10 @@
 package org.springframework.samples.petclinic.service;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.model.Profession;
 import org.springframework.samples.petclinic.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
-
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.List;

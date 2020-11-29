@@ -13,7 +13,6 @@ import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Balance;
-import org.springframework.samples.petclinic.model.Bono;
 import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.model.Pago;
 import org.springframework.samples.petclinic.repository.BalanceRepository;
@@ -101,7 +100,7 @@ public class BalanceService {
 		Iterator<EmployeeRevenue> iterator = total.iterator();
 		int res = 0;
         while (iterator.hasNext()) {
-        	res = res + iterator.next().getCuantity();
+        	res = res + iterator.next().getQuantity();
         }
 		return res;
 	}

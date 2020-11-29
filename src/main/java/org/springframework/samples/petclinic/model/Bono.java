@@ -1,9 +1,6 @@
 package org.springframework.samples.petclinic.model;
-
-
 import java.time.LocalDate;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,14 +8,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
-import lombok.Data;
-import lombok.Setter;
 
 @Entity
-@Data
 @Table(name = "bonos")
 public class Bono extends  BaseEntity {
 	
@@ -32,10 +25,10 @@ public class Bono extends  BaseEntity {
     private Set<Sala> salas;
 	
 	@Column(name = "codigo")
-	 @Setter private String codigo;
+	private String codigo;
 	
 	@Column(name = "precio")
-	 @Setter private Integer precio;
+	private Integer precio;
 	 
 	 
 	 @Column(name = "duracion")
@@ -43,10 +36,10 @@ public class Bono extends  BaseEntity {
 		private LocalDate duracion;
 	 
 	 @Column(name = "descripcion")
-	 @Setter private String descripcion;
+	 private String descripcion;
 	 
 	 @Column(name = "usado")
-	 @Setter private Boolean usado;
+	 private Boolean usado;
 
 	 public Boolean getUsado() {
 		return this.usado;

@@ -1,13 +1,8 @@
 package org.springframework.samples.petclinic.service;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
+import java.util.Optional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -30,7 +25,7 @@ public class ClienteServiceTests {
 	
 	@Transactional
 	void insertCliente() {
-		Set<Pago> pagos = new HashSet<Pago>();
+		Pago pago = new Pago();
 		Cliente cliente = new Cliente();
 
 		cliente.setSuscripcion(SubType.MATINAL);
@@ -41,7 +36,7 @@ public class ClienteServiceTests {
 		cliente.setId(1);
 		cliente.setNick("El Madrileño");
 		cliente.setNombre("Anónimo");
-		cliente.setPagos(pagos);
+		cliente.addPay(pago);
 		clienteservice.save(cliente);
 	}
 	
@@ -54,8 +49,8 @@ public class ClienteServiceTests {
 	@Test
 	void mostrarClientesPorId() {
 		Integer id = 1;
-		List<Cliente> cliente = clienteservice.findByIdLista(id);
-		assertFalse(cliente.size() == 0);
+		Optional<Cliente> cliente = clienteservice.findById(id);
+		assertFalse(cliente.isEmpty());
 	}
 	
 	 @Test

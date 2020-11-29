@@ -1,12 +1,5 @@
 package org.springframework.samples.petclinic.model;
-
-import lombok.Data;
-import lombok.Setter;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.xml.bind.annotation.XmlEnum;
-import javax.xml.bind.annotation.XmlEnumValue;
 import java.util.List;
 
 @Entity
