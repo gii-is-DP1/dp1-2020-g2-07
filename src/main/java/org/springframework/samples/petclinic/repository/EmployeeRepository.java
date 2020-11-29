@@ -1,16 +1,22 @@
 package org.springframework.samples.petclinic.repository;
-
-import java.util.Collection;
-import java.util.List;
-
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Employee;
+import org.springframework.samples.petclinic.model.EmployeeRevenue;
+import java.util.Collection;
+import java.util.Optional;
 
-public interface EmployeeRepository extends Repository<Employee,Integer>, CrudRepository<Employee, Integer> {
+public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
     Collection<Employee> findAll();
+
+    Optional<Employee> findById(int id);
 
     Collection<Employee> findEmployeeByProfession(String prefession);
 
-    List<Employee> findById(int id);
+    @Query("SELECT revenue FROM EmployeeRevenue revenue WHERE revenue.employee.id = :employee_id")
+    public Collection<EmployeeRevenue> getSalariesByEmployee(@Param("employee_id") int employee_id);
+
+
+
 }

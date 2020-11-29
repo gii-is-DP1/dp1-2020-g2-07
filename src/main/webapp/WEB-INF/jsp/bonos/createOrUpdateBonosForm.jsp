@@ -14,11 +14,10 @@
         </script>
 
     <h2>
-        <c:if test="${bono['new']}">Nuevo </c:if> Bono
+        <c:if test="${bono['new']}">Nuevo Bono</c:if> 
     </h2>
     <form:form modelAttribute="bono" class="form-horizontal" id="add-owner-form">
-        <div class="form-group has-feedback">
-            <petclinic:inputField label="Codigo" name="codigo"/>  
+        <div class="form-group has-feedback">  
             <petclinic:inputField label="Precio" name="precio"/>
             <petclinic:inputField  label="Duracion" name="duracion"/>  
             <petclinic:inputField label="Descripcion" name="descripcion"/>             

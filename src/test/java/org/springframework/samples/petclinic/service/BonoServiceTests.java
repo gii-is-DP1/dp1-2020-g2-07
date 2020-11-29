@@ -28,11 +28,12 @@ public class BonoServiceTests {
 	@Transactional
 	void insertBono() {
 		Bono bono = new Bono();
-		bono.setCodigo("QWERT1");
+		bono.setCodigo();
 		bono.setDescripcion("Soy una descripción");
 		bono.setDuracion(LocalDate.of(2021, 02, 01));
 		bono.setId(1);
 		bono.setPrecio(2);
+		bono.setUsado(true);
 		bonoservice.save(bono);
 	}
 	

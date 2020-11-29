@@ -1,8 +1,6 @@
 package org.springframework.samples.petclinic.model;
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.Set;
-
 
 @Entity
 @Table(name = "clientes")
@@ -14,13 +12,14 @@ public class Cliente extends Usuario{
 
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
-    private Set<Pago> pagos;
+    private List<Pago> pagos;
+
 
     public SubType getSuscripcion() {
         return suscripcion;
     }
 
-    public Set<Pago> getPagos() {
+    public List<Pago> getPagos() {
         return pagos;
     }
 
@@ -28,8 +27,12 @@ public class Cliente extends Usuario{
         this.suscripcion = suscripcion;
     }
 
-    public void setPagos(Set<Pago> pagos) {
+    public void setPagos(List<Pago> pagos) {
         this.pagos = pagos;
+    }
+
+    public void addPay(Pago p){
+        this.getPagos().add(p);
     }
 
     @Override

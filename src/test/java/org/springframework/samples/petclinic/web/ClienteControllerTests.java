@@ -1,6 +1,4 @@
 package org.springframework.samples.petclinic.web;
-
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,13 +6,7 @@ import org.springframework.samples.petclinic.configuration.SecurityConfiguration
 import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.SubType;
-import org.springframework.samples.petclinic.service.VetService;
-import org.springframework.test.context.junit.jupiter.web.SpringJUnitWebConfig;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
 import static org.mockito.BDDMockito.given;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -26,9 +18,7 @@ import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 
 /**
  * Test class for {@link ClienteController}
@@ -42,9 +32,6 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 class ClienteControllerTests {
 
 	private static final int TEST_CLIENTE_ID = 10;
-
-	@Autowired
-	private ClienteController clienteController;
 
 	@MockBean
 	private ClienteService clienteService;

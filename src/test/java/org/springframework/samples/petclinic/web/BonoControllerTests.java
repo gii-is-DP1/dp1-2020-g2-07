@@ -1,5 +1,4 @@
 package org.springframework.samples.petclinic.web;
-
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -33,9 +32,6 @@ import org.springframework.test.web.servlet.MockMvc;
 class BonoControllerTests{
 	private static final int TEST_BONO_ID = 1;
 	
-	@Autowired
-	private BonoController bonocontroller;
-	
 	@MockBean
 	private BonoService bonoservice;
 	
@@ -44,21 +40,21 @@ class BonoControllerTests{
 	
 	@BeforeEach
 	void setup() {
-		Bono diego = new Bono();
-		diego.setCodigo("QWERT1");
-		diego.setDescripcion("Bono descuento para Diego");
-		diego.setDuracion(LocalDate.of(2021, 11, 03));
-		diego.setId(1);
-		diego.setPrecio(5);
+		Bono bono = new Bono();
+		bono.setCodigo();
+		bono.setDescripcion("Bono descuento para Diego");
+		bono.setDuracion(LocalDate.of(2021, 11, 03));
+		bono.setId(1);
+		bono.setPrecio(5);
 		
 		Bono miguel = new Bono();
-		miguel.setCodigo("KJBFDG23");
+		miguel.setCodigo();
 		miguel.setDescripcion("Bono descuento para Miguel");
 		miguel.setDuracion(LocalDate.of(2021, 02, 13));
 		miguel.setId(2);
 		miguel.setPrecio(3);
 		
-		given(this.bonoservice.findBonos()).willReturn(Lists.newArrayList(diego,miguel));
+		given(this.bonoservice.findBonos()).willReturn(Lists.newArrayList(bono,miguel));
 //		given(this.bonoservice.findById(TEST_BONO_ID).get()).willReturn(diego);
 	
 	}
