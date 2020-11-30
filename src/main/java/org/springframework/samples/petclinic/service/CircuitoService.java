@@ -61,6 +61,7 @@ public class CircuitoService {
 	public List<Circuito> findByIdLista(int id) {
 		return circuitoRepo.findById(id);
 	}
+	
 
 
 }

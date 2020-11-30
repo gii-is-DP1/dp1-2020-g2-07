@@ -59,13 +59,11 @@
                     <span>Circuits</span>
                 </petclinic:menuItem>
 
-                <petclinic:menuItem active="${name eq 'employees'}" url="/employees" title="employees">
-                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Employees</span>
 				<petclinic:menuItem active="${name eq 'toallas'}" url="/toallas"
                     title="toallas">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Toallas</span>
+                      </petclinic:menuItem>
                 <petclinic:menuItem active="${name eq 'employees'}" url="/employees" title="employees">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Employees</span>

@@ -14,7 +14,9 @@ import org.springframework.samples.petclinic.service.SalaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +27,7 @@ public class CircuitoController {
 	
 	public static final String CIRCUITOS_FORM ="/circuitos/createOrUpdateCircuitosForm";
 	public static final String CIRCUITOS_LISTING ="/circuitos/CircuitosListing";
-	
 
-
-
-	
 	private final CircuitoService circuitosServices;
     private final SalaService salasServices;
 
@@ -38,9 +36,14 @@ public class CircuitoController {
     	this.circuitosServices = circuitosServices;
         this.salasServices = salasServices;
     }
-
-	
-
+    @InitBinder("salas")
+    public void initCircuitoBinder(WebDataBinder dataBinder) {
+    	dataBinder.setValidator(new CircuitoValidator());
+    }
+//    @InitBinder("circuito")
+//    public void initCircuitoSala(WebDataBinder dataBinder) {
+//        dataBinder.setDisallowedFields("id");
+//    }
 	@GetMapping
 	public String cicuitosListing(ModelMap model) {
 		Collection<Circuito> c = circuitosServices.findAll();
@@ -67,14 +70,30 @@ public class CircuitoController {
 	}
 	
 	
+//	@PostMapping("/{id}/edit")
+//	public String editCircuito(@PathVariable("id") int id,@Valid Circuito modifiedCircuito, BindingResult binding,ModelMap model) {
+//		Optional<Circuito> circuito = circuitosServices.findById(id);
+//		if(binding.hasErrors()) {
+//			return CIRCUITOS_FORM;
+//		}else {
+//			modifiedCircuito.setAforo(circuitosServices.getAforo(modifiedCircuito));
+//			BeanUtils.copyProperties(modifiedCircuito, circuito.get(),"id");	
+//			BeanUtils.copyProperties(modifiedCircuito, circuito.get(),"id");
+//			circuitosServices.save(modifiedCircuito);
+//			model.addAttribute("circuito", modifiedCircuito);
+//			model.addAttribute("message", "The circuit was updated successfully.");
+//			return cicuitosListing(model);
+//		}
+//	}
 	@PostMapping("/{id}/edit")
 	public String editCircuito(@PathVariable("id") int id,@Valid Circuito modifiedCircuito, BindingResult binding,ModelMap model) {
 		Optional<Circuito> circuito = circuitosServices.findById(id);
 		if(binding.hasErrors()) {
+			model.addAttribute("circuito", modifiedCircuito);
+			model.addAttribute("salas",salasServices.findAll());
 			return CIRCUITOS_FORM;
 		}else {
 			modifiedCircuito.setAforo(circuitosServices.getAforo(modifiedCircuito));
-			BeanUtils.copyProperties(modifiedCircuito, circuito.get(),"id");	
 			BeanUtils.copyProperties(modifiedCircuito, circuito.get(),"id");
 			circuitosServices.save(modifiedCircuito);
 			model.addAttribute("circuito", modifiedCircuito);
@@ -82,6 +101,8 @@ public class CircuitoController {
 			return cicuitosListing(model);
 		}
 	}
+		
+	
 	
 	@GetMapping("/{id}/delete")
 	public String deleteCircuito(@PathVariable("id") int id, ModelMap model) {
@@ -116,8 +137,5 @@ public class CircuitoController {
 		}
 	}
 
-	
-	
-	
 
 }

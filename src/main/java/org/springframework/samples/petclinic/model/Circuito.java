@@ -28,7 +28,7 @@ public class Circuito extends NamedEntity {
 
 	@NotEmpty
 	@ManyToMany
-//	@Size(min = 2)
+	@Size(min = 2)
 	private List<Sala> salas;
 	
 	private Integer aforo;
@@ -51,6 +51,7 @@ public class Circuito extends NamedEntity {
 	public void addSalas(List<Sala> s){
         salas.addAll(s);
     }
+	
 	
 		
 }
