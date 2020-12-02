@@ -23,7 +23,7 @@ public class SalaTypeFormatter implements Formatter<Sala> {
     @Override
     public String print(Sala salaType, Locale locale) {
         // TODO Auto-generated method stub
-        return salaType.getName() + " (" + salaType.getAforo() + ") ";
+        return salaType.getName() + " (" + salaType.getAforo() + ")";
     }
 
     @Override

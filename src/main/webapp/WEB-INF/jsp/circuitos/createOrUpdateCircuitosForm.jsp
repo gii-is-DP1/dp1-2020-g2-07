@@ -22,12 +22,8 @@
                 </div>
             </c:if>
             <petclinic:inputField label="Description" name="descripcion"/>
-			<div class="formGroup">            
-            	<div class="col-sm-10">
-            	<label>Rooms in the circuit:</label>
-            		<form:checkboxes items="${salas}" path="salas" delimiter="&nbsp;&nbsp;&nbsp;"/>
-            	</div>
-            </div> 
+			<petclinic:multiSelect names = "${salas}" name="salas" label = "Rooms in the circuit"></petclinic:multiSelect>
+
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

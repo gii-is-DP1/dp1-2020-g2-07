@@ -50,7 +50,6 @@ public class SalaController {
 		}else {
 			BeanUtils.copyProperties(modifiedSala, sala.get(),"id");
 			this.salasServices.save(modifiedSala);
-			model.addAttribute("sala", modifiedSala);
 			model.addAttribute("message", "The room was updated successfully.");
 			return salasListing(model);
 		}

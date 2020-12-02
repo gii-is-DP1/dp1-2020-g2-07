@@ -13,7 +13,9 @@ import org.springframework.samples.petclinic.service.SalaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +26,6 @@ public class CircuitoController {
 	
 	public static final String CIRCUITOS_FORM ="/circuitos/createOrUpdateCircuitosForm";
 	public static final String CIRCUITOS_LISTING ="/circuitos/CircuitosListing";
-	
-
 	
 	private final CircuitoService circuitosServices;
     private final SalaService salasServices;
@@ -61,15 +61,16 @@ public class CircuitoController {
 		}
 	}
 	@PostMapping("/{id}/edit")
-	public String editCircuito(@PathVariable("id") int id,@Valid Circuito modifiedCircuito, BindingResult binding,ModelMap model) {
+	public String editCircuito(@PathVariable("id") int id, @Valid Circuito modifiedCircuito, BindingResult binding,ModelMap model) {
 		Optional<Circuito> circuito = circuitosServices.findById(id);
 		if(binding.hasErrors()) {
+			model.put("circuito", modifiedCircuito);
+			model.put("salas", salasServices.findAll());
 			return CIRCUITOS_FORM;
 		}else {
 			modifiedCircuito.setAforo(circuitosServices.getAforo(modifiedCircuito));
 			BeanUtils.copyProperties(modifiedCircuito, circuito.get(),"id");
 			circuitosServices.save(modifiedCircuito);
-			model.addAttribute("circuito", modifiedCircuito);
 			model.addAttribute("message", "The circuit was updated successfully.");
 			return cicuitosListing(model);
 		}
@@ -87,6 +88,8 @@ public class CircuitoController {
 			return cicuitosListing(model);
 		}
 	}
+	
+	
 	@GetMapping("/new")
 	public String editNewCircuito(ModelMap model) {
 		model.addAttribute("circuito",new Circuito());
@@ -95,8 +98,10 @@ public class CircuitoController {
 	}
 	
 	@PostMapping("/new")
-	public String saveNewCircuito(Circuito circuito, BindingResult binding,ModelMap model) {
+	public String saveNewCircuito(@Valid Circuito circuito, BindingResult binding,ModelMap model) {
 		if(binding.hasErrors()) {
+			model.put("circuito", circuito);
+			model.put("salas", salasServices.findAll());
 			return CIRCUITOS_FORM;
 			
 		}else {
