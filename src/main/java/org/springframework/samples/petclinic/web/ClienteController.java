@@ -1,3 +1,4 @@
+  
 package org.springframework.samples.petclinic.web;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,9 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 import javax.validation.Valid;
-import java.beans.Encoder;
-import java.util.Collection;
 import java.util.Optional;
 
 @Controller
@@ -85,5 +85,30 @@ public class ClienteController {
         }
     }
 
+    @GetMapping("/{clientId}")
+    public ModelAndView showEmployee(@PathVariable("clientId") int clientId) {
+        ModelAndView mav = new ModelAndView("clientes/clienteDetails");
+        mav.addObject("cliente",this.clientService.findById(clientId).get());
+        return mav;
+    }
 
+    @GetMapping("/{clientId}/newPay")
+    public String addSalary(@PathVariable("clientId") int clientId, ModelMap model) {
+        model.addAttribute("cliente",clientService.findById(clientId).get());
+        model.addAttribute("pago",new Pago());
+        return "pay/payForm";
+    }
+
+    @PostMapping("/{clientId}/newPay")
+    public String saveSalary(@PathVariable("clientId") int clientId,@Valid @ModelAttribute("pago") Pago pago, BindingResult binding, ModelMap model){
+        model.addAttribute("cliente",clientService.findById(clientId).get());
+        if(binding.hasErrors()){
+            model.addAttribute("message", "hay un error capo");
+            return "pay/payForm";
+        }else{
+            pago.setCliente(clientService.findById(clientId).get());
+            clientService.addPayToClient(clientId, pago);
+            return "redirect:/clientes/" + String.valueOf(clientId);
+        }
+    }
 }

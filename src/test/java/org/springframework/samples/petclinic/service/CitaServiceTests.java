@@ -21,7 +21,7 @@ public class CitaServiceTests {
 	protected CitaService citaservice;
 	
 	@Test
-	void mostrarListaConBonos() {
+	void mostrarListaConCitas() {
 		Collection<Cita> citas =  citaservice.findAll();
 		assertEquals(0, citas.size());
 	}

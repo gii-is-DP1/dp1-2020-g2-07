@@ -1,3 +1,4 @@
+
 package org.springframework.samples.petclinic.web;
 
 import java.text.ParseException;
@@ -23,14 +24,14 @@ public class SalaTypeFormatter implements Formatter<Sala> {
     @Override
     public String print(Sala salaType, Locale locale) {
         // TODO Auto-generated method stub
-        return salaType.getName();
+        return salaType.getName() + " (" + salaType.getAforo() + ")";
     }
 
     @Override
     public Sala parse(String text, Locale locale) throws ParseException {
         Collection<Sala> findSalas = this.salaService.findAll();
         for (Sala sala : findSalas) {
-            if (sala.getName().equals(text)) {
+            if (sala.getName().equals(text.substring(0, text.indexOf("(")-1))) {
                 return sala;
             }
         }

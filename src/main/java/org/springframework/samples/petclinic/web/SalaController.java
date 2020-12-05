@@ -1,13 +1,9 @@
+  
 package org.springframework.samples.petclinic.web;
-
-import java.util.Map;
 import java.util.Optional;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Sala;
 import org.springframework.samples.petclinic.service.SalaService;
 import org.springframework.stereotype.Controller;
@@ -55,7 +51,6 @@ public class SalaController {
 		}else {
 			BeanUtils.copyProperties(modifiedSala, sala.get(),"id");
 			this.salasServices.save(modifiedSala);
-			model.addAttribute("sala", modifiedSala);
 			model.addAttribute("message", "The room was updated successfully.");
 			return salasListing(model);
 		}

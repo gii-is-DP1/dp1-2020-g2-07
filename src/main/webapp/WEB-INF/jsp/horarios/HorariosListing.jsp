@@ -1,4 +1,3 @@
-  
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -6,48 +5,46 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="circuitos">
-    <h2>Circuits</h2>
+<petclinic:layout pageName="horarios">
+    <h2>TimeTable</h2>
 
-    <table id="circuitosTable" class="table table-striped">
+    <table id="horariosTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Name</th>
-            <th>Capacity</th>
-            <th>Description</th>
-            <th>Rooms</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Employees</th>
             <th width=2%></th>
             <th width=2%></th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${circuitos}" var="circuito">
+        <c:forEach items="${horarios}" var="horario">
             <tr>
                 <td>
-                    <c:out value="${circuito.name} "/>
+                    <c:out value="${horario.horaIni}"/>
                 </td>
                 <td>
-                    <c:out value="${circuito.aforo}"/>
+                    <c:out value="${horario.horaFin}"/>
                 </td>
-                <td>
-                    <c:out value="${circuito.descripcion}"/>
-                </td>
-                <td>
+                
+                 <td>
                 	<ul>
-                		<c:forEach items="${circuito.salas}" var="Sala">
-                    		<li>${Sala.name}</li>
-                		</c:forEach>
+                		<c:forEach var="employee" items="${horario.employees}">
+                        <c:out value="${employee.nombre} "/>
+                        <c:out value=","/>
+                         </c:forEach>
                 	</ul>
                 
-                </td>         
-
+                </td>  
+               
                 <td>
-                    <a href="/circuitos/${circuito.id}/edit">
+                    <a href="/horarios/${horario.id}/edit">
                         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
                     </a>
                 </td>
                 <td>
-                    <a href="/circuitos/${circuito.id}/delete">
+                    <a href="/horarios/${horario.id}/delete">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </a>
                 </td>
@@ -55,7 +52,9 @@
         </c:forEach>
         </tbody>
     </table>
-     <p>
-        <a href="/circuitos/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add circuit</a>
-    </p>
+    <div class="form-group">
+   	    <p>
+       		<a href="/horarios/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add TimeTable</a>
+    	</p>
+	</div>
 </petclinic:layout>

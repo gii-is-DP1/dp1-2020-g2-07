@@ -1,14 +1,12 @@
 package org.springframework.samples.petclinic.model;
 
+import com.sun.istack.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "revenue")
@@ -17,83 +15,61 @@ public class EmployeeRevenue extends BaseEntity{
     @JoinColumn(name = "employee_id")
     private Employee employee;
 
+    @NotNull
     @Column(name = "date_start")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateStart;
 
+    @NotNull
     @Column(name = "date_end")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateEnd;
 
+    @NotNull
     @Column(name = "hours_worked")
     private Integer hoursWorked;
 
-    @Column(name = "cuantity")
-    private Integer cuantity;
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
-
-    public void setDateStart(LocalDate dateStart) {
-        this.dateStart = dateStart;
-    }
-
-    public void setDateEnd(LocalDate dateEnd) {
-        this.dateEnd = dateEnd;
-    }
-
-    public void setHoursWorked(Integer hoursWorked) {
-        this.hoursWorked = hoursWorked;
-    }
-
-    public void setCuantity(Integer cuantity) {
-        this.cuantity = cuantity;
-    }
+    @NotNull
+    @Column(name = "quantity")
+    private Integer quantity;
 
     public Employee getEmployee() {
         return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
     public LocalDate getDateStart() {
         return dateStart;
     }
 
+    public void setDateStart(LocalDate dateStart) {
+        this.dateStart = dateStart;
+    }
+
     public LocalDate getDateEnd() {
         return dateEnd;
+    }
+
+    public void setDateEnd(LocalDate dateEnd) {
+        this.dateEnd = dateEnd;
     }
 
     public Integer getHoursWorked() {
         return hoursWorked;
     }
 
-    public Integer getCuantity() {
-        return cuantity;
+    public void setHoursWorked(Integer hoursWorked) {
+        this.hoursWorked = hoursWorked;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        EmployeeRevenue that = (EmployeeRevenue) o;
-        return Objects.equals(employee, that.employee) &&
-            Objects.equals(dateStart, that.dateStart) &&
-            Objects.equals(dateEnd, that.dateEnd) &&
-            Objects.equals(hoursWorked, that.hoursWorked) &&
-            Objects.equals(cuantity, that.cuantity);
+    public Integer getQuantity() {
+        return quantity;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(employee, dateStart, dateEnd, hoursWorked, cuantity);
-    }
-
-    @Override
-    public String toString() {
-        return "EmployeeRevenue{" +
-            "employee=" + employee +
-            ", dateStart=" + dateStart +
-            ", dateEnd=" + dateEnd +
-            ", hoursWorked=" + hoursWorked +
-            ", cuantity=" + cuantity +
-            '}';
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
     }
 }
