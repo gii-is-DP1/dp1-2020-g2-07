@@ -50,7 +50,7 @@ public class ClienteServiceTests {
 	void mostrarClientesPorId() {
 		Integer id = 1;
 		Optional<Cliente> cliente = clienteservice.findById(id);
-		assertFalse(cliente.isEmpty());
+		assertFalse(!cliente.isPresent());
 	}
 	
 	 @Test
