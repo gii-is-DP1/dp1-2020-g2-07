@@ -33,8 +33,8 @@ public class Horario extends BaseEntity{
 	@JoinColumn(name="employee_id")
 	private Employee employee;
 	
-//	@OneToMany(cascade = CascadeType.ALL,mappedBy = "horario")
-//	private Sesion sesion;
+	@OneToMany(cascade = CascadeType.ALL,mappedBy = "horario")
+	private List<Sesion> sesion;
 
 
 	public LocalDate getFecha() {
@@ -52,7 +52,7 @@ public class Horario extends BaseEntity{
 	}
 
 
-	public void setEmployee_id(Employee employee) {
+	public void setEmployee(Employee employee) {
 		this.employee = employee;
 	}
 

@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.EmployeeRevenue;
+import org.springframework.samples.petclinic.model.Horario;
 import org.springframework.samples.petclinic.model.Profession;
 import org.springframework.samples.petclinic.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,11 @@ public class EmployeeService {
 
     public void addSalaryToEmployee(int id, EmployeeRevenue salary){
         employeeRepo.findById(id).get().addSalary(salary);
+        this.save(employeeRepo.findById(id).get());
+    }
+    
+    public void addTimeTableToEmployee(int id, Horario horario){
+        employeeRepo.findById(id).get().addTimeTable(horario);
         this.save(employeeRepo.findById(id).get());
     }
 

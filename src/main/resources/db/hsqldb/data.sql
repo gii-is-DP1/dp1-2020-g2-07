@@ -118,3 +118,6 @@ INSERT INTO horario(id,fecha,employee_id) VALUES (1,'2020-10-04',1);
 INSERT INTO horario(id,fecha,employee_id) VALUES (2,'2020-10-04',2);
 INSERT INTO horario(id,fecha,employee_id) VALUES (3,'2020-10-04',3);
 INSERT INTO horario(id,fecha,employee_id) VALUES (4,'2020-10-05',1);
+
+INSERT INTO sesion(id, hora_Inicio, hora_Fin, sala_id,horario_id) VALUES(1,'10:00:00','12:00:00',1,1);
+INSERT INTO sesion(id, hora_Inicio, hora_Fin, sala_id,horario_id) VALUES(2,'12:00:00','14:30:00',1,1);

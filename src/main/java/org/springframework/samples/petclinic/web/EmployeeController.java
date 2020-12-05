@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.EmployeeRevenue;
+import org.springframework.samples.petclinic.model.Horario;
 import org.springframework.samples.petclinic.service.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -108,6 +109,27 @@ public class EmployeeController {
         }else{
             revenue.setEmployee(employeeService.findById(employeeId).get());
             employeeService.addSalaryToEmployee(employeeId, revenue);
+
+            return "redirect:/employees/" + String.valueOf(employeeId);
+        }
+    }
+    
+    @GetMapping("/{employeeId}/newTimeTable")
+    public String addTimeTable(@PathVariable("employeeId") int employeeId, ModelMap model) {
+        model.addAttribute("employee",employeeService.findById(employeeId).get());
+        model.addAttribute("horario",new Horario());
+        return "timetable/horarioForm";
+    }
+
+    @PostMapping("/{employeeId}/newTimeTable")
+    public String saveTimeTable(@PathVariable("employeeId") int employeeId,@Valid @ModelAttribute("horario") Horario horario, BindingResult binding, ModelMap model){
+        model.addAttribute("employee",employeeService.findById(employeeId).get());
+        if(binding.hasErrors()){
+            model.addAttribute("message", "hay un error capo");
+            return "timetable/horarioForm";
+        }else{
+        	horario.setEmployee(employeeService.findById(employeeId).get());
+            employeeService.addTimeTableToEmployee(employeeId, horario);
 
             return "redirect:/employees/" + String.valueOf(employeeId);
         }

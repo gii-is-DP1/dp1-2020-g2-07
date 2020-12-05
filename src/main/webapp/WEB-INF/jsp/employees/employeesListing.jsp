@@ -40,6 +40,7 @@
                 <td>
                     <c:out value="${employee.profession}"/>
                 </td>
+                
                
         </c:forEach>
         </tbody>
