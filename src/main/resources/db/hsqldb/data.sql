@@ -113,3 +113,7 @@ INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantit
 
 
 INSERT INTO toallas(cantidad) VALUES (1);
+
+
+INSERT INTO sesion(id, hora_Inicio, hora_Fin, sala_id) VALUES(1,'10:00:00','12:00:00',1);
+INSERT INTO sesion(id, hora_Inicio, hora_Fin, sala_id) VALUES(2,'12:00:00','14:30:00',1);
