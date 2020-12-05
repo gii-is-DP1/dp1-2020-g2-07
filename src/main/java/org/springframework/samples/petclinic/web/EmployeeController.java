@@ -84,7 +84,7 @@ public class EmployeeController {
         if(binding.hasErrors()) {
             return EMPLOYEES_FORM;
         }else {
-            employee.setCategoria(Categoria.EMPLEADO);
+            employee.setCategory(Categoria.EMPLEADO);
             employeeService.save(employee);
             model.addAttribute("message", "The employee was created successfully!");
             return "redirect:/employees/" + employee.getId();

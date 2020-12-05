@@ -17,6 +17,12 @@ public class ClienteService {
     @Autowired
     ClienteRepository clientRepo;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private AuthoritiesService authoritiesService;
+
     public Collection<Cliente> findAll(){
         return clientRepo.findAll();
     }
@@ -31,6 +37,11 @@ public class ClienteService {
 
     public void save(@Valid Cliente cliente){
         clientRepo.save(cliente);
+
+        userService.saveUser(cliente.getUser());
+        //creating authorities
+        authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "owner");
+
     }
 
     public void addPayToClient(int id, Pago pay){

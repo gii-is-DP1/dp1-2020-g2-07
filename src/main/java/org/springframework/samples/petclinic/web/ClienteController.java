@@ -27,9 +27,9 @@ public class ClienteController {
         return CLIENTS_LISTING;
     }
 
-    @GetMapping("/{id}/edit")
-    public String editCliente(@PathVariable("id") int id, ModelMap model) {
-        Optional<Cliente> cliente = clientService.findById(id);
+    @GetMapping("/{clientId}/edit")
+    public String editCliente(@PathVariable("clientId") int clientId, ModelMap model) {
+        Optional<Cliente> cliente = clientService.findById(clientId);
         if(cliente.isPresent()) {
             model.addAttribute("cliente",cliente.get());
             return CLIENTS_FORM;
@@ -39,23 +39,23 @@ public class ClienteController {
         }
     }
 
-    @PostMapping("/{id}/edit")
-    public String editCliente(@PathVariable("id") int id, @Valid Cliente modifiedClient, BindingResult binding, ModelMap model) {
-        Optional<Cliente> cliente = clientService.findById(id);
+    @PostMapping("/{clientId}/edit")
+    public String editCliente(@PathVariable("clientId") int clientId, @Valid Cliente modifiedClient, BindingResult binding, ModelMap model) {
+        Optional<Cliente> cliente = clientService.findById(clientId);
         if(binding.hasErrors()) {
             return CLIENTS_FORM;
         }else {
             BeanUtils.copyProperties(modifiedClient, cliente.get(), "{id}");
-            cliente.get().setCategoria(Categoria.CLIENTE);
+            cliente.get().setCategory(Categoria.CLIENTE);
             clientService.save(cliente.get());
             model.addAttribute("message","Se ha modificado el cliente");
             return listClients(model);
         }
     }
 
-    @GetMapping("/{id}/delete")
-    public String deleteCliente(@PathVariable("id") int id,ModelMap model) {
-        Optional<Cliente> cliente =clientService.findById(id);
+    @GetMapping("/{clientId}/delete")
+    public String deleteCliente(@PathVariable("clientId") int clientId,ModelMap model) {
+        Optional<Cliente> cliente =clientService.findById(clientId);
         if(cliente.isPresent()) {
             clientService.delete(cliente.get());
             model.addAttribute("message","Se ha borrado satisfactoriamente");
@@ -69,6 +69,7 @@ public class ClienteController {
     @GetMapping("/new")
     public String editNewClient(ModelMap model) {
         model.addAttribute("cliente",new Cliente());
+        model.addAttribute("user", new User());
         return CLIENTS_FORM;
     }
 
@@ -77,7 +78,7 @@ public class ClienteController {
         if(binding.hasErrors()) {
             return CLIENTS_FORM;
         }else {
-            cliente.setCategoria(Categoria.EMPLEADO);
+            cliente.setCategory(Categoria.EMPLEADO);
             clientService.save(cliente);
             model.addAttribute("message", "The client was created successfully!");
             return listClients(model);

@@ -4,7 +4,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "employees")
-public class Employee extends Usuario{
+public class Employee extends Individual {
 
     @Column(name = "profession")
     @Enumerated(EnumType.STRING)
