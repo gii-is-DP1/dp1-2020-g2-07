@@ -15,7 +15,7 @@
             <td><b><c:out value="${employee.nombre} ${employee.apellidos}"/></b></td>
         </tr>
         <tr>
-            <th>Addres</th>
+            <th>Address</th>
             <td><b><c:out value="${employee.direccion}"/></b></td>
         </tr>
         <tr>
@@ -26,6 +26,8 @@
             <th>Profession</th>
             <td><b><c:out value="${employee.profession}"/></b></td>
         </tr>
+        
+      
     </table>
 
     <spring:url value="{employeeId}/edit" var="editUrl">
@@ -76,4 +78,34 @@
     </spring:url>
     <a href="${fn:escapeXml(employeeSalaryUrl)}"><span class="glyphicon glyphicon-plus"
                                                        aria-hidden="true"></span>New Salary</a>
+                                                       
+    <h3>TimeTable of <c:out value="${employee.nombre} ${employee.apellidos}"/></h3>
+    <table id="employeesTimeTable" class="table table-striped">
+ 	  <thead>
+        <tr>
+            <th>Date</th>
+        </tr>
+        </thead>
+   	 	<tbody>
+        <c:forEach items="${employee.horarios}" var="horario">
+            <tr>
+                <td>
+                <spring:url value="/employees/{employeeId}/TimeTable" var="employeeUrl">
+                        <spring:param name="employeeId" value="${employee.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(employeeUrl)}"><petclinic:localDate date="${horario.fecha}" pattern="yyyy/MM/dd"/></a>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+     <spring:url value="/employees/{employeeId}/newTimeTable" var="employeeTimeTableUrl">
+        <spring:param name="employeeId" value="${employee.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(employeeTimeTableUrl)}"><span class="glyphicon glyphicon-plus"
+                                                       aria-hidden="true"></span>New TimeTable</a>
+    
+    
+
+    
 </petclinic:layout>

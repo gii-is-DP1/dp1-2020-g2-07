@@ -16,6 +16,7 @@
             <th>Address</th>
             <th>IBAN</th>
             <th>Profession</th>
+            
         </tr>
         </thead>
         <tbody>
@@ -39,6 +40,8 @@
                 <td>
                     <c:out value="${employee.profession}"/>
                 </td>
+                
+               
         </c:forEach>
         </tbody>
     </table>

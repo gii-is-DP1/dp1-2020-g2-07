@@ -31,8 +31,8 @@ public class Sala extends NamedEntity{
 	@ManyToMany(mappedBy="salas", cascade = CascadeType.ALL)
 	private List<Circuito> circuitos;
 	
-	@OneToMany(mappedBy = "sala", cascade = CascadeType.ALL)
-	private List<Sesion> sesiones;
+	@OneToMany(mappedBy="sala", cascade = CascadeType.ALL)
+	private List<Horario> horario;
 
 	public Integer getAforo() {
 		return aforo;
@@ -58,8 +58,5 @@ public class Sala extends NamedEntity{
 		this.circuitos = circuitos;
 	}
 	
-	
-	
-		
 
 }

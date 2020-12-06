@@ -97,10 +97,10 @@ INSERT INTO REL_BONOS_SALAS(FK_Bono,FK_Sala) VALUES(1,2);
 INSERT INTO REL_BONOS_SALAS(FK_Bono,FK_Sala) VALUES(2,1);
 INSERT INTO REL_BONOS_SALAS(FK_Bono,FK_Sala) VALUES(2,2);
 
+
 INSERT INTO employees(id, nick, nombre, apellidos, direccion, categoria, IBAN, profession) VALUES(1, 'em1', 'Jhon', 'Smith', 'Sevilla C/Tangana 1º A',1, 'ES72 6789 4839 3928 2143', 'LIFE_GUARD');
 INSERT INTO employees(id, nick, nombre, apellidos, direccion, categoria, IBAN, profession) VALUES(2, 'em2', 'Izan', 'Brent', 'Sevilla C/Ej 23',1, 'ES72 8009 1129 1089 27401', 'LIFE_GUARD');
 INSERT INTO employees(id, nick, nombre, apellidos, direccion, categoria, IBAN, profession) VALUES(3, 'em3', 'Jessica', 'Wilde', 'Sevilla C/Torneo 19 3º I',1, 'ES72 0329 4543 3990 6543', 'LIFE_GUARD');
-
 
 
 INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantity) VALUES(1, 1, '2013-01-02', '2013-01-29', 60, 700);
@@ -114,6 +114,6 @@ INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantit
 
 INSERT INTO toallas(cantidad) VALUES (1);
 
-
-INSERT INTO sesion(id, hora_Inicio, hora_Fin, sala_id) VALUES(1,'10:00:00','12:00:00',1);
-INSERT INTO sesion(id, hora_Inicio, hora_Fin, sala_id) VALUES(2,'12:00:00','14:30:00',1);
+INSERT INTO horario(id,fecha,hora_ini,hora_fin,employee_id,sala_id) VALUES (1,'2020-12-05','10:00:00','12:00:00',1,1);
+INSERT INTO horario(id,fecha,hora_ini,hora_fin,employee_id,sala_id) VALUES (2,'2020-12-05','12:00:00','14:00:00',1,2);
+INSERT INTO horario(id,fecha,hora_ini,hora_fin,employee_id,sala_id) VALUES (3,'2020-12-06','12:00:00','14:00:00',1,4);
