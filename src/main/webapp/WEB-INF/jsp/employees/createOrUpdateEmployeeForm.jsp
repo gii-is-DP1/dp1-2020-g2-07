@@ -20,6 +20,8 @@
             <div class="profession-group">
                 <petclinic:selectField name="profession" label="Profession" names="${['LIFE_GUARD', 'CLEANER', 'MASSAGIST']}" size="1"/>
             </div>
+            <petclinic:inputField label="Username" name="user.username"/>
+            <petclinic:inputField label="Password" name="user.password"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
