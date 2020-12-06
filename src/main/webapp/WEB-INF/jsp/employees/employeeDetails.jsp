@@ -90,7 +90,10 @@
         <c:forEach items="${employee.horarios}" var="horario">
             <tr>
                 <td>
-                    <c:out value="${horario.fecha}"/>
+                <spring:url value="/employees/{employeeId}/TimeTable" var="employeeUrl">
+                        <spring:param name="employeeId" value="${employee.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(employeeUrl)}"><c:out value="${horario.fecha}"/></a>
                 </td>
             </tr>
         </c:forEach>

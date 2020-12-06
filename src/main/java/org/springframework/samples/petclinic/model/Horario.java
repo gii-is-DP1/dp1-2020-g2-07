@@ -10,6 +10,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -28,13 +29,51 @@ public class Horario extends BaseEntity{
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate fecha;
 	
+	@Column(name="hora_ini")
+	@DateTimeFormat(pattern = "HH:mm:ss")
+	private LocalTime horaIni;
+	
+	@Column(name="hora_fin")
+	@DateTimeFormat(pattern = "HH:mm:ss")
+	private LocalTime horaFin;
 	
 	@ManyToOne
 	@JoinColumn(name="employee_id")
 	private Employee employee;
 	
-	@OneToMany(cascade = CascadeType.ALL,mappedBy = "horario")
-	private List<Sesion> sesion;
+	@ManyToOne
+	@JoinColumn(name="sala_id")
+	private Sala sala;
+
+
+	public LocalTime getHoraIni() {
+		return horaIni;
+	}
+
+
+	public void setHoraIni(LocalTime horaIni) {
+		this.horaIni = horaIni;
+	}
+
+
+	public LocalTime getHoraFin() {
+		return horaFin;
+	}
+
+
+	public void setHoraFin(LocalTime horaFin) {
+		this.horaFin = horaFin;
+	}
+
+
+	public Sala getSala() {
+		return sala;
+	}
+
+
+	public void setSala(Sala sala) {
+		this.sala = sala;
+	}
 
 
 	public LocalDate getFecha() {
@@ -57,9 +96,6 @@ public class Horario extends BaseEntity{
 	}
 
 
-
-	
-	
 	
 
 }

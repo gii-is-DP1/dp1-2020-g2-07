@@ -134,4 +134,11 @@ public class EmployeeController {
             return "redirect:/employees/" + String.valueOf(employeeId);
         }
     }
+    
+    @GetMapping("/{employeeId}/TimeTable")
+    public ModelAndView showEmployeeTimeTable(@PathVariable("employeeId") int employeeId) {
+        ModelAndView mav = new ModelAndView("employees/employeeTimeTable");
+        mav.addObject(this.employeeService.findById(employeeId).get());
+        return mav;
+    }
 }
