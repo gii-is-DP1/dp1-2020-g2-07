@@ -12,11 +12,11 @@
     <table class="table table-striped" id="emploee_details">
         <tr>
             <th>Name & Surname</th>
-            <td><b><c:out value="${cliente.nombre} ${cliente.apellidos}"/></b></td>
+            <td><b><c:out value="${cliente.first_name} ${cliente.last_name}"/></b></td>
         </tr>
         <tr>
             <th>Addres</th>
-            <td><b><c:out value="${cliente.direccion}"/></b></td>
+            <td><b><c:out value="${cliente.address}"/></b></td>
         </tr>
         <tr>
             <th>IBAN</th>
@@ -42,7 +42,7 @@
     <br/>
     <br/>
 
-    <h3>Pays of <c:out value="${cliente.nombre} ${cliente.apellidos}"/></h3>
+    <h3>Pays of <c:out value="${cliente.first_name} ${cliente.last_name}"/></h3>
     <table id="employeesSalaries" class="table table-striped">
         <thead>
         <tr>

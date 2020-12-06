@@ -11,8 +11,7 @@
     <table id="employeesTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Nick</th>
-            <th>Name & Surnames</th>
+            <th>First and Last Name</th>
             <th>Address</th>
             <th>IBAN</th>
             <th>Profession</th>
@@ -25,13 +24,10 @@
                     <spring:url value="/employees/{employeeId}" var="employeeUrl">
                         <spring:param name="employeeId" value="${employee.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(employeeUrl)}"><c:out value="${employee.nick}"/></a>
+                    <a href="${fn:escapeXml(employeeUrl)}"><c:out value="${employee.first_name} ${employee.last_name}"/></a>
                 </td>
                 <td>
-                    <c:out value="${employee.nombre} ${employee.apellidos}"/>
-                </td>
-                <td>
-                    <c:out value="${employee.direccion}"/>
+                    <c:out value="${employee.address}"/>
                 </td>
                 <td>
                     <c:out value="${employee.IBAN}"/>

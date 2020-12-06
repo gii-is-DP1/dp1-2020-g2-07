@@ -13,14 +13,15 @@
     </h2>
     <form:form modelAttribute="employee" class="form-horizontal" id="add-employee-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Nick" name="nick"/>
-            <petclinic:inputField label="Nombre" name="nombre"/>
-            <petclinic:inputField label="Apellidos" name="apellidos"/>
-            <petclinic:inputField label="Direccion" name="direccion"/>
+            <petclinic:inputField label="First Name" name="first_name"/>
+            <petclinic:inputField label="Last Name" name="last_name"/>
+            <petclinic:inputField label="Address" name="address"/>
             <petclinic:inputField label="IBAN" name="IBAN"/>
             <div class="profession-group">
                 <petclinic:selectField name="profession" label="Profession" names="${['LIFE_GUARD', 'CLEANER', 'MASSAGIST']}" size="1"/>
             </div>
+            <petclinic:inputField label="Username" name="user.username"/>
+            <petclinic:inputField label="Password" name="user.password"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

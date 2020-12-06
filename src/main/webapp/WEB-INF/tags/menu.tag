@@ -61,6 +61,13 @@
                     <span>Towels</span>
                 </petclinic:menuItem>
 
+                <sec:authorize access="hasAuthority('admin')">
+                    <petclinic:menuItem active="${name eq 'Admin'}" url="/admin" title="adminHome">
+                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        <span>Admin</span>
+                    </petclinic:menuItem>
+                </sec:authorize>
+
                 <petclinic:menuItem active="${name eq 'error'}" url="/oups"
                                     title="trigger a RuntimeException to see how it is handled">
                     <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
@@ -73,6 +80,8 @@
                     <span>Tokens</span>
                 </petclinic:menuItem>
 
+
+
             </ul>
 
 
@@ -81,7 +90,7 @@
             <ul class="nav navbar-nav navbar-right">
                 <sec:authorize access="!isAuthenticated()">
                     <li><a href="<c:url value="/login" />">Login</a></li>
-                    <li><a href="<c:url value="/users/new" />">Register</a></li>
+                    <li><a href="<c:url value="/clientes/new" />">Register</a></li>
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
                     <li class="dropdown"><a href="#" class="dropdown-toggle"
