@@ -22,13 +22,12 @@
             <petclinic:inputField label="Date start" name="dateStart"/>
             <petclinic:inputField label="Date end" name="dateEnd"/>
             <petclinic:inputField label="Hours Worked" name="hoursWorked"/>
-            <petclinic:inputField label="Quantity" name="quantity"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${revenue['new']}">
-                        <button class="btn btn-default" type="submit">add Salary</button>
+                        <button class="btn btn-default" type="submit">Add Salary</button>
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-default" type="submit">Update Salary</button>
