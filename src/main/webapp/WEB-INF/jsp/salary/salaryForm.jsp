@@ -19,8 +19,8 @@
     </h2>
     <form:form modelAttribute="revenue" class="form-horizontal" id="add-employee-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Date start" name="dateStart"/>
-            <petclinic:inputField label="Date end" name="dateEnd"/>
+            <petclinic:localDate pattern="yyyy-MM-dd" label="Date start" name="dateStart"/>
+            <petclinic:localDate pattern="yyyy-MM-dd" label="Date end" name="dateEnd"/>
             <petclinic:inputField label="Hours Worked" name="hoursWorked"/>
         </div>
         <div class="form-group">

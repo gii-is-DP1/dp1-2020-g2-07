@@ -18,7 +18,7 @@
     </h2>
     <form:form modelAttribute="pago" class="form-horizontal" id="add-employee-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Date" name="fEmision"/>
+            <petclinic:localDate pattern="yyyy-MM-dd" label="Date" name="fEmision"/>
             <petclinic:inputField label="Quantity" name="cantidad"/>
         </div>
         <div class="form-group">
