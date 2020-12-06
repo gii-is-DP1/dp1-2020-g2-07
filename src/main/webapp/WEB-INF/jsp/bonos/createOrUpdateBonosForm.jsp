@@ -17,16 +17,17 @@
         <c:if test="${bono['new']}">Nuevo Bono</c:if> 
     </h2>
     <form:form modelAttribute="bono" class="form-horizontal" id="add-owner-form">
-        <div class="form-group has-feedback">  
+        <div class="form-group has-feedback"> 
+            <petclinic:inputField label="Codigo" name="codigo"/> 
             <petclinic:inputField label="Precio" name="precio"/>
-            <petclinic:inputField  label="Duracion" name="duracion"/>  
+            <petclinic:inputField label="Duracion" name="duracion"/>  
             <petclinic:inputField label="Descripcion" name="descripcion"/>             
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${bono['new']}">
-                        <button class="btn btn-default" type="submit">Añadir Bono</button>
+                        <button class="btn btn-default" type="submit">AÃ±adir Bono</button>
                     </c:when>
                     <c:otherwise>
                         <button class="btn btn-default" type="submit">Actualizar Bono</button>
