@@ -106,6 +106,7 @@ public class EmployeeController {
             return "salary/salaryForm";
         }else{
             revenue.setEmployee(employeeService.findById(employeeId).get());
+            revenue.setQuantity();
             employeeService.addSalaryToEmployee(employeeId, revenue);
 
             return "redirect:/employees/" + String.valueOf(employeeId);

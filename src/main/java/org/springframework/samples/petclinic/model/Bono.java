@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.model;
+
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.Set;
 import javax.persistence.CascadeType;
 
@@ -10,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.samples.petclinic.service.BonoService;
 
 
 @Entity
@@ -53,26 +56,59 @@ public class Bono extends  BaseEntity {
 	public String getCodigo() {
 		return this.codigo;
 	}
-	
+
+	public void setCodigo(String codigo) {
+	    this.codigo= codigo;
+	}
+
 	public void setCodigo() {
-	    this.codigo= getAlphaNumericString(8);
+	    this.codigo= getAlphaNumericString(12);
 	}
 
 	private String getAlphaNumericString(int n) { 
 	    String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	                                + "0123456789"
-	                                + "abcdefghijklmnopqrstuvxyz"; 
+									+ "abcdefghijklmnopqrstuvxyz";
 	  
-	    StringBuilder sb = new StringBuilder(n); 
-	  
+		StringBuilder sb = new StringBuilder(n);
+
 	    for (int i = 0; i < n; i++) { 
 	        int index  = (int)(AlphaNumericString.length() * Math.random()); 
 	  
 	    	sb.append(AlphaNumericString.charAt(index)); 
-		} 
+		}
 	  
 	    return sb.toString(); 
 	}
+	
+	/*public void setCodigo(BonoService bs) {
+	    this.codigo= getAlphaNumericString(12, true, bs);
+	}
+
+	private String getAlphaNumericString(int n, Boolean verifyUnique, BonoService bs) { 
+	    String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+	                                + "0123456789"
+									+ "abcdefghijklmnopqrstuvxyz";
+	  
+		StringBuilder sb = new StringBuilder(n);
+
+		Boolean isUnique = false;
+
+		while (!isUnique) {
+			sb.setLength(n);
+	    	for (int i = 0; i < n; i++) { 
+	        	int index  = (int)(AlphaNumericString.length() * Math.random()); 
+	  
+	    		sb.append(AlphaNumericString.charAt(index)); 
+			}
+			
+			isUnique = !bs.findBonos().stream()
+				.anyMatch(b -> b.getCodigo() == sb.toString());
+			sb.setLength(0);
+		}
+	  
+	    return sb.toString(); 
+	}*/
 	
 	public Integer getPrecio() {
 		return this.precio;		

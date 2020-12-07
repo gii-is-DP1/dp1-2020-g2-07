@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="employees">
     <h2>
@@ -17,9 +17,11 @@
             <petclinic:inputField label="Last Name" name="last_name"/>
             <petclinic:inputField label="Address" name="address"/>
             <petclinic:inputField label="IBAN" name="IBAN"/>
-            <div class="profession-group">
-                <petclinic:selectField name="profession" label="Profession" names="${['LIFE_GUARD', 'CLEANER', 'MASSAGIST']}" size="1"/>
-            </div>
+            <sec:authorize access="hasAuthority('admin')">
+                <div class="profession-group">
+                    <petclinic:selectField name="profession" label="Profession" names="${['LIFE_GUARD', 'CLEANER', 'MASSAGIST']}" size="1"/>
+                </div>
+            </sec:authorize>
             <petclinic:inputField label="Username" name="user.username"/>
             <petclinic:inputField label="Password" name="user.password"/>
         </div>

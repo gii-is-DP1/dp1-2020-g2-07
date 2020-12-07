@@ -22,39 +22,41 @@
         <div class="navbar-collapse collapse" id="main-navbar">
             <ul class="nav navbar-nav">
 
-                <petclinic:menuItem active="${name eq 'home'}" url="/"
-                                    title="home page">
+                <petclinic:menuItem active="${name eq 'home'}" url="/" title="home page">
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                     <span>Home</span>
                 </petclinic:menuItem>
 
-                <petclinic:menuItem active="${name eq 'Clients'}" url="/clientes"
-                                    title="clients">
+                <petclinic:menuItem active="${name eq 'Clients'}" url="/clientes" title="clients">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Clients</span>
                 </petclinic:menuItem>
 
-                <petclinic:menuItem active="${name eq 'Income Statements'}" url="/balances"
-                                    title="Income Statements">
-                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Income Statements</span>
-                </petclinic:menuItem>
+                <sec:authorize access="hasAuthority('admin')">
+                    <petclinic:menuItem active="${name eq 'Income Statements'}" url="/balances" title="Income Statements">
+                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        <span>Income Statements</span>
+                    </petclinic:menuItem>
+                </sec:authorize>
 
-                <petclinic:menuItem active="${name eq 'Rooms'}" url="/salas"
-                                    title="salas activas del spa">
+                <petclinic:menuItem active="${name eq 'Rooms'}" url="/salas" title="salas activas del spa">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                     <span>Rooms</span>
                 </petclinic:menuItem>
-                <petclinic:menuItem active="${name eq 'Circuits'}" url="/circuitos"
-                                    title="Circuits">
-                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Circuits</span>
-                </petclinic:menuItem>
 
-                <petclinic:menuItem active="${name eq 'Employees'}" url="/employees" title="employees">
-                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Employees</span>
-                </petclinic:menuItem>
+                <sec:authorize access="hasAuthority('admin')">
+                    <petclinic:menuItem active="${name eq 'Circuits'}" url="/circuitos" title="Circuits">
+                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        <span>Circuits</span>
+                    </petclinic:menuItem>
+                </sec:authorize>
+
+                <sec:authorize access="hasAuthority('admin')">
+                    <petclinic:menuItem active="${name eq 'Employees'}" url="/employees" title="employees">
+                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        <span>Employees</span>
+                    </petclinic:menuItem>
+                </sec:authorize>
 
                 <petclinic:menuItem active="${name eq 'Towels'}" url="/toallas" title="Towels">
                     <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
@@ -74,12 +76,13 @@
                     <span>Error</span>
                 </petclinic:menuItem>
 
-                <petclinic:menuItem active="${name eq 'Tokens'}" url="/bonos"
-                                    title="Tokens">
-                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Tokens</span>
-                </petclinic:menuItem>
-
+                <sec:authorize access="hasAuthority('admin')">
+                    <petclinic:menuItem active="${name eq 'Tokens'}" url="/bonos"
+                                        title="Tokens">
+                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        <span>Tokens</span>
+                    </petclinic:menuItem>
+                </sec:authorize>
 
 
             </ul>
