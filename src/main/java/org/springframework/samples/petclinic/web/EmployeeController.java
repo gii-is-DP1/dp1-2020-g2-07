@@ -1,7 +1,5 @@
 package org.springframework.samples.petclinic.web;
-import java.time.LocalDate;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -11,7 +9,9 @@ import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.model.Horario;
+import org.springframework.samples.petclinic.model.Sesion;
 import org.springframework.samples.petclinic.service.EmployeeService;
+import org.springframework.samples.petclinic.service.HorarioService;
 import org.springframework.samples.petclinic.service.SalaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -33,6 +33,8 @@ public class EmployeeController {
     EmployeeService employeeService;
     @Autowired
     SalaService salaService;
+    @Autowired
+    HorarioService horarioService;
     
 
     @GetMapping
@@ -83,7 +85,6 @@ public class EmployeeController {
     public ModelAndView showEmployee(@PathVariable("employeeId") int employeeId) {
         ModelAndView mav = new ModelAndView("employees/employeeDetails");
         mav.addObject(this.employeeService.findById(employeeId).get());
-//        mav.addObject("fechas",employeeService.selectFechasEmpleado(employeeId));
         return mav;
     }
 
@@ -130,7 +131,6 @@ public class EmployeeController {
     public String addTimeTable(@PathVariable("employeeId") int employeeId, ModelMap model) {
         model.addAttribute("employee",employeeService.findById(employeeId).get());
         model.addAttribute("horario",new Horario());
-        model.addAttribute("salas",salaService.findAll());
         return "timetable/horarioForm";
     }
 
@@ -150,10 +150,38 @@ public class EmployeeController {
         }
     }
     
-    @GetMapping("/{employeeId}/TimeTable")
-    public ModelAndView showEmployeeTimeTable(@PathVariable("employeeId") int employeeId) {
+    @GetMapping("/{employeeId}/TimeTable/{horarioId}")
+    public ModelAndView showEmployeeTimeTable(@PathVariable("employeeId") int employeeId,@PathVariable("horarioId") int horarioId) {
         ModelAndView mav = new ModelAndView("employees/employeeTimeTable");
         mav.addObject(this.employeeService.findById(employeeId).get());
+        mav.addObject("sesion",this.employeeService.findSesionesHorario(horarioId));
         return mav;
     }
+    
+    @GetMapping("/{employeeId}/TimeTable/{horarioId}/newSesion")
+    public String addSession(@PathVariable("employeeId") int employeeId, ModelMap model,@PathVariable("horarioId") int horarioId) {
+        model.addAttribute("horarioID", horarioId);
+        model.addAttribute("sesion", this.employeeService.findSesionesHorario(horarioId));
+        model.addAttribute("newSesion", new Sesion());
+        model.addAttribute("salas",salaService.findAll());
+        return "timetable/sesionForm";
+    }
+    
+    @PostMapping("/{employeeId}/TimeTable/{horarioId}/newSesion")
+    public String saveTimeTable(@PathVariable("employeeId") int employeeId,@PathVariable("horarioId") int horarioId,@Valid @ModelAttribute("newSesion") Sesion sesion, BindingResult binding, ModelMap model){
+        if(binding.hasErrors()){
+            model.addAttribute("salas",salaService.findAll());
+            model.addAttribute("sesion", this.employeeService.findSesionesHorario(horarioId));
+            return "timetable/sesionForm";
+        }else{
+        	sesion.setHorario(horarioService.findById(horarioId).get());
+            horarioService.addSesion(horarioId, sesion);
+
+            return "redirect:/employees/" + String.valueOf(employeeId);
+        }
+    }
+    
+    
+    
+    
 }

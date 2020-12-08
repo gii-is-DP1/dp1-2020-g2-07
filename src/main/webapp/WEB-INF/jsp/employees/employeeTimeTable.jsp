@@ -19,17 +19,21 @@
         </thead>
    	 	<tbody>
         <c:forEach items="${employee.horarios}" var="horario">
+        	<c:forEach items="${sesion}" var="sesion">
+        	<c:if test="${sesion.horario.getId()==horario.id}">
             <tr>
             <td>
-            <c:out value="${horario.sala}"/>
+            <c:out value="${sesion.sala}"/>
             </td>
             <td>
-            <c:out value="${horario.horaIni}"/>
+            <c:out value="${sesion.horaInicio}"/>
             </td>
             <td>
-            <c:out value="${horario.horaFin}"/>
+            <c:out value="${sesion.horaFin}"/>
             </td>
             </tr>
+            </c:if>
+            </c:forEach>
         </c:forEach>
         </tbody>
     </table>

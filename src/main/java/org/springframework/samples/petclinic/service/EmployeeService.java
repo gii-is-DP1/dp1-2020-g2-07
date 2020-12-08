@@ -1,10 +1,7 @@
 package org.springframework.samples.petclinic.service;
-import java.time.LocalDate;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -14,6 +11,7 @@ import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.model.Horario;
 import org.springframework.samples.petclinic.model.Profession;
+import org.springframework.samples.petclinic.model.Sesion;
 import org.springframework.samples.petclinic.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
@@ -54,11 +52,8 @@ public class EmployeeService {
         this.save(employeeRepo.findById(id).get());
     }
     
-    public Set<LocalDate> selectFechasEmpleado(int id){
-    	Collection<Horario> hl = employeeRepo.getHorariosByEmployee(id);
-    	Set<LocalDate> fechas = new HashSet<>();
-    	fechas.addAll(hl.stream().map(x->x.getFecha()).distinct().collect(Collectors.toSet()));
-    	return fechas;
+    public Collection<Sesion> findSesionesHorario(int id){
+    	return employeeRepo.getSesionByHorario(id);
     }
-
+    
 }

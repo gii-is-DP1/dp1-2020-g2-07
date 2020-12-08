@@ -11,28 +11,11 @@
 <petclinic:layout pageName="horarios">
   <jsp:attribute name="customScript">
         <script>
-//             $(function () {
-//                 $("#fecha").datepicker({dateFormat: 'yy/mm/dd'});
-//             });          
+            $(function () {
+                $("#fecha").datepicker({dateFormat: 'yy/mm/dd'});
+            });          
         </script>
         
-        <script>
-        	
-	        $(function () {
-        		$("#horaIni").timepicker();
-    		});
-        
-// 	        $(function () {
-// 	            $("#horaIni").timepicker({timeFormat: 'HH:mm:ss'});
-// 	        });
-        </script>
-        
-        <script>
-// 	        $(function () {
-// 	            $("#horaFin").timepicker({timeFormat: 'HH:mm:ss'});
-// 	        });
-        </script>
-
     </jsp:attribute>
    <jsp:body>
     <h2>
@@ -41,13 +24,7 @@
 
     <form:form modelAttribute="horario" class="form-horizontal" id="add-employee-form">
         <div class="form-group has-feedback">
-          <petclinic:inputField label="Date" name="fecha"/>
-          <petclinic:inputField label="From" name="horaIni"/>
-          <petclinic:inputField label="To" name="horaFin"/>
-           <div class="control-group">
-                    <petclinic:selectField name="sala" label="Rooms " names="${salas}" size="5"/>
-                </div>
-          
+          <petclinic:inputField label="Date" name="fecha"/>          
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

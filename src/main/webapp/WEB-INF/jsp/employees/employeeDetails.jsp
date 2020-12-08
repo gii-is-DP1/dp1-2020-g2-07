@@ -83,17 +83,27 @@
     <table id="employeesTimeTable" class="table table-striped">
  	  <thead>
         <tr>
-            <th>Date</th>
+            <th width=80%>Date</th>
+            <th></th>
         </tr>
         </thead>
    	 	<tbody>
         <c:forEach items="${employee.horarios}" var="horario">
             <tr>
                 <td>
-                <spring:url value="/employees/{employeeId}/TimeTable" var="employeeUrl">
+                <spring:url value="/employees/{employeeId}/TimeTable/{horarioId}" var="employeeUrl">
                         <spring:param name="employeeId" value="${employee.id}"/>
+                        <spring:param name="horarioId" value="${horario.id}"/>
                     </spring:url>
                     <a href="${fn:escapeXml(employeeUrl)}"><petclinic:localDate date="${horario.fecha}" pattern="yyyy/MM/dd"/></a>
+                </td>
+                <td>
+                <spring:url value="/employees/{employeeId}/TimeTable/{horarioId}/newSesion" var="employeeSesionUrl">
+        			<spring:param name="employeeId" value="${employee.id}"/>
+        			<spring:param name="horarioId" value="${horario.id}"/>
+   				</spring:url>
+    			<a href="${fn:escapeXml(employeeSesionUrl)}"><span class="glyphicon glyphicon-plus"
+                                                       aria-hidden="true"></span>Add a session to this day</a>
                 </td>
             </tr>
         </c:forEach>
