@@ -53,9 +53,9 @@ img {vertical-align: middle;}
 /* Fading animation */
 .fade {
   -webkit-animation-name: fade;
-  -webkit-animation-duration: 1.5s;
+  -webkit-animation-duration: 3s;
   animation-name: fade;
-  animation-duration: 1.5s;
+  animation-duration: 3s;
 }
 
 @-webkit-keyframes fade {
@@ -83,7 +83,7 @@ img {vertical-align: middle;}
 
 		<div class="mySlides fade">
   			<div class="numbertext">2 / 3</div>
-  			<img src="/resources/images/personal.jpg" style="width:90%; height: 100%">
+  			<img src="/resources/images/personal.jpg" style="width:100%; height: 100%">
 		</div>
 
 		<div class="mySlides fade">
