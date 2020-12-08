@@ -42,8 +42,17 @@ public class ClienteService {
         clientRepo.deleteById(cliente.getId());
     }
 
-    public void save(@Valid Cliente cliente){
-        Date date = java.util.Calendar.getInstance().getTime();
+    public void save(@Valid Cliente cliente, String type_safe){
+        if(!type_safe.equals("edit")){
+            Date date = java.util.Calendar.getInstance().getTime();
+
+            Email e = new Email();
+            String[] addres = {"spa.dp2020@gmail.com"};
+            e.setAddress(addres);
+            e.setSubject("Sign up petition made on " + date.toString());
+            e.setBody("Have a petition of registrer from " + cliente.getFirst_name() + " " + cliente.getLast_name());
+            emailService.sendMail(e);
+        }
 
         clientRepo.save(cliente);
 
@@ -52,17 +61,11 @@ public class ClienteService {
         //creating authorities
         authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "owner");
 
-        Email e = new Email();
-        e.setAddress("spa.dp2020@gmail.com");
-        e.setSubject("Register petition made on " + date.toString());
-        e.setBody("Have a petition of registrer from " + cliente.getFirst_name() + " " + cliente.getLast_name());
-
-        emailService.sendMail(e);
     }
 
     public void addPayToClient(int id, Pago pay){
         clientRepo.findById(id).get().addPay(pay);
-        this.save(clientRepo.findById(id).get());
+        this.save(clientRepo.findById(id).get(), "edit");
     }
 
 }
