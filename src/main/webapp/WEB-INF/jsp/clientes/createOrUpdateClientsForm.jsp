@@ -17,12 +17,22 @@
             <petclinic:inputField label="Last Name" name="last_name"/>
             <petclinic:inputField label="Address" name="address"/>
             <petclinic:inputField label="IBAN" name="IBAN"/>
-            <sec:authorize access="hasAuthority('admin')">
-                <div class="suscription-group">
-                    <petclinic:selectField name="suscripcion" label="Subscription" names="${['MATINAL', 'VESPERTINO', 'PREMIUM']}" size="1"/>
-                </div>
-            </sec:authorize>
-            <petclinic:inputField label="Username" name="user.username"/>
+            
+            <sec:authorize access="hasAuthority('admin')" var="hasAccess"></sec:authorize>
+            <c:choose>
+                <c:when test="${hasAccess}">
+                    <div class="suscription-group">
+                        <petclinic:selectField name="suscripcion" label="Subscription" names="${['MATINAL', 'VESPERTINO', 'PREMIUM']}" size="1"/>
+                    </div>
+                    <petclinic:inputField label="Username" name="user.username"/>
+                </c:when>
+                <c:otherwise>
+                    <div class="suscription-group">
+                        <petclinic:inputField disabled="true" name="suscripcion" label="Subscription"/>
+                    </div>
+                    <petclinic:inputField disabled="true" label="Username" name="user.username"/>
+                </c:otherwise>
+            </c:choose>
             <petclinic:inputField label="Password" name="user.password"/>
         </div>
         <div class="form-group">

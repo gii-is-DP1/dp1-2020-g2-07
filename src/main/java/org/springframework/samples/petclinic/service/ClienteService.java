@@ -50,7 +50,7 @@ public class ClienteService {
         cliente.getUser().setEnabled(false);
         userService.saveUser(cliente.getUser());
         //creating authorities
-        authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "owner");
+        authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "client");
 
         Email e = new Email();
         e.setAddress("spa.dp2020@gmail.com");
