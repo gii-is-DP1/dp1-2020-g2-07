@@ -27,10 +27,12 @@
                     <span>Home</span>
                 </petclinic:menuItem>
 
-                <petclinic:menuItem active="${name eq 'Clients'}" url="/clientes" title="clients">
-                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Clients</span>
-                </petclinic:menuItem>
+                <sec:authorize access="hasAnyAuthority('client', 'admin')">
+                    <petclinic:menuItem active="${name eq 'Clients'}" url="/clientes" title="clients">
+                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        <span>Clients</span>
+                    </petclinic:menuItem>
+                </sec:authorize>
 
                 <sec:authorize access="hasAuthority('admin')">
                     <petclinic:menuItem active="${name eq 'Income Statements'}" url="/balances" title="Income Statements">
@@ -44,24 +46,24 @@
                     <span>Rooms</span>
                 </petclinic:menuItem>
 
-                <sec:authorize access="hasAuthority('admin')">
-                    <petclinic:menuItem active="${name eq 'Circuits'}" url="/circuitos" title="Circuits">
-                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                        <span>Circuits</span>
-                    </petclinic:menuItem>
-                </sec:authorize>
+                <petclinic:menuItem active="${name eq 'Circuits'}" url="/circuitos" title="Circuits">
+                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                    <span>Circuits</span>
+                </petclinic:menuItem>
 
-                <sec:authorize access="hasAuthority('admin')">
+                <sec:authorize access="hasAnyAuthority('employee', 'admin')">
                     <petclinic:menuItem active="${name eq 'Employees'}" url="/employees" title="employees">
                         <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                         <span>Employees</span>
                     </petclinic:menuItem>
                 </sec:authorize>
 
-                <petclinic:menuItem active="${name eq 'Towels'}" url="/toallas" title="Towels">
-                    <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-                    <span>Towels</span>
-                </petclinic:menuItem>
+                <sec:authorize access="hasAnyAuthority('client', 'admin')">
+                    <petclinic:menuItem active="${name eq 'Towels'}" url="/toallas" title="Towels">
+                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        <span>Towels</span>
+                    </petclinic:menuItem>
+                </sec:authorize>
 
                 <sec:authorize access="hasAuthority('admin')">
                     <petclinic:menuItem active="${name eq 'Admin'}" url="/admin" title="adminHome">
@@ -97,7 +99,7 @@
                 </sec:authorize>
                 <sec:authorize access="isAuthenticated()">
                     <li class="dropdown"><a href="#" class="dropdown-toggle"
-                                            data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>Ã¯Â¿Â½
+                                            data-toggle="dropdown"> <span class="glyphicon glyphicon-user"></span>
                         <strong><sec:authentication property="name" /></strong> <span
                                 class="glyphicon glyphicon-chevron-down"></span>
                     </a>
