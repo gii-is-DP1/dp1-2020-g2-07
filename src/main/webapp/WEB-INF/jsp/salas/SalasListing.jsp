@@ -31,17 +31,20 @@
                 <td>
                     <c:out value="${sala.descripcion}"/>
                 </td>
-
                 <td>
-                    <a href="/salas/${sala.id}/edit">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    </a>
+                    <sec:authorize access="hasAuthority('admin')">
+                        <a href="/salas/${sala.id}/edit">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </a>
+                    </sec:authorize>
                 </td>
                 <td>
-                    <a href="/salas/${sala.id}/delete">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    </a>
-                </td>
+                    <sec:authorize access="hasAuthority('admin')">
+                        <a href="/salas/${sala.id}/delete">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </a>
+                    </sec:authorize>
+                </td>    
             </tr>
         </c:forEach>
         </tbody>

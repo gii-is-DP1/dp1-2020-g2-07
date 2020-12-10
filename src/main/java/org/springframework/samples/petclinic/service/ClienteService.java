@@ -59,7 +59,7 @@ public class ClienteService {
         cliente.getUser().setEnabled(false);
         userService.saveUser(cliente.getUser());
         //creating authorities
-        authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "owner");
+        authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "client");
 
     }
 

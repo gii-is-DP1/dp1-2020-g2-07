@@ -3,6 +3,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="employees">
 
@@ -33,10 +34,12 @@
     </spring:url>
     <a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit</a>
 
-    <spring:url value="{employeeId}/delete" var="deleteUrl">
-        <spring:param name="employeeId" value="${employee.id}"/>
-    </spring:url>
-    <a href="${fn:escapeXml(deleteUrl)}" class="btn btn-default">Delete</a>
+    <sec:authorize access="hasAuthority('admin')">
+        <spring:url value="{employeeId}/delete" var="deleteUrl">
+            <spring:param name="employeeId" value="${employee.id}"/>
+        </spring:url>
+        <a href="${fn:escapeXml(deleteUrl)}" class="btn btn-default">Delete</a>
+    </sec:authorize>
 
     <br/>
     <br/>
@@ -71,9 +74,11 @@
         </c:forEach>
         </tbody>
     </table>
-    <spring:url value="/employees/{employeeId}/newSalary" var="employeeSalaryUrl">
-        <spring:param name="employeeId" value="${employee.id}"/>
-    </spring:url>
-    <a href="${fn:escapeXml(employeeSalaryUrl)}"><span class="glyphicon glyphicon-plus"
-                                                       aria-hidden="true"></span>New Salary</a>
+    <sec:authorize access="hasAuthority('admin')">
+        <spring:url value="/employees/{employeeId}/newSalary" var="employeeSalaryUrl">
+            <spring:param name="employeeId" value="${employee.id}"/>
+        </spring:url>
+        <a href="${fn:escapeXml(employeeSalaryUrl)}"><span class="glyphicon glyphicon-plus"
+                                                        aria-hidden="true"></span>New Salary</a>
+    </sec:authorize>
 </petclinic:layout>
