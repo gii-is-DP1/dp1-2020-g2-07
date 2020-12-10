@@ -8,6 +8,7 @@
 <petclinic:layout pageName="clients">
 
     <h2>Client Profile</h2>
+    <button onclick="location.href = '/bonos/redeem_token';" id="myButton" class="float-left submit-button" >Reedem Token</button>
 
 
     <table class="table table-striped" id="emploee_details">
