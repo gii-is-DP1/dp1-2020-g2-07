@@ -19,7 +19,8 @@
     <form:form modelAttribute="bono" class="form-horizontal" id="add-owner-form">
         <div class="form-group has-feedback">  
             <petclinic:inputField label="Precio" name="precio"/>
-            <petclinic:inputField  label="Duracion" name="duracion"/>  
+            <petclinic:inputField  label="Date Start" name="date_start"/>
+            <petclinic:inputField  label="Date End" name="date_end"/> 
             <petclinic:inputField label="Descripcion" name="descripcion"/>             
         </div>
         <div class="form-group">
