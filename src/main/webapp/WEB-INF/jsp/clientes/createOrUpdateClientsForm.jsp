@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="owners">
     <h2>
@@ -13,14 +13,27 @@
     </h2>
     <form:form modelAttribute="cliente" class="form-horizontal" id="add-cliente-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Nick" name="nick"/>
-            <petclinic:inputField label="Nombre" name="nombre"/>
-            <petclinic:inputField label="Apellidos" name="apellidos"/>
-            <petclinic:inputField label="Direccion" name="direccion"/>
+            <petclinic:inputField label="First Name" name="first_name"/>
+            <petclinic:inputField label="Last Name" name="last_name"/>
+            <petclinic:inputField label="Address" name="address"/>
             <petclinic:inputField label="IBAN" name="IBAN"/>
-            <div class="suscription-group">
-                <petclinic:selectField name="suscripcion" label="Suscripcion" names="${['MATINAL', 'VESPERTINO', 'PREMIUM']}" size="1"/>
-            </div>
+            
+            <sec:authorize access="hasAuthority('admin')" var="hasAccess"></sec:authorize>
+            <c:choose>
+                <c:when test="${hasAccess}">
+                    <div class="suscription-group">
+                        <petclinic:selectField name="suscripcion" label="Subscription" names="${['MATINAL', 'VESPERTINO', 'PREMIUM']}" size="1"/>
+                    </div>
+                    <petclinic:inputField label="Username" name="user.username"/>
+                </c:when>
+                <c:otherwise>
+                    <div class="suscription-group">
+                        <petclinic:inputField disabled="true" name="suscripcion" label="Subscription"/>
+                    </div>
+                    <petclinic:inputField disabled="true" label="Username" name="user.username"/>
+                </c:otherwise>
+            </c:choose>
+            <petclinic:inputField label="Password" name="user.password"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

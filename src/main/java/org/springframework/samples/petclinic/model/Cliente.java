@@ -1,12 +1,11 @@
 package org.springframework.samples.petclinic.model;
 import javax.persistence.*;
-
 import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "clientes")
-public class Cliente extends Usuario{
+public class Cliente extends Individual {
 
     @Column(name = "suscripcion")
     @Enumerated(EnumType.STRING)

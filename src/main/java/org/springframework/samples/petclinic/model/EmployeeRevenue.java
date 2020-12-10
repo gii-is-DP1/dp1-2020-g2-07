@@ -66,7 +66,7 @@ public class EmployeeRevenue extends BaseEntity{
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setQuantity() {
+        this.quantity = getHoursWorked() * getEmployee().getSalary();
     }
 }

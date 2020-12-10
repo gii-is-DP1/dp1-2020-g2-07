@@ -16,6 +16,7 @@
 package org.springframework.samples.petclinic.service;
 
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,10 +44,15 @@ public class UserService {
 
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {
-		user.setEnabled(true);
 		userRepository.save(user);
 	}
-	
+
+    public Integer notEnableAdvice(){
+	   Collection<User> users = (Collection<User>) userRepository.findAll();
+	   Integer numberNotEnable = Math.toIntExact(users.stream().filter(u -> u.isEnabled() == false).count());
+	    return  numberNotEnable;
+    }
+
 	public Optional<User> findUser(String username) {
 		return userRepository.findById(username);
 	}

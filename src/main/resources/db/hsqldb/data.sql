@@ -71,12 +71,17 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04',
 INSERT INTO bonos(id, codigo, precio, date_start, date_end, descripcion, usado) VALUES (1,  'QWERT1', 5,  '2020-11-03','2020-11-11', 'Token for a free Spa session.', 1);
 INSERT INTO bonos(id, codigo, precio, date_start, date_end, descripcion, usado) VALUES (2, 'SADYT3', 3, '2020-11-03','2020-11-11', 'Token for a free Cardio session.',1);
 
-INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, suscripcion) VALUES(1, 'juanma', 'Juan Manuel', 'García Criado', 'C/ Pedro Sanchez', 0, 'ES72 2923 9043 2575 5091', 'MATINAL');
-INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, suscripcion) VALUES(2, 'faker', 'Pepe', 'Díaz Oslo', 'Sevilla C/Inventada 2',0, 'ES72 2223 2334 3422', 'VESPERTINO');
-INSERT INTO clientes(id, nick, nombre, apellidos, direccion, categoria, IBAN, suscripcion) VALUES(3, 'mgc99', 'Manuel', 'Osuna Moreno', 'Sevilla C/Tangana 1º A',0, 'ES72 6789 4839 3928 2143', 'PREMIUM');
-
 INSERT INTO pagos(id, cliente_id, f_emision, cantidad) VALUES(1, 1, '2020-11-15', 32);
 INSERT INTO pagos(id, cliente_id, f_emision, cantidad) VALUES(2, 1, '2020-11-27', 100);
+
+INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion, email) VALUES(1, 'Juan Manuel', 'García Criado', 'C/ Pedro Sanchez', 0, 'ES72 2923 9043 2575 5091', 'MATINAL', 'juanma101099@gmail.com');
+/*INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion) VALUES(2, 'Pepe', 'Díaz Oslo', 'Sevilla C/Inventada 2',0, 'ES72 2223 2334 3422', 'VESPERTINO');
+INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion) VALUES(3, 'Manuel', 'Osuna Moreno', 'Sevilla C/Tangana 1º A',0, 'ES72 6789 4839 3928 2143', 'PREMIUM');
+*/
+INSERT INTO pagos(id, cliente_id, f_emision, cantidad) VALUES(1, 1, '2020-10-15', 32);
+INSERT INTO pagos(id, cliente_id, f_emision, cantidad) VALUES(2, 1, '2020-10-27', 100);
+INSERT INTO balances(id, month, year, subs, bonos, salaries,mante) VALUES(1, 'JANUARY', '2020', 200,200,202,200);
+
 
 INSERT INTO salas(id, name, aforo, descripcion) VALUES(1, 'Jacuzzi', 7, 'A large circular bath which is fitted with a device that makes the water move around.');
 INSERT INTO salas(id, name, aforo, descripcion) VALUES(2, 'Relax pool', 15, 'Indoor heated pool where you can relax');
@@ -96,10 +101,10 @@ INSERT INTO REL_BONOS_SALAS(FK_Bono,FK_Sala) VALUES(1,2);
 INSERT INTO REL_BONOS_SALAS(FK_Bono,FK_Sala) VALUES(2,1);
 INSERT INTO REL_BONOS_SALAS(FK_Bono,FK_Sala) VALUES(2,2);
 
-INSERT INTO employees(id, nick, nombre, apellidos, direccion, categoria, IBAN, profession) VALUES(1, 'em1', 'Jhon', 'Smith', 'Sevilla C/Tangana 1º A',1, 'ES72 6789 4839 3928 2143', 'LIFE_GUARD');
-INSERT INTO employees(id, nick, nombre, apellidos, direccion, categoria, IBAN, profession) VALUES(2, 'em2', 'Izan', 'Brent', 'Sevilla C/Ej 23',1, 'ES72 8009 1129 1089 27401', 'LIFE_GUARD');
-INSERT INTO employees(id, nick, nombre, apellidos, direccion, categoria, IBAN, profession) VALUES(3, 'em3', 'Jessica', 'Wilde', 'Sevilla C/Torneo 19 3º I',1, 'ES72 0329 4543 3990 6543', 'LIFE_GUARD');
-
+INSERT INTO employees(id, first_name, last_name, address, category, IBAN, profession, email) VALUES(1, 'Jhon', 'Smith', 'Sevilla C/Tangana 1º A',1, 'ES72 6789 4839 3928 2143', 'LIFE_GUARD', 'miguel_molina2@hotmail.es');
+/*INSERT INTO employees(id, first_name, last_name, address, category, IBAN, profession) VALUES(2, 'Izan', 'Brent', 'Sevilla C/Ej 23',1, 'ES72 8009 1129 1089 27401', 'LIFE_GUARD');
+INSERT INTO employees(id, first_name, last_name, address, category, IBAN, profession) VALUES(3, 'Jessica', 'Wilde', 'Sevilla C/Torneo 19 3º I',1, 'ES72 0329 4543 3990 6543', 'LIFE_GUARD');
+*/
 
 
 INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantity) VALUES(1, 1, '2013-01-02', '2013-01-29', 60, 700);
