@@ -37,7 +37,7 @@ public class ClienteServiceTests {
 		//cliente.setNick("El Madrileño");
 		//cliente.setNombre("Anónimo");
 		cliente.addPay(pago);
-		clienteservice.save(cliente);
+		clienteservice.save(cliente, "new");
 	}
 
 	@Test

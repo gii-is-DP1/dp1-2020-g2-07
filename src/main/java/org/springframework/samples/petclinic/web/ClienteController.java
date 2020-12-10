@@ -45,9 +45,9 @@ public class ClienteController {
         if(binding.hasErrors()) {
             return CLIENTS_FORM;
         }else {
-            BeanUtils.copyProperties(modifiedClient, cliente.get(), "{id}");
-            cliente.get().setCategory(Categoria.CLIENTE);
-            clientService.save(cliente.get());
+            modifiedClient.setSuscripcion(cliente.get().getSuscripcion());
+            BeanUtils.copyProperties(modifiedClient, cliente.get(), "id");
+            clientService.save(cliente.get(), "edit");
             model.addAttribute("message","Se ha modificado el cliente");
             return listClients(model);
         }
@@ -79,7 +79,7 @@ public class ClienteController {
             return CLIENTS_FORM;
         }else {
             cliente.setCategory(Categoria.EMPLEADO);
-            clientService.save(cliente);
+            clientService.save(cliente, "new");
             model.addAttribute("message", "The client was created successfully!");
             return listClients(model);
         }

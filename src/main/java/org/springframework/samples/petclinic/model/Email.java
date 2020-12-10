@@ -7,7 +7,7 @@ import javax.validation.constraints.NotEmpty;
 
 public class Email {
     @NotEmpty
-    private String address;
+    private String[] address;
 
     @NotEmpty
     private String subject;
@@ -15,11 +15,11 @@ public class Email {
     @NotEmpty
     private String body;
 
-    public String getAddress() {
+    public String[] getAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setAddress(String[] address) {
         this.address = address;
     }
 
