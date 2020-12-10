@@ -53,10 +53,10 @@
   	<p>
   		<c:forEach items="${subs}" var="sub">
   			<td>
-  				Client: <c:out value="${sub.cliente.nombre}"/>
+  				Client: <c:out value="${sub.cliente.first_name}"/>
   			</td>
   			<td>
-  				Price: <c:out value="${sub.cantidad}"/>$
+  				Quantity: <c:out value="${sub.cantidad}"/>$
   				<br>
   			</td>
         </c:forEach>
@@ -95,10 +95,10 @@
   	<p>
   		<c:forEach items="${salaries}" var="salary">
   			<td>
-  				Employee: <c:out value="${salary.employee.nombre}"/>
+  				Employee: <c:out value="${salary.employee.first_name}"/>
   			</td>
   			<td>
-                Price: <c:out value="${salary.quantity}"/>$
+                Quantity: <c:out value="${salary.quantity}"/>$
                 <br>
             </td>
         </c:forEach>

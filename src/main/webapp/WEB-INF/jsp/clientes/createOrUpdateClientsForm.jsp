@@ -18,7 +18,13 @@
             <petclinic:inputField label="Address" name="address"/>
             <petclinic:inputField label="IBAN" name="IBAN"/>
             
-            <sec:authorize access="hasAuthority('admin')" var="hasAccess"></sec:authorize>
+            <c:choose>
+  				<c:when test="${cliente['new']}">
+					<petclinic:inputField label="Username" name="user.username"/>
+					<petclinic:inputField label="Password" name="user.password"/>
+				</c:when>
+				<c:otherwise>
+  					 <sec:authorize access="hasAuthority('admin')" var="hasAccess"></sec:authorize>
             <c:choose>
                 <c:when test="${hasAccess}">
                     <div class="suscription-group">
@@ -33,7 +39,10 @@
                     <petclinic:inputField disabled="true" label="Username" name="user.username"/>
                 </c:otherwise>
             </c:choose>
-            <petclinic:inputField label="Password" name="user.password"/>
+ 					<petclinic:inputField label="Password" name="user.password"/>
+       			</c:otherwise>
+			</c:choose>
+
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
