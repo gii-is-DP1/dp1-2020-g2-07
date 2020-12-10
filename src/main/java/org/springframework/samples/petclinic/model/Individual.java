@@ -25,8 +25,8 @@ public class Individual extends BaseEntity {
     @Column(name = "IBAN")
     private String IBAN;
 
-    /*@Column(name = "email")
-    private  String email;*/
+    @Column(name = "email")
+    private  String email;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "username", referencedColumnName = "username")
@@ -80,12 +80,12 @@ public class Individual extends BaseEntity {
         this.user = user;
     }
 
-    /*public String getEmail() {
+    public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
-    }*/
+    }
 }
 

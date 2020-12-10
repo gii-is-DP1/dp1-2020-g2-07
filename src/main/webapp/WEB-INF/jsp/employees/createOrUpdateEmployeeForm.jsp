@@ -17,6 +17,7 @@
             <petclinic:inputField label="Last Name" name="last_name"/>
             <petclinic:inputField label="Address" name="address"/>
             <petclinic:inputField label="IBAN" name="IBAN"/>
+            <petclinic:inputField label="Email" name="email"/>
             <sec:authorize access="hasAuthority('admin')">
                 <div class="profession-group">
                     <petclinic:selectField name="profession" label="Profession" names="${['LIFE_GUARD', 'CLEANER', 'MASSAGIST']}" size="1"/>
