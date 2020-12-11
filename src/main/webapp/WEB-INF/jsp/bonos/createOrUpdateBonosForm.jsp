@@ -20,8 +20,10 @@
         <div class="form-group has-feedback"> 
             <petclinic:inputField label="Code" name="codigo"/> 
             <petclinic:inputField label="Price" name="precio"/>
-            <petclinic:localDate pattern="yyyy-MM-dd" label="Duration" name="duracion"/>
+            <petclinic:localDate pattern="yyyy-MM-dd"  label="Date Start" name="date_start"/>
+            <petclinic:localDate pattern="yyyy-MM-dd"  label="Date End" name="date_end"/> 
             <petclinic:inputField label="Description" name="descripcion"/>             
+
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

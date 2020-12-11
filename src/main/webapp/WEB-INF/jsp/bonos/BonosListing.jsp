@@ -13,7 +13,8 @@
         <tr>
             <th style="width: 25%">Code </th>
             <th style="width: 25%">Price</th>
-            <th style="width: 25%">Valid During</th>
+            <th style="width: 25%">Valid Start</th>
+            <th style="width: 25%">Valid End</th>
             <th style="width: 25%">Description</th>
         </tr>
         </thead>
@@ -27,7 +28,10 @@
                 	<c:out value="${bono.precio}"/>
                 </td>
                 <td>
-                    <c:out value="${bono.duracion}"/>
+                    <c:out value="${bono.date_start}"/>
+                </td>
+                <td>
+                    <c:out value="${bono.date_end}"/>
                 </td>
                 <td>
                     <c:out value="${bono.descripcion}"/>
