@@ -10,10 +10,14 @@
     <br>
     <a href="/employees"><span class="glyphicon glyphicon-th-list" aria-hidden="true"><span>Employees</span></span></a>
     <br>
+    <br>
     <h3>You have <c:out value="${petitions}"></c:out> petitions of sign up without approve</h3>
+    <br>
     <br>
     <a href="/admin/newEmail"><span class="glyphicon glyphicon-envelope" aria-hidden="true">Individual Email</span></a>
     <br>
     <a href="/admin/newAnnouncement"><span class="glyphicon glyphicon-envelope" aria-hidden="true">Announcement</span></a>
-
+    <br>
+    <br>
+    <a href="/admin/users"><span class="glyphicon glyphicon-user" aria-hidden="true">Users</span></a>
 </petclinic:layout>

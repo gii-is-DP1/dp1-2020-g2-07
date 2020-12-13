@@ -19,7 +19,7 @@ public class User{
 
 	String password;
 
-	boolean enabled = false;
+	boolean enabled;
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities;

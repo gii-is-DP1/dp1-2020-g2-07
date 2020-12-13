@@ -17,30 +17,29 @@
             <petclinic:inputField label="Last Name" name="last_name"/>
             <petclinic:inputField label="Address" name="address"/>
             <petclinic:inputField label="IBAN" name="IBAN"/>
-            
+
+            <sec:authorize access="hasAuthority('admin')" var="hasAccess"></sec:authorize>
             <c:choose>
   				<c:when test="${cliente['new']}">
 					<petclinic:inputField label="Username" name="user.username"/>
 					<petclinic:inputField label="Password" name="user.password"/>
 				</c:when>
 				<c:otherwise>
-  					 <sec:authorize access="hasAuthority('admin')" var="hasAccess"></sec:authorize>
-            <c:choose>
-                <c:when test="${hasAccess}">
-                    <div class="suscription-group">
-                        <petclinic:selectField name="suscripcion" label="Subscription" names="${['MATINAL', 'VESPERTINO', 'PREMIUM']}" size="1"/>
-                    </div>
-                    <petclinic:inputField label="Username" name="user.username"/>
-                </c:when>
-                <c:otherwise>
-                    <div class="suscription-group">
-                        <petclinic:inputField disabled="true" name="suscripcion" label="Subscription"/>
-                    </div>
-                    <petclinic:inputField disabled="true" label="Username" name="user.username"/>
+
+                    <c:choose>
+
+                        <c:when test="${hasAccess}">
+                            <petclinic:selectField name="suscripcion" label="Subscription" names="${['MATINAL', 'VESPERTINO', 'PREMIUM']}" size="1"/>
+                            <petclinic:inputField label="Username" name="user.username"/>
+                            <petclinic:selectField label="Enabled" name="user.enabled" names="${['true', 'false']}" size="1"/>
+                        </c:when>
+                        <c:otherwise>
+                            <petclinic:inputField disabled="true" name="suscripcion" label="Subscription"/>
+                            <petclinic:inputField disabled="true" label="Username" name="user.username"/>
+                        </c:otherwise>
+                    </c:choose>
+                            <petclinic:inputField label="Password" name="user.password"/>
                 </c:otherwise>
-            </c:choose>
- 					<petclinic:inputField label="Password" name="user.password"/>
-       			</c:otherwise>
 			</c:choose>
 
         </div>
