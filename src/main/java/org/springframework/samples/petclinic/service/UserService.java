@@ -21,6 +21,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -51,6 +52,14 @@ public class UserService {
 	   Collection<User> users = (Collection<User>) userRepository.findAll();
 	   Integer numberNotEnable = Math.toIntExact(users.stream().filter(u -> u.isEnabled() == false).count());
 	    return  numberNotEnable;
+    }
+
+    public Collection<User> findAll(){
+        return userRepository.findAll();
+    }
+
+    public void delete(User u){
+	    userRepository.delete(u);
     }
 
 	public Optional<User> findUser(String username) {

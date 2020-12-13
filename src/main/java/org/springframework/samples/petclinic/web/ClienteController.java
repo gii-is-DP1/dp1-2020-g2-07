@@ -3,6 +3,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.service.ClienteService;
+import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,9 @@ public class ClienteController {
 
     @Autowired
     ClienteService clientService;
+
+    @Autowired
+    UserService userService;
 
     @GetMapping
     public String listClients(ModelMap model){
@@ -45,7 +49,7 @@ public class ClienteController {
         if(binding.hasErrors()) {
             return CLIENTS_FORM;
         }else {
-            modifiedClient.setSuscripcion(cliente.get().getSuscripcion());
+            modifiedClient.setCategory(cliente.get().getCategory());
             BeanUtils.copyProperties(modifiedClient, cliente.get(), "id");
             clientService.save(cliente.get(), "edit");
             model.addAttribute("message","Se ha modificado el cliente");

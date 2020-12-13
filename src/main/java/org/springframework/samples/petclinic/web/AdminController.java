@@ -3,11 +3,13 @@ package org.springframework.samples.petclinic.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Email;
 import org.springframework.samples.petclinic.model.Employee;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -23,6 +25,7 @@ public class AdminController {
     public static final String HOME_ADMIN = "admin/adminHome";
     public static final String ADMIN_EMAIL = "admin/newEmail";
     public static final String ADMIN_ANNOUNCEMENT = "admin/newAnnouncement";
+    public static final String ADMIN_USERS = "admin/checkUsers";
 
     @Autowired
     AdminService adminService;
@@ -43,6 +46,25 @@ public class AdminController {
     public String getHomeAdmin(ModelMap model){
         model.addAttribute("petitions", userService.notEnableAdvice());
         return HOME_ADMIN;
+    }
+
+    @GetMapping("/users")
+    public String getUsers(ModelMap model){
+        model.addAttribute("users", userService.findAll());
+        return ADMIN_USERS;
+    }
+
+    @GetMapping("/users/{username}")
+    public String activeUser(@PathVariable("username") String username,ModelMap model){
+        User u = userService.findUser(username).get();
+        if(u.isEnabled()){
+            u.setEnabled(false);
+        }else{
+            u.setEnabled(true);
+        }
+        model.addAttribute("message", "State of user " + u.getUsername() + " has been changed");
+        userService.saveUser(u);
+        return getUsers(model);
     }
 
     @GetMapping("/newEmail")
