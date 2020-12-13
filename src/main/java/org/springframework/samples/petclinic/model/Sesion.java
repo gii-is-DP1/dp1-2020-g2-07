@@ -19,19 +19,19 @@ public class Sesion extends BaseEntity{
 
 	@NotNull
 	@Column(name = "horaInicio")
-	@DateTimeFormat(iso = ISO.TIME, pattern = "HH:mm:ss")
+	@DateTimeFormat(iso = ISO.TIME, pattern = "HH:mm")
 	private LocalTime horaInicio;
-	
+
 	@NotNull
 	@Column(name = "horaFin")
-	@DateTimeFormat(iso = ISO.TIME, pattern = "HH:mm:ss")
+	@DateTimeFormat(iso = ISO.TIME, pattern = "HH:mm")
 	private LocalTime horaFin;
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "sala_id")
 	private Sala sala;
-	
+
 	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "horario_id")

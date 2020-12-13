@@ -22,9 +22,10 @@
         New TimeTable
     </h2>
 
-    <form:form modelAttribute="horario" class="form-horizontal" id="add-employee-form">
+    <form:form modelAttribute="horario" class="form-horizontal" id="add-timetable-form">
         <div class="form-group has-feedback">
-          <petclinic:inputField label="Date" name="fecha"/>          
+          <petclinic:inputField label="Date" name="fecha"/>´
+          <input type="hidden" name="employee" value="${employee.id}">
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

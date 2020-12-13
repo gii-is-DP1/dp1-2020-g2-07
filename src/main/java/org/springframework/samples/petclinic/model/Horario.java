@@ -12,6 +12,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.support.MutableSortDefinition;
+import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -49,6 +51,7 @@ public class Horario extends BaseEntity{
 	}
 
     public List<Sesion> getSesiones() {
+    	PropertyComparator.sort(sesiones, new MutableSortDefinition("horaInicio", true, true));//no funciona
 		return sesiones;
 	}
 

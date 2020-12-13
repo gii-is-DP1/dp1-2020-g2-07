@@ -13,7 +13,7 @@
         <script>
             $(function () {
             	$('horaInicio').timepicker({
-            	    timeFormat: 'h:mm p',
+            	    timeFormat: 'HH:mm p',
             	    interval: 60,
             	    minTime: '10',
             	    maxTime: '6:00pm',
@@ -36,6 +36,7 @@
         <div class="form-group has-feedback">
           <petclinic:inputField label="From" name="horaInicio"/>
           <petclinic:inputField label="To" name="horaFin"/>
+          <input type="hidden" name="horario" value="${horarioID}">
            <div class="control-group">
                     <petclinic:selectField name="sala" label="Rooms " names="${salas}" size="5"/>
                 </div>
@@ -61,13 +62,13 @@
    	 	<tbody>
         	<c:forEach items="${sesion}" var="sesion">
         	<c:if test="${sesion.horario.getId()==horarioID}">
-        	<c:if test="${!sesion['new']}">
+<%--         	<c:if test="${!sesion['new']}"> --%>
             <tr>
             <td><c:out value="${sesion.sala}"/></td>
             <td><c:out value="${sesion.horaInicio}"/></td>
             <td><c:out value="${sesion.horaFin}"/></td>
             </tr>
-            </c:if>
+<%--             </c:if> --%>
             </c:if>
             </c:forEach>
         </tbody>
