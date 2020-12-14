@@ -4,9 +4,17 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 @Entity
 @Table(name = "clientes")
-public class Cliente extends Usuario{
+public class Cliente extends Individual {
 
     @Column(name = "suscripcion")
     @Enumerated(EnumType.STRING)

@@ -1,11 +1,8 @@
 package org.springframework.samples.petclinic.model;
-
 import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.util.Objects;
 
 
 @Entity
@@ -69,7 +66,7 @@ public class EmployeeRevenue extends BaseEntity{
         return quantity;
     }
 
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
+    public void setQuantity() {
+        this.quantity = getHoursWorked() * getEmployee().getSalary();
     }
 }
