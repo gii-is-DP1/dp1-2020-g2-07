@@ -7,7 +7,7 @@
 <petclinic:layout pageName="employees">
 
 
-<h3>Details of the TimeTable of <c:out value="${employee.nombre} ${employee.apellidos}"/></h3>
+<h3>Details of the TimeTable of <c:out value="${employee.first_name} ${employee.last_name}"/></h3>
     <table id="employeesTimeTable" class="table table-striped">
  	  <thead>
         <tr>
