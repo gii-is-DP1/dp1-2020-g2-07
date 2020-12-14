@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -13,6 +14,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Balance;
+import org.springframework.samples.petclinic.model.Bono;
 import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.model.Pago;
 import org.springframework.samples.petclinic.repository.BalanceRepository;
@@ -64,7 +66,7 @@ public class BalanceService {
 		SimpleDateFormat formatter= new SimpleDateFormat("dd");
 		Date hoy_millis = new Date(System.currentTimeMillis());
 		String hoy = formatter.format(hoy_millis);
-		if(hoy.equals("28")) {
+		if(hoy.equals("10")) {
 			tocaBalance = true;
 		}
 		return tocaBalance;
@@ -117,6 +119,40 @@ public class BalanceService {
 	public Balance getBalanceById (Integer id) {
 		Balance b = balanceRepo.findBalanceById(id);
 		return b;
+	}
+	
+	public int getTokens (LocalDate date_start, LocalDate date_end, Boolean used) {
+		Collection<Bono> total = balanceRepo.findUsedTokensByMonth(date_start,date_end, used);
+		Iterator<Bono> iterator = total.iterator();
+		int res = 0;
+        while (iterator.hasNext()) {
+        	res = res + iterator.next().getPrecio();
+        }
+		return res;
+	}
+	
+	public List<Bono> getTokensData (LocalDate date_start, LocalDate date_end) {
+		Collection<Bono> total = balanceRepo.findUsedTokensByMonth(date_start,date_end, true);
+		List<Bono> list = new ArrayList<Bono>();
+		list.addAll(total);
+		return list;
+	}
+	
+	public List<Pago> getSubsData (LocalDate date_start, LocalDate date_end, DateTimeFormatter formatter) {
+		String date_start_string = date_start.format(formatter);
+		String date_end_string = date_end.format(formatter);
+		
+		Collection<Pago> total = balanceRepo.findSubsByMonth(date_start_string, date_end_string);
+		List<Pago> list = new ArrayList<Pago>();
+		list.addAll(total);
+		return list;
+	}
+	
+	public List<EmployeeRevenue> getSalariesData (LocalDate date_start, LocalDate date_end) {
+		Collection<EmployeeRevenue> total = balanceRepo.findSalariesByMonth(date_start, date_end);
+		List<EmployeeRevenue> list = new ArrayList<EmployeeRevenue>();
+		list.addAll(total);
+		return list;
 	}
 
 }

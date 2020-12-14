@@ -19,6 +19,12 @@ public class EmployeeService {
     @Autowired
     EmployeeRepository employeeRepo;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private AuthoritiesService authoritiesService;
+
     public Collection<Employee> findAll(){
         return employeeRepo.findAll();
     }
@@ -34,6 +40,11 @@ public class EmployeeService {
 
     public void save(@Valid Employee employee){
         employeeRepo.save(employee);
+
+        userService.saveUser(employee.getUser());
+        //creating authorities
+        authoritiesService.saveAuthorities(employee.getUser().getUsername(), "employee");
+
     }
 
     public void delete(Employee employee) {

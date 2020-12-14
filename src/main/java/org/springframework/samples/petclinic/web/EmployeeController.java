@@ -59,7 +59,7 @@ public class EmployeeController {
         if(binding.hasErrors()){
             return EMPLOYEES_FORM;
         }else{
-            BeanUtils.copyProperties(modifiedEmployee, employee.get(), "categoria");
+            BeanUtils.copyProperties(modifiedEmployee, employee.get(), "id,category");
             employeeService.save(employee.get());
             model.addAttribute("message", "Employee updated succesfully!!");
             return "redirect:/employees/" + employee.get().getId();
@@ -97,7 +97,7 @@ public class EmployeeController {
         if(binding.hasErrors()) {
             return EMPLOYEES_FORM;
         }else {
-            employee.setCategoria(Categoria.EMPLEADO);
+            employee.setCategory(Categoria.EMPLEADO);
             employeeService.save(employee);
             model.addAttribute("message", "The employee was created successfully!");
             return "redirect:/employees/" + employee.getId();
@@ -119,6 +119,7 @@ public class EmployeeController {
             return "salary/salaryForm";
         }else{
             revenue.setEmployee(employeeService.findById(employeeId).get());
+            revenue.setQuantity();
             employeeService.addSalaryToEmployee(employeeId, revenue);
 
             return "redirect:/employees/" + String.valueOf(employeeId);

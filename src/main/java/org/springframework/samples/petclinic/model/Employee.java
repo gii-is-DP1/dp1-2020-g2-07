@@ -16,8 +16,9 @@ import org.springframework.beans.support.PropertyComparator;
 
 @Entity
 @Table(name = "employees")
-public class Employee extends Usuario{
-	
+
+public class Employee extends Individual {
+
     @Column(name = "profession")
     @Enumerated(EnumType.STRING)
     private Profession profession;
@@ -66,7 +67,15 @@ public class Employee extends Usuario{
 		return getNombre();
 	}
     
-    
-    
-    
+    public Integer getSalary() {
+        //retorna el salario (euros / hora)
+        switch (profession) {
+            case ADMIN: return 17;
+            case CLEANER: return 10;
+            case LIFE_GUARD: return 12;
+            case MASSAGIST: return 15;
+            default: return 0;
+        }
+    }
 }
+
