@@ -46,12 +46,7 @@ public class ClienteServiceTests {
 		assertEquals(3, cliente.size());
 	}
 	
-	@Test
-	void mostrarClientesPorId() {
-		Integer id = 1;
-		Optional<Cliente> cliente = clienteservice.findById(id);
-		assertFalse(cliente.isEmpty());
-	}
+	
 	
 	 @Test
 	 @Transactional
