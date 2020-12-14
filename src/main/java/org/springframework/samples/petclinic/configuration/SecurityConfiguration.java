@@ -38,6 +38,19 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/users/new").permitAll()
 				.antMatchers("/admin/**").hasAnyAuthority("admin")
 				.antMatchers("/owners/**").hasAnyAuthority("owner","admin")
+				.antMatchers("/employees/**/delete").hasAnyAuthority("admin")
+				.antMatchers("/employees/new").hasAnyAuthority("admin")
+				.antMatchers("/employees/**").hasAnyAuthority("admin", "employee")
+				.antMatchers("/tokens/**").hasAnyAuthority("admin")
+				//.antMatchers("/clientes/**").hasAnyAuthority("client", "admin")
+				.antMatchers("/salas/new").hasAnyAuthority("admin")
+				.antMatchers("/salas/**/edit").hasAnyAuthority("admin")
+				.antMatchers("/salas/**/delete").hasAnyAuthority("admin")
+				.antMatchers("/circuitos/new").hasAnyAuthority("admin")
+				.antMatchers("/circuitos/**/edit").hasAnyAuthority("admin")
+				.antMatchers("/circuitos/**/delete").hasAnyAuthority("admin")
+				.antMatchers("/towels").hasAnyAuthority("client", "employee", "admin")
+				.antMatchers("/balances/**").hasAnyAuthority("admin")
 				.antMatchers("/vets/**").authenticated()
 				.anyRequest().permitAll()
 				.and()
@@ -77,5 +90,3 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	}
 
 }
-
-

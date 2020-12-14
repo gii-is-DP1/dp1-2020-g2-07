@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
@@ -24,6 +25,8 @@ public class Circuito extends NamedEntity {
 		        joinColumns = @JoinColumn(name="FK_Circuito"),
 		        inverseJoinColumns = @JoinColumn(name="FK_Sala")
 		    )
+
+	
 	@ManyToMany
 	@Size(min = 2, message = "The circuit has to be composed of two rooms minimum.")
 	private List<Sala> salas;

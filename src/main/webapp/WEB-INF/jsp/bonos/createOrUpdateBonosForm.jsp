@@ -14,23 +14,25 @@
         </script>
 
     <h2>
-        <c:if test="${bono['new']}">Nuevo </c:if> Bono
+        <c:if test="${bono['new']}">New Token</c:if> 
     </h2>
     <form:form modelAttribute="bono" class="form-horizontal" id="add-owner-form">
-        <div class="form-group has-feedback">
-            <petclinic:inputField label="Codigo" name="codigo"/>  
-            <petclinic:inputField label="Precio" name="precio"/>
-            <petclinic:inputField  label="Duracion" name="duracion"/>  
-            <petclinic:inputField label="Descripcion" name="descripcion"/>             
+        <div class="form-group has-feedback"> 
+            <petclinic:inputField label="Code" name="codigo"/> 
+            <petclinic:inputField label="Price" name="precio"/>
+            <petclinic:localDate pattern="yyyy-MM-dd"  label="Date Start" name="date_start"/>
+            <petclinic:localDate pattern="yyyy-MM-dd"  label="Date End" name="date_end"/> 
+            <petclinic:inputField label="Description" name="descripcion"/>             
+
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
                     <c:when test="${bono['new']}">
-                        <button class="btn btn-default" type="submit">Añadir Bono</button>
+                        <button class="btn btn-default" type="submit">Add Token</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Actualizar Bono</button>
+                        <button class="btn btn-default" type="submit">Update Token</button>
                     </c:otherwise>
                 </c:choose>
             </div>

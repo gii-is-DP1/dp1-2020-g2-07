@@ -5,6 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="circuitos">
     <h2>Circuits</h2>
@@ -42,20 +43,26 @@
                 </td>         
 
                 <td>
-                    <a href="/circuitos/${circuito.id}/edit">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    </a>
+                    <sec:authorize access="hasAuthority('admin')">
+                        <a href="/circuitos/${circuito.id}/edit">
+                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                        </a>
+                    </sec:authorize>
                 </td>
                 <td>
-                    <a href="/circuitos/${circuito.id}/delete">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                    </a>
+                    <sec:authorize access="hasAuthority('admin')">
+                        <a href="/circuitos/${circuito.id}/delete">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                        </a>
+                    </sec:authorize>
                 </td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
-     <p>
-        <a href="/circuitos/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add circuit</a>
-    </p>
+    <sec:authorize access="hasAuthority('admin')">
+        <p>
+            <a href="/circuitos/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add circuit</a>
+        </p>
+    </sec:authorize>
 </petclinic:layout>

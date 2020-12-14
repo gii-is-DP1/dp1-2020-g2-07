@@ -11,12 +11,10 @@
     <table id="clientesTable" class="table table-striped">
         <thead>
         <tr>
-            <th>Nick</th>
-            <th>Nombre</th>
-            <th>Apellidos</th>
-            <th>Direccion</th>
+            <th>First Name & Last Name</th>
+            <th>Address</th>
             <th>IBAN</th>
-            <th>Suscripcion</th>
+            <th>Subscription</th>
         </tr>
         </thead>
         <tbody>
@@ -26,16 +24,10 @@
                     <spring:url value="/clientes/{clientId}" var="clientUrl">
                         <spring:param name="clientId" value="${cliente.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(clientUrl)}"><c:out value="${cliente.nick}"/></a>
+                    <a href="${fn:escapeXml(clientUrl)}"><c:out value="${cliente.first_name} ${cliente.last_name}"/></a>
                 </td>
                 <td>
-                    <c:out value="${cliente.nombre}"/>
-                </td>
-                <td>
-                    <c:out value="${cliente.apellidos}"/>
-                </td>
-                <td>
-                    <c:out value="${cliente.direccion}"/>
+                    <c:out value="${cliente.address}"/>
                 </td>
                 <td>
                     <c:out value="${cliente.IBAN}"/>

@@ -1,92 +1,93 @@
+  
 package org.springframework.samples.petclinic.web;
-
-import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.Horario;
+import org.springframework.samples.petclinic.model.Sesion;
+import org.springframework.samples.petclinic.service.EmployeeService;
 import org.springframework.samples.petclinic.service.HorarioService;
+import org.springframework.samples.petclinic.service.SalaService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
-@RequestMapping("/horarios")
+@RequestMapping("/employees/{employeeId}")
 public class HorarioController {
-	public static final String HORARIOS_FORM ="/horarios/CreateOrUpdateHorariosForm";
-	public static final String HORARIOS_LISTING ="/horarios/HorariosListing";
 	
-	@Autowired 
-	HorarioService horariosService;
+	@Autowired
+	EmployeeService employeeService;
+	@Autowired
+	HorarioService horarioService;
+	@Autowired
+	SalaService salaService;
 	
-	
-	@GetMapping
-	public String horariosListing(ModelMap model) {
-		model.addAttribute("horarios", horariosService.findAll());
-		return HORARIOS_LISTING;
+	@ModelAttribute("employee")
+	public Employee findEmployee(@PathVariable("employeeId") int employeeId) {
+		return this.employeeService.findById(employeeId).get();
 	}
 	
-	@GetMapping("/{id}/edit")
-	public String editHorario(@PathVariable("id") int id,ModelMap model) {
-		Optional<Horario> horario = horariosService.findById(id);
-		if(horario.isPresent()) {
-			model.addAttribute("horario", horario.get());
-			return HORARIOS_FORM;
-		}else {
-			model.addAttribute("message", "We could not find the room you are trying to edit.");
-			return HORARIOS_LISTING;
-		}
-	}
-	@PostMapping("/{id}/edit")
-	public String editHorario(@PathVariable("id") int id,@Valid Horario modifiedHorario, BindingResult binding,ModelMap model) {
-		Optional<Horario> horario = horariosService.findById(id);
-		if(binding.hasErrors()) {
-			return HORARIOS_FORM;
-		}else {
-			BeanUtils.copyProperties(modifiedHorario, horario.get(),"id");
-			this.horariosService.save(modifiedHorario);
-			model.addAttribute("message", "Timetable was updated successfully.");
-			return horariosListing(model);
-		}
-	}
-	
-	@GetMapping("/{id}/delete")
-	public String deleteHorario(@PathVariable("id") int id, ModelMap model) {
-		Optional<Horario> horario = horariosService.findById(id);
-		if(horario.isPresent()) {
-			horariosService.delete(horario.get());
-			model.addAttribute("message", "Timetable  delete successfully.");
-			return horariosListing(model);
-		}else {
-			model.addAttribute("message", "We could not find the timetable you are trying to delete.");
-			return horariosListing(model);
-		}
-	}
-	
-	@GetMapping(value = "/new")
-	public String initCreationForm(ModelMap model) {
-		Horario horario = new Horario();
-		model.addAttribute("horario", horario);
-		return HORARIOS_FORM;
-	}
+    @GetMapping("/newTimeTable")
+    public String addTimeTable(Employee employee, ModelMap model) {
+    	Horario h = new Horario();
+    	employee.addHorario(h);
+        model.addAttribute("horario",h);
+        return "timetable/horarioForm";
+    }
 
-	@PostMapping(value = "/new")
-	public String processCreationForm(@Valid Horario horario, BindingResult result, ModelMap model) {
-		if (result.hasErrors()) {
-			return HORARIOS_FORM;
-		}
-		else {
-			this.horariosService.save(horario);
-			model.addAttribute("message", "Timetable create successfully.");
-			return horariosListing(model);
-		}
-	}
+    @PostMapping("/newTimeTable")
+    public String saveTimeTable(Employee e,@Valid @ModelAttribute("horario") Horario horario, BindingResult binding, ModelMap model){
+        if(binding.hasErrors()){
+            model.addAttribute("message", binding.toString());
+            return "timetable/horarioForm";
+        }else{
+            horarioService.save(horario);
+
+            return "redirect:/employees/" + String.valueOf(e.getId());
+        }
+    }
+    
+    @GetMapping("/TimeTable/{horarioId}")
+    public ModelAndView showEmployeeTimeTable(Employee e, @PathVariable("horarioId") int horarioId) {
+        ModelAndView mav = new ModelAndView("employees/employeeTimeTable");
+        mav.addObject(e);
+        mav.addObject("sesion",this.horarioService.findSesionesHorario(horarioId));
+        return mav;
+    }
 	
-	
+    @GetMapping("/TimeTable/{horarioId}/newSesion")
+    public String addSession(ModelMap model,@PathVariable("horarioId") int horarioId) {
+        model.addAttribute("horarioID", horarioId);
+        model.addAttribute("sesion", this.horarioService.findSesionesHorario(horarioId));
+        model.addAttribute("newSesion", new Sesion());
+        model.addAttribute("salas",salaService.findAll());
+        return "timetable/sesionForm";
+    }
+    
+    @PostMapping("/TimeTable/{horarioId}/newSesion")
+    public String saveTimeTable(Employee e, @PathVariable("horarioId") int horarioId,@Valid @ModelAttribute("newSesion") Sesion sesion, BindingResult binding, ModelMap model){
+        if(binding.hasErrors()){
+        	model.addAttribute("horarioID", horarioId);
+            model.addAttribute("salas",salaService.findAll());
+            model.addAttribute("sesion", this.horarioService.findSesionesHorario(horarioId));
+            return "timetable/sesionForm";
+        }else{
+        	sesion.setHorario(horarioService.findById(horarioId).get());
+            horarioService.addSesion(horarioId, sesion);
+
+            return "redirect:/employees/" + String.valueOf(e.getId());
+        }
+    }
+    
+    
+
 }

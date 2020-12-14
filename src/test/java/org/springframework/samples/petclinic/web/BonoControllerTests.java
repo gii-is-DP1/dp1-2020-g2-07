@@ -1,3 +1,4 @@
+  
 package org.springframework.samples.petclinic.web;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
@@ -43,14 +44,14 @@ class BonoControllerTests{
 		Bono bono = new Bono();
 		bono.setCodigo();
 		bono.setDescripcion("Bono descuento para Diego");
-		bono.setDuracion(LocalDate.of(2021, 11, 03));
+		//bono.setDuracion(LocalDate.of(2021, 11, 03));
 		bono.setId(1);
 		bono.setPrecio(5);
 		
 		Bono miguel = new Bono();
 		miguel.setCodigo();
 		miguel.setDescripcion("Bono descuento para Miguel");
-		miguel.setDuracion(LocalDate.of(2021, 02, 13));
+		//miguel.setDuracion(LocalDate.of(2021, 02, 13));
 		miguel.setId(2);
 		miguel.setPrecio(3);
 		

@@ -6,7 +6,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
@@ -32,8 +31,8 @@ public class Sala extends NamedEntity{
 	@ManyToMany(mappedBy="salas", cascade = CascadeType.ALL)
 	private List<Circuito> circuitos;
 	
-	@ManyToMany(mappedBy="sala", cascade = CascadeType.ALL)
-	private List<Horario> horario;
+	@OneToMany(mappedBy="sala", cascade = CascadeType.ALL)
+	private List<Sesion> sesiones;
 
 	public Integer getAforo() {
 		return aforo;
