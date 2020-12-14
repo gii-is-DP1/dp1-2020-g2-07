@@ -16,7 +16,7 @@
             <td><b><c:out value="${employee.first_name} ${employee.last_name}"/></b></td>
         </tr>
         <tr>
-            <th>Addres</th>
+            <th>Address</th>
             <td><b><c:out value="${employee.address}"/></b></td>
         </tr>
         <tr>
@@ -27,6 +27,8 @@
             <th>Profession</th>
             <td><b><c:out value="${employee.profession}"/></b></td>
         </tr>
+        
+      
     </table>
 
     <spring:url value="{employeeId}/edit" var="editUrl">
@@ -74,6 +76,49 @@
         </c:forEach>
         </tbody>
     </table>
+
+    <spring:url value="/employees/{employeeId}/newSalary" var="employeeSalaryUrl">
+        <spring:param name="employeeId" value="${employee.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(employeeSalaryUrl)}"><span class="glyphicon glyphicon-plus"
+                                                       aria-hidden="true"></span>New Salary</a>
+                                                       
+    <h3>TimeTable of <c:out value="${employee.first_name} ${employee.last_name}"/></h3>
+    <table id="employeesTimeTable" class="table table-striped">
+ 	  <thead>
+        <tr>
+            <th width=80%>Date</th>
+            <th></th>
+        </tr>
+        </thead>
+   	 	<tbody>
+        <c:forEach items="${employee.horarios}" var="horario">
+            <tr>
+                <td>
+                <spring:url value="/employees/{employeeId}/TimeTable/{horarioId}" var="employeeUrl">
+                        <spring:param name="employeeId" value="${employee.id}"/>
+                        <spring:param name="horarioId" value="${horario.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(employeeUrl)}"><petclinic:localDate date="${horario.fecha}" pattern="yyyy/MM/dd"/></a>
+                </td>
+                <td>
+                <spring:url value="/employees/{employeeId}/TimeTable/{horarioId}/newSesion" var="employeeSesionUrl">
+        			<spring:param name="employeeId" value="${employee.id}"/>
+        			<spring:param name="horarioId" value="${horario.id}"/>
+   				</spring:url>
+    			<a href="${fn:escapeXml(employeeSesionUrl)}"><span class="glyphicon glyphicon-plus"
+                                                       aria-hidden="true"></span>Add a session to this day</a>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+     <spring:url value="/employees/{employeeId}/newTimeTable" var="employeeTimeTableUrl">
+        <spring:param name="employeeId" value="${employee.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(employeeTimeTableUrl)}"><span class="glyphicon glyphicon-plus"
+                                                       aria-hidden="true"></span>New TimeTable</a>
+    
     <sec:authorize access="hasAuthority('admin')">
         <spring:url value="/employees/{employeeId}/newSalary" var="employeeSalaryUrl">
             <spring:param name="employeeId" value="${employee.id}"/>
@@ -82,3 +127,4 @@
                                                         aria-hidden="true"></span>New Salary</a>
     </sec:authorize>
 </petclinic:layout>
+
