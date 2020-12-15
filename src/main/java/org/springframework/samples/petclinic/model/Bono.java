@@ -22,8 +22,9 @@ public class Bono extends  BaseEntity {
 		        inverseJoinColumns = @JoinColumn(name="FK_Sala")
 		    )
 	
-	 @ManyToMany
-	 private Set<Sala> salas;
+
+	@ManyToMany
+    private Set<Sala> salas;
 	
 	@Column(name = "codigo")
 	private String codigo;
