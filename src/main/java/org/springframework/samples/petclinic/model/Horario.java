@@ -1,41 +1,67 @@
 package org.springframework.samples.petclinic.model;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
+import org.springframework.beans.support.MutableSortDefinition;
+import org.springframework.beans.support.PropertyComparator;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-
-import lombok.Data;
 
 @Entity
-@Data
 @Table(name = "horario")
 public class Horario extends BaseEntity{
 	
+	@NotNull
 	@Column(name = "fecha")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate fecha;
 	
-//	@Column(name = "hora")
-//	@DateTimeFormat(iso = ISO.TIME, pattern = "HH:mm:ss.SSSXXX")
-////	para hacer un horario debería ser una lista de horas disponibles en el día
-//	private List<LocalTime> hora;
+	@NotNull
+	@ManyToOne
+	@JoinColumn(name="employee_id")
+	private Employee employee;
+
+	@OneToMany(mappedBy = "horario",cascade=CascadeType.ALL)
+	private List<Sesion> sesiones;
 	
-//	@OneToMany(Optional = false)
-//	@JoinColumn(name = "empleado_id")
-//	private Empleado empleado;
 	
-//	@OneToOne(Optional = false)
-//	@JoinColumn(name = "cita_id")
-//	private Cita cita;
-	
+	public LocalDate getFecha() {
+		return fecha;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setFecha(LocalDate fecha) {
+		this.fecha = fecha;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+    public List<Sesion> getSesiones() {
+    	PropertyComparator.sort(sesiones, new MutableSortDefinition("horaInicio", true, true));//no funciona
+		return sesiones;
+	}
+
+	public void setSesiones(List<Sesion> sesiones) {
+		this.sesiones = sesiones;
+	}
+
+	public void addSesion(Sesion s){
+        this.sesiones.add(s);
+    }
+    
 
 }
