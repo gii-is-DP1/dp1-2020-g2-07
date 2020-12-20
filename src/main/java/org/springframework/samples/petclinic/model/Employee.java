@@ -64,7 +64,7 @@ public class Employee extends Individual {
 
 	@Override
 	public String toString() {
-		return getNombre();
+		return getFirst_name();
 	}
     
     public Integer getSalary() {

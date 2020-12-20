@@ -23,8 +23,12 @@
         <c:forEach items="${salas}" var="sala">
             <tr>
                 <td>
-                    <c:out value="${sala.name}"/>
+                    <spring:url value="/salas/{salaId}" var="salaUrl">
+                        <spring:param name="salaId" value="${sala.id}"/>
+                    </spring:url>
+                <a href="${fn:escapeXml(salaUrl)}"><c:out value="${sala.name}"/></a>
                 </td>
+               
                 <td>
                     <c:out value="${sala.aforo}"/>
                 </td>
