@@ -7,8 +7,10 @@
 <%@ attribute name="name" required="true" rtexprvalue="true"
               description="Name of the active menu: home, owners, vets or error"%>
 
-<nav class="navbar navbar-default" role="navigation">
+<nav class="navbar navbar-default" role="navigation" style="margin-right: -15%">
     <div class="container">
+    <!-- <img id="logo" alt="logo" src="/resources/images/logo.png" style="margin-left: -35%; margin-top: -2%"> -->
+				 
         <div class="navbar-header">
             <a class="navbar-brand"
                href="<spring:url value="/" htmlEscape="true" />"><span></span></a>
@@ -19,10 +21,12 @@
                     class="icon-bar"></span>
             </button>
         </div>
-        <div class="navbar-collapse collapse" id="main-navbar">
-            <ul class="nav navbar-nav">
+        <div class="navbar-collapse collapse" id="main-navbar" style="margin-top: -15%;">
+            <ul class="nav navbar-nav" style="margin-left: -17%">
+				 
+                <petclinic:menuItem active="${name eq 'home'}" url="/"
+                                    title="home page">
 
-                <petclinic:menuItem active="${name eq 'home'}" url="/" title="home page">
                     <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
                     <span>Home</span>
                 </petclinic:menuItem>
@@ -88,11 +92,7 @@
 
 
             </ul>
-
-
-
-
-            <ul class="nav navbar-nav navbar-right">
+            <ul class="nav navbar-nav navbar-right" style="margin-right: -13%; margin-top: 5%">
                 <sec:authorize access="!isAuthenticated()">
                     <li><a href="<c:url value="/login" />">Login</a></li>
                     <li><a href="<c:url value="/clientes/new" />">Register</a></li>

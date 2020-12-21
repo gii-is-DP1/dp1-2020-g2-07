@@ -122,5 +122,6 @@
     <a href="${fn:escapeXml(employeeTimeTableUrl)}"><span class="glyphicon glyphicon-plus"
                                                        aria-hidden="true"></span>New TimeTable</a>
     
+
 </petclinic:layout>
 
