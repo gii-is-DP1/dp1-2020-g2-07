@@ -25,8 +25,12 @@
             <td><b><c:out value="${cliente.IBAN}"/></b></td>
         </tr>
         <tr>
-            <th>Categoria</th>
+            <th>Subscription</th>
             <td><b><c:out value="${cliente.suscripcion}"/></b></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td><b><c:out value="${cliente.email}"/></b></td>
         </tr>
     </table>
 
@@ -40,7 +44,7 @@
         <spring:param name="id" value="${cliente.id}"/>
     </spring:url>
     <a href="${fn:escapeXml(deleteUrl)}" class="btn btn-default">Delete</a>
-    ></sec:authorize>
+    </sec:authorize>
 
     <br/>
     <br/>

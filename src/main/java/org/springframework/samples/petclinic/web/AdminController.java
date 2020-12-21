@@ -57,13 +57,11 @@ public class AdminController {
     @GetMapping("/users/{username}")
     public String activeUser(@PathVariable("username") String username,ModelMap model){
         User u = userService.findUser(username).get();
-        if(u.isEnabled()){
-            u.setEnabled(false);
-        }else{
+        if(!u.isEnabled()){
             u.setEnabled(true);
+            model.addAttribute("message", "State of user " + u.getUsername() + " has been changed");
+            userService.saveUser(u);
         }
-        model.addAttribute("message", "State of user " + u.getUsername() + " has been changed");
-        userService.saveUser(u);
         return getUsers(model);
     }
 
