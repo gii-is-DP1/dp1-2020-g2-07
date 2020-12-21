@@ -148,7 +148,5 @@ public class SalaController {
 				return salasListing(model);
 			}
 		}
-    
-    
-	
+    	
 }
