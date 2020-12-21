@@ -1,3 +1,4 @@
+  
 package org.springframework.samples.petclinic.web;
 import java.util.Collection;
 import java.util.Optional;
@@ -118,6 +119,7 @@ public class SalaController {
 //        return mav;
 //    }
 	
+
 	  @GetMapping("/{salaId}")
 	  public String showSala(@PathVariable("salaId") int salaId, ModelMap model, @AuthenticationPrincipal User user) {
 		  if(user==null) {
@@ -150,3 +152,6 @@ public class SalaController {
 		}
     	
 }
+
+	
+

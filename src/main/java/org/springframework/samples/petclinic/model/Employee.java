@@ -62,10 +62,14 @@ public class Employee extends Individual {
         this.horarios.add(h);
     }
 
+
 	@Override
 	public String toString() {
 		return getFirst_name();
 	}
+
+	
+
     
     public Integer getSalary() {
         //retorna el salario (euros / hora)
@@ -78,4 +82,3 @@ public class Employee extends Individual {
         }
     }
 }
-

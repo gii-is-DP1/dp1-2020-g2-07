@@ -127,5 +127,16 @@
                                                        aria-hidden="true"></span>New TimeTable</a>
     
 
+
+
+
+
+    <sec:authorize access="hasAuthority('admin')">
+        <spring:url value="/employees/{employeeId}/newSalary" var="employeeSalaryUrl">
+            <spring:param name="employeeId" value="${employee.id}"/>
+        </spring:url>
+        <a href="${fn:escapeXml(employeeSalaryUrl)}"><span class="glyphicon glyphicon-plus"
+                                                        aria-hidden="true"></span>New Salary</a>
+    </sec:authorize>
 </petclinic:layout>
 

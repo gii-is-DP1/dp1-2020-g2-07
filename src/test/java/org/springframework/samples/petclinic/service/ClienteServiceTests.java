@@ -59,10 +59,8 @@ public class ClienteServiceTests {
 		 Cliente cliente = this.clienteservice.findById(1).get();
 	     String oldName = cliente.getNombre();
 	     String newName = oldName + "X";
-
 	     cliente.setNombre(newName);
 	     this.clienteservice.save(cliente);
-
 	     cliente = this.clienteservice.findById(1).get();
 	     assertEquals(newName, cliente.getNombre());
 	 }
