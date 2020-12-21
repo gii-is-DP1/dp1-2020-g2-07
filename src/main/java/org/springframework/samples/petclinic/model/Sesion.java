@@ -1,11 +1,13 @@
 package org.springframework.samples.petclinic.model;
 
 import java.time.LocalTime;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -16,7 +18,10 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 @Entity
 @Table(name = "sesion")
 public class Sesion extends BaseEntity{
-
+	
+	@OneToMany(mappedBy="sesion")	
+	private Set<Cita> citas;
+	
 	@NotNull
 	@Column(name = "horaInicio")
 	@DateTimeFormat(iso = ISO.TIME, pattern = "HH:mm")
@@ -68,4 +73,19 @@ public class Sesion extends BaseEntity{
 	public void setSala(Sala sala) {
 		this.sala = sala;
 	}
+	
+	public Set<Cita> getCitas() {
+		return citas;
+	}
+
+	public void setCitas(Set<Cita> citas) {
+		this.citas = citas;
+	}
+
+	@Override
+	public String toString() {
+		return horario.getFecha() + ": From " + this.getHoraInicio() + " to " + this.getHoraFin();
+	}
+	
+	
 }
