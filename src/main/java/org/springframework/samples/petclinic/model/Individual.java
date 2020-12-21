@@ -1,21 +1,28 @@
 package org.springframework.samples.petclinic.model;
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 
 @MappedSuperclass
 public class Individual extends BaseEntity {
 
     @Column(name = "first_name")
-    @NotEmpty
+    @NotEmpty(message = "First name must be filled")
+    @Size(min = 3, max = 20)
+    @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$")
     private String first_name;
 
     @Column(name = "last_name")
-    @NotEmpty
+    @NotEmpty(message = "Last name must be filled")
+    @Size(min = 3, max = 20)
+    @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$")
     private String last_name;
 
     @Column(name = "address")
-    @NotEmpty
+    @NotEmpty(message = "Address must be filled")
     private String address;
 
     @Column(name = "category")
@@ -23,9 +30,13 @@ public class Individual extends BaseEntity {
     private Categoria category;
 
     @Column(name = "IBAN")
+    @NotEmpty(message = "IBAN must be filled")
+    @Pattern(regexp = "([a-zA-Z]{2})\\s*\\t*(\\d{2})\\s*\\t*(\\d{4})\\s*\\t*(\\d{4})\\s*\\t*(\\d{2})\\s*\\t*(\\d{10})")
     private String IBAN;
 
     @Column(name = "email")
+    @NotEmpty(message = "Email must be filled")
+    @Pattern(regexp = "^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$")
     private  String email;
 
     @OneToOne(cascade = CascadeType.ALL)

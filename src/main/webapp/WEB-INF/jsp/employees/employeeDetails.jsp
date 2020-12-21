@@ -27,6 +27,10 @@
             <th>Profession</th>
             <td><b><c:out value="${employee.profession}"/></b></td>
         </tr>
+        <tr>
+            <th>Email</th>
+            <td><b><c:out value="${employee.email}"/></b></td>
+        </tr>
         
       
     </table>
@@ -47,7 +51,7 @@
     <br/>
     <br/>
 
-    <h3>Salaries of <c:out value="${employee.last_name} ${employee.first_name}"/></h3>
+    <h3>Salaries of <c:out value="${employee.first_name} ${employee.last_name}"/></h3>
     <table id="employeesSalaries" class="table table-striped">
         <thead>
         <tr>
@@ -76,12 +80,15 @@
         </c:forEach>
         </tbody>
     </table>
+    
+    <sec:authorize access="hasAuthority('admin')">
+        <spring:url value="/employees/{employeeId}/newSalary" var="employeeSalaryUrl">
+            <spring:param name="employeeId" value="${employee.id}"/>
+        </spring:url>
+        <a href="${fn:escapeXml(employeeSalaryUrl)}"><span class="glyphicon glyphicon-plus"
+                                                        aria-hidden="true"></span>New Salary</a>
+    </sec:authorize>
 
-    <spring:url value="/employees/{employeeId}/newSalary" var="employeeSalaryUrl">
-        <spring:param name="employeeId" value="${employee.id}"/>
-    </spring:url>
-    <a href="${fn:escapeXml(employeeSalaryUrl)}"><span class="glyphicon glyphicon-plus"
-                                                       aria-hidden="true"></span>New Salary</a>
                                                        
     <h3>TimeTable of <c:out value="${employee.first_name} ${employee.last_name}"/></h3>
     <table id="employeesTimeTable" class="table table-striped">
@@ -99,7 +106,7 @@
                         <spring:param name="employeeId" value="${employee.id}"/>
                         <spring:param name="horarioId" value="${horario.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(employeeUrl)}"><petclinic:localDate date="${horario.fecha}" pattern="yyyy/MM/dd"/></a>
+                    <a href="${fn:escapeXml(employeeUrl)}"><c:out value="${horario.fecha}" /></a>
                 </td>
                 <td>
                 <spring:url value="/employees/{employeeId}/TimeTable/{horarioId}/newSesion" var="employeeSesionUrl">
@@ -119,6 +126,11 @@
     <a href="${fn:escapeXml(employeeTimeTableUrl)}"><span class="glyphicon glyphicon-plus"
                                                        aria-hidden="true"></span>New TimeTable</a>
     
+
+
+
+
+
     <sec:authorize access="hasAuthority('admin')">
         <spring:url value="/employees/{employeeId}/newSalary" var="employeeSalaryUrl">
             <spring:param name="employeeId" value="${employee.id}"/>
@@ -127,3 +139,4 @@
                                                         aria-hidden="true"></span>New Salary</a>
     </sec:authorize>
 </petclinic:layout>
+

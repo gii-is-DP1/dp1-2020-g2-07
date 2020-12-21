@@ -1,6 +1,8 @@
   
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,8 +48,8 @@ public class HorarioController {
 
     @PostMapping("/newTimeTable")
     public String saveTimeTable(Employee e,@Valid @ModelAttribute("horario") Horario horario, BindingResult binding, ModelMap model){
-        if(binding.hasErrors()){
-            model.addAttribute("message", binding.toString());
+        if(binding.hasErrors() || LocalDate.now().isAfter(horario.getFecha())){
+            model.addAttribute("message", "La fecha no puede ser previa a la fecha actual");
             return "timetable/horarioForm";
         }else{
             horarioService.save(horario);

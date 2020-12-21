@@ -49,6 +49,7 @@ public class EmployeeService {
 
     public void delete(Employee employee) {
         employeeRepo.deleteById(employee.getId());
+        userService.delete(employee.getUser());
     }
 
     public void addSalaryToEmployee(int id, EmployeeRevenue salary){
@@ -56,5 +57,9 @@ public class EmployeeService {
         this.save(employeeRepo.findById(id).get());
     }
 
-        
+
+
 }
+
+        
+
