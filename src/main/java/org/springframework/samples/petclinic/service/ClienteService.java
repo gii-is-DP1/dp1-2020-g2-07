@@ -37,6 +37,7 @@ public class ClienteService {
 
     public void delete(Cliente cliente) {
         clientRepo.deleteById(cliente.getId());
+        userService.delete(cliente.getUser());
     }
 
     public void save(@Valid Cliente cliente, String type_safe){
@@ -49,16 +50,17 @@ public class ClienteService {
             e.setSubject("Sign up petition made on " + date.toString());
             e.setBody("Have a petition of registrer from " + cliente.getFirst_name() + " " + cliente.getLast_name());
             emailService.sendMail(e);
+            cliente.getUser().setEnabled(false);
         }
 
         clientRepo.save(cliente);
 
-        cliente.getUser().setEnabled(false);
         userService.saveUser(cliente.getUser());
         //creating authorities
         authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "client");
 
     }
+
 
     public void addPayToClient(int id, Pago pay){
         clientRepo.findById(id).get().addPay(pay);

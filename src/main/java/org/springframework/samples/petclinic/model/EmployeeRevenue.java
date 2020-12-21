@@ -2,6 +2,8 @@ package org.springframework.samples.petclinic.model;
 import com.sun.istack.NotNull;
 import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import java.time.LocalDate;
 
 
@@ -23,10 +25,13 @@ public class EmployeeRevenue extends BaseEntity{
     private LocalDate dateEnd;
 
     @NotNull
+    @Min(1)
+    @Max(50)
     @Column(name = "hours_worked")
     private Integer hoursWorked;
 
     @NotNull
+    @Min(8)
     @Column(name = "quantity")
     private Integer quantity;
 
