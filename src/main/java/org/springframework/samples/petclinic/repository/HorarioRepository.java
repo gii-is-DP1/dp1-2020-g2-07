@@ -22,5 +22,7 @@ public interface HorarioRepository extends Repository<Horario, Integer>,CrudRepo
     @Query("SELECT sesion FROM Sesion sesion WHERE sesion.horario.id = :horario_id")
     public Collection<Sesion> getSesionByHorario(@Param("horario_id") int horario_id);
 
+    @Query("SELECT sesion FROM Sesion sesion WHERE sesion.sala.id = :sala_id")
+    public Collection<Sesion> getSesionBySala(@Param("sala_id") int sala_id);
 
 }

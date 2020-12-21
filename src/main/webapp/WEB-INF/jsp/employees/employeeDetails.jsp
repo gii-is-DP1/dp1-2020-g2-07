@@ -27,6 +27,10 @@
             <th>Profession</th>
             <td><b><c:out value="${employee.profession}"/></b></td>
         </tr>
+        <tr>
+            <th>Email</th>
+            <td><b><c:out value="${employee.email}"/></b></td>
+        </tr>
         
       
     </table>
@@ -76,7 +80,7 @@
         </c:forEach>
         </tbody>
     </table>
-
+    
     <sec:authorize access="hasAuthority('admin')">
         <spring:url value="/employees/{employeeId}/newSalary" var="employeeSalaryUrl">
             <spring:param name="employeeId" value="${employee.id}"/>
@@ -84,6 +88,7 @@
         <a href="${fn:escapeXml(employeeSalaryUrl)}"><span class="glyphicon glyphicon-plus"
                                                         aria-hidden="true"></span>New Salary</a>
     </sec:authorize>
+
                                                        
     <h3>TimeTable of <c:out value="${employee.first_name} ${employee.last_name}"/></h3>
     <table id="employeesTimeTable" class="table table-striped">
