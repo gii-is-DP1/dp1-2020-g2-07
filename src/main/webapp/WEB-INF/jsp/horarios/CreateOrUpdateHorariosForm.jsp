@@ -6,29 +6,27 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<script>
-    $(function () {
-        $("#fEmision").datepicker({dateFormat: 'yyyy-mm-dd'});
-    });
-</script>
 
-<petclinic:layout pageName="pays">
+<petclinic:layout pageName="horarios">
     <h2>
-        <c:if test="${pago['new']}">New </c:if> Salary
+        <c:if test="${horario['new']}">New </c:if> TimeTable
     </h2>
-    <form:form modelAttribute="pago" class="form-horizontal" id="add-employee-form">
+    <form:form modelAttribute="horario" class="form-horizontal" id="add-employee-form">
         <div class="form-group has-feedback">
-            <petclinic:localDate pattern="yyyy-MM-dd" label="Date" name="fEmision"/>
-            <petclinic:inputField label="Quantity" name="cantidad"/>
+            <petclinic:inputField label="HoraIni" name="horaIni"/>
+            <petclinic:inputField label="HoraFin" name="horaFin"/>
+            <div class="profession-group">
+                <petclinic:multiSelect names="${employees}" name="employees"  label="Employees"></petclinic:multiSelect>
+            </div>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
                 <c:choose>
-                    <c:when test="${pago['new']}">
-                        <button class="btn btn-default" type="submit">add Pay</button>
+                    <c:when test="${horario['new']}">
+                        <button class="btn btn-default" type="submit">add TimeTable</button>
                     </c:when>
                     <c:otherwise>
-                        <button class="btn btn-default" type="submit">Update Pay</button>
+                        <button class="btn btn-default" type="submit">Update TimeTable</button>
                     </c:otherwise>
                 </c:choose>
             </div>

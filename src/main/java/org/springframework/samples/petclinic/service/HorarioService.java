@@ -44,6 +44,7 @@ public class HorarioService {
     public Collection<Sesion> findSesionesHorario(int id){
     	return horarioRepo.getSesionByHorario(id);
     }
+
     
 //    public Collection<Sesion> findSesionesSala(int id){
 //    	return horarioRepo.getSesionBySala(id);
@@ -64,3 +65,4 @@ public class HorarioService {
 //    	}
 //    }
 }
+

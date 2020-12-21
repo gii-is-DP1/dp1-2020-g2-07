@@ -86,16 +86,13 @@ public class Bono extends  BaseEntity {
 	/*public void setCodigo(BonoService bs) {
 	    this.codigo= getAlphaNumericString(12, true, bs);
 	}
-
 	private String getAlphaNumericString(int n, Boolean verifyUnique, BonoService bs) { 
 	    String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 	                                + "0123456789"
 									+ "abcdefghijklmnopqrstuvxyz";
 	  
 		StringBuilder sb = new StringBuilder(n);
-
 		Boolean isUnique = false;
-
 		while (!isUnique) {
 			sb.setLength(n);
 	    	for (int i = 0; i < n; i++) { 

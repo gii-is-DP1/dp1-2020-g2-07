@@ -27,6 +27,7 @@ public class EmployeeServiceTests {
 
 	//@Test
 	@Transactional
+
 	void insertEmpleado() {
 		EmployeeRevenue pagos = new EmployeeRevenue();
 		Employee empleado = new Employee();
@@ -41,6 +42,23 @@ public class EmployeeServiceTests {
 		empleado.setProfession(Profession.CLEANER);;
 		employeeservice.save(empleado);*/
 	}
+
+
+//	void insertEmpleado() {
+//		EmployeeRevenue pagos = new EmployeeRevenue();
+//		Employee empleado = new Employee();
+//		empleado.setApellidos("Rodríguez Cruz");
+//		empleado.setCategoria(Categoria.EMPLEADO);
+//		empleado.setDireccion("Calle falsa 456");
+//		empleado.setIBAN("SE1232344324");
+//		empleado.setNick("Paco");
+//		empleado.setId(2);
+//		empleado.setNombre("Francisco");
+//		empleado.addSalary(pagos);
+//		empleado.setProfession(Profession.CLEANER);;
+//		employeeservice.save(empleado);
+//	}
+	
 
 	@Test
 	void mostrarListaConEmpleados() {
@@ -62,4 +80,8 @@ public class EmployeeServiceTests {
 		assertFalse(empleados.size() == 0);
 	}
 
+
 }
+
+	
+

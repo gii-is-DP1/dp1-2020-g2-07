@@ -18,11 +18,9 @@
   font-size: 15px;
   transition: 0.4s;
 }
-
 .active, .accordion:hover {
   background-color: #ccc;
 }
-
 .accordion:after {
   content: '\002B';
   color: #777;
@@ -30,11 +28,9 @@
   float: right;
   margin-left: 5px;
 }
-
 .active:after {
   content: "\2212";
 }
-
 .panel {
   padding: 0 18px;
   background-color: white;
@@ -108,7 +104,6 @@
 <script>
 var acc = document.getElementsByClassName("accordion");
 var i;
-
 for (i = 0; i < acc.length; i++) {
   acc[i].addEventListener("click", function() {
     this.classList.toggle("active");
