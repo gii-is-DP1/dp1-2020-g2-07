@@ -11,6 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
@@ -26,14 +27,15 @@ public class Circuito extends NamedEntity {
 		        inverseJoinColumns = @JoinColumn(name="FK_Sala")
 		    )
 
-	@NotEmpty
+	
 	@ManyToMany
-//	@Size(min = 2)
+	@Size(min = 2, message = "The circuit has to be composed of two rooms minimum.")
 	private List<Sala> salas;
+	
 	
 	private Integer aforo;
 	
-	@Size(min = 10, max = 1024)
+	@Size(min= 10, message = "The description need to have at least ten letters.")
 	@Column(name = "descripcion", length=1024)
 	private String descripcion;
 		

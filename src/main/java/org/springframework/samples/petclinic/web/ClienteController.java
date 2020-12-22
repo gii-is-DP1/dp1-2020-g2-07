@@ -1,13 +1,17 @@
 package org.springframework.samples.petclinic.web;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.service.ClienteService;
+import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -21,15 +25,18 @@ public class ClienteController {
     @Autowired
     ClienteService clientService;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping
     public String listClients(ModelMap model){
         model.addAttribute("clientes", clientService.findAll());
         return CLIENTS_LISTING;
     }
 
-    @GetMapping("/{id}/edit")
-    public String editCliente(@PathVariable("id") int id, ModelMap model) {
-        Optional<Cliente> cliente = clientService.findById(id);
+    @GetMapping("/{clientId}/edit")
+    public String editCliente(@PathVariable("clientId") int clientId, ModelMap model) {
+        Optional<Cliente> cliente = clientService.findById(clientId);
         if(cliente.isPresent()) {
             model.addAttribute("cliente",cliente.get());
             return CLIENTS_FORM;
@@ -39,23 +46,23 @@ public class ClienteController {
         }
     }
 
-    @PostMapping("/{id}/edit")
-    public String editCliente(@PathVariable("id") int id, @Valid Cliente modifiedClient, BindingResult binding, ModelMap model) {
-        Optional<Cliente> cliente = clientService.findById(id);
+    @PostMapping("/{clientId}/edit")
+    public String editCliente(@PathVariable("clientId") int clientId, @Valid Cliente modifiedClient, BindingResult binding, ModelMap model) {
+        Optional<Cliente> cliente = clientService.findById(clientId);
         if(binding.hasErrors()) {
             return CLIENTS_FORM;
         }else {
-            BeanUtils.copyProperties(modifiedClient, cliente.get(), "{id}");
-            cliente.get().setCategoria(Categoria.CLIENTE);
-            clientService.save(cliente.get());
+            modifiedClient.setCategory(cliente.get().getCategory());
+            BeanUtils.copyProperties(modifiedClient, cliente.get(), "id");
+            clientService.save(cliente.get(), "edit");
             model.addAttribute("message","Se ha modificado el cliente");
             return listClients(model);
         }
     }
 
-    @GetMapping("/{id}/delete")
-    public String deleteCliente(@PathVariable("id") int id,ModelMap model) {
-        Optional<Cliente> cliente =clientService.findById(id);
+    @GetMapping("/{clientId}/delete")
+    public String deleteCliente(@PathVariable("clientId") int clientId,ModelMap model) {
+        Optional<Cliente> cliente =clientService.findById(clientId);
         if(cliente.isPresent()) {
             clientService.delete(cliente.get());
             model.addAttribute("message","Se ha borrado satisfactoriamente");
@@ -69,6 +76,7 @@ public class ClienteController {
     @GetMapping("/new")
     public String editNewClient(ModelMap model) {
         model.addAttribute("cliente",new Cliente());
+        model.addAttribute("user", new User());
         return CLIENTS_FORM;
     }
 
@@ -76,9 +84,9 @@ public class ClienteController {
     public String saveNewEmployee(@Valid Cliente cliente, BindingResult binding,ModelMap model) {
         if(binding.hasErrors()) {
             return CLIENTS_FORM;
-        }else {
-            cliente.setCategoria(Categoria.EMPLEADO);
-            clientService.save(cliente);
+        } else {
+            cliente.setCategory(Categoria.EMPLEADO);
+            clientService.save(cliente, "new");
             model.addAttribute("message", "The client was created successfully!");
             return listClients(model);
         }
@@ -110,4 +118,5 @@ public class ClienteController {
             return "redirect:/clientes/" + String.valueOf(clientId);
         }
     }
+
 }

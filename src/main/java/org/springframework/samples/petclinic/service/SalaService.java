@@ -5,9 +5,13 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Sala;
 import org.springframework.samples.petclinic.repository.SalaRepository;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedSalaNameException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 public class SalaService {
@@ -37,4 +41,31 @@ public class SalaService {
     	salaRepo.save(sala);
     }
     
-}
+    public Sala getRoomwithIdDIfferent(String name,Integer id) {
+		name=name.toLowerCase();
+		for (Sala sala: getRooms()) {
+			String compName=sala.getName();
+			compName=compName.toLowerCase();
+			if (compName.equals(name) && sala.getId()!=id) {
+				return sala;
+			}
+		}
+		return null;
+	}
+    public Collection<Sala> getRooms(){
+    	return salaRepo.findAll();
+    }
+    
+    @Transactional(rollbackOn = DuplicatedSalaNameException.class)
+    public void saveSala(Sala sala)  throws DuplicatedSalaNameException {
+    	Sala otherRoom=getRoomwithIdDIfferent(sala.getName(), sala.getId());
+    	 if (StringUtils.hasLength(sala.getName()) &&  (otherRoom!= null && otherRoom.getId()!=sala.getId())) {            	
+         	throw new DuplicatedSalaNameException();
+         }else
+        	 salaRepo.save(sala);    
+    }
+    	
+    	
+    }
+    
+

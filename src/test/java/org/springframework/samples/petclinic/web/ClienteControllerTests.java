@@ -35,12 +35,12 @@ class ClienteControllerTests {
 
 	@MockBean
 	private ClienteService clienteService;
-        
+
     @MockBean
 	private UserService userService;
-        
+
     @MockBean
-    private AuthoritiesService authoritiesService; 
+    private AuthoritiesService authoritiesService;
 
 	@Autowired
 	private MockMvc mockMvc;
@@ -52,12 +52,11 @@ class ClienteControllerTests {
 
 		paco = new Cliente();
 		paco.setId(TEST_CLIENTE_ID);
-        paco.setNombre("Paco");
-        paco.setApellidos("Paquez Perez");
-        paco.setNick("paquito12");
+        paco.setFirst_name("Paco");
+        paco.setLast_name("Paquez Perez");
         paco.setIBAN("424535634563A");
-        paco.setDireccion("C/ Falsa 123");
-        paco.setCategoria(Categoria.CLIENTE);
+        paco.setAddress("C/ Falsa 123");
+        paco.setCategory(Categoria.CLIENTE);
         paco.setSuscripcion(SubType.PREMIUM);
 		given(this.clienteService.findById(TEST_CLIENTE_ID).get()).willReturn(paco);
 
