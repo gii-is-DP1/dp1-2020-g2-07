@@ -27,6 +27,10 @@
             <th>Profession</th>
             <td><b><c:out value="${employee.profession}"/></b></td>
         </tr>
+        <tr>
+            <th>Email</th>
+            <td><b><c:out value="${employee.email}"/></b></td>
+        </tr>
         
       
     </table>
