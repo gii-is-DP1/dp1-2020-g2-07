@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.web;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.service.ClienteService;
 import org.springframework.samples.petclinic.service.UserService;
@@ -9,6 +10,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.Optional;
 
@@ -81,7 +84,7 @@ public class ClienteController {
     public String saveNewEmployee(@Valid Cliente cliente, BindingResult binding,ModelMap model) {
         if(binding.hasErrors()) {
             return CLIENTS_FORM;
-        }else {
+        } else {
             cliente.setCategory(Categoria.EMPLEADO);
             clientService.save(cliente, "new");
             model.addAttribute("message", "The client was created successfully!");
@@ -115,4 +118,5 @@ public class ClienteController {
             return "redirect:/clientes/" + String.valueOf(clientId);
         }
     }
+
 }

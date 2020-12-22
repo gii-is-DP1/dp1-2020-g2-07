@@ -1,21 +1,31 @@
 package org.springframework.samples.petclinic.model;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
 @Table(name = "pagos")
 public class Pago extends BaseEntity{
     @Column(name = "f_emision")
-    private String fEmision;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fEmision;
 
     @Column(name = "cantidad")
+    @NotNull
+    @Min(30)
+    @Max(50)
     private Integer cantidad;
 
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    public void setfEmision(String fEmision) {
+    public void setfEmision(LocalDate fEmision) {
         this.fEmision = fEmision;
     }
 
@@ -27,7 +37,7 @@ public class Pago extends BaseEntity{
         this.cliente = cliente;
     }
 
-    public String getfEmision(){ return this.fEmision; }
+    public LocalDate getfEmision(){ return this.fEmision; }
     public Integer getCantidad(){ return this.cantidad; }
     public Cliente getCliente(){ return this.cliente; }
 

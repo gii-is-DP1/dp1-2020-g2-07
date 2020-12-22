@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class EmployeeServiceTests {
 	@Autowired
 	protected EmployeeService employeeservice;
-	
+
 	//@Test
 	@Transactional
 	void insertEmpleado() {
@@ -39,27 +39,27 @@ public class EmployeeServiceTests {
 		//sesmpleado.setNombre("Francisco");
 		empleado.addSalary(pagos);
 		empleado.setProfession(Profession.CLEANER);;
-		employeeservice.save(empleado);
+		employeeservice.save(empleado);*/
 	}
-	
+
 	@Test
 	void mostrarListaConEmpleados() {
 		List<Employee> empleados = (List<Employee>) employeeservice.findAll();
 		assertEquals(3, empleados.size());
 	}
-	
+
 	@Test
 	void mostrarEmpleadosPorId() {
 		Integer id = 1;
 		Optional<Employee> empleados = employeeservice.findById(id);
 		assertFalse(!empleados.isPresent());
 	}
-	
+
 	@Test
 	void mostrarEmpleadosPorProfesión() {
 		String profesion = "LIFE_GUARD";
 		List<Employee> empleados = employeeservice.findEmployeeByProfession(profesion);
 		assertFalse(empleados.size() == 0);
 	}
-	
+
 }
