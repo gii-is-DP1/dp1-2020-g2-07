@@ -20,7 +20,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "horario")
 public class Horario extends BaseEntity{
 	
-	@NotNull
+	@NotNull(message = "Date can't be null")
 	@Column(name = "fecha")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate fecha;
@@ -62,6 +62,5 @@ public class Horario extends BaseEntity{
 	public void addSesion(Sesion s){
         this.sesiones.add(s);
     }
-    
-
+	
 }

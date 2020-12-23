@@ -16,8 +16,8 @@ public interface HorarioRepository extends Repository<Horario, Integer>,CrudRepo
     Collection<Horario> findAll();
     Optional<Horario> findById(int id);
     
-//    @Query("SELECT horario FROM Horario horario WHERE horario.employee.id = :employee_id")
-//    public Collection<Horario> getHorariosByEmployee(@Param("employee_id") int employee_id);
+    @Query("SELECT horario FROM Horario horario WHERE horario.employee.id = :employee_id")
+    public Collection<Horario> getHorariosByEmployee(@Param("employee_id") int employee_id);
     
     @Query("SELECT sesion FROM Sesion sesion WHERE sesion.horario.id = :horario_id")
     public Collection<Sesion> getSesionByHorario(@Param("horario_id") int horario_id);

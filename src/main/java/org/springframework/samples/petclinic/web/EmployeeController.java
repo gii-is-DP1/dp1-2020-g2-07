@@ -83,6 +83,7 @@ public class EmployeeController {
     public ModelAndView showEmployee(@PathVariable("employeeId") int employeeId) {
         ModelAndView mav = new ModelAndView("employees/employeeDetails");
         mav.addObject(this.employeeService.findById(employeeId).get());
+        mav.addObject("horarios",horarioService.futureDays(employeeId));
         return mav;
     }
 

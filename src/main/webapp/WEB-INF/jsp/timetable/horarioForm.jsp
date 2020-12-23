@@ -11,10 +11,10 @@
 <petclinic:layout pageName="horarios">
   <jsp:attribute name="customScript">
         <script>
-            $(function () {
-                $("#fecha").datepicker({dateFormat: 'yy/mm/dd'});
-            });          
-        </script>
+	         $(function () {
+                 $("#fecha").datepicker({dateFormat: 'yy/mm/dd'});
+             });          
+		</script>
         
     </jsp:attribute>
    <jsp:body>
@@ -24,7 +24,7 @@
 
     <form:form modelAttribute="horario" class="form-horizontal" id="add-timetable-form">
         <div class="form-group has-feedback">
-          <petclinic:inputField label="Date" name="fecha"/>´
+          <petclinic:inputField label="Date" name="fecha"/>
           <input type="hidden" name="employee" value="${employee.id}">
         </div>
         <div class="form-group">
