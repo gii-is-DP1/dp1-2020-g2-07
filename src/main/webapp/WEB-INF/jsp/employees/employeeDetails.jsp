@@ -90,7 +90,7 @@
     </sec:authorize>
 
                                                        
-    <h3>TimeTable of <c:out value="${employee.first_name} ${employee.last_name}"/></h3>
+   <h3>Schedule of <c:out value="${employee.first_name} ${employee.last_name}"/></h3>
     <table id="employeesTimeTable" class="table table-striped">
  	  <thead>
         <tr>
@@ -99,7 +99,7 @@
         </tr>
         </thead>
    	 	<tbody>
-        <c:forEach items="${employee.horarios}" var="horario">
+        <c:forEach items="${horarios}" var="horario">
             <tr>
                 <td>
                 <spring:url value="/employees/{employeeId}/TimeTable/{horarioId}" var="employeeUrl">
@@ -120,12 +120,17 @@
         </c:forEach>
         </tbody>
     </table>
-     <spring:url value="/employees/{employeeId}/newTimeTable" var="employeeTimeTableUrl">
+    <spring:url value="/employees/{employeeId}/newTimeTable" var="employeeTimeTableUrl">
         <spring:param name="employeeId" value="${employee.id}"/>
     </spring:url>
-    <a href="${fn:escapeXml(employeeTimeTableUrl)}"><span class="glyphicon glyphicon-plus"
-                                                       aria-hidden="true"></span>New TimeTable</a>
+    <a href="${fn:escapeXml(employeeTimeTableUrl)}"class="btn btn-default">
+    <span class="glyphicon glyphicon-time" aria-hidden="true"></span> New day to the schedule</a>
+    
+    <spring:url value="/employees/{employeeId}/pastSessions" var="employeePastSessionsUrl">
+        <spring:param name="employeeId" value="${employee.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(employeePastSessionsUrl)}"class="btn btn-default">
+    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>  Past sessions</a>
     
 
 </petclinic:layout>
-

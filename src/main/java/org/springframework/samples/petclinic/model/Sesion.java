@@ -22,17 +22,17 @@ public class Sesion extends BaseEntity{
 	@OneToMany(mappedBy="sesion")	
 	private Set<Cita> citas;
 	
-	@NotNull
+	@NotNull(message = "Start time can't be null")
 	@Column(name = "horaInicio")
 	@DateTimeFormat(iso = ISO.TIME, pattern = "HH:mm")
 	private LocalTime horaInicio;
 
-	@NotNull
+	@NotNull(message = "End time can't be null")
 	@Column(name = "horaFin")
 	@DateTimeFormat(iso = ISO.TIME, pattern = "HH:mm")
 	private LocalTime horaFin;
 
-	@NotNull
+	@NotNull(message = "The room can't be null")
 	@ManyToOne
 	@JoinColumn(name = "sala_id")
 	private Sala sala;

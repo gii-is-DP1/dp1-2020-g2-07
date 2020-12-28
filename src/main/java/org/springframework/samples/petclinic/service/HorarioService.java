@@ -1,7 +1,10 @@
 package org.springframework.samples.petclinic.service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -14,6 +17,8 @@ import org.springframework.samples.petclinic.model.Horario;
 import org.springframework.samples.petclinic.model.Sesion;
 import org.springframework.samples.petclinic.repository.HorarioRepository;
 import org.springframework.stereotype.Service;
+
+import javassist.expr.NewArray;
 
 @Service
 public class HorarioService {
@@ -44,6 +49,7 @@ public class HorarioService {
     public Collection<Sesion> findSesionesHorario(int id){
     	return horarioRepo.getSesionByHorario(id);
     }
+     
     
 //    public Collection<Sesion> findSesionesSala(int id){
 //    	return horarioRepo.getSesionBySala(id);
@@ -55,12 +61,22 @@ public class HorarioService {
     	return a;
     }
     
-//    public void addAppointment(int salaId,int sesionId,Cliente c) {
-//    	Collection<Sesion> a = activeSessions(salaId);
-//    	Sesion s = a.stream().filter(x->x.getId().equals(sesionId)).findFirst().get();
-//    	Set<Cliente> citas = s.getLista_clientes();
-//    	if(citas.size()<s.getSala().getAforo()) {
-//    		citas.add(c);
-//    	}
-//    }
+    
+    public Collection<Horario> futureDays(int employee_id){
+    	Collection<Horario> a = horarioRepo.getHorariosByEmployee(employee_id);
+    	a.removeIf(x->x.getFecha().isBefore(LocalDate.now()));
+    	List<Horario> future = new ArrayList<>(a);
+    	Collections.sort(future, (x,y)->x.getFecha().compareTo(y.getFecha()));
+    	return future;
+    }
+    
+    public Collection<Horario> pastDays(int employee_id){
+    	Collection<Horario> a = horarioRepo.getHorariosByEmployee(employee_id);
+    	a.removeIf(x->x.getFecha().isAfter(LocalDate.now()));
+    	List<Horario> past = new ArrayList<>(a);
+    	Collections.sort(past, (x,y)->x.getFecha().compareTo(y.getFecha()));
+    	return past;
+    }
+    
+
 }

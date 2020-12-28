@@ -9,19 +9,14 @@
 
 
 <petclinic:layout pageName="sesiones">
-  <jsp:attribute name="customScript">
+   <jsp:attribute name="customScript">
         <script>
             $(function () {
-            	$('horaInicio').timepicker({
+            	$('#horaInicio').timepicker({
             	    timeFormat: 'HH:mm p',
-            	    interval: 60,
-            	    minTime: '10',
-            	    maxTime: '6:00pm',
-            	    defaultTime: '11',
-            	    startTime: '10:00',
-            	    dynamic: false,
-            	    dropdown: true,
-            	    scrollbar: true
+            	    minTime: '9',
+            	    maxTime: '21:00pm'
+            	    startTime: '9:00'
             	});
             });          
         </script>

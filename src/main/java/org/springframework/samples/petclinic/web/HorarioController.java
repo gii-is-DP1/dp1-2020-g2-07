@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/employees/{employeeId}")
 public class HorarioController {
 	
+	
 	@Autowired
 	EmployeeService employeeService;
 	@Autowired
@@ -32,8 +33,16 @@ public class HorarioController {
 	@Autowired
 	SalaService salaService;
 	
+	@Autowired
+	public HorarioController(EmployeeService employeeService, HorarioService horarioService,SalaService salaService) {
+		this.employeeService = employeeService;
+		this.horarioService = horarioService;
+		this.salaService = salaService;
+	}
+	
 	@ModelAttribute("employee")
 	public Employee findEmployee(@PathVariable("employeeId") int employeeId) {
+		
 		return this.employeeService.findById(employeeId).get();
 	}
 	
@@ -44,12 +53,16 @@ public class HorarioController {
         model.addAttribute("horario",h);
         return "timetable/horarioForm";
     }
+    
+
 
     @PostMapping("/newTimeTable")
     public String saveTimeTable(Employee e,@Valid @ModelAttribute("horario") Horario horario, BindingResult binding, ModelMap model){
-        if(binding.hasErrors() || LocalDate.now().isAfter(horario.getFecha())){
-            model.addAttribute("message", "La fecha no puede ser previa a la fecha actual");
+        if(binding.hasErrors()){
             return "timetable/horarioForm";
+        }else if(LocalDate.now().isAfter(horario.getFecha())) {
+        	model.addAttribute("message", "The day you picked can't be in the past");
+        	return "timetable/horarioForm";
         }else{
             horarioService.save(horario);
 
@@ -58,13 +71,22 @@ public class HorarioController {
     }
     
     @GetMapping("/TimeTable/{horarioId}")
-    public ModelAndView showEmployeeTimeTable(Employee e, @PathVariable("horarioId") int horarioId) {
+    public ModelAndView showEmployeeTimeTable( @PathVariable("horarioId") int horarioId) {
         ModelAndView mav = new ModelAndView("employees/employeeTimeTable");
-        mav.addObject(e);
         mav.addObject("sesion",this.horarioService.findSesionesHorario(horarioId));
+        mav.addObject("horario", this.horarioService.findById(horarioId).get());
         return mav;
     }
+    
 	
+    @GetMapping("/pastSessions")
+	public ModelAndView showPastSessions(@PathVariable("employeeId") int employeeId) {
+		ModelAndView mav = new ModelAndView("employees/employeePastSessions");
+		mav.addObject("past", horarioService.pastDays(employeeId));
+		return mav;
+		
+	}
+    
     @GetMapping("/TimeTable/{horarioId}/newSesion")
     public String addSession(ModelMap model,@PathVariable("horarioId") int horarioId) {
         model.addAttribute("horarioID", horarioId);
