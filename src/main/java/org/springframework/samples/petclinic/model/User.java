@@ -17,7 +17,6 @@ import lombok.Data;
 @Table(name = "users")
 public class User{
 	@Id
-    @NotEmpty
 	String username;
 
 	String password;
