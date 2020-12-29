@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Controller
@@ -81,10 +83,20 @@ public class ClienteController {
     }
 
     @PostMapping("/new")
-    public String saveNewEmployee(@Valid Cliente cliente, BindingResult binding,ModelMap model) {
+    public String saveNewCliente(@Valid Cliente cliente, BindingResult binding,ModelMap model) {
         if(binding.hasErrors()) {
             return CLIENTS_FORM;
         } else {
+            Map<Boolean, List<String>> m = userService.checkUser(cliente.getUser());
+
+            if(m.containsKey(false)){
+                List<String> ls = m.get(false);
+                for (int i = 0; i < ls.size(); i++){
+                    model.addAttribute("message", ls);
+                }
+                return CLIENTS_FORM;
+            }
+
             cliente.setCategory(Categoria.EMPLEADO);
             clientService.save(cliente, "new");
             model.addAttribute("message", "The client was created successfully!");
@@ -93,7 +105,7 @@ public class ClienteController {
     }
 
     @GetMapping("/{clientId}")
-    public ModelAndView showEmployee(@PathVariable("clientId") int clientId) {
+    public ModelAndView showClient(@PathVariable("clientId") int clientId) {
         ModelAndView mav = new ModelAndView("clientes/clienteDetails");
         mav.addObject("cliente",this.clientService.findById(clientId).get());
         return mav;
