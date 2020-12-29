@@ -17,7 +17,7 @@ public interface BalanceRepository  extends Repository<Balance,Integer>,  CrudRe
     List<Balance> findById(int id);
     
     @Query("SELECT pago FROM Pago pago WHERE pago.fEmision >= :init_date and pago.fEmision <= :last_date")
-	public Collection<Pago> findSubsByMonth(@Param("init_date") String init_date,@Param("last_date") String last_date);
+	public Collection<Pago> findSubsByMonth(@Param("init_date") LocalDate init_date,@Param("last_date") LocalDate last_date);
     
     @Query("SELECT revenue FROM EmployeeRevenue revenue WHERE revenue.dateStart >= :init_date and revenue.dateEnd <= :last_date")
 	public Collection<EmployeeRevenue> findSalariesByMonth(@Param("init_date") LocalDate init_date,@Param("last_date") LocalDate last_date);

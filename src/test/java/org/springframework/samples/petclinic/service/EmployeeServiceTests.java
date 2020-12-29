@@ -39,7 +39,7 @@ public class EmployeeServiceTests {
 		//sesmpleado.setNombre("Francisco");
 		empleado.addSalary(pagos);
 		empleado.setProfession(Profession.CLEANER);;
-		employeeservice.save(empleado);*/
+		employeeservice.save(empleado);
 	}
 
 	@Test
