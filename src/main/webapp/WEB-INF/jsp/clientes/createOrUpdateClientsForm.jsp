@@ -26,12 +26,10 @@
 					<petclinic:inputField label="Password" name="user.password"/>
 				</c:when>
 				<c:otherwise>
-
                     <c:choose>
-
                         <c:when test="${hasAccess}">
                             <petclinic:selectField name="suscripcion" label="Subscription" names="${['MATINAL', 'VESPERTINO', 'PREMIUM']}" size="1"/>
-                            <petclinic:inputField label="Username" name="user.username"/>
+                            <petclinic:inputField disabled="true" label="Username" name="user.username"/>
                         </c:when>
                         <c:otherwise>
                             <petclinic:inputField disabled="true" name="suscripcion" label="Subscription"/>
