@@ -5,7 +5,7 @@
               description="Name of corresponding property in bean object" %>
 <%@ attribute name="label" required="true" rtexprvalue="true"
               description="Label appears in red color if input is considered as invalid after submission" %>
-<%@ attribute name="disabled" required="false" type="java.lang.Boolean" %>
+<%@ attribute name="readonly" required="false" type="java.lang.Boolean" %>
 <%@ attribute name="type" required="false" type="java.lang.String" %>
 
 <spring:bind path="${name}">
@@ -16,8 +16,8 @@
 
         <div class="col-sm-10">
             <c:choose>
-                <c:when test="${disabled}">
-                    <form:input type="${type}" disabled="${disabled}" class="form-control" path="${name}"/>
+                <c:when test="${readonly}">
+                    <form:input type="${type}" class="form-control" path="${name}" readonly="true"/>
                 </c:when>
                 <c:otherwise>
                     <form:input type="${type}" class="form-control" path="${name}"/>

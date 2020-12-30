@@ -119,6 +119,7 @@
         </c:forEach>
         </tbody>
     </table>
+    <h4>Total: <c:out value="${horas}"/> hours worked</h4>
      <spring:url value="/employees/{employeeId}/newTimeTable" var="employeeTimeTableUrl">
         <spring:param name="employeeId" value="${employee.id}"/>
     </spring:url>
