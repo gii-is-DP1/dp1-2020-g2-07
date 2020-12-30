@@ -28,7 +28,7 @@ public class Sala extends NamedEntity{
 	@Min(value = 1, message = "The room must have 1 person capacity at least.")
 	private Integer aforo;
 	
-	@Size(min= 10, message = "The description needs to have at least ten letters.")
+	
 	@Column(name = "descripcion")
 	private String descripcion;
 	
