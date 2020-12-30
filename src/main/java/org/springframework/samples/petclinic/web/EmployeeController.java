@@ -54,6 +54,7 @@ public class EmployeeController {
         User user = userService.findUser(auth.getName()).get();
         if(employee.isPresent() && hasAuthority(employee, user)) {
             model.addAttribute("employee", employee.get());
+            model.addAttribute("profession", employee.get().getProfession());
             return EMPLOYEES_FORM;
         }
         else if (!hasAuthority(employee, user))
@@ -66,14 +67,11 @@ public class EmployeeController {
     @PostMapping("/{id}/edit")
     public String editEmployee(@PathVariable("id") int id, ModelMap model, @Valid Employee modifiedEmployee, BindingResult binding){
         Optional<Employee> employee = employeeService.findById(id);
-        if(binding.hasErrors()){
-            return EMPLOYEES_FORM;
-        }else{
-            BeanUtils.copyProperties(modifiedEmployee, employee.get(), "id,category");
-            employeeService.save(employee.get());
-            model.addAttribute("message", "Employee updated succesfully!!");
-            return "redirect:/employees/" + employee.get().getId();
-        }
+        modifiedEmployee.setCategory(employee.get().getCategory());
+        BeanUtils.copyProperties(modifiedEmployee, employee.get(), "id,category");
+        employeeService.save(employee.get());
+        model.addAttribute("message","Se ha modificado el empleado");
+        return listEmployees(model);
     }
 
     @GetMapping("/{id}/delete")

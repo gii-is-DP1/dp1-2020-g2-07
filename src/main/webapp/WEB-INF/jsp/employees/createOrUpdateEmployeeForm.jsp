@@ -68,13 +68,17 @@
                     <div class="profession-group">
                         <petclinic:selectField name="profession" label="Profession" names="${['LIFE_GUARD', 'CLEANER', 'MASSAGIST']}" size="1"/>
                     </div>
-                    <petclinic:inputField label="Username" name="user.username"/>
+                    <c:choose>
+                        <c:when test="${employee['new']}"><petclinic:inputField label="Username" name="user.username"/></c:when>
+                        <c:otherwise><petclinic:inputField readonly="true" label="Username" name="user.username"/></c:otherwise>
+                    </c:choose>
+                    
                 </c:when>
                 <c:otherwise>
                     <div class="profession-group">
-                        <petclinic:inputField disabled="true" name="profession" label="Profession"/>
+                        <petclinic:inputField readonly="true" name="profession" label="Profession"/>
                     </div>
-                    <petclinic:inputField disabled="true" label="Username" name="user.username"/>
+                    <petclinic:inputField readonly="true" label="Username" name="user.username"/>
                 </c:otherwise>
             </c:choose>
             <petclinic:inputField label="Password" name="user.password"/>

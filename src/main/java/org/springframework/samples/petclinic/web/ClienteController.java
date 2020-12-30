@@ -60,6 +60,7 @@ public class ClienteController {
         User user = userService.findUser(auth.getName()).get();
         if(cliente.isPresent() && hasAuthority(cliente, user)) {
             model.addAttribute("cliente",cliente.get());
+            model.addAttribute("suscripcion",cliente.get().getSuscripcion());
             return CLIENTS_FORM;
         }
         else if (!hasAuthority(cliente, user))

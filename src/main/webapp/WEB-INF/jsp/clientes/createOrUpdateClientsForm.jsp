@@ -77,11 +77,11 @@
 
                         <c:when test="${hasAccess}">
                             <petclinic:selectField name="suscripcion" label="Subscription" names="${['MATINAL', 'VESPERTINO', 'PREMIUM']}" size="1"/>
-                            <petclinic:inputField label="Username" name="user.username"/>
+                            <petclinic:inputField readonly="true" label="Username" name="user.username"/>
                         </c:when>
                         <c:otherwise>
-                            <petclinic:inputField disabled="true" name="suscripcion" label="Subscription"/>
-                            <petclinic:inputField disabled="true" label="Username" name="user.username"/>
+                            <petclinic:inputField readonly="true" label="Subscription" name="suscripcion"/>
+                            <petclinic:inputField readonly="true" label="Username" name="user.username"/>
                         </c:otherwise>
                     </c:choose>
                             <petclinic:inputField label="Password" name="user.password"/>
