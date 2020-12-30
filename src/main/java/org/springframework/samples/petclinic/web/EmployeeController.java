@@ -67,11 +67,14 @@ public class EmployeeController {
     @PostMapping("/{id}/edit")
     public String editEmployee(@PathVariable("id") int id, ModelMap model, @Valid Employee modifiedEmployee, BindingResult binding){
         Optional<Employee> employee = employeeService.findById(id);
-        modifiedEmployee.setCategory(employee.get().getCategory());
-        BeanUtils.copyProperties(modifiedEmployee, employee.get(), "id,category");
-        employeeService.save(employee.get());
-        model.addAttribute("message","Se ha modificado el empleado");
-        return listEmployees(model);
+        if(binding.hasErrors()){
+            return EMPLOYEES_FORM;
+        }else{
+            BeanUtils.copyProperties(modifiedEmployee, employee.get(), "id,category");
+            employeeService.save(employee.get());
+            model.addAttribute("message", "Employee updated succesfully!!");
+            return "redirect:/employees/" + employee.get().getId();
+        }
     }
 
     @GetMapping("/{id}/delete")
