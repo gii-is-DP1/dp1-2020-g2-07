@@ -80,7 +80,7 @@ public class ClienteService {
 //    	return null;
 //    }
     
-    public Optional<Cliente> clientByUsername(String username){
+    public Optional<Cliente> clientByUsername1(String username){
         return this.findAll().stream().filter(c -> c.getUser().getUsername().equals(username)).findAny();
     }
 
