@@ -84,4 +84,8 @@ public class ClienteService {
         return this.findAll().stream().filter(c -> c.getUser().getUsername().equals(username)).findAny();
     }
 
+    public Cliente clientByUsername(String username){
+        return this.findAll().stream().filter(c -> c.getUser().getUsername().equals(username)).findAny().get();
+    }
+
 }
