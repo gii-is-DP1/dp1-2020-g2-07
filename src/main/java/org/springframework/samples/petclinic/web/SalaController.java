@@ -1,14 +1,24 @@
 package org.springframework.samples.petclinic.web;
 import java.util.Optional;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Cita;
+import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Sala;
+import org.springframework.samples.petclinic.service.CitaService;
+import org.springframework.samples.petclinic.service.ClienteService;
+import org.springframework.samples.petclinic.service.HorarioService;
 import org.springframework.samples.petclinic.service.SalaService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,18 +30,30 @@ public class SalaController {
 	public static final String SALAS_FORM ="/salas/CreateOrUpdateSalasForm";
 	public static final String SALAS_LISTING ="/salas/SalasListing";
 	
+	
+	private SalaService salaService;
+	private HorarioService hs;
+	private CitaService cs;
+	private ClienteService cls;
+	
 	@Autowired
-	SalaService salasServices;
+	public SalaController(SalaService salaService,HorarioService hs,CitaService cs, ClienteService cls) {
+		this.salaService = salaService;
+		this.hs = hs;
+		this.cs = cs;
+		this.cls = cls;
+	}
 	
 	@GetMapping
 	public String salasListing(ModelMap model) {
-		model.addAttribute("salas", salasServices.findAll());
+		model.addAttribute("salas", salaService.findAll());
 		return SALAS_LISTING;
 	}
 	
+	
 	@GetMapping("/{id}/edit")
 	public String editSala(@PathVariable("id") int id,ModelMap model) {
-		Optional<Sala> sala = salasServices.findById(id);
+		Optional<Sala> sala = salaService.findById(id);
 		if(sala.isPresent()) {
 			model.addAttribute("sala", sala.get());
 			return SALAS_FORM;
@@ -44,12 +66,12 @@ public class SalaController {
 	
 	@PostMapping("/{id}/edit")
 	public String editSala(@PathVariable("id") int id,@Valid Sala modifiedSala, BindingResult binding,ModelMap model) {
-		Optional<Sala> sala = salasServices.findById(id);
+		Optional<Sala> sala = salaService.findById(id);
 		if(binding.hasErrors()) {
 			return SALAS_FORM;
 		}else {
 			BeanUtils.copyProperties(modifiedSala, sala.get(),"id");
-			this.salasServices.save(modifiedSala);
+			this.salaService.save(modifiedSala);
 			model.addAttribute("message", "The room was updated successfully.");
 			return salasListing(model);
 		}
@@ -57,9 +79,9 @@ public class SalaController {
 	
 	@GetMapping("/{id}/delete")
 	public String deleteSala(@PathVariable("id") int id, ModelMap model) {
-		Optional<Sala> sala = salasServices.findById(id);
+		Optional<Sala> sala = salaService.findById(id);
 		if(sala.isPresent()) {
-			salasServices.delete(sala.get());
+			salaService.delete(sala.get());
 			model.addAttribute("message", "The room was deleted successfully.");
 			return salasListing(model);
 		}else {
@@ -81,12 +103,46 @@ public class SalaController {
 			return SALAS_FORM;
 		}
 		else {
-			this.salasServices.save(sala);
+			this.salaService.save(sala);
 			model.addAttribute("message", "The room was created successfully.");
 			return salasListing(model);
 		}
 	}
 	
 	
-	
+	  @GetMapping("/{salaId}")
+	  public String showSala(@PathVariable("salaId") int salaId, ModelMap model, @AuthenticationPrincipal User user) {
+		  model.clear();
+		  if(user==null) {
+			  model.addAttribute("message", "You need to log in to access this view");
+			  return salasListing(model);
+		  }else {
+			  Optional<Cliente> c = cls.clientByUsername1(user.getUsername());
+			  if(c.isPresent()) {
+				  model.addAttribute("cliente", c.get().getId());
+				  model.addAttribute("sala", this.salaService.findById(salaId).get());
+			      model.addAttribute("sesiones", hs.activeSessions(salaId,c.get()));
+			      model.put("cita", new Cita());
+			      return "salas/salaDetails";   
+			  }else {
+				  model.addAttribute("message", "We had some issues with your username");
+				  return salasListing(model);
+			  }
+		  }
+	  }
+	  
+		@PostMapping("/{salaId}")
+		public String addCita(@PathVariable("salaId") int salaId,@Valid @ModelAttribute("cita") Cita cita, BindingResult binding,ModelMap model,@ModelAttribute("cliente") Cliente c) {
+			Sala sala = salaService.findById(salaId).get();
+			if(binding.hasErrors()) {
+				model.addAttribute("sala", sala);
+			    model.addAttribute("sesiones", hs.activeSessions(salaId,c));
+				return "salas/salaDetails";
+			}else {
+				cs.save(cita);
+				model.addAttribute("message", "You now have an appointment in " + sala.getName() + " " + cita.getSesion());
+				return salasListing(model);
+			}
+		}
+    	
 }
