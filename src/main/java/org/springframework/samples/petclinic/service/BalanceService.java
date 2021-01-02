@@ -66,7 +66,7 @@ public class BalanceService {
 		SimpleDateFormat formatter= new SimpleDateFormat("dd");
 		Date hoy_millis = new Date(System.currentTimeMillis());
 		String hoy = formatter.format(hoy_millis);
-		if(hoy.equals("10")) {
+		if(hoy.equals("29")) {
 			tocaBalance = true;
 		}
 		return tocaBalance;
@@ -87,7 +87,7 @@ public class BalanceService {
 		return ultimo;
 	}
 
-	public Integer getSubs(String init, String last) {
+	public Integer getSubs(LocalDate init, LocalDate last) {
 		Collection<Pago> total = balanceRepo.findSubsByMonth(init, last);
 		Iterator<Pago> iterator = total.iterator();
 		int res = 0;
@@ -138,11 +138,8 @@ public class BalanceService {
 		return list;
 	}
 	
-	public List<Pago> getSubsData (LocalDate date_start, LocalDate date_end, DateTimeFormatter formatter) {
-		String date_start_string = date_start.format(formatter);
-		String date_end_string = date_end.format(formatter);
-		
-		Collection<Pago> total = balanceRepo.findSubsByMonth(date_start_string, date_end_string);
+	public List<Pago> getSubsData (LocalDate date_start, LocalDate date_end, DateTimeFormatter formatter) {	
+		Collection<Pago> total = balanceRepo.findSubsByMonth(date_start, date_end);
 		List<Pago> list = new ArrayList<Pago>();
 		list.addAll(total);
 		return list;
