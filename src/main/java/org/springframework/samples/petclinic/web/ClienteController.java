@@ -30,6 +30,11 @@ public class ClienteController {
     @Autowired
     UserService userService;
 
+    @ModelAttribute("subTypes")
+    public List<SubType> getSubType(){
+        return clientService.finSubTypes();
+    }
+
     @GetMapping
     public String listClients(ModelMap model){
         model.addAttribute("clientes", clientService.findAll());

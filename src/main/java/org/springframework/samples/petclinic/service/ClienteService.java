@@ -3,14 +3,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Email;
 import org.springframework.samples.petclinic.model.Pago;
+import org.springframework.samples.petclinic.model.SubType;
 import org.springframework.samples.petclinic.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ClienteService {
@@ -67,8 +65,11 @@ public class ClienteService {
         this.save(clientRepo.findById(id).get(), "edit");
     }
 
-    public Cliente clientByUsername(String username){
-        return this.findAll().stream().filter(c -> c.getUser().getUsername().equals(username)).findAny().get();
+    public Optional<Cliente> clientByUsername(String username){
+        return this.findAll().stream().filter(c -> c.getUser().getUsername().equals(username)).findAny();
     }
 
+    public List<SubType> finSubTypes(){
+        return Arrays.stream(SubType.class.getEnumConstants()).collect(Collectors.toList());
+    }
 }

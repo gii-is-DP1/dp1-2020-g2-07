@@ -1,36 +1,55 @@
 package org.springframework.samples.petclinic.service;
-import java.util.Collection;
+
 import java.util.Optional;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.Test;
+import org.junit.Before;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.samples.petclinic.model.Categoria;
-import org.springframework.samples.petclinic.model.Cliente;
-import org.springframework.samples.petclinic.model.Pago;
-import org.springframework.samples.petclinic.model.SubType;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.samples.petclinic.model.*;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
+
 
 import static org.junit.Assert.*;
 
-@DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@TestPropertySource(locations = "classpath:application.properties")
 public class ClienteServiceTests {
+
+    
 
 	@Autowired
 	protected ClienteService clienteservice;
 
+	@Before
+    public void init(){
+	    Cliente c = new Cliente();
+	    User u = new User();
+	    u.setUsername("juanma");
+	    u.setPassword("12345");
+	    c.setFirst_name("odfiuy");
+	    c.setLast_name("fkjdh");
+	    c.setCategory(Categoria.EMPLEADO);
+	    c.setId(1);
+	    c.setAddress("C/Pantomima");
+	    c.setEmail("jmgc101099@hotmail.com");
+	    c.setIBAN("ES4131905864163572187269");
+	    c.setUser(u);
+	    clienteservice.save(c,"nuevo");
+    }
+
 	@Test
-    void shouldFindClientByNickName(){
-        Cliente c = clienteservice.clientByUsername("juanma");
-        assertEquals("juanma",c.getUser().getUsername());
+    public void shouldFindClientByNickName(){
+        Optional<Cliente> c = clienteservice.clientByUsername("juanma");
+        assertTrue(c.isPresent());
+    }
 
-
-        assertNull("Doesnt exist a client with that username.", clienteservice.clientByUsername("NonExistUsername"));
+    @Test
+    public void shouldNotFindClientByNickNameT(){
+        Optional<Cliente> c = clienteservice.clientByUsername("inventado");
+        assertFalse(c.isPresent());
     }
 
 }
