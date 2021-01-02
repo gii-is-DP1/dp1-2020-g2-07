@@ -144,7 +144,7 @@
     <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>  Past sessions</a>
 
     <h4>Total: <c:out value="${horas}"/> hours worked</h4>
-     <spring:url value="/employees/{employeeId}/newTimeTable" var="employeeTimeTableUrl">
+     <spring:url value="/employees/{employeeId}/newTimeTable" var="employeeTimeTableUrl"></spring:url>
     
 
 </petclinic:layout>

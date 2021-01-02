@@ -117,7 +117,7 @@ public class SalaController {
 			  model.addAttribute("message", "You need to log in to access this view");
 			  return salasListing(model);
 		  }else {
-			  Optional<Cliente> c = cls.clientByUsername(user.getUsername());
+			  Optional<Cliente> c = cls.clientByUsername1(user.getUsername());
 			  if(c.isPresent()) {
 				  model.addAttribute("cliente", c.get().getId());
 				  model.addAttribute("sala", this.salaService.findById(salaId).get());
