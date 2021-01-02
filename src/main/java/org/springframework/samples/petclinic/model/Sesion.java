@@ -87,5 +87,9 @@ public class Sesion extends BaseEntity{
 		return horario.getFecha() + ": From " + this.getHoraInicio() + " to " + this.getHoraFin();
 	}
 	
+	public Boolean validate() {
+		return horaInicio.isBefore(horaFin);
+	}
+	
 	
 }

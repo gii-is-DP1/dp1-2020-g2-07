@@ -90,10 +90,16 @@ public class HorarioController {
     
     @PostMapping("/TimeTable/{horarioId}/newSesion")
     public String saveTimeTable(Employee e, @PathVariable("horarioId") int horarioId,@Valid @ModelAttribute("newSesion") Sesion sesion, BindingResult binding, ModelMap model){
-        if(binding.hasErrors()){
+        if(binding.hasErrors()||!sesion.validate()||horarioService.checkDuplicatedSessions(sesion, horarioId)){
         	model.addAttribute("horarioID", horarioId);
             model.addAttribute("salas",salaService.findAll());
             model.addAttribute("sesion", this.horarioService.findSesionesHorario(horarioId));
+            if(!sesion.validate()) {
+            	model.addAttribute("message", "Start time must be before end time");
+            }
+            if(horarioService.checkDuplicatedSessions(sesion, horarioId)) {
+            	model.addAttribute("message", "This room is already in use at this time");
+            }
             return "timetable/sesionForm";
         }else{
         	sesion.setHorario(horarioService.findById(horarioId).get());

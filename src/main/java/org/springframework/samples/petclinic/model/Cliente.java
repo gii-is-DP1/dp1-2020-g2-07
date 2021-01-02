@@ -1,5 +1,4 @@
 package org.springframework.samples.petclinic.model;
-import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -11,8 +10,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "clientes")
@@ -56,6 +53,10 @@ public class Cliente extends Individual {
 
 	public void setCitas(Set<Cita> citas) {
 		this.citas = citas;
+	}
+	
+	public void addApointment(Cita c) {
+		this.addApointment(c);
 	}
 
 	@Override

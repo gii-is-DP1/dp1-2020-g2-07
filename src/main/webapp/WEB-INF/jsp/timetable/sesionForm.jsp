@@ -12,14 +12,20 @@
   <jsp:attribute name="customScript">
         <script>
             $(function () {
-            	$('#horaInicio').timepicker({
-            	    timeFormat: 'HH:mm p',
-            	    minTime: '9',
-            	    maxTime: '21:00pm'
-            	    startTime: '9:00'
-            	});
-            });          
+				$('.horaInicio').timepicker({
+				    timeFormat: 'h:mm p',
+				    interval: 60,
+				    minTime: '10',
+				    maxTime: '6:00pm',
+				    defaultTime: '11',
+				    startTime: '10:00',
+				    dynamic: false,
+				    dropdown: true,
+				    scrollbar: true
+				}); 
+            });
         </script>
+        
         
     </jsp:attribute>
    <jsp:body>
@@ -29,8 +35,8 @@
 
     <form:form modelAttribute="newSesion" class="form-horizontal" id="add-sesion-form">
         <div class="form-group has-feedback">
-          <petclinic:inputField type="time" label="From" name="horaInicio"/>
-          <petclinic:inputField type="time" label="To" name="horaFin"/>
+          <petclinic:inputField label="From" name="horaInicio"/>
+          <petclinic:inputField label="To" name="horaFin"/>
           <input type="hidden" name="horario" value="${horarioID}">
            <div class="control-group">
                     <petclinic:selectField name="sala" label="Rooms " names="${salas}" size="5"/>
