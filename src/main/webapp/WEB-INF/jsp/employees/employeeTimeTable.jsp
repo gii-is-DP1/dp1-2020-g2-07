@@ -7,7 +7,8 @@
 <petclinic:layout pageName="employees">
 
 
-<h3>Details of the TimeTable of <c:out value="${employee.first_name} ${employee.last_name}"/></h3>
+<h3>Details of the schedule of <c:out value="${employee.first_name} ${employee.last_name}"/> for <c:out value="${horario.fecha}"/></h3>
+
     <table id="employeesTimeTable" class="table table-striped">
  	  <thead>
         <tr>
@@ -18,7 +19,6 @@
         </tr>
         </thead>
    	 	<tbody>
-        <c:forEach items="${employee.horarios}" var="horario">
         	<c:forEach items="${sesion}" var="sesion">
         	<c:if test="${sesion.horario.getId()==horario.id}">
             <tr>
@@ -34,13 +34,7 @@
             </tr>
             </c:if>
             </c:forEach>
-        </c:forEach>
         </tbody>
     </table>
-
-
-
-
-
 
 </petclinic:layout>

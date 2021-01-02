@@ -1,8 +1,7 @@
 package org.springframework.samples.petclinic.model;
-import javax.persistence.*;
-
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -11,12 +10,13 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "clientes")
 public class Cliente extends Individual {
+	
+	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)	
+	private Set<Cita> citas;
 
     @Column(name = "suscripcion")
     @Enumerated(EnumType.STRING)
@@ -47,7 +47,19 @@ public class Cliente extends Individual {
         this.getPagos().add(p);
     }
 
-    @Override
+    public Set<Cita> getCitas() {
+		return citas;
+	}
+
+	public void setCitas(Set<Cita> citas) {
+		this.citas = citas;
+	}
+	
+	public void addApointment(Cita c) {
+		this.addApointment(c);
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -64,9 +76,6 @@ public class Cliente extends Individual {
 
     @Override
     public String toString() {
-        return "Cliente{" +
-            "suscripcion=" + suscripcion +
-            ", pagos=" + pagos +
-            '}';
+    	return this.getFirst_name();
     }
 }
