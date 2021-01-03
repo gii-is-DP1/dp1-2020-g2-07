@@ -17,10 +17,4 @@ public interface ClienteRepository extends CrudRepository<Cliente, Integer> {
     Optional<Cliente> findById( int id);
 
     Collection<Cliente> findAll();
-
-    List<SubType> finSubTypes();
-
-    void addPayToClient();
-
-    Optional<Cliente> clientByUsername();
 }
