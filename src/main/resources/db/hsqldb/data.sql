@@ -74,9 +74,9 @@ INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscrip
 INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion) VALUES(3, 'Manuel', 'Osuna Moreno', 'Sevilla C/Tangana 1º A',0, 'ES72 6789 4839 3928 2143', 'PREMIUM');
 */
 
-INSERT INTO bonos(id, codigo, precio, date_start, date_end, descripcion, usado) VALUES (1,  'QWERT1', 5,  '2020-11-03','2020-11-11', 'Token for a free Spa session.', 1);
-INSERT INTO bonos(id, codigo, precio, date_start, date_end, descripcion, usado) VALUES (2, 'SADYT3', 3, '2020-11-03','2020-11-11', 'Token for a free Cardio session.',1);
-
+/*INSERT INTO bonos(id, codigo, precio, date_available, descripcion, usado) VALUES (1,  'QWERT1', 5,  '2020-11-03', 'Token for a free Spa session.', 1);
+INSERT INTO bonos(id, codigo, precio, date_available, descripcion, usado) VALUES (2, 'SADYT3', 3, '2020-11-03', 'Token for a free Cardio session.',1);
+*/
 INSERT INTO pagos(id, cliente_id, f_emision, cantidad) VALUES(1, 1, '2020-11-15', 32);
 INSERT INTO pagos(id, cliente_id, f_emision, cantidad) VALUES(2, 1, '2020-11-27', 40);
 
@@ -97,11 +97,11 @@ INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(1,3);
 INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(2,2);
 INSERT INTO REL_CIRCUITO_SALAS(FK_Circuito,FK_Sala) VALUES(2,3);
 
-INSERT INTO REL_BONOS_SALAS(FK_Bono,FK_Sala) VALUES(1,1);
+/*INSERT INTO REL_BONOS_SALAS(FK_Bono,FK_Sala) VALUES(1,1);
 INSERT INTO REL_BONOS_SALAS(FK_Bono,FK_Sala) VALUES(1,2);
 INSERT INTO REL_BONOS_SALAS(FK_Bono,FK_Sala) VALUES(2,1);
 INSERT INTO REL_BONOS_SALAS(FK_Bono,FK_Sala) VALUES(2,2);
-
+*/
 INSERT INTO users(username,password,enabled) VALUES ('miguel','hola',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (4,'miguel','employee');
 INSERT INTO employees(id, first_name, last_name, address, category, IBAN, profession, email, username) VALUES(1, 'Jhon', 'Smith', 'Sevilla C/Tangana 1º A',1, 'ES3912341234250123456789', 'LIFE_GUARD', 'miguel_molina2@hotmail.es', 'miguel');

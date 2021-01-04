@@ -1,9 +1,7 @@
 package org.springframework.samples.petclinic.web;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Email;
-import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.*;
 import org.springframework.stereotype.Controller;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;

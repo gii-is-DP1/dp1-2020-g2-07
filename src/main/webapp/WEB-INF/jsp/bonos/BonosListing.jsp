@@ -37,11 +37,6 @@
                     <c:out value="${bono.descripcion}"/>
                 </td>
                 <td>
-                    <a href="/bonos/${bono.id}/edit">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    </a>
-                </td>
-                <td>
                     <a href="/bonos/${bono.id}/delete">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </a>
@@ -50,7 +45,4 @@
         </c:forEach>
         </tbody>
     </table>
-     <p>
-    	<a href="/bonos/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Añadir Bono</a>
-    </p>
 </petclinic:layout>

@@ -2,10 +2,8 @@ package org.springframework.samples.petclinic.service;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Email;
@@ -70,16 +68,6 @@ public class ClienteService {
         this.save(clientRepo.findById(id).get(), "edit");
     }
     
-//    public Cliente findClienteByUsername(String username){
-//    	for(Cliente c: clientRepo.findAll()) {
-//    		String usernamerepo = c.getUser().getUsername();
-//    		if(usernamerepo.equals(username)) {
-//    			return c;
-//    		}
-//    	}
-//    	return null;
-//    }
-    
     public Optional<Cliente> clientByUsername1(String username){
         return this.findAll().stream().filter(c -> c.getUser().getUsername().equals(username)).findAny();
     }
@@ -87,5 +75,4 @@ public class ClienteService {
     public Cliente clientByUsername(String username){
         return this.findAll().stream().filter(c -> c.getUser().getUsername().equals(username)).findAny().get();
     }
-
 }

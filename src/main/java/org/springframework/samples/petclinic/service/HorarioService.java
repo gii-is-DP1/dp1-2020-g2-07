@@ -1,20 +1,20 @@
 package org.springframework.samples.petclinic.service;
-
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
+import java.util.Set;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cita;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Horario;
 import org.springframework.samples.petclinic.model.Sesion;
+import org.springframework.samples.petclinic.model.SubType;
 import org.springframework.samples.petclinic.repository.HorarioRepository;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +65,52 @@ public class HorarioService {
     	a.removeAll(toRemove);
     	return a;
     }
+    
+    public Collection<Sesion> activeSessionsBis(int id){
+    	Collection<Sesion> a = horarioRepo.getSesionBySala(id);
+    	a.removeIf(x->x.getHorario().getFecha().isBefore(LocalDate.now())||x.getSala().getAforo()<=x.getCitas().size());
+    	return a;
+    }
+    
+    public Collection<Sesion> availableSessions(Collection<Sesion> active_sessions,Cliente c){
+    	List<Sesion> client_session = new ArrayList<Sesion>();
+    	Set<Cita> client_apt = c.getCitas();
+    	for (Cita x : client_apt) {
+    		client_session.add(x.getSesion());
+    	}
+    	List<Sesion> toRemove = new ArrayList<Sesion>();
+    	for (Sesion a: client_session) {
+    		for (Sesion b : active_sessions) {
+    			if(a.getHoraInicio().equals(b.getHoraInicio()) && a.getHoraFin().equals(b.getHoraFin()) && a.getHorario().getFecha().equals(b.getHorario().getFecha())){
+    				toRemove.add(b);
+    			}
+    		}
+    		
+    	}
+    	active_sessions.removeAll(toRemove);
+    	return active_sessions;
+    } 
+    
+    public Collection<Sesion> inTimeSessions(Collection<Sesion> available_sessions,Cliente c){
+    	List<Sesion> toRemove = new ArrayList<Sesion>();
+    	SubType sub_type = c.getSuscripcion();
+    	if(sub_type.toString().equals("MATINAL")) {
+    		for(Sesion s: available_sessions) {
+    			if((s.getHoraInicio().isAfter(LocalTime.parse("14:00")) || s.getHoraInicio().equals(LocalTime.parse("14:00")))  && (s.getHoraFin().isBefore(LocalTime.parse("21:00")) || s.getHoraFin().equals(LocalTime.parse("21:00")))) {
+    				toRemove.add(s);
+    			}
+    		}
+    	}else if(sub_type.toString().equals("VESPERTINO")) {
+    		for(Sesion s: available_sessions) {
+    			if((s.getHoraInicio().isAfter(LocalTime.parse("09:00")) || s.getHoraInicio().equals(LocalTime.parse("09:00")) )  && (s.getHoraFin().isBefore(LocalTime.parse("14:00")) || s.getHoraFin().equals(LocalTime.parse("14:00"))) ){
+    				toRemove.add(s);
+    			}
+    		}
+    	}
+    	available_sessions.removeAll(toRemove);
+    	return available_sessions;
+    }
+    
     
     public Collection<Horario> futureDays(int employee_id){
     	Collection<Horario> a = horarioRepo.getHorariosByEmployee(employee_id);

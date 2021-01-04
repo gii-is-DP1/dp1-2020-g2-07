@@ -8,6 +8,8 @@
 
 <petclinic:layout pageName="bonos">
     <h2>Reedem Token</h2>
+    
+    <c:out value="${cliente}"/>
 
     <form:form modelAttribute="tokencode" class="form-horizontal" id="add-token-form">
         <div class="form-group has-feedback">

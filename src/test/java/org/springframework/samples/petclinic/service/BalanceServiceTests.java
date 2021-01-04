@@ -1,11 +1,8 @@
 package org.springframework.samples.petclinic.service;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-
 import java.time.LocalDate;
 import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
@@ -25,14 +22,7 @@ public class BalanceServiceTests {
 	@Test
 	@Transactional
 	void insertBalance() {
-		Balance balance = new Balance();
-		balance.setBonos(2);
-		balance.setId(1);
-		balance.setMante(12);
-		balance.setMonth("Enero");
-		balance.setSalaries(35);
-		balance.setSubs(21);
-		balance.setYear("2005");
+		Balance balance = new Balance("JANUARY", "2005", 21, 2, 35, 12);
 		balanceservice.save(balance);
 	}
 	

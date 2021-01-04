@@ -71,13 +71,10 @@ public class BalanceController {
     public void createBalance(LocalDate day_one, String month, String year) {
     	LocalDate day_last = balanceService.getUltimoDiaMes(day_one);
     	
-    	Balance b = new Balance();
-    	b.setMonth(month);
-    	b.setYear(year);
-    	b.setSubs(balanceService.getSubs(day_one, day_last));
-    	b.setBonos(balanceService.getTokens(day_one, day_last, true));
-    	b.setSalaries(balanceService.getSalaries(day_one, day_last));
-    	b.setMante(100);
+    	Integer subs = balanceService.getSubs(day_one, day_last);
+    	Integer tokens = balanceService.getTokens(day_one, day_last, true);
+    	Integer salaries = balanceService.getSalaries(day_one, day_last);
+    	Balance b = new Balance(month, year, subs, tokens, salaries, 100);
     	balanceService.save(b);
     }
     
