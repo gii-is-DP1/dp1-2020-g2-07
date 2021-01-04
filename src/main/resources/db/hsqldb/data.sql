@@ -123,11 +123,11 @@ INSERT INTO toallas(cantidad) VALUES (1);
 INSERT INTO horario(id,fecha,employee_id) VALUES (1,'2020-12-05',1);
 INSERT INTO horario(id,fecha,employee_id) VALUES (2,'2020-12-05',1);
 INSERT INTO horario(id,fecha,employee_id) VALUES (3,'2020-12-06',1);
-INSERT INTO horario(id,fecha,employee_id) VALUES (4,'2020-12-25',1);
-INSERT INTO horario(id,fecha,employee_id) VALUES (5,'2020-12-26',1);
+INSERT INTO horario(id,fecha,employee_id) VALUES (4,'2021-01-25',1);
 /*INSERT INTO horario(id,fecha,employee_id) VALUES (4,'2020-12-06',2);*/
 
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (1,'10:00','12:00',1,1);
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (2,'12:00','14:00',2,1);
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (3,'10:00','12:00',4,1);
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (4,'10:00','12:00',3,2);
+INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (5,'10:00','12:00',1,4);

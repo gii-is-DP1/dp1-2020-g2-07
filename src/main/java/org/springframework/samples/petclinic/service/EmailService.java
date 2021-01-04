@@ -8,20 +8,17 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmailService {
+
     @Autowired
-    private JavaMailSender mailSender;
+    private JavaMailSender gmailSender;
 
-
-    /**
-     * This method will send compose and send the message
-     * */
     public void sendMail(Email e)
     {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(e.getAddress());
         message.setSubject(e.getSubject());
         message.setText(e.getBody());
-        mailSender.send(message);
+        gmailSender.send(message);
     }
 
 }

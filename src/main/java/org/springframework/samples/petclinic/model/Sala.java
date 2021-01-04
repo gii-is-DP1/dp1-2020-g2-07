@@ -1,6 +1,4 @@
 package org.springframework.samples.petclinic.model;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -13,8 +11,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.samples.petclinic.repository.SalaRepository;
 
 @Entity
 @Table(name = "salas")
@@ -61,11 +57,6 @@ public class Sala extends NamedEntity{
 	public void setCircuitos(List<Circuito> circuitos) {
 		this.circuitos = circuitos;
 	}
-	
-	
-
-
-
 	
 
 }

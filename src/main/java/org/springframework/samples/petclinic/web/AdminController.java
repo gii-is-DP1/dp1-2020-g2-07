@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Email;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.User;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -34,7 +36,7 @@ public class AdminController {
     UserService userService;
 
     @Autowired
-    EmailService emailService;
+    private EmailService emailService;
 
     @Autowired
     ClienteService clienteService;
@@ -57,6 +59,13 @@ public class AdminController {
     @GetMapping("/users/{username}")
     public String activeUser(@PathVariable("username") String username,ModelMap model){
         User u = userService.findUser(username).get();
+        Optional<Cliente> c = clienteService.clientByUsername(username);
+
+        if(c.get().getSuscripcion() == null){
+            model.addAttribute("message", "All client must have a subscription type before enable their users");
+            return getUsers(model);
+        }
+
         if(!u.isEnabled()){
             u.setEnabled(true);
             model.addAttribute("message", "State of user " + u.getUsername() + " has been changed");
@@ -127,5 +136,3 @@ public class AdminController {
         return arr;
     }
 }
-
-

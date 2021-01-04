@@ -11,7 +11,6 @@ import org.springframework.samples.petclinic.model.Circuito;
 import org.springframework.samples.petclinic.service.CircuitoService;
 import org.springframework.samples.petclinic.service.SalaService;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedCircuitoNameException;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedSalaNameException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -62,7 +61,6 @@ public class CircuitoController {
 			return CIRCUITOS_LISTING;
 		}
 	}
-
 	@PostMapping("/{id}/edit")
 	public String editCircuito(@PathVariable("id") int id, @Valid Circuito modifiedCircuito, BindingResult binding,ModelMap model) {
 		Optional<Circuito> circuito = circuitosServices.findById(id);
@@ -108,8 +106,6 @@ public class CircuitoController {
 		model.addAttribute("salas", salasServices.findAll());
 		return CIRCUITOS_FORM;
 	}
-	
-
 	
 	@PostMapping("/new")
 	public String saveNewCircuito(@Valid Circuito circuito, BindingResult binding,ModelMap model) {

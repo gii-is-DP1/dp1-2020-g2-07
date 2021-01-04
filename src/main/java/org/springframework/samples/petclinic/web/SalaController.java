@@ -1,5 +1,4 @@
 package org.springframework.samples.petclinic.web;
-import java.util.Collection;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -7,15 +6,12 @@ import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cita;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.Pet;
+import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Sala;
-import org.springframework.samples.petclinic.model.Sesion;
 import org.springframework.samples.petclinic.service.CitaService;
 import org.springframework.samples.petclinic.service.ClienteService;
 import org.springframework.samples.petclinic.service.HorarioService;
 import org.springframework.samples.petclinic.service.SalaService;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedPetNameException;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedSalaNameException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -25,6 +21,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -73,7 +70,7 @@ public class SalaController {
 			return SALAS_LISTING;
 		}
 	}
-
+	
 	
 	@PostMapping("/{id}/edit")
 	public String editSala(@PathVariable("id") int id,@Valid Sala modifiedSala, BindingResult binding,ModelMap model) {
@@ -132,34 +129,36 @@ public class SalaController {
 		}
 	}
 	
-
-	
 	  @GetMapping("/{salaId}")
 	  public String showSala(@PathVariable("salaId") int salaId, ModelMap model, @AuthenticationPrincipal User user) {
+		  model.clear();
 		  if(user==null) {
 			  model.addAttribute("message", "You need to log in to access this view");
 			  return salasListing(model);
 		  }else {
-			  model.addAttribute("sala", this.salaService.findById(salaId).get());
-		      Collection<Sesion> sesiones = hs.activeSessions(salaId);
-		      model.addAttribute("sesiones", sesiones);
-		      model.addAttribute("cita", new Cita());
-//		      Cliente c = cls.findClienteByUsername(user.getUsername());
-//		      model.addAttribute("clienteID",c);
-		      return "salas/salaDetails"; 
+			  Optional<Cliente> c = cls.clientByUsername(user.getUsername());
+			  if(c.isPresent()) {
+				  model.addAttribute("cliente", c.get().getId());
+				  model.addAttribute("sala", this.salaService.findById(salaId).get());
+			      model.addAttribute("sesiones", hs.activeSessions(salaId,c.get()));
+			      model.put("cita", new Cita());
+			      return "salas/salaDetails";   
+			  }else {
+				  model.addAttribute("message", "We had some issues with your username");
+				  return salasListing(model);
+			  }
 		  }
 	  }
 	  
 		@PostMapping("/{salaId}")
-		public String addCita(@PathVariable("salaId") int salaId,@Valid Cita cita, BindingResult binding,ModelMap model,@AuthenticationPrincipal User user) {
+		public String addCita(@PathVariable("salaId") int salaId,@Valid @ModelAttribute("cita") Cita cita, BindingResult binding,ModelMap model,@ModelAttribute("cliente") Cliente c) {
 			Sala sala = salaService.findById(salaId).get();
 			if(binding.hasErrors()) {
 				model.addAttribute("sala", sala);
-				Collection<Sesion> sesiones = hs.activeSessions(salaId);
-			      model.addAttribute("sesiones", sesiones);
+			    model.addAttribute("sesiones", hs.activeSessions(salaId,c));
 				return "salas/salaDetails";
 			}else {
-				cs.save(cita,cls.findClienteByUsername(user.getUsername()));
+				cs.save(cita);
 				model.addAttribute("message", "You now have an appointment in " + sala.getName() + " " + cita.getSesion());
 				return salasListing(model);
 			}

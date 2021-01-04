@@ -1,4 +1,7 @@
 package org.springframework.samples.petclinic.model;
+
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -16,6 +19,7 @@ import org.springframework.beans.support.PropertyComparator;
 
 @Entity
 @Table(name = "employees")
+
 public class Employee extends Individual {
 
     @Column(name = "profession")
@@ -75,6 +79,19 @@ public class Employee extends Individual {
             case MASSAGIST: return 15;
             default: return 0;
         }
+    }
+
+    public Integer getHoursWorked(LocalDate start, LocalDate end) {
+        return getHorarios().stream()
+            .filter(h -> h.getFecha().isBefore(end) && h.getFecha().isAfter(start))
+            .map(h -> h.getSesiones()
+                .stream()
+                .map(s -> (int)Duration.between(s.getHoraInicio(), s.getHoraFin()).toHours())
+                .mapToInt(Integer::intValue)
+                .sum())
+            .mapToInt(Integer::intValue)
+            .sum();
+
     }
 }
 

@@ -1,71 +1,65 @@
 package org.springframework.samples.petclinic.service;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+
 import java.util.Collection;
 import java.util.Optional;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.samples.petclinic.model.Categoria;
-import org.springframework.samples.petclinic.model.Cliente;
-import org.springframework.samples.petclinic.model.Pago;
-import org.springframework.samples.petclinic.model.SubType;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-@DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-@TestInstance(Lifecycle.PER_CLASS)
+import org.junit.Test;
+import org.junit.Before;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.samples.petclinic.model.*;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
+
+
+import static org.junit.Assert.*;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@TestPropertySource(locations = "classpath:application.properties")
 public class ClienteServiceTests {
 
-	@Autowired
-	protected ClienteService clienteservice;
+    @Autowired
+    protected ClienteService clienteservice;
 
-	@Transactional
-	void insertCliente() {
-		Pago pago = new Pago();
-		Cliente cliente = new Cliente();
+    @Before
+    public void init() {
+        Cliente c = new Cliente();
+        User u = new User();
+        u.setUsername("juanma");
+        u.setPassword("12345");
+        c.setFirst_name("odfiuy");
+        c.setLast_name("fkjdh");
+        c.setCategory(Categoria.EMPLEADO);
+        c.setId(1);
+        c.setAddress("C/Pantomima");
+        c.setEmail("jmgc101099@hotmail.com");
+        c.setIBAN("ES4131905864163572187269");
+        c.setUser(u);
+        clienteservice.save(c, "nuevo");
+    }
 
-		cliente.setSuscripcion(SubType.MATINAL);
-		//cliente.setApellidos("Ruiz Gordillo");
-		cliente.setCategory(Categoria.CLIENTE);
-		cliente.setAddress("Calle Falsa 123");
-		cliente.setIBAN("ES1221343453234");
-		cliente.setId(1);
-		//cliente.setNick("El Madrileño");
-		//cliente.setNombre("Anónimo");
-		cliente.addPay(pago);
-		clienteservice.save(cliente, "new");
-	}
+    @Test
+    public void tryToFindClientByUsername() {
+        /*Pruba a usar la funcion clientByUsername que debe devolver un Optional<Cliente>
+         * en el primer caso busca el username de un cliente existente, mientras en el segundo es al inexistente*/
 
-	@Test
-	void mostrarListaConClientes() {
-		Collection<Cliente> cliente = clienteservice.findAll();
-		assertEquals(3, cliente.size());
-	}
+        Optional<Cliente> c1 = clienteservice.clientByUsername("juanma");
+        assertTrue(c1.isPresent());
 
-	@Test
-	void mostrarClientesPorId() {
-		Integer id = 1;
-		Optional<Cliente> cliente = clienteservice.findById(id);
-		assertFalse(!cliente.isPresent());
-	}
+        Optional<Cliente> c2 = clienteservice.clientByUsername("inventado");
+        assertFalse(c2.isPresent());
+    }
 
-	/* @Test
-	 @Transactional
-	 void shouldUpdateCliente() {
-		 Cliente cliente = this.clienteservice.findById(1).get();
-	     String oldName = cliente.getNombre();
-	     String newName = oldName + "X";
+    @Test
+    public void howManyClients() {
+        /*Como hemos añadido un unico cliente al llamar a la función findAll que devuelve una colleccion con todos los
+         * clientes su tamaño debería de ser uno*/
 
-	     cliente.setNombre(newName);
-	     this.clienteservice.save(cliente);
+        Collection<Cliente> clients = clienteservice.findAll();
+        assertTrue(clients.size() == 1);
+    }
 
-	     cliente = this.clienteservice.findById(1).get();
-	     assertEquals(newName, cliente.getNombre());
-	 }
-    */
 
 }

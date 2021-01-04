@@ -25,12 +25,8 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/employees/{employeeId}")
 public class HorarioController {
 	
-	
-	@Autowired
 	EmployeeService employeeService;
-	@Autowired
 	HorarioService horarioService;
-	@Autowired
 	SalaService salaService;
 	
 	@Autowired
@@ -42,7 +38,6 @@ public class HorarioController {
 	
 	@ModelAttribute("employee")
 	public Employee findEmployee(@PathVariable("employeeId") int employeeId) {
-		
 		return this.employeeService.findById(employeeId).get();
 	}
 	
@@ -53,8 +48,6 @@ public class HorarioController {
         model.addAttribute("horario",h);
         return "timetable/horarioForm";
     }
-    
-
 
     @PostMapping("/newTimeTable")
     public String saveTimeTable(Employee e,@Valid @ModelAttribute("horario") Horario horario, BindingResult binding, ModelMap model){
@@ -71,22 +64,21 @@ public class HorarioController {
     }
     
     @GetMapping("/TimeTable/{horarioId}")
-    public ModelAndView showEmployeeTimeTable( @PathVariable("horarioId") int horarioId) {
+    public ModelAndView showEmployeeTimeTable(@PathVariable("horarioId") int horarioId) {
         ModelAndView mav = new ModelAndView("employees/employeeTimeTable");
         mav.addObject("sesion",this.horarioService.findSesionesHorario(horarioId));
         mav.addObject("horario", this.horarioService.findById(horarioId).get());
         return mav;
     }
     
-	
-    @GetMapping("/pastSessions")
+	@GetMapping("/pastSessions")
 	public ModelAndView showPastSessions(@PathVariable("employeeId") int employeeId) {
 		ModelAndView mav = new ModelAndView("employees/employeePastSessions");
 		mav.addObject("past", horarioService.pastDays(employeeId));
 		return mav;
 		
 	}
-    
+	
     @GetMapping("/TimeTable/{horarioId}/newSesion")
     public String addSession(ModelMap model,@PathVariable("horarioId") int horarioId) {
         model.addAttribute("horarioID", horarioId);
@@ -98,10 +90,16 @@ public class HorarioController {
     
     @PostMapping("/TimeTable/{horarioId}/newSesion")
     public String saveTimeTable(Employee e, @PathVariable("horarioId") int horarioId,@Valid @ModelAttribute("newSesion") Sesion sesion, BindingResult binding, ModelMap model){
-        if(binding.hasErrors()){
+        if(binding.hasErrors()||!sesion.validate()||horarioService.checkDuplicatedSessions(sesion, horarioId)){
         	model.addAttribute("horarioID", horarioId);
             model.addAttribute("salas",salaService.findAll());
             model.addAttribute("sesion", this.horarioService.findSesionesHorario(horarioId));
+            if(!sesion.validate()) {
+            	model.addAttribute("message", "Start time must be before end time");
+            }
+            if(horarioService.checkDuplicatedSessions(sesion, horarioId)) {
+            	model.addAttribute("message", "This room is already in use at this time");
+            }
             return "timetable/sesionForm";
         }else{
         	sesion.setHorario(horarioService.findById(horarioId).get());

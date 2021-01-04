@@ -10,13 +10,25 @@
     $(function () {
         $("#fEmision").datepicker({dateFormat: 'yyyy-mm-dd'});
     });
+
+    function validateForm(){
+        var fEmision = document.forms["payForm"]["fEmision"].value;
+
+        if(fEmision == "" || fEmision == null){
+            alert("Date must be filled")
+            return false;
+        }
+
+        return true;
+    }
 </script>
 
 <petclinic:layout pageName="pays">
     <h2>
         <c:if test="${pago['new']}">New </c:if> Salary
     </h2>
-    <form:form modelAttribute="pago" class="form-horizontal" id="add-employee-form">
+    <form:form name="payForm" modelAttribute="pago" class="form-horizontal" id="add-employee-form"
+               onsubmit="return validateForm()">
         <div class="form-group has-feedback">
             <petclinic:localDate pattern="yyyy-MM-dd" label="Date" name="fEmision"/>
             <petclinic:inputField label="Quantity" name="cantidad"/>

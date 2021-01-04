@@ -1,10 +1,8 @@
 package org.springframework.samples.petclinic.repository;
 
-import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.Repository;
@@ -26,10 +24,5 @@ public interface HorarioRepository extends Repository<Horario, Integer>,CrudRepo
 
     @Query("SELECT sesion FROM Sesion sesion WHERE sesion.sala.id = :sala_id")
     public Collection<Sesion> getSesionBySala(@Param("sala_id") int sala_id);
-    
-//    @Query(value ="SELECT fecha FROM Horario  WHERE fecha>=?1",nativeQuery = true)
-//    public Collection<LocalDate> getFutureDates(@Param("fecha")LocalDate today);
-//    
-    
-    
+
 }

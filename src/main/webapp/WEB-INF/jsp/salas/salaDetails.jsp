@@ -8,9 +8,7 @@
 
 <petclinic:layout pageName="salaDetails">
 
-    <h2>Room details </h2>
-    
-    
+    <h2>Room details </h2>    
 
     <table class="table table-striped" id="sala_details">
         <tr>
@@ -29,23 +27,26 @@
 <!--         ESTO SOLO SE MUESTRA A LOS CLIENTES -->
         <tr>
         	<th>Next Sessions</th>
-        	<c:if test="${sesiones.isEmpty()}">
-        	<td><b style="color:red;">Sorry, this room doesn't have sessions soon!</b></td>
-        	</c:if><c:if test="${!sesiones.isEmpty()}">
-        <td>
-        
-        <form:form modelAttribute="cita" class="form-horizontal" id="apuntarseASesion">
-	        <div class="form-group has-feedback">
-	            <petclinic:selectField label="Select a session" name="sesion" names="${sesiones}" size="1"/>
-	        </div>
-	        <div class="form-group">
-	            <div class="col-sm-offset-2 col-sm-10">
-	                  <button class="btn btn-default" type="submit">Sign up to the session</button>
-	            </div>
-	        </div>
-    	</form:form>
-        </td>
-        </c:if>
+        	<td>
+        	<c:choose>
+        		<c:when test="${!sesiones.isEmpty()}">
+       		        <form:form modelAttribute="cita" class="form-horizontal" id="apuntarseASesion">
+				        <div class="form-group has-feedback">
+				            <petclinic:selectField label="Select a session" name="sesion" names="${sesiones}" size="1"/>
+				            <input type="hidden" name="cliente" value="${cliente}">
+				        </div>
+				        <div class="form-group">
+				            <div class="col-sm-offset-2 col-sm-10">
+				                  <button class="btn btn-default" type="submit">Sign up to the session</button>
+				            </div>
+				        </div>
+			    	</form:form>
+        		</c:when>
+        		<c:otherwise>
+        			<b style="color:red;">Sorry, this room doesn't have sessions soon!</b>
+        		</c:otherwise>
+        	</c:choose>
+        	</td>
         </tr>
     </table>
        
