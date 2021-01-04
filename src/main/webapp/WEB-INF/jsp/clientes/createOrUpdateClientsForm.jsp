@@ -8,7 +8,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <script>
     function validateForm(){
-
         var fName = document.forms["clientForm"]["first_name"].value.trim();
         var lName = document.forms["clientForm"]["last_name"].value.trim();
         var address = document.forms["clientForm"]["address"].value;
@@ -16,12 +15,9 @@
         var email = document.forms["clientForm"]["email"].value;
         var username = document.forms["clientForm"]["user.username"].value;
         var password = document.forms["clientForm"]["user.password"].value;
-
         var nameRegex = /^(?!-)[a-zA-Z-]*[a-zA-Z]$/;
         var IBANRegex = /([a-zA-Z]{2})\s*\t*(\d{2})\s*\t*(\d{4})\s*\t*(\d{4})\s*\t*(\d{2})\s*\t*(\d{10})/;
         var emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
-
         if(fName == "" || fName == null || lName == "" || lName == null){
             alert("First and last name must be filled");
             return false;
@@ -35,12 +31,10 @@
             alert("Last name must be between 3 and 25 characters");
             return false;
         }
-
         if(address.trim() == "" || address == null){
             alert("Address must be filled");
             return false;
         }
-
         if(IBAN.trim() == "" || IBAN == null){
             alert("IBAN must be filled");
             return false;
@@ -48,7 +42,6 @@
             alert("IBAN must be spelled appropriately");
             return false;
         }
-
         if(email.trim() == "" || email == null){
             alert("Email must be filled");
             return false;
@@ -56,7 +49,6 @@
             alert("IBAN must be spelled appropriately");
             return false;
         }
-
         return true;
     }
 </script>
@@ -86,10 +78,12 @@
                         <c:when test="${hasAccess}">
                             <petclinic:selectField name="suscripcion" label="Subscription" names="${subTypes}" size="1"/>
                             <petclinic:inputField label="Username" name="user.username"/>
+
+
                         </c:when>
                         <c:otherwise>
-                            <petclinic:inputField disabled="true" name="suscripcion" label="Subscription"/>
-                            <petclinic:inputField disabled="true" label="Username" name="user.username"/>
+                            <petclinic:inputField readonly="true" label="Subscription" name="suscripcion"/>
+                            <petclinic:inputField readonly="true" label="Username" name="user.username"/>
                         </c:otherwise>
                     </c:choose>
                             <petclinic:inputField label="Password" name="user.password"/>

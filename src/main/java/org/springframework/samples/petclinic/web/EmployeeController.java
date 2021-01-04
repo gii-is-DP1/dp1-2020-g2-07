@@ -1,16 +1,15 @@
 package org.springframework.samples.petclinic.web;
+
+import java.time.LocalDate;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Categoria;
-import org.springframework.samples.petclinic.model.Employee;
-import org.springframework.samples.petclinic.model.EmployeeRevenue;
-import org.springframework.samples.petclinic.service.EmployeeService;
-import org.springframework.samples.petclinic.service.HorarioService;
-import org.springframework.samples.petclinic.service.SalaService;
+import org.springframework.samples.petclinic.model.*;
+import org.springframework.samples.petclinic.service.*;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -33,7 +32,15 @@ public class EmployeeController {
     SalaService salaService;
     @Autowired
     HorarioService horarioService;
+    @Autowired
+    UserService userService;
     
+    public Boolean hasAuthority(Optional<Employee> empleado, User user) {
+        if (user.equals(null))
+            return false;
+        else
+            return empleado.get().getUser().equals(user) || user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("admin"));
+    }
 
     @GetMapping
     public String listEmployees(ModelMap model){
@@ -42,15 +49,19 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}/edit")
-    public String editEmployee(@PathVariable("id") int id, ModelMap model){
+    public String editEmployee(@PathVariable("id") int id, ModelMap model, Authentication auth){
         Optional<Employee> employee = employeeService.findById(id);
-        if(employee.isPresent()){
+        User user = userService.findUser(auth.getName()).get();
+        if(employee.isPresent() && hasAuthority(employee, user)) {
             model.addAttribute("employee", employee.get());
+            model.addAttribute("profession", employee.get().getProfession());
             return EMPLOYEES_FORM;
-        }else{
-            model.addAttribute("message", "Cant find the employee you are looking for");
-            return listEmployees(model);
         }
+        else if (!hasAuthority(employee, user))
+            model.addAttribute("message","Acceso denegado");
+        else 
+            model.addAttribute("message", "Cant find the employee you are looking for");
+        return listEmployees(model);
     }
 
     @PostMapping("/{id}/edit")
@@ -80,10 +91,20 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public ModelAndView showEmployee(@PathVariable("employeeId") int employeeId) {
-        ModelAndView mav = new ModelAndView("employees/employeeDetails");
-        mav.addObject(this.employeeService.findById(employeeId).get());
-        return mav;
+    public ModelAndView showEmployee(@PathVariable("employeeId") int employeeId, Authentication auth) {
+        Optional<Employee> employee = employeeService.findById(employeeId);
+
+        if (hasAuthority(employee, userService.findUser(auth.getName()).get())) {
+            ModelAndView mav = new ModelAndView("employees/employeeDetails");
+            mav.addObject(this.employeeService.findById(employeeId).get());
+            mav.addObject("horarios",horarioService.futureDays(employeeId));
+            //placeholder de las horas totales, es solo para comprobar que funciona dandole los parametros
+            mav.addObject("horas", this.employeeService.findById(employeeId).get().getHoursWorked(LocalDate.of(2020, 12, 1), LocalDate.of(2020, 12, 31)));
+            return mav;
+        }
+        else {
+            return new ModelAndView("/login");
+        }
     }
 
     @GetMapping("/new")
@@ -119,7 +140,6 @@ public class EmployeeController {
             return "salary/salaryForm";
         }else{
             revenue.setEmployee(employeeService.findById(employeeId).get());
-            revenue.setQuantity();
             employeeService.addSalaryToEmployee(employeeId, revenue);
 
             return "redirect:/employees/" + String.valueOf(employeeId);

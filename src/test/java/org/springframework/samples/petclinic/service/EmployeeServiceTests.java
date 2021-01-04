@@ -32,14 +32,14 @@ public class EmployeeServiceTests {
 		Employee empleado = new Employee();
 		/*empleado.setApellidos("Rodríguez Cruz");
 		empleado.setCategoria(Categoria.EMPLEADO);
-		empleado.setDireccion("Calle falsa 456");
+		empleado.setDireccion("Calle falsa 456");*/
 		empleado.setIBAN("SE1232344324");
-		empleado.setNick("Paco");
+		//empleado.setNick("Paco");
 		empleado.setId(2);
-		empleado.setNombre("Francisco");
+		//sesmpleado.setNombre("Francisco");
 		empleado.addSalary(pagos);
 		empleado.setProfession(Profession.CLEANER);;
-		employeeservice.save(empleado);*/
+		employeeservice.save(empleado);
 	}
 
 	@Test
