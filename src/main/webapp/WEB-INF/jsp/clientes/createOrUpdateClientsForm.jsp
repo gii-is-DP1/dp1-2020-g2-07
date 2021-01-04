@@ -76,8 +76,10 @@
                     <c:choose>
 
                         <c:when test="${hasAccess}">
-                            <petclinic:selectField name="suscripcion" label="Subscription" names="${['MATINAL', 'VESPERTINO', 'PREMIUM']}" size="1"/>
-                            <petclinic:inputField readonly="true" label="Username" name="user.username"/>
+                            <petclinic:selectField name="suscripcion" label="Subscription" names="${subTypes}" size="1"/>
+                            <petclinic:inputField label="Username" name="user.username"/>
+
+
                         </c:when>
                         <c:otherwise>
                             <petclinic:inputField readonly="true" label="Subscription" name="suscripcion"/>
