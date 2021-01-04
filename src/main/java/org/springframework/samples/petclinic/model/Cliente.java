@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "clientes")
@@ -22,10 +24,8 @@ public class Cliente extends Individual {
     @Enumerated(EnumType.STRING)
     private SubType suscripcion;
 
-
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "cliente")
     private List<Pago> pagos;
-
 
     public SubType getSuscripcion() {
         return suscripcion;

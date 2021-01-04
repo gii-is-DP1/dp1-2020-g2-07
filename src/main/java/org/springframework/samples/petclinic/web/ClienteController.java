@@ -13,9 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/clientes")
@@ -32,7 +34,7 @@ public class ClienteController {
 
     @ModelAttribute("subTypes")
     public List<SubType> getSubType(){
-        return clientService.finSubTypes();
+        return Arrays.stream(SubType.class.getEnumConstants()).collect(Collectors.toList());
     }
 
     @GetMapping
