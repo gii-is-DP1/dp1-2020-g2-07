@@ -16,7 +16,6 @@ import org.springframework.beans.support.PropertyComparator;
 
 @Entity
 @Table(name = "employees")
-
 public class Employee extends Individual {
 
     @Column(name = "profession")

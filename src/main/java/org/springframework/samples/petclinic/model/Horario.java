@@ -25,7 +25,7 @@ public class Horario extends BaseEntity{
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate fecha;
 	
-	@NotNull
+	
 	@ManyToOne
 	@JoinColumn(name="employee_id")
 	private Employee employee;
