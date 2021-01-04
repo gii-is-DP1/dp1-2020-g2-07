@@ -23,6 +23,11 @@
             return false;
         }
 
+        if (dateStart > dateEnd) {
+            alert("Start date must be before end date")
+            return false;
+        }
+
         return true;
     }
 </script>

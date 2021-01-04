@@ -99,7 +99,7 @@ public class EmployeeController {
             mav.addObject(this.employeeService.findById(employeeId).get());
             mav.addObject("horarios",horarioService.futureDays(employeeId));
             //placeholder de las horas totales, es solo para comprobar que funciona dandole los parametros
-            mav.addObject("horas", this.employeeService.findById(employeeId).get().getHoursWorked(LocalDate.of(2020, 12, 1), LocalDate.of(2020, 12, 31)));
+            mav.addObject("horas", this.employeeService.findById(employeeId).get().getHoursWorked(LocalDate.of(2020, 12, 1), LocalDate.of(2021, 12, 31)));
             return mav;
         }
         else {

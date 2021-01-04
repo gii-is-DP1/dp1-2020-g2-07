@@ -13,9 +13,15 @@
 
     function validateForm(){
         var fEmision = document.forms["payForm"]["fEmision"].value;
+        var date = new Date().toISOString().slice(0,10);
 
         if(fEmision == "" || fEmision == null){
             alert("Date must be filled")
+            return false;
+        }
+
+        if (fEmision < date) {
+            alert("Date must be set before current date")
             return false;
         }
 
