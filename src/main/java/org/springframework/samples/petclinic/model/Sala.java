@@ -1,7 +1,5 @@
 package org.springframework.samples.petclinic.model;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,8 +14,8 @@ import javax.validation.constraints.Size;
 @Table(name = "salas")
 public class Sala extends NamedEntity{
 	
-	@ManyToMany(mappedBy = "salas",cascade = CascadeType.ALL)
-    private Set<Bono> bonos;
+	@Column(name = "token_code")
+	private String token_code;
 		
 	@Column(name = "aforo")
 	@NotNull(message = "Capacity can't be null")

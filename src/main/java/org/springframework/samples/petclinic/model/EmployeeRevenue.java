@@ -26,7 +26,7 @@ public class EmployeeRevenue extends BaseEntity{
 
     @NotNull
     @Min(1)
-    @Max(50)
+    @Max(170)
     @Column(name = "hours_worked")
     private Integer hoursWorked;
 
@@ -34,6 +34,10 @@ public class EmployeeRevenue extends BaseEntity{
     @Min(8)
     @Column(name = "quantity")
     private Integer quantity;
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
 
     public Employee getEmployee() {
         return employee;

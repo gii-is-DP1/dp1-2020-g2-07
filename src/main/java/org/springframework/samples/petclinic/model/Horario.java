@@ -33,7 +33,6 @@ public class Horario extends BaseEntity{
 	@OneToMany(mappedBy = "horario",cascade=CascadeType.ALL)
 	private List<Sesion> sesiones;
 	
-	
 	public LocalDate getFecha() {
 		return fecha;
 	}

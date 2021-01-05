@@ -1,16 +1,14 @@
 package org.springframework.samples.petclinic.model;
-
 import java.time.LocalTime;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
-
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
@@ -41,6 +39,9 @@ public class Sesion extends BaseEntity{
 	@ManyToOne
 	@JoinColumn(name = "horario_id")
 	private Horario horario;
+	
+	@OneToOne
+	private Bono token;
 
 	public Horario getHorario() {
 		return horario;

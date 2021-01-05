@@ -10,7 +10,6 @@ import org.mockito.Mock;
 
 import static org.mockito.ArgumentMatchers.*;
 
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.samples.petclinic.model.*;
@@ -42,14 +41,10 @@ public class ClientMockTest {
     private AuthoritiesService authoritiesService;
 
     private ClienteService clienteService;
-
     private Cliente c;
-
     private User u;
-
     private Collection<Cliente> clients;
     private Optional<Cliente> cOptional;
-
     private Pago p;
 
     @Before
@@ -59,6 +54,7 @@ public class ClientMockTest {
         c = new Cliente();
         u = new User();
         clients = new ArrayList<Cliente>();
+        p = new Pago();
 
         u.setUsername("juanma");
         u.setPassword("12345");
@@ -75,8 +71,6 @@ public class ClientMockTest {
         c.setPagos(new ArrayList<Pago>());
         clients.add(c);
 
-        p = new Pago();
-
         p.setfEmision(LocalDate.parse("2020-11-15", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
         p.setCantidad(30);
         p.setCliente(c);
@@ -90,12 +84,11 @@ public class ClientMockTest {
     }
 
     @Test
-    public void shouldFind(){
+    public void shouldFindAll(){
+        Collection<Cliente> clientsExample = this.clienteService.findAll();
 
-        Collection<Cliente> clientExample = this.clienteService.findAll();
-
-        assertThat(clientExample).hasSize(1);
-        assertThat(clients.iterator().next().getFirst_name()).isEqualTo("Juanma");
+        assertThat(clientsExample).hasSize(1);
+        assertThat(clientsExample.iterator().next().getFirst_name()).isEqualTo("Juanma");
     }
 
     @Test
@@ -109,7 +102,6 @@ public class ClientMockTest {
 
     @Test
     public void shouldSave(){
-
         clienteService.save(c, "new");
         verify(authoritiesService).saveAuthorities("juanma", "client");
         verify(userService).saveUser(c.getUser());
@@ -118,7 +110,6 @@ public class ClientMockTest {
 
     @Test
     public void shouldFindClientById(){
-
         Optional<Cliente> cOptionalExample1 = clienteService.findById(1);
         assertTrue(cOptionalExample1.isPresent());
 
