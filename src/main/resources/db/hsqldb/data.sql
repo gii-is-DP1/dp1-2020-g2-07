@@ -68,7 +68,7 @@ INSERT INTO visits(id,pet_id,visit_date,description) VALUES (4, 7, '2013-01-04',
 */
 INSERT INTO users(username,password,enabled) VALUES ('juanma','hola',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (2,'juanma','client');
-INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion, email, username) VALUES(1, 'Juan Manuel', 'García Criado', 'C/ Pedro Sanchez', 0, 'ES3912341234250123456789', 'MORNING', 'juanma101099@gmail.com','juanma');
+INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion, email, username) VALUES(1, 'Juan Manuel', 'Garcia Criado', 'C/ Pedro Sanchez', 0, 'ES3912341234250123456789', 'MORNING', 'juanma101099@gmail.com','juanma');
 
 /*INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion) VALUES(2, 'Pepe', 'Díaz Oslo', 'Sevilla C/Inventada 2',0, 'ES72 2223 2334 3422', 'VESPERTINO');
 INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion) VALUES(3, 'Manuel', 'Osuna Moreno', 'Sevilla C/Tangana 1º A',0, 'ES72 6789 4839 3928 2143', 'PREMIUM');
