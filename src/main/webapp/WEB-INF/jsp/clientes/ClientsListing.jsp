@@ -4,8 +4,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="clientes">
+
+	<sec:authorize access="hasAuthority('admin')">
     <h2>Clientes</h2>
 
     <table id="clientesTable" class="table table-striped">
@@ -42,4 +45,10 @@
     <p>
         <a href="/clientes/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add client</a>
     </p>
+    </sec:authorize>
+    
+    <sec:authorize access="hasAuthority('client')">
+    		<c:redirect url="/clientes/${c.id}"/>
+    </sec:authorize>
+    
 </petclinic:layout>
