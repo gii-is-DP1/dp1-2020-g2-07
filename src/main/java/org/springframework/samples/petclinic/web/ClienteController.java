@@ -1,11 +1,11 @@
 package org.springframework.samples.petclinic.web;
-
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Categoria;
@@ -147,7 +147,6 @@ public class ClienteController {
     @GetMapping("/{clientId}")
     public ModelAndView showClient(@PathVariable("clientId") int clientId, Authentication auth) {
         Optional<Cliente> cliente = clientService.findById(clientId);
-
         if (hasAuthority(cliente, userService.findUser(auth.getName()).get())) {
             ModelAndView mav = new ModelAndView("clientes/clienteDetails");
             mav.addObject("cliente",this.clientService.findById(clientId).get());

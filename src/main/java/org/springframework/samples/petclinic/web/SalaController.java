@@ -1,13 +1,14 @@
 package org.springframework.samples.petclinic.web;
+import java.time.LocalDate;
 import java.util.Optional;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Bono;
 import org.springframework.samples.petclinic.model.Cita;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Sala;
+import org.springframework.samples.petclinic.service.BonoService;
 import org.springframework.samples.petclinic.service.CitaService;
 import org.springframework.samples.petclinic.service.ClienteService;
 import org.springframework.samples.petclinic.service.HorarioService;
@@ -26,7 +27,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/salas")
 public class SalaController {
-
+	public static final String BONOS_LISTING="bonos/BonosListing";
+	public static final String BONOS_FORM="bonos/createToken";
 	public static final String SALAS_FORM ="/salas/CreateOrUpdateSalasForm";
 	public static final String SALAS_LISTING ="/salas/SalasListing";
 	
@@ -35,13 +37,15 @@ public class SalaController {
 	private HorarioService hs;
 	private CitaService cs;
 	private ClienteService cls;
+	private BonoService bonoservice;
 	
 	@Autowired
-	public SalaController(SalaService salaService,HorarioService hs,CitaService cs, ClienteService cls) {
+	public SalaController(SalaService salaService,HorarioService hs,CitaService cs, ClienteService cls, BonoService bonoservice) {
 		this.salaService = salaService;
 		this.hs = hs;
 		this.cs = cs;
 		this.cls = cls;
+		this.bonoservice = bonoservice;
 	}
 	
 	@GetMapping
@@ -121,7 +125,8 @@ public class SalaController {
 			  model.addAttribute("sala", this.salaService.findById(salaId).get());
 			  if(c.isPresent()) {
 				  model.addAttribute("cliente", c.get().getId());
-			      model.addAttribute("sesiones", hs.activeSessions(salaId,c.get()));
+				  model.addAttribute("sala", this.salaService.findById(salaId).get());
+			      model.addAttribute("sesiones", hs.inTimeSessions(hs.availableSessions(hs.activeSessions(salaId,c.get()),c.get()), c.get()));
 			      model.put("cita", new Cita());
 			  }	  
 			  return "salas/salaDetails";
@@ -142,5 +147,29 @@ public class SalaController {
 				return salasListing(model);
 			}
 		}
+		
+		
+	@GetMapping("/{salaId}/createtoken")
+	public String createtoken(@PathVariable("salaId") int salaId,ModelMap model) {
+		model.addAttribute("bono", new Bono());
+		model.addAttribute("session", hs.activeSessions(salaId, null));
+		return BONOS_FORM;
+	}
+	
+	@PostMapping("/{salaId}/createtoken")
+	public String saveNewBono(@Valid Bono bono, BindingResult binding,ModelMap model) {
+		if(binding.hasErrors()) {			
+			return BONOS_FORM;
+		}else {
+			bono.setUsado(false);
+			bono.setDate_start(LocalDate.now());
+			bono.setDate_end(bono.getSession().getHorario().getFecha().minusDays(1));
+			if (bono.getCodigo().isEmpty())
+				bono.setCodigo();
+			bonoservice.save(bono);
+			model.addAttribute("message", "The token has been created successfully");			
+			return salasListing(model);
+		}
+	}
     	
 }
