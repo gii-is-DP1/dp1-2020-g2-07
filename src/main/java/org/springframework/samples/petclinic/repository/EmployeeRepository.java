@@ -15,7 +15,4 @@ public interface EmployeeRepository extends CrudRepository<Employee, Integer> {
 
     Collection<Employee> findEmployeeByProfession(String prefession);
 
-    @Query("SELECT revenue FROM EmployeeRevenue revenue WHERE revenue.employee.id = :employee_id")
-    public Collection<EmployeeRevenue> getSalariesByEmployee(@Param("employee_id") int employee_id);
-        
 }
