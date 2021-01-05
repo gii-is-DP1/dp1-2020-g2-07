@@ -16,13 +16,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class EmployeeService {
 
-    @Autowired
-    EmployeeRepository employeeRepo;
+    public EmployeeService(EmployeeRepository employeeRepo, UserService userService, AuthoritiesService authoritiesService){
+        this.employeeRepo = employeeRepo;
+        this.userService = userService;
+        this.authoritiesService = authoritiesService;
+    }
 
-    @Autowired
+    private EmployeeRepository employeeRepo;
+
     private UserService userService;
 
-    @Autowired
     private AuthoritiesService authoritiesService;
 
     public Collection<Employee> findAll(){
@@ -40,7 +43,7 @@ public class EmployeeService {
 
     public void save(@Valid Employee employee){
         employeeRepo.save(employee);
-
+        employee.getUser().setEnabled(true);
         userService.saveUser(employee.getUser());
         //creating authorities
         authoritiesService.saveAuthorities(employee.getUser().getUsername(), "employee");
