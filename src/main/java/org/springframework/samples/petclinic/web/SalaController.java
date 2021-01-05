@@ -153,7 +153,7 @@ public class SalaController {
 	@GetMapping("/{salaId}/createtoken")
 	public String createtoken(@PathVariable("salaId") int salaId,ModelMap model) {
 		model.addAttribute("bono", new Bono());
-		model.addAttribute("session", hs.activeSessionsBis(salaId));
+		model.addAttribute("session", hs.activeSessions(salaId, null));
 		return BONOS_FORM;
 	}
 	
