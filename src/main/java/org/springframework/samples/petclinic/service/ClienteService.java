@@ -10,23 +10,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Email;
 import org.springframework.samples.petclinic.model.Pago;
+import org.springframework.samples.petclinic.model.SubType;
 import org.springframework.samples.petclinic.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
+import javax.transaction.Transactional;
+import javax.validation.Valid;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ClienteService {
 
-    @Autowired
     ClienteRepository clientRepo;
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private EmailService emailService;
 
-    @Autowired
     private AuthoritiesService authoritiesService;
+
+    @Autowired
+    public ClienteService(ClienteRepository clienteRepository, UserService userService, AuthoritiesService authoritiesService,
+                          EmailService emailService){
+        this.clientRepo = clienteRepository;
+        this.userService = userService;
+        this.authoritiesService = authoritiesService;
+        this.emailService = emailService;
+    }
 
     public Collection<Cliente> findAll(){
         return clientRepo.findAll();
@@ -64,28 +74,17 @@ public class ClienteService {
 
     }
 
-
+    @Transactional
     public void addPayToClient(int id, Pago pay){
         clientRepo.findById(id).get().addPay(pay);
         this.save(clientRepo.findById(id).get(), "edit");
     }
     
-//    public Cliente findClienteByUsername(String username){
-//    	for(Cliente c: clientRepo.findAll()) {
-//    		String usernamerepo = c.getUser().getUsername();
-//    		if(usernamerepo.equals(username)) {
-//    			return c;
-//    		}
-//    	}
-//    	return null;
-//    }
-    
     public Optional<Cliente> clientByUsername1(String username){
         return this.findAll().stream().filter(c -> c.getUser().getUsername().equals(username)).findAny();
     }
 
-    public Cliente clientByUsername(String username){
-        return this.findAll().stream().filter(c -> c.getUser().getUsername().equals(username)).findAny().get();
+    public Optional<Cliente> clientByUsername(String username){
+        return this.findAll().stream().filter(c -> c.getUser().getUsername().equals(username)).findAny();
     }
-
 }
