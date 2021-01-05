@@ -47,15 +47,15 @@ public class SalaController {
 		this.cls = cls;
 	}
 	
-	@InitBinder("sala")
-	public void initPetBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(new SalaValidator());
-	}
-	
 	@GetMapping
 	public String salasListing(ModelMap model) {
 		model.addAttribute("salas", salaService.findAll());
 		return SALAS_LISTING;
+	}
+	
+	@InitBinder("sala")
+	public void initPetBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(new SalaValidator());
 	}
 	
 	
@@ -111,7 +111,6 @@ public class SalaController {
 		return SALAS_FORM;
 	}
 
-
 	@PostMapping(value = "/new")
 	public String processCreationForm(@Valid Sala sala, BindingResult result, ModelMap model) {
 		if (result.hasErrors()) {
@@ -129,6 +128,7 @@ public class SalaController {
 		}
 	}
 	
+	
 	  @GetMapping("/{salaId}")
 	  public String showSala(@PathVariable("salaId") int salaId, ModelMap model, @AuthenticationPrincipal User user) {
 		  model.clear();
@@ -136,7 +136,7 @@ public class SalaController {
 			  model.addAttribute("message", "You need to log in to access this view");
 			  return salasListing(model);
 		  }else {
-			  Optional<Cliente> c = cls.clientByUsername(user.getUsername());
+			  Optional<Cliente> c = cls.clientByUsername1(user.getUsername());
 			  if(c.isPresent()) {
 				  model.addAttribute("cliente", c.get().getId());
 				  model.addAttribute("sala", this.salaService.findById(salaId).get());

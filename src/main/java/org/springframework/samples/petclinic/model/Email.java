@@ -1,6 +1,8 @@
 package org.springframework.samples.petclinic.model;
 
+import org.springframework.context.annotation.Bean;
 
+import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 
 public class Email {
