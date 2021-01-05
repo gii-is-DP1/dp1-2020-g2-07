@@ -2,18 +2,36 @@ package org.springframework.samples.petclinic.web;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.*;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import javax.validation.Valid;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Categoria;
+import org.springframework.samples.petclinic.model.Cliente;
+import org.springframework.samples.petclinic.model.Pago;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.ClienteService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 
 @Controller
 @RequestMapping("/clientes")
@@ -35,10 +53,19 @@ public class ClienteController {
     @Autowired
     UserService userService;
 
+    @ModelAttribute("subTypes")
+    public List<SubType> getSubType(){
+        return Arrays.stream(SubType.class.getEnumConstants()).collect(Collectors.toList());
+    }
+
     @GetMapping
     public String listClients(ModelMap model, Authentication auth){
         if (auth.isAuthenticated()) {
-            model.addAttribute("clientes", clientService.findAll());
+            Optional<Cliente> c = clientService.clientByUsername1(auth.getName());
+            if(c.isPresent()) {
+            	model.addAttribute("c", c.get());
+            }else model.addAttribute("clientes", clientService.findAll());
+            
             return CLIENTS_LISTING;
         }
         else return "/login";

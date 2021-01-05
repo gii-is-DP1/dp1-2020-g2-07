@@ -23,10 +23,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class HorarioService {
 
+    
+    private HorarioRepository horarioRepo;
+    
     @Autowired
-    HorarioRepository horarioRepo;
-
-    public Collection<Horario> findAll(){
+    public HorarioService(HorarioRepository horarioRepo) {
+		this.horarioRepo = horarioRepo;
+	}
+    
+    
+	public Collection<Horario> findAll(){
         return horarioRepo.findAll();
     }
     public Optional<Horario> findById(Integer id){

@@ -122,16 +122,15 @@ public class SalaController {
 			  return salasListing(model);
 		  }else {
 			  Optional<Cliente> c = cls.clientByUsername1(user.getUsername());
+			  model.addAttribute("sala", this.salaService.findById(salaId).get());
 			  if(c.isPresent()) {
 				  model.addAttribute("cliente", c.get().getId());
 				  model.addAttribute("sala", this.salaService.findById(salaId).get());
 			      model.addAttribute("sesiones", hs.inTimeSessions(hs.availableSessions(hs.activeSessions(salaId,c.get()),c.get()), c.get()));
 			      model.put("cita", new Cita());
-			      return "salas/salaDetails";   
-			  }else {
-				  model.addAttribute("message", "We had some issues with your username");
-				  return salasListing(model);
-			  }
+			  }	  
+			  return "salas/salaDetails";
+			  
 		  }
 	  }
 	  

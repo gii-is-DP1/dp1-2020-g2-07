@@ -12,14 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CitaService {
 
-    
     CitaRepository citaRepo;
-    ClienteService cls;
     
     @Autowired
-    public CitaService(CitaRepository citaRepo, ClienteService cls) {
+    public CitaService(CitaRepository citaRepo) {
     	this.citaRepo = citaRepo;
-    	this.cls = cls;
     }
     
 

@@ -7,7 +7,9 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="clientes">
+	<sec:authorize access="hasAuthority('admin')">
     <h2>Clients</h2>
+
 
     <table id="clientesTable" class="table table-striped">
         <thead>
@@ -49,4 +51,11 @@
         <a href="/clientes/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add client</a>
     </p>
     </sec:authorize>
+
+    </sec:authorize>
+    <sec:authorize access="hasAuthority('client')">
+    		<c:redirect url="/clientes/${c.id}"/>
+    </sec:authorize>
+    
+
 </petclinic:layout>
