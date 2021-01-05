@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Circuito;
 import org.springframework.samples.petclinic.service.CircuitoService;
 import org.springframework.samples.petclinic.service.SalaService;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedCircuitoNameException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -68,9 +69,18 @@ public class CircuitoController {
 			model.put("salas", salasServices.findAll());
 			return CIRCUITOS_FORM;
 		}else {
-			modifiedCircuito.setAforo(circuitosServices.getAforo(modifiedCircuito));
-			BeanUtils.copyProperties(modifiedCircuito, circuito.get(),"id");
-			circuitosServices.save(modifiedCircuito);
+			
+			BeanUtils.copyProperties(modifiedCircuito, circuito.get(),"id","aforo","salas","descripcion");
+			try{
+				modifiedCircuito.setAforo(circuitosServices.getAforo(modifiedCircuito));
+				this.circuitosServices.saveCircuito(modifiedCircuito);
+             }catch(DuplicatedCircuitoNameException ex){
+            	model.put("circuito", modifiedCircuito);
+     			model.put("salas", salasServices.findAll());
+            	binding.rejectValue("name", "duplicate", "already exists");
+                return  CIRCUITOS_FORM;
+             }
+			
 			model.addAttribute("message", "The circuit was updated successfully.");
 			return cicuitosListing(model);
 		}
@@ -100,19 +110,27 @@ public class CircuitoController {
 	@PostMapping("/new")
 	public String saveNewCircuito(@Valid Circuito circuito, BindingResult binding,ModelMap model) {
 		if(binding.hasErrors()) {
+
 			model.put("circuito", circuito);
 			model.put("salas", salasServices.findAll());
 			return CIRCUITOS_FORM;
 			
 		}else {
-			circuito.setAforo(circuitosServices.getAforo(circuito));
-			circuitosServices.save(circuito);
+			 try{
+				circuito.setAforo(circuitosServices.getAforo(circuito));
+				this.circuitosServices.saveCircuito(circuito);
+             }catch(DuplicatedCircuitoNameException ex){
+            	model.put("circuito", circuito);
+     			model.put("salas", salasServices.findAll());
+            	binding.rejectValue("name", "duplicate", "already exists");
+                return  CIRCUITOS_FORM;
+             }
+			
 			model.addAttribute("message", "The circuit was created successfully.");
 			return cicuitosListing(model);
 			
 		}
 	}
-
 	
 	
 	

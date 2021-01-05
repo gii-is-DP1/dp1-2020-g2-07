@@ -2,12 +2,16 @@ package org.springframework.samples.petclinic.service;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Circuito;
 import org.springframework.samples.petclinic.model.Sala;
 import org.springframework.samples.petclinic.repository.CircuitoRepository;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedCircuitoNameException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 @Service
 public class CircuitoService {
@@ -25,7 +29,7 @@ public class CircuitoService {
         return circuitoRepo.findAll();
     }
 	
-	public Optional<Circuito> findById(Integer id){
+	public Optional<Circuito> findById(int id){
     	return circuitoRepo.findById(id);
     }
 	
@@ -54,9 +58,34 @@ public class CircuitoService {
 		return min;
 	}
 
-	public List<Circuito> findByIdLista(int id) {
-		return circuitoRepo.findById(id);
+//	public List<Circuito> findByIdLista(int id) {
+//		return circuitoRepo.findById(id);
+//	}
+	public Circuito getCircuitwithIdDIfferent(String name,Integer id) {
+		name=name.toLowerCase();
+		for (Circuito circuito: getCircuits()) {
+			String compName=circuito.getName();
+			compName=compName.toLowerCase();
+			if (compName.equals(name) && circuito.getId()!=id) {
+				return circuito;
+			}
+		}
+		return null;
 	}
+    public Collection<Circuito> getCircuits(){
+    	return findAll();
+    }
+    
+    @Transactional(rollbackOn = DuplicatedCircuitoNameException.class)
+    public void saveCircuito(Circuito circuito)  throws DuplicatedCircuitoNameException {
+    	Circuito otherCircuit=getCircuitwithIdDIfferent(circuito.getName(), circuito.getId());
+    	 if (StringUtils.hasLength(circuito.getName())&&  (otherCircuit!= null && otherCircuit.getId()!=circuito.getId())) {            	
+         	throw new DuplicatedCircuitoNameException();
+         }else
+        	 circuitoRepo.save(circuito);    
+    }
+
+
 
 
 }
