@@ -28,7 +28,7 @@ public class Employee extends Individual {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     private List<EmployeeRevenue> salaries;
-    
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     private List<Horario> horarios;
 
@@ -59,7 +59,7 @@ public class Employee extends Individual {
     public void addSalary(EmployeeRevenue e){
         this.salaries.add(e);
     }
-    
+
     public void addHorario(Horario h){
         this.horarios.add(h);
     }
@@ -68,7 +68,7 @@ public class Employee extends Individual {
 	public String toString() {
 		return getFirst_name();
 	}
-    
+
     public Integer getSalary() {
         //retorna el salario (euros / hora)
         switch (profession) {

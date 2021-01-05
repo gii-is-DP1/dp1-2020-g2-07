@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -58,9 +59,9 @@ public class AdminController {
     @GetMapping("/users/{username}")
     public String activeUser(@PathVariable("username") String username,ModelMap model){
         User u = userService.findUser(username).get();
-        Cliente c = clienteService.clientByUsername(username);
+        Optional<Cliente> c = clienteService.clientByUsername(username);
 
-        if(c.getSuscripcion() == null){
+        if(c.get().getSuscripcion() == null){
             model.addAttribute("message", "All client must have a subscription type before enable their users");
             return getUsers(model);
         }
