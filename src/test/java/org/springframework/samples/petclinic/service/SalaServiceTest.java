@@ -8,18 +8,18 @@ import java.util.Collection;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.ComponentScan;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.samples.petclinic.model.Circuito;
 import org.springframework.samples.petclinic.model.Sala;
-import org.springframework.stereotype.Service;
+import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-@DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
-@TestInstance(Lifecycle.PER_CLASS)
+@RunWith(SpringRunner.class)
+@SpringBootTest
+@TestPropertySource(locations = "classpath:application.properties")
 public class SalaServiceTest {
 
 	@Autowired
@@ -41,7 +41,7 @@ public class SalaServiceTest {
 	@Test
 	void mostrarListaConSalas() {
 		Collection<Sala> salas = salaservice.findAll();
-		assertEquals(4, salas.size());
+		assertEquals(5, salas.size());
 	}
 	
 	@Test

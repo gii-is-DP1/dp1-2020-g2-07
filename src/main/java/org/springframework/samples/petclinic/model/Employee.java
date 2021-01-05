@@ -33,7 +33,6 @@ public class Employee extends Individual {
     private List<Horario> horarios;
 
     public List<Horario> getHorarios() {
-    	PropertyComparator.sort(horarios, new MutableSortDefinition("fecha", true, true));
 		return horarios;
 	}
 

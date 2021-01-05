@@ -31,10 +31,17 @@
                     <span>Home</span>
                 </petclinic:menuItem>
 
-                <sec:authorize access="hasAnyAuthority('client', 'admin')">
+                <sec:authorize access="hasAuthority('admin')">
                     <petclinic:menuItem active="${name eq 'Clients'}" url="/clientes" title="clients">
                         <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
                         <span>Clients</span>
+                    </petclinic:menuItem>
+                </sec:authorize>
+                
+                <sec:authorize access="hasAuthority('client')">
+                    <petclinic:menuItem active="${name eq 'My profile'}" url="/clientes" title="Myprofile">
+                        <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
+                        <span>My profile</span>
                     </petclinic:menuItem>
                 </sec:authorize>
 
