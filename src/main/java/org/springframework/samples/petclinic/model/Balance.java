@@ -22,7 +22,22 @@ public class Balance extends BaseEntity{
     private Integer salaries;
 
 	@Column(name = "mante")
-    private Integer mante;
+    private Integer mante;	
+
+	
+	public Balance() {
+		super();
+	}
+
+	public Balance(String month, String year, Integer subs, Integer bonos, Integer salaries, Integer mante) {
+		super();
+		this.month = month;
+		this.year = year;
+		this.subs = subs;
+		this.bonos = bonos;
+		this.salaries = salaries;
+		this.mante = mante;
+	}
 
 	public String getMonth() {
 		return month;

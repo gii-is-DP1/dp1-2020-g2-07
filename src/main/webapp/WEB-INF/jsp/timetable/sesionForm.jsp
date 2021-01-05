@@ -35,8 +35,8 @@
 
     <form:form modelAttribute="newSesion" class="form-horizontal" id="add-sesion-form">
         <div class="form-group has-feedback">
-          <petclinic:inputField label="From" name="horaInicio"/>
-          <petclinic:inputField label="To" name="horaFin"/>
+          <petclinic:selectField label="From" name="horaInicio" names="${hours_op}" size="1"/>
+          <petclinic:selectField label="To" name="horaFin" names="${hours_end}" size="1"/>
           <input type="hidden" name="horario" value="${horarioID}">
            <div class="control-group">
                     <petclinic:selectField name="sala" label="Rooms " names="${salas}" size="5"/>

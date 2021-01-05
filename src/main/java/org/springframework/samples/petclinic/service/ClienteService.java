@@ -2,10 +2,8 @@ package org.springframework.samples.petclinic.service;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Email;

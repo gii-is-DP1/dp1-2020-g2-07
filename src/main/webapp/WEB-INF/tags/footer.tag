@@ -1,4 +1,5 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
 <%-- Placed at the end of the document so the pages load faster --%>
 <spring:url value="/webjars/jquery/2.2.4/jquery.min.js" var="jQuery"/>
