@@ -20,9 +20,10 @@
         <div class="form-group has-feedback"> 
             <petclinic:inputField label="Code" name="codigo"/> 
             <petclinic:inputField label="Price" name="precio"/>
-            <petclinic:localDate pattern="yyyy-MM-dd"  label="Date Start" name="date_start"/>
-            <petclinic:localDate pattern="yyyy-MM-dd"  label="Date End" name="date_end"/> 
-            <petclinic:inputField label="Description" name="descripcion"/>             
+            <petclinic:inputField label="Description" name="descripcion"/>
+            <div class="form-group has-feedback">
+				<petclinic:selectField label="Select a session" name="session" names="${session}" size="1"/>
+			</div>        
 
         </div>
         <div class="form-group">

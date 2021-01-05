@@ -44,6 +44,13 @@
                 </td>
                 <td>
                     <sec:authorize access="hasAuthority('admin')">
+                        <a href="/salas/${sala.id}/createtoken">
+                            <span class="glyphicon glyphicon-barcode" aria-hidden="true"></span>
+                        </a>
+                    </sec:authorize>
+                </td>
+                <td>
+                    <sec:authorize access="hasAuthority('admin')">
                         <a href="/salas/${sala.id}/delete">
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         </a>

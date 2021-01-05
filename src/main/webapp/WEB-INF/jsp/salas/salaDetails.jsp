@@ -25,6 +25,7 @@
         </tr>
         
 <!--         ESTO SOLO SE MUESTRA A LOS CLIENTES -->
+		<sec:authorize access="hasAuthority('client')">
         <tr>
         	<th>Next Sessions</th>
         	<td>
@@ -48,6 +49,7 @@
         	</c:choose>
         	</td>
         </tr>
+        </sec:authorize>
     </table>
        
 </petclinic:layout>

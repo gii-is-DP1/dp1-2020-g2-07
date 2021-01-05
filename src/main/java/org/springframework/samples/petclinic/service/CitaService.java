@@ -1,14 +1,10 @@
 package org.springframework.samples.petclinic.service;
-
 import java.util.Collection;
 import java.util.Optional;
-
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cita;
-import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.repository.CitaRepository;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +12,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CitaService {
 
-    
     CitaRepository citaRepo;
-    ClienteService cls;
     
     @Autowired
-    public CitaService(CitaRepository citaRepo, ClienteService cls) {
+    public CitaService(CitaRepository citaRepo) {
     	this.citaRepo = citaRepo;
-    	this.cls = cls;
     }
     
 

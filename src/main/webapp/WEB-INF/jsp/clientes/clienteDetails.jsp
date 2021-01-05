@@ -75,7 +75,36 @@
         <spring:url value="/clientes/{clientId}/newPay" var="clientePayUrl">
             <spring:param name="clientId" value="${cliente.id}"/>
         </spring:url>
-
         <a href="${fn:escapeXml(clientePayUrl)}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>New Pay</a>
     </sec:authorize>
+    
+    <h3>Appointments of <c:out value="${cliente.first_name} ${cliente.last_name}"/></h3>
+    <table id="employeesSalaries" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>Start Time</th>
+            <th>End Time</th>
+            <th>Room</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${cliente.citas}" var="cita">
+            <tr>
+                <td>
+                    <c:out value="${cita.sesion.horario.fecha}"/>
+                </td>
+                <td>
+                    <c:out value="${cita.sesion.horaInicio}"/>
+                </td>
+                <td>
+                    <c:out value="${cita.sesion.horaFin}"/>
+                </td>
+                <td>
+                    <c:out value="${cita.sesion.sala.name}"/>
+                </td>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>  
 </petclinic:layout>
