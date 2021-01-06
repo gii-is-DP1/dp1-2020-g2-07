@@ -1,7 +1,5 @@
 package org.springframework.samples.petclinic.model;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,15 +14,15 @@ import javax.validation.constraints.Size;
 @Table(name = "salas")
 public class Sala extends NamedEntity{
 	
-	@ManyToMany(mappedBy = "salas",cascade = CascadeType.ALL)
-    private Set<Bono> bonos;
+	@Column(name = "token_code")
+	private String token_code;
 		
 	@Column(name = "aforo")
 	@NotNull(message = "Capacity can't be null")
 	@Min(value = 1, message = "The room must have 1 person capacity at least.")
 	private Integer aforo;
 	
-	@Size(min= 10, message = "The description needs to have at least ten letters.")
+
 	@Column(name = "descripcion")
 	private String descripcion;
 	

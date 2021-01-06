@@ -1,17 +1,19 @@
 package org.springframework.samples.petclinic.web;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.Optional;
+import java.util.Set;
 import javax.validation.Valid;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Bono;
+import org.springframework.samples.petclinic.model.Cita;
+import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.TokenCode;
 import org.springframework.samples.petclinic.repository.BonoRepository;
 import org.springframework.samples.petclinic.service.BonoService;
+import org.springframework.samples.petclinic.service.CitaService;
+import org.springframework.samples.petclinic.service.ClienteService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -23,47 +25,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/bonos")
 public class BonoController {
-	public static final String BONOS_FORM="bonos/createOrUpdateBonosForm";
 	public static final String BONOS_LISTING="bonos/BonosListing";
 	public static final String REEDEM_TOKEN="bonos/ReedemToken";
 	
-	@Autowired
-	BonoService bonoservice;
+	private BonoService bonoservice;
+	private ClienteService clientservice;
+	private BonoRepository bonoRepo;
+	private CitaService citaService;
+	
 	
 	@Autowired
-	BonoRepository bonoRepo;
-	
+	public BonoController(BonoService bonoservice, ClienteService clientservice, BonoRepository bonoRepo, CitaService citaService) {
+		super();
+		this.bonoservice = bonoservice;
+		this.clientservice = clientservice;
+		this.bonoRepo = bonoRepo;
+		this.citaService = citaService;
+	}
+
 	@GetMapping
 	public String listBonos(ModelMap model) {
 		model.addAttribute("bonos",bonoservice.findAll());
 		return BONOS_LISTING;
-	}
-	
-	@GetMapping("/{id}/edit")
-	public String editBono(@PathVariable("id") int id,ModelMap model) {
-		Optional<Bono> bono=bonoservice.findById(id);
-		if(bono.isPresent()) {
-			model.addAttribute("bono", bono.get());
-			return BONOS_FORM;
-		}else {
-			model.addAttribute("message", "No podemos encontrar el bono que desea editar");
-			return listBonos(model);
-		}
-	}
-	
-	@PostMapping("/{id}/edit")
-	public String editBono(@PathVariable("id") int id, @Valid Bono modifiedBono, BindingResult binding, ModelMap model){
-		Optional<Bono> bono=bonoservice.findById(id);
-		if(binding.hasErrors()) {
-			return BONOS_FORM;
-		}else {
-			if (modifiedBono.getCodigo().isEmpty())
-				modifiedBono.setCodigo();
-			BeanUtils.copyProperties(modifiedBono, bono.get(),"id");
-			bonoservice.save(bono.get());
-			model.addAttribute("message", "Bono ha sido actualizado");
-			return listBonos(model);
-		}
 	}
 	
 	@GetMapping("/{id}/delete")
@@ -71,43 +54,26 @@ public class BonoController {
 		Optional<Bono> bono=bonoservice.findById(id);
 		if(bono.isPresent()) {
 			bonoservice.delete(bono.get());
-			model.addAttribute("message","El Bono ha sido borrado");
+			model.addAttribute("message","The token has been deleted");
 			return listBonos(model);
 		}else {
-			model.addAttribute("message","No podemos encontrar el bono que está ntentando borrar");
-			return listBonos(model);
-		}
-	}
-	
-	@GetMapping("/new")
-	public String editNewBono(ModelMap model) {
-		model.addAttribute("bono", new Bono());
-		return BONOS_FORM;
-	}
-	
-	@PostMapping("/new")
-	public String saveNewBono(@Valid Bono bono, BindingResult binding,ModelMap model) {
-		if(binding.hasErrors()) {			
-			return BONOS_FORM;
-		}else {
-			bono.setCodigo();
-			bono.setUsado(false);
-			if (bono.getCodigo().isEmpty())
-				bono.setCodigo();
-			bonoservice.save(bono);
-			model.addAttribute("message", "El Bono ha sido creado");			
+			model.addAttribute("message","The token you are trying to delete doesn´t exist");
 			return listBonos(model);
 		}
 	}
 	
 	@GetMapping("/redeem_token")
-    public String redeemToken(ModelMap model) {
+    public String redeemToken(ModelMap model,@AuthenticationPrincipal User user) {
         model.addAttribute("tokencode",new TokenCode());
+        if(user==null) {
+			  model.addAttribute("message", "You need to log in to access this view");
+			  return listBonos(model);
+		  }
         return REEDEM_TOKEN;
     }
 	
 	 @PostMapping("/redeem_token")
-	 public String chargeToken(@Valid TokenCode code, BindingResult binding,ModelMap model) {
+	 public String chargeToken(@Valid TokenCode code, BindingResult binding,ModelMap model,@AuthenticationPrincipal User user) {
 		 if(binding.hasErrors()) {
 			 return REEDEM_TOKEN;
 		 }else {
@@ -115,23 +81,33 @@ public class BonoController {
 	        if(bonoRepo.findTokenExists(token_code) == 0) {
 	        	model.addAttribute("message", "This token doesn´t exist");
 	        }else {
-	        	Bono b = bonoRepo.findTokenByCode(token_code);
-	        	DateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
-	        	Date today_millis = new Date(System.currentTimeMillis());
-	        	String today_s = formatter.format(today_millis);
-	    		LocalDate today = LocalDate.parse(today_s, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		  
-		    	if(b.getDate_start().isBefore(today) && b.getDate_end().isAfter(today) && b.getUsado() != true) {
-		    		model.addAttribute("message", "Token reedemed, the appointment has been created");
-		    		//CREAR CITA - POR HACER
-		    		b.setUsado(true);
-		    		bonoservice.save(b);
+	        	Bono token = bonoRepo.findTokenByCode(token_code);
+	    		LocalDate today = LocalDate.now();	
+	    		if(token.getDate_start().isBefore(today) || token.getDate_start().isEqual(today) && 
+	    				token.getDate_end().isAfter(today) || token.getDate_start().isEqual(today) && token.getUsado() != true) {
+	    			Optional<Cliente> c = clientservice.clientByUsername1(user.getUsername());
+	    			Cita apt = new Cita(c.get(), token.getSession());
+	    			
+	    			Set<Cita> set = c.get().getCitas();
+	    			Boolean apt_not_exist = true;
+	    			for (Cita s : set) {
+	    			    if(s.getCliente().equals(apt.getCliente()) && s.getSesion().equals(s.getSesion())) {
+	    			    	apt_not_exist = false;
+	    			    }
+	    			}
+	    			if(apt_not_exist) {
+	    				token.setUsado(true);
+			    		bonoservice.save(token);
+			    		citaService.save(apt);
+			    		model.addAttribute("message", "Token reedemed, the appointment has been created");
+	    			}else {
+	    				model.addAttribute("message", "Appointment already exits");
+	    			}
 		    	}else {
 		    		model.addAttribute("message", "This token has expired or has already been used");
 		    	}
 	        }
 	     }
-		 model.addAttribute("bonos",bonoservice.findAll());
-		 return BONOS_LISTING;
+		 return listBonos(model); //Te tiene que devolver al perfil del cliente
 	 }
 }

@@ -15,7 +15,7 @@
         var email = document.forms["clientForm"]["email"].value;
         var username = document.forms["clientForm"]["user.username"].value;
         var password = document.forms["clientForm"]["user.password"].value;
-        var nameRegex = /^(?!-)[a-zA-Z-]*[a-zA-Z]$/;
+        var nameRegex = /^[a-zA-Z ]*$/;
         var IBANRegex = /([a-zA-Z]{2})\s*\t*(\d{2})\s*\t*(\d{4})\s*\t*(\d{4})\s*\t*(\d{2})\s*\t*(\d{10})/;
         var emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
         if(fName == "" || fName == null || lName == "" || lName == null){

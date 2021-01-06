@@ -1,30 +1,38 @@
 package org.springframework.samples.petclinic.service;
-
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
+import java.util.Set;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cita;
 import org.springframework.samples.petclinic.model.Cliente;
+import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.Horario;
 import org.springframework.samples.petclinic.model.Sesion;
+import org.springframework.samples.petclinic.model.SubType;
 import org.springframework.samples.petclinic.repository.HorarioRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class HorarioService {
 
+    
+    private HorarioRepository horarioRepo;
+    
     @Autowired
-    HorarioRepository horarioRepo;
-
-    public Collection<Horario> findAll(){
+    public HorarioService(HorarioRepository horarioRepo) {
+		this.horarioRepo = horarioRepo;
+	}
+    
+    
+	public Collection<Horario> findAll(){
         return horarioRepo.findAll();
     }
     public Optional<Horario> findById(Integer id){
@@ -66,6 +74,46 @@ public class HorarioService {
     	return a;
     }
     
+    public Collection<Sesion> availableSessions(Collection<Sesion> active_sessions,Cliente c){ //Sessions deleting the ones the client already has
+    	List<Sesion> client_session = new ArrayList<Sesion>();
+    	Set<Cita> client_apt = c.getCitas();
+    	for (Cita x : client_apt) {
+    		client_session.add(x.getSesion());
+    	}
+    	List<Sesion> toRemove = new ArrayList<Sesion>();
+    	for (Sesion a: client_session) {
+    		for (Sesion b : active_sessions) {
+    			if(a.getHoraInicio().equals(b.getHoraInicio()) && a.getHoraFin().equals(b.getHoraFin()) && a.getHorario().getFecha().equals(b.getHorario().getFecha())){
+    				toRemove.add(b);
+    			}
+    		}
+    		
+    	}
+    	active_sessions.removeAll(toRemove);
+    	return active_sessions;
+    } 
+    
+    public Collection<Sesion> inTimeSessions(Collection<Sesion> available_sessions,Cliente c){ //Sessions deleting the ones the client can´t access due to they subscription type
+    	List<Sesion> toRemove = new ArrayList<Sesion>();
+    	SubType sub_type = c.getSuscripcion();
+    	if(sub_type.toString().equals("MATINAL")) {
+    		for(Sesion s: available_sessions) {
+    			if((s.getHoraInicio().isAfter(LocalTime.parse("14:00")) || s.getHoraInicio().equals(LocalTime.parse("14:00")))  && (s.getHoraFin().isBefore(LocalTime.parse("21:00")) || s.getHoraFin().equals(LocalTime.parse("21:00")))) {
+    				toRemove.add(s);
+    			}
+    		}
+    	}else if(sub_type.toString().equals("VESPERTINO")) {
+    		for(Sesion s: available_sessions) {
+    			if((s.getHoraInicio().isAfter(LocalTime.parse("09:00")) || s.getHoraInicio().equals(LocalTime.parse("09:00")) )  && (s.getHoraFin().isBefore(LocalTime.parse("14:00")) || s.getHoraFin().equals(LocalTime.parse("14:00"))) ){
+    				toRemove.add(s);
+    			}
+    		}
+    	}
+    	available_sessions.removeAll(toRemove);
+    	return available_sessions;
+    }
+    
+    
     public Collection<Horario> futureDays(int employee_id){
     	Collection<Horario> a = horarioRepo.getHorariosByEmployee(employee_id);
     	a.removeIf(x->x.getFecha().isBefore(LocalDate.now()));
@@ -100,5 +148,39 @@ public class HorarioService {
     		}
     	}
     	return duplicated;
+    }
+    
+    public List<LocalTime> initHours(){
+    	int gapInMinutes = 60;
+    	int loops = ((int) Duration.ofHours(12).toMinutes() / gapInMinutes);
+    	List<LocalTime> times_op = new ArrayList<>( loops );
+    	LocalTime time = LocalTime.parse("09:00");
+    	for( int i = 1 ; i <= loops ; i ++ ) {
+        	    times_op.add( time );
+        	    time = time.plusMinutes( gapInMinutes ) ;
+    	}
+    	return times_op;
+    }
+    
+    public List<LocalTime> endHours(){
+    	int gapInMinutes = 60;
+    	int loops = ((int) Duration.ofHours(12).toMinutes() / gapInMinutes);
+    	List<LocalTime> times_end = new ArrayList<>( loops );
+    	LocalTime time_end = LocalTime.parse("10:00");
+    	for( int i = 1 ; i <= loops ; i ++ ) {
+    			times_end.add( time_end );
+        	    time_end = time_end.plusMinutes( gapInMinutes ) ;
+    	}
+    	return times_end;
+    }
+    
+    public Boolean dayAlreadyInSchedule(Employee e,Horario horario) {
+    	Boolean res = false;
+    	for (Horario h : e.getHorarios()) {
+    		if(horario.getFecha().equals(h.getFecha())) {
+    			res=true;
+    		}
+    	}
+		return res;
     }
 }
