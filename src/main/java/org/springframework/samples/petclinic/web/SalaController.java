@@ -13,12 +13,15 @@ import org.springframework.samples.petclinic.service.CitaService;
 import org.springframework.samples.petclinic.service.ClienteService;
 import org.springframework.samples.petclinic.service.HorarioService;
 import org.springframework.samples.petclinic.service.SalaService;
+import org.springframework.samples.petclinic.service.exceptions.DuplicatedSalaNameException;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,6 +57,11 @@ public class SalaController {
 		return SALAS_LISTING;
 	}
 
+	
+	@InitBinder("sala")
+	public void initPetBinder(WebDataBinder dataBinder) {
+		dataBinder.setValidator(new SalaValidator());
+	}
 
 	@GetMapping("/{id}/edit")
 	public String editSala(@PathVariable("id") int id,ModelMap model) {
@@ -67,15 +75,20 @@ public class SalaController {
 		}
 	}
 
-
 	@PostMapping("/{id}/edit")
 	public String editSala(@PathVariable("id") int id,@Valid Sala modifiedSala, BindingResult binding,ModelMap model) {
 		Optional<Sala> sala = salaService.findById(id);
 		if(binding.hasErrors()) {
 			return SALAS_FORM;
 		}else {
-			BeanUtils.copyProperties(modifiedSala, sala.get(),"id");
-			this.salaService.save(modifiedSala);
+			BeanUtils.copyProperties(modifiedSala, sala.get(),"id","aforo","descripcion");
+			try{
+            	this.salaService.saveSala(modifiedSala);
+            }catch(DuplicatedSalaNameException ex){
+            	binding.rejectValue("name", "duplicate", "already exists");
+                return  SALAS_FORM;
+            }
+			
 			model.addAttribute("message", "The room was updated successfully.");
 			return salasListing(model);
 		}
@@ -107,12 +120,16 @@ public class SalaController {
 			return SALAS_FORM;
 		}
 		else {
-			this.salaService.save(sala);
-			model.addAttribute("message", "The room was created successfully.");
-			return salasListing(model);
+               try{
+              	this.salaService.saveSala(sala);
+                }catch(DuplicatedSalaNameException ex){
+                 result.rejectValue("name", "duplicate", "already exists");
+                return  SALAS_FORM;
+              }
+           model.addAttribute("message", "The room was created successfully.");
+        	return salasListing(model);
 		}
 	}
-
 
 	  @GetMapping("/{salaId}")
 	  public String showSala(@PathVariable("salaId") int salaId, ModelMap model, @AuthenticationPrincipal User user) {
