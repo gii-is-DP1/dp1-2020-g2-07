@@ -31,10 +31,10 @@ public class SesionesFormatter implements Formatter<Sesion> {
         Collection<Horario> findHorario = this.hs.findAll();
         for (Horario h : findHorario) {
             if (h.getFecha().toString().equals(text.substring(0, text.indexOf(":")))) {
-//            	if (h.getFecha().equals(text.substring(0, text.indexOf(":")))) {
             	for(Sesion s : h.getSesiones()) {
-            		if(s.getHoraInicio().toString().equals(text.substring(text.indexOf("m")+2, text.indexOf("t")-1)));
-            		return s;
+            		if(s.getHoraInicio().toString().equals(text.substring(text.indexOf("m")+2, text.indexOf("t")-1))) {
+            			return s;
+            		}
             	}   
             }
         }
