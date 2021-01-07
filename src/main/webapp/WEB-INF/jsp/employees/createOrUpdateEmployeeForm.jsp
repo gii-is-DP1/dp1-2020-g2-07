@@ -65,14 +65,22 @@
             <sec:authorize access="hasAuthority('admin')" var="hasAccess"></sec:authorize>
             <c:choose>
                 <c:when test="${hasAccess}">
-                    <div class="profession-group">
-                        <petclinic:selectField name="profession" label="Profession" names="${['LIFE_GUARD', 'CLEANER', 'MASSAGIST']}" size="1"/>
-                    </div>
+                    <c:choose>
+                        <c:when test="${employee['new']}">
+                            <div class="profession-group">
+                                <petclinic:selectField name="profession" label="Profession" names="${['LIFE_GUARD', 'CLEANER', 'MASSAGIST']}" size="1"/>
+                            </div>
+                        </c:when>
+                        <c:otherwise>
+                            <div class="profession-group">
+                                <petclinic:inputField readonly="true" name="profession" label="Profession"/>
+                            </div>
+                        </c:otherwise>
+                    </c:choose>
                     <c:choose>
                         <c:when test="${employee['new']}"><petclinic:inputField label="Username" name="user.username"/></c:when>
                         <c:otherwise><petclinic:inputField readonly="true" label="Username" name="user.username"/></c:otherwise>
                     </c:choose>
-                    
                 </c:when>
                 <c:otherwise>
                     <div class="profession-group">
