@@ -15,8 +15,12 @@
  */
 package org.springframework.samples.petclinic.service;
 import java.util.*;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Authorities;
+import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.UserRepository;
 import org.springframework.stereotype.Service;
@@ -35,7 +39,10 @@ public class UserService {
 	private UserRepository userRepository;
 
 	@Autowired
-    private  ClienteService clienteService;
+    private ClienteService clienteService;
+
+	@Autowired
+    private EmployeeService employeeService;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
@@ -49,12 +56,28 @@ public class UserService {
 
     public Integer notEnableAdvice(){
 	   Collection<User> users = (Collection<User>) userRepository.findAll();
-	   Integer numberNotEnable = Math.toIntExact(users.stream().filter(u -> u.isEnabled() == false).count());
+	   Integer numberNotEnable = Math.toIntExact(users.stream().filter(u -> !u.isEnabled()).count());
 	    return  numberNotEnable;
     }
 
     public Collection<User> findAll(){
         return userRepository.findAll();
+    }
+
+    public Collection<User> fidByCategory(Categoria cat){
+        if(cat.equals(Categoria.EMPLEADO)){
+            return this.findAll().stream().filter(u -> employeeService.employeeByUsername(u.getUsername()).isPresent()).collect(Collectors.toList());
+        }
+
+        if(cat.equals(Categoria.CLIENTE)){
+            return this.findAll().stream().filter(u -> clienteService.clientByUsername(u.getUsername()).isPresent()).collect(Collectors.toList());
+        }
+
+        return this.findAll()
+            .stream()
+            .filter(u -> !clienteService.clientByUsername(u.getUsername()).isPresent() || !employeeService.employeeByUsername(u.getUsername()).isPresent())
+            .collect(Collectors.toList());
+
     }
 
     public void delete(User u){
