@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import java.util.Collection;
 import java.util.Optional;
 
@@ -50,6 +51,7 @@ public class ClienteServiceTests {
 
         Optional<Cliente> c1 = clienteservice.clientByUsername("juanma");
         assertTrue(c1.isPresent());
+        assertThat(c1.get().getUser().getUsername().equals("juanma"));
 
         Optional<Cliente> c2 = clienteservice.clientByUsername("inventado");
         assertFalse(c2.isPresent());

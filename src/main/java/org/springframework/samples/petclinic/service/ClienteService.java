@@ -77,10 +77,6 @@ public class ClienteService {
         clientRepo.findById(id).get().addPay(pay);
         this.save(clientRepo.findById(id).get(), "edit");
     }
-    
-    public Optional<Cliente> clientByUsername1(String username){
-        return this.findAll().stream().filter(c -> c.getUser().getUsername().equals(username)).findAny();
-    }
 
     public Optional<Cliente> clientByUsername(String username){
         return this.findAll().stream().filter(c -> c.getUser().getUsername().equals(username)).findAny();

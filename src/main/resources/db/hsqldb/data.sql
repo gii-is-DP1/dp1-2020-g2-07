@@ -4,20 +4,13 @@ INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
 -- One client user
 INSERT INTO users(username,password,enabled) VALUES ('juanma','hola',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (2,'juanma','client');
-<<<<<<< HEAD
-INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion, email, username) VALUES(1, 'Juan Manuel', 'Garcia Criado', 'C/ Pedro Sanchez', 0, 'ES3912341234250123456789', 'MORNING', 'juanma101099@gmail.com','juanma');
-=======
-<<<<<<< HEAD
-INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion, email, username) VALUES(1, 'Juan Manuel', 'García Criado', 'C/ Pedro Sanchez', 0, 'ES3912341234250123456789', 'MATINAL', 'juanma101099@gmail.com','juanma');
+
 -- One employee user
 INSERT INTO users(username,password,enabled) VALUES ('miguel','hola',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (4,'miguel','employee');
 INSERT INTO employees(id, first_name, last_name, address, category, IBAN, profession, email, username) VALUES(1, 'Jhon', 'Smith', 'Sevilla C/Tangana 1º A',1, 'ES3912341234250123456789', 'LIFE_GUARD', 'miguel_molina2@hotmail.es', 'miguel');
-=======
 
-INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion, email, username) VALUES(1, 'Juan Manuel', 'García Criado', 'C/ Pedro Sanchez', 0, 'ES3912341234250123456789', 'MORNING', 'juanma101099@gmail.com','juanma');
->>>>>>> master
->>>>>>> a1077efd56bc4c526a30499cfbc030fd813403de
+INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion, email, username) VALUES(1, 'Juan Manuel', 'Garcia Criado', 'C/ Pedro Sanchez', 0, 'ES3912341234250123456789', 'MORNING', 'juanma101099@gmail.com','juanma');
 
 /*INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion) VALUES(2, 'Pepe', 'Díaz Oslo', 'Sevilla C/Inventada 2',0, 'ES72 2223 2334 3422', 'VESPERTINO');
 INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion) VALUES(3, 'Manuel', 'Osuna Moreno', 'Sevilla C/Tangana 1º A',0, 'ES72 6789 4839 3928 2143', 'PREMIUM');
@@ -62,8 +55,5 @@ INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (2,'12:00'
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (3,'10:00','12:00',4,1);
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (4,'10:00','12:00',3,2);
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (5,'10:00','12:00',1,4);
-<<<<<<< HEAD
-=======
 
 INSERT INTO citas(id,cliente_id, sesion_id) VALUES (1,1,5);
->>>>>>> a1077efd56bc4c526a30499cfbc030fd813403de
