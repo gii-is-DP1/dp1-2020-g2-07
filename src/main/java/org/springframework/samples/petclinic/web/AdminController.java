@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.web;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Admin;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Email;
 import org.springframework.samples.petclinic.model.User;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -25,6 +28,7 @@ public class AdminController {
     public static final String ADMIN_EMAIL = "admin/newEmail";
     public static final String ADMIN_ANNOUNCEMENT = "admin/newAnnouncement";
     public static final String ADMIN_USERS = "admin/checkUsers";
+    public static final String ADMINS_FORM ="admin/createOrUpdateAdminsForm";
 
     @Autowired
     AdminService adminService;
@@ -40,10 +44,39 @@ public class AdminController {
 
     @Autowired
     EmployeeService employeeService;
+    
+    @GetMapping("/new")
+    public String editNewAdmin(ModelMap model) {
+        model.addAttribute("admin",new Admin());
+        model.addAttribute("user", new User());
+        return ADMINS_FORM;
+    }
+
+    @PostMapping("/new")
+    public String saveNewAdmin(@Valid Admin admin, BindingResult binding,ModelMap model) {
+        if(binding.hasErrors()) {
+            return ADMINS_FORM;
+        } else {
+            Map<Boolean, List<String>> m = userService.checkUser(admin.getUser());
+
+            if(m.containsKey(false)){
+                List<String> ls = m.get(false);
+                for (int i = 0; i < ls.size(); i++){
+                    model.addAttribute("message", ls);
+                }
+                return ADMINS_FORM;
+            }
+
+            adminService.save(admin);
+            model.addAttribute("message", "The client was created successfully!");
+            return getHomeAdmin(model);
+        }
+    }
 
     @GetMapping
     public String getHomeAdmin(ModelMap model){
         model.addAttribute("petitions", userService.notEnableAdvice());
+        model.addAttribute("admins", adminService.findAll());
         return HOME_ADMIN;
     }
 

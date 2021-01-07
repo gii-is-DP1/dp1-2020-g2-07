@@ -6,6 +6,29 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <petclinic:layout pageName="admin">
+    <h2>Admins</h2>
+    <table id="adminsTable" class="table table-striped">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${admins}" var="admin">
+            <tr>
+                <td>
+                    <c:out value="${admin.getUser().username}"/>
+                </td>
+                </sec:authorize>
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    <p>
+        <a href="/admin/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add admin</a>
+    </p>
+
     <a href="/clientes"><span class="glyphicon glyphicon-th-list" aria-hidden="true"><span>Clients</span></span></a>
     <br>
     <a href="/employees"><span class="glyphicon glyphicon-th-list" aria-hidden="true"><span>Employees</span></span></a>
