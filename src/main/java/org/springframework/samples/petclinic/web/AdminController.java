@@ -1,10 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Admin;
-import org.springframework.samples.petclinic.model.Cliente;
-import org.springframework.samples.petclinic.model.Email;
-import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.service.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -82,27 +79,56 @@ public class AdminController {
 
     @GetMapping("/users")
     public String getUsers(ModelMap model){
-        model.addAttribute("users", userService.findAll());
+        model.addAttribute("clientUsers", userService.fidByCategory(Categoria.CLIENTE));
+        model.addAttribute("employeeUsers", userService.fidByCategory(Categoria.EMPLEADO));
         return ADMIN_USERS;
     }
 
-    @GetMapping("/users/{username}")
+    @GetMapping("/users/{username}/turn_on")
     public String activeUser(@PathVariable("username") String username,ModelMap model){
-        User u = userService.findUser(username).get();
-        Optional<Cliente> c = clienteService.clientByUsername(username);
+        Optional<User> u = userService.findUser(username);
 
-        if(c.get().getSuscripcion() == null){
-            model.addAttribute("message", "All client must have a subscription type before enable their users");
-            return getUsers(model);
+        if(u.isPresent()){
+            Optional<Cliente> c = clienteService.clientByUsername(username);
+            if(c.isPresent()){
+                if(c.get().getSuscripcion() == null){
+                    model.addAttribute("message", "All client must have a subscription type before enable their users");
+                    return getUsers(model);
+                }
+            }
+            if(!u.get().isEnabled()){
+                u.get().setEnabled(true);
+                model.addAttribute("message", "State of user " + u.get().getUsername() + " has been changed");
+                userService.saveUser(u.get());
+            }else{
+                model.addAttribute("message","This user is already enable, delete it if you wont use it anymore.");
+            }
+        }else{
+            model.addAttribute("Ups that username doesnt exist, there must be a problem");
         }
 
-        if(!u.isEnabled()){
-            u.setEnabled(true);
-            model.addAttribute("message", "State of user " + u.getUsername() + " has been changed");
-            userService.saveUser(u);
+        return getUsers(model);
+    }
+
+    @GetMapping("/users/{username}/delete")
+    public String deleteUserAnsAsociated(@PathVariable("username") String username,ModelMap model){
+        Optional<User> u = userService.findUser(username);
+        if(u.isPresent()){
+            Optional<Cliente> c = clienteService.clientByUsername(username);
+            if (c.isPresent()){
+                clienteService.delete(c.get());
+                model.addAttribute("message", "Client deleted succesfully");
+            }else {
+                Optional<Employee> e = employeeService.employeeByUsername(username);
+                e.ifPresent(employee -> employeeService.delete(employee));
+                model.addAttribute("message", "Employee deleted succesfully");
+            }
+        }else{
+            model.addAttribute("message","Ups that username doesnt exist, there must be a problem");
         }
         return getUsers(model);
     }
+
 
     @GetMapping("/newEmail")
     public String sendNewEmail(ModelMap model){

@@ -26,10 +26,20 @@
         <c:forEach items="${clientes}" var="cliente">
             <tr>
                 <td>
-                    <spring:url value="/clientes/{clientId}" var="clientUrl">
-                        <spring:param name="clientId" value="${cliente.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(clientUrl)}"><c:out value="${cliente.first_name} ${cliente.last_name}"/></a>
+                <c:choose>
+                    <c:when test="${cliente.user.enabled == false}">
+                        <spring:url value="/clientes/{clientId}" var="clientUrl">
+                            <spring:param name="clientId" value="${cliente.id}"/>
+                        </spring:url>
+                        <a href="${fn:escapeXml(clientUrl)}"><c:out value="${cliente.first_name} ${cliente.last_name}"/><p style="color: red; font-weight: bold;">[MUST SELECT SUBTYPE]</p></a>
+                    </c:when>
+                    <c:otherwise>
+                        <spring:url value="/clientes/{clientId}" var="clientUrl">
+                            <spring:param name="clientId" value="${cliente.id}"/>
+                        </spring:url>
+                        <a href="${fn:escapeXml(clientUrl)}"><c:out value="${cliente.first_name} ${cliente.last_name}"/></a>
+                    </c:otherwise>
+                </c:choose>
                 </td>
                 <sec:authorize access="hasAuthority('admin')">
                 <td>

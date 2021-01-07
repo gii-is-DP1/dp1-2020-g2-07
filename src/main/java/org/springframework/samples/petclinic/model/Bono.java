@@ -1,10 +1,11 @@
 package org.springframework.samples.petclinic.model;
 import java.time.LocalDate;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -31,7 +32,7 @@ public class Bono extends  BaseEntity {
 	 @Column(name = "usado")
 	 private Boolean usado;
 	 
-	 @OneToOne(cascade=CascadeType.ALL)
+	 @OneToOne(mappedBy = "token")
 	 private Sesion session;
 
 	 public Boolean getUsado() {

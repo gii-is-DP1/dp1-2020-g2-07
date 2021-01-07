@@ -96,13 +96,13 @@ public class HorarioService {
     public Collection<Sesion> inTimeSessions(Collection<Sesion> available_sessions,Cliente c){ //Sessions deleting the ones the client can´t access due to they subscription type
     	List<Sesion> toRemove = new ArrayList<Sesion>();
     	SubType sub_type = c.getSuscripcion();
-    	if(sub_type.toString().equals("MATINAL")) {
+    	if(sub_type.toString().equals("MORNING")) {
     		for(Sesion s: available_sessions) {
     			if((s.getHoraInicio().isAfter(LocalTime.parse("14:00")) || s.getHoraInicio().equals(LocalTime.parse("14:00")))  && (s.getHoraFin().isBefore(LocalTime.parse("21:00")) || s.getHoraFin().equals(LocalTime.parse("21:00")))) {
     				toRemove.add(s);
     			}
     		}
-    	}else if(sub_type.toString().equals("VESPERTINO")) {
+    	}else if(sub_type.toString().equals("AFTERNOON")) {
     		for(Sesion s: available_sessions) {
     			if((s.getHoraInicio().isAfter(LocalTime.parse("09:00")) || s.getHoraInicio().equals(LocalTime.parse("09:00")) )  && (s.getHoraFin().isBefore(LocalTime.parse("14:00")) || s.getHoraFin().equals(LocalTime.parse("14:00"))) ){
     				toRemove.add(s);
