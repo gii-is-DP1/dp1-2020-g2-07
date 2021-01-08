@@ -13,7 +13,7 @@ Mineral House is a spa located in Newcastle, UK. This project is a website progr
 
 ### As an employee
 * Personal profile listing your daily schedule
-* Charge subscriptions from clients
+* Charge subscriptions to clients
 
 ### As an admin
 * Enable, Edit and Delete clients and employees
