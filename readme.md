@@ -21,7 +21,7 @@ Mineral House is a spa located in Newcastle, UK. This project is a website progr
 * Send email to employees and/or clients
 * Create token codes
 * Assign work to each employee, creating schedules and sessions in their profiles
-* Check the earnings the bussines makes by consulting income statements auto-generated he first day of each month, breaking down the money in different categories. These statements contain charts for an easier reading
+* Check the earnings the bussines makes by consulting auto-generated income statements, breaking down the money in different categories. These statements contain charts for an easier reading
 
 <img width="1042" alt="petclinic-screenshot" src="https://cloud.githubusercontent.com/assets/838318/19727082/2aee6d6c-9b8e-11e6-81fe-e889a5ddfded.png">
 
