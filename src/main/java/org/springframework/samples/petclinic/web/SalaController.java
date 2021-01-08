@@ -1,12 +1,16 @@
 package org.springframework.samples.petclinic.web;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Bono;
 import org.springframework.samples.petclinic.model.Cita;
 import org.springframework.samples.petclinic.model.Cliente;
+import org.springframework.samples.petclinic.model.RoomType;
 import org.springframework.samples.petclinic.model.Sala;
 import org.springframework.samples.petclinic.service.BonoService;
 import org.springframework.samples.petclinic.service.CitaService;
@@ -38,6 +42,11 @@ public class SalaController {
 	private CitaService cs;
 	private ClienteService cls;
 	private BonoService bonoservice;
+	
+    @ModelAttribute("room_type")
+    public List<RoomType> getRoomType(){
+        return Arrays.stream(RoomType.class.getEnumConstants()).collect(Collectors.toList());
+    }
 	
 	@Autowired
 	public SalaController(SalaService salaService,HorarioService hs,CitaService cs, ClienteService cls, BonoService bonoservice) {
@@ -126,11 +135,10 @@ public class SalaController {
 			  if(c.isPresent()) {
 				  model.addAttribute("cliente", c.get().getId());
 				  model.addAttribute("sala", this.salaService.findById(salaId).get());
-			      model.addAttribute("sesiones", hs.inTimeSessions(hs.availableSessions(hs.activeSessions(salaId,c.get()),c.get()), c.get()));
+			      model.addAttribute("sesiones", hs.inTimeSessions(hs.activeSessions(salaId,c.get()),c.get()));
 			      model.put("cita", new Cita());
 			  }	  
 			  return "salas/salaDetails";
-			  
 		  }
 	  }
 	  

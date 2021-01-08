@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,35 +75,16 @@ public class HorarioService {
     	return a;
     }
     
-    public Collection<Sesion> availableSessions(Collection<Sesion> active_sessions,Cliente c){ //Sessions deleting the ones the client already has
-    	List<Sesion> client_session = new ArrayList<Sesion>();
-    	Set<Cita> client_apt = c.getCitas();
-    	for (Cita x : client_apt) {
-    		client_session.add(x.getSesion());
-    	}
-    	List<Sesion> toRemove = new ArrayList<Sesion>();
-    	for (Sesion a: client_session) {
-    		for (Sesion b : active_sessions) {
-    			if(a.getHoraInicio().equals(b.getHoraInicio()) && a.getHoraFin().equals(b.getHoraFin()) && a.getHorario().getFecha().equals(b.getHorario().getFecha())){
-    				toRemove.add(b);
-    			}
-    		}
-    		
-    	}
-    	active_sessions.removeAll(toRemove);
-    	return active_sessions;
-    } 
-    
     public Collection<Sesion> inTimeSessions(Collection<Sesion> available_sessions,Cliente c){ //Sessions deleting the ones the client can´t access due to they subscription type
     	List<Sesion> toRemove = new ArrayList<Sesion>();
     	SubType sub_type = c.getSuscripcion();
-    	if(sub_type.toString().equals("MATINAL")) {
+    	if(sub_type.toString().equals("MORNING")) {
     		for(Sesion s: available_sessions) {
     			if((s.getHoraInicio().isAfter(LocalTime.parse("14:00")) || s.getHoraInicio().equals(LocalTime.parse("14:00")))  && (s.getHoraFin().isBefore(LocalTime.parse("21:00")) || s.getHoraFin().equals(LocalTime.parse("21:00")))) {
     				toRemove.add(s);
     			}
     		}
-    	}else if(sub_type.toString().equals("VESPERTINO")) {
+    	}else if(sub_type.toString().equals("AFTERNOON")) {
     		for(Sesion s: available_sessions) {
     			if((s.getHoraInicio().isAfter(LocalTime.parse("09:00")) || s.getHoraInicio().equals(LocalTime.parse("09:00")) )  && (s.getHoraFin().isBefore(LocalTime.parse("14:00")) || s.getHoraFin().equals(LocalTime.parse("14:00"))) ){
     				toRemove.add(s);
@@ -182,5 +164,23 @@ public class HorarioService {
     		}
     	}
 		return res;
+    }
+    public Boolean checkTokenAptExist(Cita apt, Set<Cita> set) {
+    	Cliente client = apt.getCliente();
+    	boolean ok = false;
+    	for(Cita c : set) {
+    		if(!client.equals(c.getCliente())) {
+    			break;
+    		}
+    		Sesion s = apt.getSesion();
+    		Sesion sc = c.getSesion();
+    		boolean checkprevio = s.getHoraInicio().isBefore(sc.getHoraInicio()) && s.getHoraFin().isBefore(sc.getHoraInicio().plusMinutes(1));
+    		boolean checkpost = s.getHoraInicio().isAfter(sc.getHoraFin().minusMinutes(1)) && s.getHoraFin().isAfter(sc.getHoraFin());
+    		if(!(checkprevio||checkpost)) {
+    			ok=true;
+    			break;
+    		}
+    	}
+		return ok;
     }
 }

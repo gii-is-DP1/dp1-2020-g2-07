@@ -5,6 +5,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -14,9 +17,10 @@ public class Bono extends  BaseEntity {
 	@Column(name = "codigo")
 	private String codigo;
 	
+	@NotNull(message = "Price must be filled")
 	@Column(name = "precio")
 	private Integer precio;
-
+	
 	@Column(name = "date_start")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date_start;
@@ -25,16 +29,17 @@ public class Bono extends  BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date_end;
 	 
-	 @Column(name = "descripcion")
-	 private String descripcion;
+    @Size(min = 3, max = 100, message="Description must be beetwen 3 and 100 characters")
+	@Column(name = "descripcion")
+	private String descripcion;
 
-	 @Column(name = "usado")
-	 private Boolean usado;
+	@Column(name = "usado")
+	private Boolean usado;
 	 
-	 @OneToOne(cascade=CascadeType.ALL)
-	 private Sesion session;
+	@OneToOne(cascade=CascadeType.ALL)
+	private Sesion session;
 
-	 public Boolean getUsado() {
+	public Boolean getUsado() {
 		return this.usado;
 	}
 		

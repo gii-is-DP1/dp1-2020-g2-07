@@ -12,6 +12,7 @@ import org.springframework.samples.petclinic.repository.BonoRepository;
 import org.springframework.samples.petclinic.service.BonoService;
 import org.springframework.samples.petclinic.service.CitaService;
 import org.springframework.samples.petclinic.service.ClienteService;
+import org.springframework.samples.petclinic.service.HorarioService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -32,15 +33,17 @@ public class BonoController {
 	private ClienteService clientservice;
 	private BonoRepository bonoRepo;
 	private CitaService citaService;
+	private HorarioService horarioService;
 	
 	
 	@Autowired
-	public BonoController(BonoService bonoservice, ClienteService clientservice, BonoRepository bonoRepo, CitaService citaService) {
+	public BonoController(BonoService bonoservice, ClienteService clientservice, BonoRepository bonoRepo, CitaService citaService, HorarioService horarioService) {
 		super();
 		this.bonoservice = bonoservice;
 		this.clientservice = clientservice;
 		this.bonoRepo = bonoRepo;
 		this.citaService = citaService;
+		this.horarioService = horarioService;
 	}
 
 	@GetMapping
@@ -86,22 +89,16 @@ public class BonoController {
 	    		if(token.getDate_start().isBefore(today) || token.getDate_start().isEqual(today) && 
 	    				token.getDate_end().isAfter(today) || token.getDate_start().isEqual(today) && token.getUsado() != true) {
 	    			Optional<Cliente> c = clientservice.clientByUsername1(user.getUsername());
-	    			Cita apt = new Cita(c.get(), token.getSession());
 	    			
+	    			Cita apt = new Cita(c.get(), token.getSession());
 	    			Set<Cita> set = c.get().getCitas();
-	    			Boolean apt_not_exist = true;
-	    			for (Cita s : set) {
-	    			    if(s.getCliente().equals(apt.getCliente()) && s.getSesion().equals(s.getSesion())) {
-	    			    	apt_not_exist = false;
-	    			    }
-	    			}
-	    			if(apt_not_exist) {
+	    			if(!horarioService.checkTokenAptExist(apt, set)) {
 	    				token.setUsado(true);
 			    		bonoservice.save(token);
 			    		citaService.save(apt);
 			    		model.addAttribute("message", "Token reedemed, the appointment has been created");
 	    			}else {
-	    				model.addAttribute("message", "Appointment already exits");
+	    				model.addAttribute("message", "The appointment either already exists or interrupts another");
 	    			}
 		    	}else {
 		    		model.addAttribute("message", "This token has expired or has already been used");

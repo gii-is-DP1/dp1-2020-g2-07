@@ -91,8 +91,8 @@ public class HorarioController {
     }
     
     @PostMapping("/TimeTable/{horarioId}/newSesion")
-    public String saveTimeTable(Employee e, @PathVariable("horarioId") int horarioId,@Valid @ModelAttribute("newSesion") Sesion sesion, BindingResult binding, ModelMap model){
-        if(binding.hasErrors()||!sesion.validate()||horarioService.checkDuplicatedSessions(sesion, horarioId)){
+    public String saveTimeTable(Employee e, @PathVariable("horarioId") int horarioId,@Valid @ModelAttribute("newSesion") Sesion sesion, BindingResult binding, ModelMap model){ 	   	
+    	if(binding.hasErrors()||!sesion.validate()||horarioService.checkDuplicatedSessions(sesion, horarioId) || !e.validEmployee(e.getProfession().toString(), sesion.getSala().getRoom_type().toString())){
         	model.addAttribute("horarioID", horarioId);
             model.addAttribute("salas",salaService.findAll());
             model.addAttribute("sesion", this.horarioService.findSesionesHorario(horarioId));
@@ -104,6 +104,11 @@ public class HorarioController {
             if(horarioService.checkDuplicatedSessions(sesion, horarioId)) {
             	model.addAttribute("message", "This room is already in use at this time");
             }
+            if(!e.validEmployee(e.getProfession().toString(), sesion.getSala().getRoom_type().toString())) {
+            	model.addAttribute("message", "The employee is not qualified to work in this room");
+            }
+        	
+
             return "timetable/sesionForm";
         }else{
         	sesion.setHorario(horarioService.findById(horarioId).get());
