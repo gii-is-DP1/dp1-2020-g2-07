@@ -23,9 +23,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,19 +36,19 @@ public class SalaController {
 	public static final String BONOS_FORM="bonos/createToken";
 	public static final String SALAS_FORM ="/salas/CreateOrUpdateSalasForm";
 	public static final String SALAS_LISTING ="/salas/SalasListing";
-	
-	
+
+
 	private SalaService salaService;
 	private HorarioService hs;
 	private CitaService cs;
 	private ClienteService cls;
 	private BonoService bonoservice;
-	
+  
     @ModelAttribute("room_type")
     public List<RoomType> getRoomType(){
         return Arrays.stream(RoomType.class.getEnumConstants()).collect(Collectors.toList());
     }
-	
+
 	@Autowired
 	public SalaController(SalaService salaService,HorarioService hs,CitaService cs, ClienteService cls, BonoService bonoservice) {
 		this.salaService = salaService;
@@ -59,19 +57,14 @@ public class SalaController {
 		this.cls = cls;
 		this.bonoservice = bonoservice;
 	}
-	
+
 	@GetMapping
 	public String salasListing(ModelMap model) {
 		model.addAttribute("salas", salaService.findAll());
 		return SALAS_LISTING;
 	}
-	
-	@InitBinder("sala")
-	public void initPetBinder(WebDataBinder dataBinder) {
-		dataBinder.setValidator(new SalaValidator());
-	}
-	
-	
+
+
 	@GetMapping("/{id}/edit")
 	public String editSala(@PathVariable("id") int id,ModelMap model) {
 		Optional<Sala> sala = salaService.findById(id);
@@ -83,7 +76,7 @@ public class SalaController {
 			return SALAS_LISTING;
 		}
 	}
-	
+
 	@PostMapping("/{id}/edit")
 	public String editSala(@PathVariable("id") int id,@Valid Sala modifiedSala, BindingResult binding,ModelMap model) {
 		Optional<Sala> sala = salaService.findById(id);
@@ -102,8 +95,7 @@ public class SalaController {
 			return salasListing(model);
 		}
 	}
-	
-	
+
 	@GetMapping("/{id}/delete")
 	public String deleteSala(@PathVariable("id") int id, ModelMap model) {
 		Optional<Sala> sala = salaService.findById(id);
@@ -116,7 +108,7 @@ public class SalaController {
 			return salasListing(model);
 		}
 	}
-	
+
 	@GetMapping(value = "/new")
 	public String initCreationForm(ModelMap model) {
 		Sala sala = new Sala();
@@ -140,7 +132,7 @@ public class SalaController {
         	return salasListing(model);
 		}
 	}
-	
+
 	  @GetMapping("/{salaId}")
 	  public String showSala(@PathVariable("salaId") int salaId, ModelMap model, @AuthenticationPrincipal User user) {
 		  model.clear();
@@ -148,20 +140,20 @@ public class SalaController {
 			  model.addAttribute("message", "You need to log in to access this view");
 			  return salasListing(model);
 		  }else {
-			  Optional<Cliente> c = cls.clientByUsername1(user.getUsername());
+			  Optional<Cliente> c = cls.clientByUsername(user.getUsername());
 			  model.addAttribute("sala", this.salaService.findById(salaId).get());
 			  if(c.isPresent()) {
 				  model.addAttribute("cliente", c.get().getId());
-				  model.addAttribute("sala", this.salaService.findById(salaId).get());
-			      model.addAttribute("sesiones", hs.inTimeSessions(hs.activeSessions(salaId,c.get()),c.get()));
-			      model.put("cita", new Cita());
+          model.addAttribute("sesiones", hs.inTimeSessions(hs.activeSessions(salaId,c.get()),c.get()));
+			    model.put("cita", new Cita());
+
 			  }	  
 			  return "salas/salaDetails";
 		  }
 	  }
-	  
+
 		@PostMapping("/{salaId}")
-		public String addCita(@PathVariable("salaId") int salaId,@Valid @ModelAttribute("cita") Cita cita, BindingResult binding,ModelMap model,@ModelAttribute("cliente") Cliente c) {
+		public String addCita(@PathVariable("salaId") int salaId,@Valid Cita cita, BindingResult binding, ModelMap model,@ModelAttribute("cliente") Cliente c) {
 			Sala sala = salaService.findById(salaId).get();
 			if(binding.hasErrors()) {
 				model.addAttribute("sala", sala);
@@ -173,18 +165,18 @@ public class SalaController {
 				return salasListing(model);
 			}
 		}
-		
-		
+
+
 	@GetMapping("/{salaId}/createtoken")
 	public String createtoken(@PathVariable("salaId") int salaId,ModelMap model) {
 		model.addAttribute("bono", new Bono());
 		model.addAttribute("session", hs.activeSessions(salaId, null));
 		return BONOS_FORM;
 	}
-	
+
 	@PostMapping("/{salaId}/createtoken")
 	public String saveNewBono(@Valid Bono bono, BindingResult binding,ModelMap model) {
-		if(binding.hasErrors()) {			
+		if(binding.hasErrors()) {
 			return BONOS_FORM;
 		}else {
 			bono.setUsado(false);
@@ -193,9 +185,9 @@ public class SalaController {
 			if (bono.getCodigo().isEmpty())
 				bono.setCodigo();
 			bonoservice.save(bono);
-			model.addAttribute("message", "The token has been created successfully");			
+			model.addAttribute("message", "The token has been created successfully");
 			return salasListing(model);
 		}
 	}
-    	
+
 }

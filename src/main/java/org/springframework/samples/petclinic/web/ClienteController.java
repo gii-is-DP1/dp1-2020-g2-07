@@ -54,11 +54,11 @@ public class ClienteController {
     @GetMapping
     public String listClients(ModelMap model, Authentication auth){
         if (auth.isAuthenticated()) {
-            Optional<Cliente> c = clientService.clientByUsername1(auth.getName());
+            Optional<Cliente> c = clientService.clientByUsername(auth.getName());
             if(c.isPresent()) {
             	model.addAttribute("c", c.get());
             }else model.addAttribute("clientes", clientService.findAll());
-            
+
             return CLIENTS_LISTING;
         }
         else return "/login";
@@ -80,7 +80,7 @@ public class ClienteController {
         }
         else if (!hasAuthority(cliente, user))
             model.addAttribute("message","Acceso denegado");
-        else 
+        else
             model.addAttribute("message","No se encuentra el cliente que pretende editar");
         return listClients(model);
     }

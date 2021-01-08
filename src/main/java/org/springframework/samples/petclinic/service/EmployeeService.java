@@ -4,6 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
+import org.apache.taglibs.standard.lang.jstl.EmptyOperator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.model.Profession;
@@ -61,5 +64,8 @@ public class EmployeeService {
         return this.findAll().stream().filter(c -> c.getUser().getUsername().equals(username)).findAny();
     }
 
+    public Optional<Employee> employeeByUsername(String username){
+        return this.findAll().stream().filter(e -> e.getUser().getUsername().equals(username)).findAny();
+    }
 
 }

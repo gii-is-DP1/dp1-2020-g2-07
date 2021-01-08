@@ -28,14 +28,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BonoController {
 	public static final String BONOS_LISTING="bonos/BonosListing";
 	public static final String REEDEM_TOKEN="bonos/ReedemToken";
-	
+
 	private BonoService bonoservice;
 	private ClienteService clientservice;
 	private BonoRepository bonoRepo;
 	private CitaService citaService;
 	private HorarioService horarioService;
-	
-	
+
 	@Autowired
 	public BonoController(BonoService bonoservice, ClienteService clientservice, BonoRepository bonoRepo, CitaService citaService, HorarioService horarioService) {
 		super();
@@ -51,7 +50,7 @@ public class BonoController {
 		model.addAttribute("bonos",bonoservice.findAll());
 		return BONOS_LISTING;
 	}
-	
+
 	@GetMapping("/{id}/delete")
 	public String deleteBono(@PathVariable("id") int id,ModelMap model) {
 		Optional<Bono> bono=bonoservice.findById(id);
@@ -64,7 +63,7 @@ public class BonoController {
 			return listBonos(model);
 		}
 	}
-	
+
 	@GetMapping("/redeem_token")
     public String redeemToken(ModelMap model,@AuthenticationPrincipal User user) {
         model.addAttribute("tokencode",new TokenCode());
@@ -74,7 +73,7 @@ public class BonoController {
 		  }
         return REEDEM_TOKEN;
     }
-	
+
 	 @PostMapping("/redeem_token")
 	 public String chargeToken(@Valid TokenCode code, BindingResult binding,ModelMap model,@AuthenticationPrincipal User user) {
 		 if(binding.hasErrors()) {
@@ -85,12 +84,11 @@ public class BonoController {
 	        	model.addAttribute("message", "This token doesn´t exist");
 	        }else {
 	        	Bono token = bonoRepo.findTokenByCode(token_code);
-	    		LocalDate today = LocalDate.now();	
-	    		if(token.getDate_start().isBefore(today) || token.getDate_start().isEqual(today) && 
+	    		LocalDate today = LocalDate.now();
+	    		if(token.getDate_start().isBefore(today) || token.getDate_start().isEqual(today) &&
 	    				token.getDate_end().isAfter(today) || token.getDate_start().isEqual(today) && token.getUsado() != true) {
-	    			Optional<Cliente> c = clientservice.clientByUsername1(user.getUsername());
-	    			
-	    			Cita apt = new Cita(c.get(), token.getSession());
+	    			  Optional<Cliente> c = clientservice.clientByUsername(user.getUsername());
+	    			  Cita apt = new Cita(c.get(), token.getSession());
 	    			Set<Cita> set = c.get().getCitas();
 	    			if(!horarioService.checkTokenAptExist(apt, set)) {
 	    				token.setUsado(true);

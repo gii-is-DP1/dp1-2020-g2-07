@@ -75,6 +75,9 @@ public class EmployeeMockTest {
 
     @Test
     public void shouldSave(){
+        /*Comprobamos que al usar la función save del service llama a las funciones implicadas ademas de configurar
+        el mock para que actue como el repositorio*/
+
         employeeService.save(e);
         verify(userService).saveUser(e.getUser());
         verify(authoritiesService).saveAuthorities(e.getUser().getUsername(),"employee");
@@ -82,6 +85,8 @@ public class EmployeeMockTest {
 
     @Test
     public void shouldFindAllEmployee(){
+        /*Le decimos al mock que cuando llame a finAll() del repositorio nos de una Collection<Employee>*/
+
         Collection<Employee> employeesExample = this.employeeService.findAll();
 
         assertThat(employeesExample).hasSize(1);
@@ -90,6 +95,9 @@ public class EmployeeMockTest {
 
     @Test
     public void shouldFindEmployeeById(){
+        /*Comprobamos que al llamar a la función con un 1 nos devuelva un Optional<Employee> con contenido tal cual le hemos indicado en el mock
+        * mientras que al llamar con un 2 el Optional este vacío*/
+
         Optional<Employee> eOptionalExample1 = this.employeeService.findById(1);
         assertTrue(eOptionalExample1.isPresent());
 
@@ -99,12 +107,16 @@ public class EmployeeMockTest {
 
     @Test
     public void shouldDeleteEmployee(){
+        /*Comprobamos que al llamar al delete, tambien llama a las funciones implicado de los otros service*/
+
         this.employeeService.delete(e);
         verify(userService).delete(e.getUser());
     }
 
     @Test
     public void shouldAddRevenue(){
+        /*Comprobamos que al añadir un salario y guardarlo, el numeor total de salarios ha crecido en 1, ademas de llamar a funciones implicadas de otros service*/
+
         assertTrue(e.getSalaries().size() == 0);
 
         this.employeeService.addSalaryToEmployee(1, revenue);
@@ -113,4 +125,15 @@ public class EmployeeMockTest {
         verify(authoritiesService).saveAuthorities(e.getUser().getUsername(),"employee");
     }
 
+    @Test
+    public void tryFindEmployeeByUsername(){
+        /*Miramos que al buscar un empleado por su usuario este nos sea devuelto si existe en caso de no exixtir el isPresent sera false*/
+
+        Optional<Employee> e1 = this.employeeService.employeeByUsername("Lyle");
+        assertTrue(e1.isPresent());
+        assertThat(e1.get().getUser().getUsername().equals("Lyle"));
+
+        Optional<Employee> e2 = this.employeeService.employeeByUsername("Inventado");
+        assertFalse(e2.isPresent());
+    }
 }
