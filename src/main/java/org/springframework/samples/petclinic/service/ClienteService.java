@@ -8,13 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Email;
 import org.springframework.samples.petclinic.model.Pago;
-import org.springframework.samples.petclinic.model.SubType;
 import org.springframework.samples.petclinic.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
-import javax.transaction.Transactional;
-import javax.validation.Valid;
-import java.util.*;
-import java.util.stream.Collectors;
+
 
 @Service
 public class ClienteService {

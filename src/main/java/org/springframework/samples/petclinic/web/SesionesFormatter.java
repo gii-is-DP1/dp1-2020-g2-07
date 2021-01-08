@@ -1,9 +1,7 @@
 package org.springframework.samples.petclinic.web;
-
 import java.text.ParseException;
 import java.util.Collection;
 import java.util.Locale;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.Formatter;
 import org.springframework.samples.petclinic.model.Horario;
@@ -22,7 +20,6 @@ public class SesionesFormatter implements Formatter<Sesion> {
 
     @Override
     public String print(Sesion sesionType, Locale locale) {
-        // TODO Auto-generated method stub
     	return sesionType.getHorario().getFecha() + ": From " + sesionType.getHoraInicio() + " to " + sesionType.getHoraFin();
     }
 

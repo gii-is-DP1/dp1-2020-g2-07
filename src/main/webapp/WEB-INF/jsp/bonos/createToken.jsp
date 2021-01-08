@@ -7,23 +7,34 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="bonoForm">
-        <script>
-            $(function () {
-                $("#duracion").datepicker({dateFormat: 'yyyy-mm-dd'});
-            });
-        </script>
-
+	<script>
+    function validateForm(){
+    	var v_price = document.forms["createTokenForm"]["precio"].value;
+    	var v_priceRegex = /^[0-9]+$/;
+    	var v_description = document.forms["createTokenForm"]["descripcion"].value;
+    	if (v_price == ""){
+    		alert("Price must be filled");
+            return false;
+    	}else if(!v_priceRegex.test(v_price)){
+    		alert("Price must be numerical");
+            return false;
+    	}else if(v_description.length < 3 || v_description.length > 100){
+    		alert("Description must be beetwen 3 and 100 characters");
+            return false;
+    	}
+    	return true;
+    }
+    </script>
+    
     <h2>
-        <c:if test="${bono['new']}">New Token</c:if> 
+        New Token
     </h2>
-    <form:form modelAttribute="bono" class="form-horizontal" id="add-owner-form">
+    <form:form name="createTokenForm" modelAttribute="bono" class="form-horizontal" id="add-owner-form" onsubmit="return validateForm();">
         <div class="form-group has-feedback"> 
             <petclinic:inputField label="Code" name="codigo"/> 
             <petclinic:inputField label="Price" name="precio"/>
             <petclinic:inputField label="Description" name="descripcion"/>
-            <div class="form-group has-feedback">
-				<petclinic:selectField label="Select a session" name="session" names="${session}" size="1"/>
-			</div>        
+			<petclinic:selectField label="Select a session" name="session" names="${session}" size="1"/>       
 
         </div>
         <div class="form-group">

@@ -7,7 +7,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="bonos">
-    <h2>Reedem Token</h2>
+    <h2>Redeem Token</h2>
     
     <c:out value="${cliente}"/>
 
@@ -15,7 +15,7 @@
         <div class="form-group has-feedback">
             <petclinic:inputField label="Code" name="code"/>
         </div>
-        <button class="btn btn-default" type="submit">Reedem</button>
+        <button class="btn btn-default" type="submit">Redeem</button>
     </form:form>
 	
 </petclinic:layout>

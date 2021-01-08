@@ -4,6 +4,8 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -14,7 +16,12 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "salas")
 public class Sala extends NamedEntity{
-			
+
+	
+    @Column(name = "room_type")
+    @Enumerated(EnumType.STRING)
+    private RoomType room_type;
+  
 	@Column(name = "aforo")
 	@NotNull(message = "Capacity can't be null")
 	@Min(value = 1, message = "The room must have 1 person capacity at least.")
@@ -53,6 +60,28 @@ public class Sala extends NamedEntity{
 	public void setCircuitos(List<Circuito> circuitos) {
 		this.circuitos = circuitos;
 	}
-	
 
+	public RoomType getRoom_type() {
+		return room_type;
+	}
+
+	public String getToken_code() {
+		return token_code;
+	}
+
+	public List<Sesion> getSesiones() {
+		return sesiones;
+	}
+
+	public void setRoom_type(RoomType room_type) {
+		this.room_type = room_type;
+	}
+
+	public void setToken_code(String token_code) {
+		this.token_code = token_code;
+	}
+
+	public void setSesiones(List<Sesion> sesiones) {
+		this.sesiones = sesiones;
+	}	
 }

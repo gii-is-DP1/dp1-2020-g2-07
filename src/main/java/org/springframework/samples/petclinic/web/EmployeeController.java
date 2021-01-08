@@ -41,8 +41,20 @@ public class EmployeeController {
         else
             return empleado.get().getUser().equals(user) || user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("admin"));
     }
-
+    
     @GetMapping
+    public String listEmployees(ModelMap model, Authentication auth){
+        if (auth.isAuthenticated()) {
+            Optional<Employee> c = employeeService.findEmployeeByUsername(auth.getName());
+            if(c.isPresent()) {
+            	model.addAttribute("c", c.get());
+            }else model.addAttribute("employees", employeeService.findAll());
+            
+            return EMPLOYEES_LISTING;
+        }
+        else return "/login";
+    }
+ 
     public String listEmployees(ModelMap model){
         model.addAttribute("employees", employeeService.findAll());
         return EMPLOYEES_LISTING;
@@ -81,13 +93,16 @@ public class EmployeeController {
     public String deleteClient(@PathVariable("id") int id, ModelMap model){
         Optional<Employee> employee = employeeService.findById(id);
         if(employee.isPresent()){
-            employeeService.delete(employee.get());
-            model.addAttribute("message", "Employee deleted successfully!!");
-            return listEmployees(model);
+        	if(employee.get().getHorarios().size()!=0) {
+        		model.addAttribute("message", "The employee can´t be deleted if the have work left to do");
+        	}else {
+                employeeService.delete(employee.get());
+                model.addAttribute("message", "Employee deleted successfully!!");
+        	}
         }else {
             model.addAttribute("message", "Cant find the employee you are looking for");
-            return listEmployees(model);
         }
+        return listEmployees(model);
     }
 
     @GetMapping("/{employeeId}")
