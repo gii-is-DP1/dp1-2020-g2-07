@@ -1,11 +1,7 @@
 package org.springframework.samples.petclinic.model;
-
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +9,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.springframework.beans.support.MutableSortDefinition;
-import org.springframework.beans.support.PropertyComparator;
 
 @Entity
 @Table(name = "employees")
@@ -90,7 +83,14 @@ public class Employee extends Individual {
                 .sum())
             .mapToInt(Integer::intValue)
             .sum();
-
     }
+    
+	public Boolean validEmployee(String prof, String room_type) {
+		Boolean res = true;
+		if(!prof.equals(room_type)) {
+			res = false;
+		}
+		return res;
+	}
 }
 

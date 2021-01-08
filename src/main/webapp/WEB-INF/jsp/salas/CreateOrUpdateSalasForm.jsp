@@ -15,6 +15,7 @@
             <petclinic:inputField label="Name" name="name"/>
             <petclinic:inputField label="Capacity" name="aforo"/>
             <petclinic:inputField label="Description" name="descripcion"/>
+            <petclinic:selectField name="room_type" label="Employee Profession" names="${room_type}" size="1"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
