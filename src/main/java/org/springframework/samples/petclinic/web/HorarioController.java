@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.web;
 import java.time.LocalDate;
+import java.time.LocalTime;
+
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Employee;
@@ -85,8 +87,8 @@ public class HorarioController {
         model.addAttribute("sesion", this.horarioService.findSesionesHorario(horarioId));
         model.addAttribute("newSesion", new Sesion());
         model.addAttribute("salas",salaService.findAll());
-        model.addAttribute("hours_op",horarioService.initHours());
-        model.addAttribute("hours_end",horarioService.endHours());
+        model.addAttribute("hours_op",horarioService.SesionHours(LocalTime.parse("09:00")));
+        model.addAttribute("hours_end",horarioService.SesionHours(LocalTime.parse("10:00")));
         return "timetable/sesionForm";
     }
     
@@ -96,8 +98,8 @@ public class HorarioController {
         	model.addAttribute("horarioID", horarioId);
             model.addAttribute("salas",salaService.findAll());
             model.addAttribute("sesion", this.horarioService.findSesionesHorario(horarioId));
-            model.addAttribute("hours_op",horarioService.initHours());
-            model.addAttribute("hours_end",horarioService.endHours());
+            model.addAttribute("hours_op",horarioService.SesionHours(LocalTime.parse("09:00")));
+            model.addAttribute("hours_end",horarioService.SesionHours(LocalTime.parse("10:00")));
             if(!sesion.validate()) {
             	model.addAttribute("message", "Start time must be before end time");
             }
