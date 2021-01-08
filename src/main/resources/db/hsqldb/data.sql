@@ -4,7 +4,7 @@ INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
 -- One client user
 INSERT INTO users(username,password,enabled) VALUES ('juanma','hola',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (2,'juanma','client');
--- One employee user
+
 INSERT INTO users(username,password,enabled) VALUES ('miguel','hola',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (4,'miguel','employee');
 INSERT INTO employees(id, first_name, last_name, address, category, IBAN, profession, email, username) VALUES(1, 'Jhon', 'Smith', 'Sevilla C/Tangana 1º A',1, 'ES3912341234250123456789', 'LIFE_GUARD', 'miguel_molina2@hotmail.es', 'miguel');
@@ -56,5 +56,6 @@ INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (2,'12:00'
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (3,'10:00','12:00',4,1);
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (4,'10:00','12:00',3,2);
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (5,'10:00','12:00',1,4);
+
 
 INSERT INTO citas(id,cliente_id, sesion_id) VALUES (1,1,5);
