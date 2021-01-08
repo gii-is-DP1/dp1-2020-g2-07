@@ -34,7 +34,7 @@ By default, this file is added in the build path of the project, but commonly it
 3) Add JARs
 4) Open the Mineral House project and select gson-2.6.2.jar
 
-## Database configuration
+## 📥 Database configuration
 In its default configuration, Mineral House Spa uses an in-memory database (H2) which gets populated at startup with data. 
 
 ## 👨🏻‍💻 Working with Petclinic in your IDE
@@ -55,5 +55,5 @@ git clone https://github.com/gii-is-DP1/dp1-2020-g2-07.git
 2) Navigate to Mineral House
 Visit [http://localhost:80](http://localhost:80) in your browser.
 
-# 📝 License
+## 📝 License
 The Spring PetClinic sample application is released under version 2.0 of the [Apache License](https://www.apache.org/licenses/LICENSE-2.0).
