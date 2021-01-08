@@ -30,8 +30,7 @@ public class HorarioService {
     public HorarioService(HorarioRepository horarioRepo) {
 		this.horarioRepo = horarioRepo;
 	}
-    
-    
+       
 	public Collection<Horario> findAll(){
         return horarioRepo.findAll();
     }
@@ -150,28 +149,15 @@ public class HorarioService {
     	return duplicated;
     }
     
-    public List<LocalTime> initHours(){
+    public List<LocalTime> SesionHours(LocalTime time){
     	int gapInMinutes = 60;
     	int loops = ((int) Duration.ofHours(12).toMinutes() / gapInMinutes);
     	List<LocalTime> times_op = new ArrayList<>( loops );
-    	LocalTime time = LocalTime.parse("09:00");
     	for( int i = 1 ; i <= loops ; i ++ ) {
         	    times_op.add( time );
         	    time = time.plusMinutes( gapInMinutes ) ;
     	}
     	return times_op;
-    }
-    
-    public List<LocalTime> endHours(){
-    	int gapInMinutes = 60;
-    	int loops = ((int) Duration.ofHours(12).toMinutes() / gapInMinutes);
-    	List<LocalTime> times_end = new ArrayList<>( loops );
-    	LocalTime time_end = LocalTime.parse("10:00");
-    	for( int i = 1 ; i <= loops ; i ++ ) {
-    			times_end.add( time_end );
-        	    time_end = time_end.plusMinutes( gapInMinutes ) ;
-    	}
-    	return times_end;
     }
     
     public Boolean dayAlreadyInSchedule(Employee e,Horario horario) {
