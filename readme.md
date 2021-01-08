@@ -1,7 +1,7 @@
 # 🏊🏼‍♀️ Mineral House Spa - A Spring Project for DP1
 This project has been programmed as an assignment for DP1, a course of the Software Engineering degree from the University of Seville
 
-Mineral House is a spa located in Newcastle, UK. This project is a website programmed in Java, which, using Pet Clinic as a template, implements all the functionalities that this business requires for its daily operation, which includes:
+Mineral House is a spa located in Newcastle, UK. This project is a website programmed in Java, which, using Pet Clinic as a template, implements all the functionalities that this business requires for its daily operation, including:
 
 ### No logged
 * Room and Circuits access, in order to learn more about the services Mineral House provides
