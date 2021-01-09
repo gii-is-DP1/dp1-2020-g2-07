@@ -1,7 +1,6 @@
 package org.springframework.samples.petclinic.web;
 import java.time.LocalDate;
 import java.time.Month;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -48,16 +47,13 @@ public class BalanceController {
     	String dataPoints = createStats(b);
     	model.addAttribute("dataPoints", dataPoints);
     	
-    	String year = b.getYear();
-		String month = b.getMonth(); //Text in capitals (SEPTEMBER)
-		Integer int_month = Month.valueOf(month).getValue();
-		String date = year+"-"+int_month+"-"+"01";
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate date_start = LocalDate.parse(date, formatter);
+    	Integer year = Integer.valueOf(b.getYear());
+		Integer int_month = Month.valueOf(b.getMonth()).getValue();
+		LocalDate date_start = LocalDate.of(year, int_month, 1);
 		LocalDate date_end = date_start.withDayOfMonth(date_start.getMonth().length(date_start.isLeapYear()));
     	
     	List<Bono> tokens = balanceService.getTokensData(date_start, date_end);
-    	List<Pago> subs = balanceService.getSubsData(date_start, date_end, formatter);
+    	List<Pago> subs = balanceService.getSubsData(date_start, date_end);
     	List<EmployeeRevenue> salaries = balanceService.getSalariesData(date_start, date_end);
     	model.addAttribute("tokens",tokens);
     	model.addAttribute("subs",subs);

@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.web;
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -179,15 +180,25 @@ public class SalaController {
 		if(binding.hasErrors()) {
 			return BONOS_FORM;
 		}else {
-			bono.setUsado(false);
-			bono.setDate_start(LocalDate.now());
-			bono.setDate_end(bono.getSession().getHorario().getFecha().minusDays(1));
-			if (bono.getCodigo().isEmpty())
-				bono.setCodigo();
-			bonoservice.save(bono);
-			model.addAttribute("message", "The token has been created successfully");
-			return salasListing(model);
+			Collection<Bono> x = bonoservice.findAll();
+			Boolean code_not_rpt = true;
+			for(Bono b:x) {
+				if(b.getCodigo().equals(bono.getCodigo())) {
+					code_not_rpt = false;
+				}
+			}
+			if(code_not_rpt) {
+				bono.setUsado(false);
+				bono.setDate_start(LocalDate.now());
+				bono.setDate_end(bono.getSession().getHorario().getFecha().minusDays(1));
+				if (bono.getCodigo().isEmpty())
+					bono.setCodigo();
+				bonoservice.save(bono);
+				model.addAttribute("message", "The token has been created successfully");
+			}else {
+				model.addAttribute("message", "The token code already exits");
+			}
 		}
+		return salasListing(model);
 	}
-
 }
