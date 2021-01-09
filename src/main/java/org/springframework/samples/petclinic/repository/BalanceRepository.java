@@ -1,7 +1,6 @@
 package org.springframework.samples.petclinic.repository;
 import java.time.LocalDate;
 import java.util.Collection;
-import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.Repository;
@@ -13,8 +12,6 @@ import org.springframework.samples.petclinic.model.Pago;
 
 public interface BalanceRepository  extends Repository<Balance,Integer>,  CrudRepository<Balance,Integer>{
     Collection<Balance> findAll();
-    
-    List<Balance> findById(int id);
     
     @Query("SELECT pago FROM Pago pago WHERE pago.fEmision >= :init_date and pago.fEmision <= :last_date")
 	public Collection<Pago> findSubsByMonth(@Param("init_date") LocalDate init_date,@Param("last_date") LocalDate last_date);

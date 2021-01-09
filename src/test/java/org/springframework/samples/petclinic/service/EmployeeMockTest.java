@@ -43,7 +43,6 @@ public class EmployeeMockTest {
         u = new User();
         e = new Employee();
         employees = new ArrayList<Employee>();
-        revenue = new EmployeeRevenue();
 
         u.setUsername("Lyle");
         u.setPassword("hola12345");
@@ -60,11 +59,8 @@ public class EmployeeMockTest {
         e.setSalaries(new ArrayList<EmployeeRevenue>());
         employees.add(e);
 
-        revenue.setEmployee(e);
-        revenue.setDateStart(LocalDate.parse("2020-11-05", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        revenue.setDateEnd(LocalDate.parse("2020-11-28", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        revenue.setHoursWorked(60);
-        revenue.setQuantity(510);
+        revenue = new EmployeeRevenue(e, LocalDate.parse("2020-11-05", DateTimeFormatter.ofPattern("yyyy-MM-dd")), 
+        		LocalDate.parse("2020-11-28", DateTimeFormatter.ofPattern("yyyy-MM-dd")), 60, 510);
 
         eOptional = Optional.of(e);
 
