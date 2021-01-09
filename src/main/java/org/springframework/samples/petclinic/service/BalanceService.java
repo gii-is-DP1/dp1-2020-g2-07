@@ -1,10 +1,7 @@
 package org.springframework.samples.petclinic.service;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.Month;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -48,9 +45,7 @@ public class BalanceService {
     //-----------------------------------------------------//
 
 	public String getNombreMes(LocalDate fecha) {
-		Month mes = fecha.getMonth();
-		String nombre_mes = mes.toString();
-		return nombre_mes;
+		return fecha.getMonth().toString();
 	}
 
 	public String getAnyo(LocalDate fecha) {
@@ -63,10 +58,8 @@ public class BalanceService {
 	//Comprueba si hoy es día 1, para calcular el balance del mes pasado
 	public boolean diaDeBalance() {
 		Boolean tocaBalance = false;
-		SimpleDateFormat formatter= new SimpleDateFormat("dd");
-		Date hoy_millis = new Date(System.currentTimeMillis());
-		String hoy = formatter.format(hoy_millis);
-		if(hoy.equals("29")) {
+		Integer day_today = LocalDate.now().getDayOfMonth();
+		if(day_today.equals(9)) {
 			tocaBalance = true;
 		}
 		return tocaBalance;
@@ -75,11 +68,9 @@ public class BalanceService {
 	//Devuelve el día 1 del mes previo (Inicio del rango)
 	public LocalDate getPrimerDiaMesPrevio() {
 		Date previo = Date.from(ZonedDateTime.now().minusMonths(1).withDayOfMonth(1).toInstant());
-		DateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
-		String primer_dia_mes_previo_s = formatter.format(previo);
-		LocalDate primer_dia_mes_previo = LocalDate.parse(primer_dia_mes_previo_s, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-		return primer_dia_mes_previo;
+		return previo.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	}
+
 
 	//Devuelve el último día del mes (Fin del rango)
 	public LocalDate getUltimoDiaMes(LocalDate selec) {
@@ -138,7 +129,7 @@ public class BalanceService {
 		return list;
 	}
 	
-	public List<Pago> getSubsData (LocalDate date_start, LocalDate date_end, DateTimeFormatter formatter) {	
+	public List<Pago> getSubsData (LocalDate date_start, LocalDate date_end) {	
 		Collection<Pago> total = balanceRepo.findSubsByMonth(date_start, date_end);
 		List<Pago> list = new ArrayList<Pago>();
 		list.addAll(total);
