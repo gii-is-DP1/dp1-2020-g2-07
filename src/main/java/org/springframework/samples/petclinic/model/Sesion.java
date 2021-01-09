@@ -47,6 +47,22 @@ public class Sesion extends BaseEntity{
 	@JoinColumn(name = "bono_id")
 	private Bono token;
 
+	public Sesion() {
+		super();
+	}
+
+	public Sesion(Set<Cita> citas, @NotNull(message = "Start time can't be null") LocalTime horaInicio,
+			@NotNull(message = "End time can't be null") LocalTime horaFin,
+			@NotNull(message = "The room can't be null") Sala sala, @NotNull Horario horario, Bono token) {
+		super();
+		this.citas = citas;
+		this.horaInicio = horaInicio;
+		this.horaFin = horaFin;
+		this.sala = sala;
+		this.horario = horario;
+		this.token = token;
+	}
+
 	public Horario getHorario() {
 		return horario;
 	}
@@ -95,6 +111,12 @@ public class Sesion extends BaseEntity{
 	public Boolean validate() {
 		return horaInicio.isBefore(horaFin);
 	}
-	
-	
+
+	public Bono getToken() {
+		return token;
+	}
+
+	public void setToken(Bono token) {
+		this.token = token;
+	}
 }

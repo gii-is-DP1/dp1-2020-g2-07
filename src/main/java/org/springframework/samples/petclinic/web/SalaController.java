@@ -189,11 +189,13 @@ public class SalaController {
 			}
 			if(code_not_rpt) {
 				bono.setUsado(false);
+				bono.getSession().setToken(bono);
 				bono.setDate_start(LocalDate.now());
 				bono.setDate_end(bono.getSession().getHorario().getFecha().minusDays(1));
 				if (bono.getCodigo().isEmpty())
 					bono.setCodigo();
 				bonoservice.save(bono);
+				
 				model.addAttribute("message", "The token has been created successfully");
 			}else {
 				model.addAttribute("message", "The token code already exits");

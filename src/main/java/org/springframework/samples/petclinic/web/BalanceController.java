@@ -2,6 +2,7 @@ package org.springframework.samples.petclinic.web;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +31,7 @@ public class BalanceController {
     @GetMapping
     public String listClients(ModelMap model){
     	LocalDate day_one = balanceService.getPrimerDiaMesPrevio();
-    	String month = balanceService.getNombreMes(day_one);
+    	String month = day_one.getMonth().toString();
     	String year = balanceService.getAnyo(day_one);
 
     	if(balanceService.diaDeBalance() && !balanceService.balanceExists(month, year)) {
@@ -43,7 +44,7 @@ public class BalanceController {
     
     @GetMapping("/{balancesId}")
 	public ModelAndView showBalance(@PathVariable("balancesId") int balanceId, ModelMap model) {
-    	Balance b = balanceService.getBalanceById(balanceId);
+    	Balance b = balanceService.findById(balanceId).get();
     	String dataPoints = createStats(b);
     	model.addAttribute("dataPoints", dataPoints);
     	
@@ -52,9 +53,9 @@ public class BalanceController {
 		LocalDate date_start = LocalDate.of(year, int_month, 1);
 		LocalDate date_end = date_start.withDayOfMonth(date_start.getMonth().length(date_start.isLeapYear()));
     	
-    	List<Bono> tokens = balanceService.getTokensData(date_start, date_end);
-    	List<Pago> subs = balanceService.getSubsData(date_start, date_end);
-    	List<EmployeeRevenue> salaries = balanceService.getSalariesData(date_start, date_end);
+    	Collection<Bono> tokens = balanceService.getTokensData(date_start, date_end);
+    	Collection<Pago> subs = balanceService.getSubsData(date_start, date_end);
+    	Collection<EmployeeRevenue> salaries = balanceService.getSalariesData(date_start, date_end);
     	model.addAttribute("tokens",tokens);
     	model.addAttribute("subs",subs);
     	model.addAttribute("salaries",salaries);
