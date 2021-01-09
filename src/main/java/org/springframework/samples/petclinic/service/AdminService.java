@@ -6,18 +6,24 @@ import org.springframework.samples.petclinic.repository.AdminRepository;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
+
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
 public class AdminService {
-    @Autowired
     AdminRepository adminRepository;
 
-    @Autowired
     private UserService userService;
 
-    @Autowired
     private AuthoritiesService authoritiesService;
+
+    @Autowired
+    public AdminService(AdminRepository adminRepo, UserService userService, AuthoritiesService authoritiesService){
+        this.adminRepository = adminRepo;
+        this.userService = userService;
+        this.authoritiesService = authoritiesService;
+    }
 
 
     public Optional<Admin> findById(int id){
@@ -26,6 +32,11 @@ public class AdminService {
 
     public void delete(Admin admin) {
         adminRepository.deleteById(admin.getId());
+        userService.delete(admin.getUser());
+    }
+
+    public Collection<Admin> findAll(){
+        return adminRepository.findAll();
     }
 
     public void save(@Valid Admin admin){
