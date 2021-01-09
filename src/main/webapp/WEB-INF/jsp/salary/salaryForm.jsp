@@ -7,8 +7,6 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <script>
-
-
     $(function () {
         $("#dateStart").datepicker({dateFormat: 'yyyy-mm-dd'});
         $("#dateEnd").datepicker({dateFormat: 'yyyy-mm-dd'});
@@ -36,12 +34,11 @@
     <h2>
         <c:if test="${revenue['new']}">New </c:if> Salary
     </h2>
-    <form:form name="salaryForm" modelAttribute="revenue" class="form-horizontal" id="add-employee-form"
+    <form:form name="payForm" modelAttribute="revenue" class="form-horizontal" id="add-employee-form"
                onsubmit="return validateForm();">
         <div class="form-group has-feedback">
             <petclinic:localDate pattern="yyyy-MM-dd" label="Date start" name="dateStart"/>
             <petclinic:localDate pattern="yyyy-MM-dd" label="Date end" name="dateEnd"/>
-            <petclinic:inputField label="Hours Worked" name="hoursWorked"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">

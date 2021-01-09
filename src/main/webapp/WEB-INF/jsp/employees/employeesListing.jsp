@@ -47,4 +47,8 @@
             <a href="/employees/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add employee</a>
         </p>
     </sec:authorize>
+
+    <sec:authorize access="hasAuthority('employee')">
+    		<c:redirect url="/employees/${c.id}"/>
+    </sec:authorize>
 </petclinic:layout>

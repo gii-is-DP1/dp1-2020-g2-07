@@ -1,14 +1,17 @@
 package org.springframework.samples.petclinic.web;
 import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
-
+import java.util.stream.Collectors;
 import javax.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Bono;
 import org.springframework.samples.petclinic.model.Cita;
 import org.springframework.samples.petclinic.model.Cliente;
+import org.springframework.samples.petclinic.model.RoomType;
 import org.springframework.samples.petclinic.model.Sala;
 import org.springframework.samples.petclinic.service.BonoService;
 import org.springframework.samples.petclinic.service.CitaService;
@@ -41,6 +44,11 @@ public class SalaController {
 	private CitaService cs;
 	private ClienteService cls;
 	private BonoService bonoservice;
+  
+    @ModelAttribute("room_type")
+    public List<RoomType> getRoomType(){
+        return Arrays.stream(RoomType.class.getEnumConstants()).collect(Collectors.toList());
+    }
 
 	@Autowired
 	public SalaController(SalaService salaService,HorarioService hs,CitaService cs, ClienteService cls, BonoService bonoservice) {
@@ -137,12 +145,11 @@ public class SalaController {
 			  model.addAttribute("sala", this.salaService.findById(salaId).get());
 			  if(c.isPresent()) {
 				  model.addAttribute("cliente", c.get().getId());
-			      model.addAttribute("sesiones", hs.inTimeSessions(hs.availableSessions(hs.activeSessions(salaId,c.get()),c.get()), c.get()));
-			      model.addAttribute("cita", new Cita());
+          model.addAttribute("sesiones", hs.inTimeSessions(hs.activeSessions(salaId,c.get()),c.get()));
+			    model.put("cita", new Cita());
+
 			  }	  
-
 			  return "salas/salaDetails";
-
 		  }
 	  }
 
@@ -173,15 +180,25 @@ public class SalaController {
 		if(binding.hasErrors()) {
 			return BONOS_FORM;
 		}else {
-			bono.setUsado(false);
-			bono.setDate_start(LocalDate.now());
-			bono.setDate_end(bono.getSession().getHorario().getFecha().minusDays(1));
-			if (bono.getCodigo().isEmpty())
-				bono.setCodigo();
-			bonoservice.save(bono);
-			model.addAttribute("message", "The token has been created successfully");
-			return salasListing(model);
+			Collection<Bono> x = bonoservice.findAll();
+			Boolean code_not_rpt = true;
+			for(Bono b:x) {
+				if(b.getCodigo().equals(bono.getCodigo())) {
+					code_not_rpt = false;
+				}
+			}
+			if(code_not_rpt) {
+				bono.setUsado(false);
+				bono.setDate_start(LocalDate.now());
+				bono.setDate_end(bono.getSession().getHorario().getFecha().minusDays(1));
+				if (bono.getCodigo().isEmpty())
+					bono.setCodigo();
+				bonoservice.save(bono);
+				model.addAttribute("message", "The token has been created successfully");
+			}else {
+				model.addAttribute("message", "The token code already exits");
+			}
 		}
+		return salasListing(model);
 	}
-
 }
