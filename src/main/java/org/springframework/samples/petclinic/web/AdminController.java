@@ -79,8 +79,8 @@ public class AdminController {
 
     @GetMapping("/users")
     public String getUsers(ModelMap model){
-        model.addAttribute("clientUsers", userService.fidByCategory(Categoria.CLIENTE));
-        model.addAttribute("employeeUsers", userService.fidByCategory(Categoria.EMPLEADO));
+        model.addAttribute("clientUsers", userService.findByCategory(Categoria.CLIENTE));
+        model.addAttribute("employeeUsers", userService.findByCategory(Categoria.EMPLEADO));
         return ADMIN_USERS;
     }
 
