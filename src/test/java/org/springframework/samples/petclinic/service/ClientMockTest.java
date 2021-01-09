@@ -49,8 +49,7 @@ public class ClientMockTest {
 
     @Before
     public void setUp(){
-        clienteService = new ClienteService(clienteRepository, userService, authoritiesService
-        ,emailService);
+        clienteService = new ClienteService(clienteRepository, userService, authoritiesService,emailService);
         c = new Cliente();
         u = new User();
         clients = new ArrayList<Cliente>();

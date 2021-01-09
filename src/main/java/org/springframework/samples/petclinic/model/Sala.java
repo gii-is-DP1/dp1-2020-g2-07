@@ -37,6 +37,22 @@ public class Sala extends NamedEntity{
 	@OneToMany(mappedBy="sala", cascade = CascadeType.ALL)
 	private List<Sesion> sesiones;
 
+	public Sala() {
+		super();
+	}
+
+	public Sala(RoomType room_type,
+			@NotNull(message = "Capacity can't be null") @Min(value = 1, message = "The room must have 1 person capacity at least.") Integer aforo,
+			@Size(min = 10, message = "The description needs 10 letters") String descripcion, List<Circuito> circuitos,
+			List<Sesion> sesiones) {
+		super();
+		this.room_type = room_type;
+		this.aforo = aforo;
+		this.descripcion = descripcion;
+		this.circuitos = circuitos;
+		this.sesiones = sesiones;
+	}
+
 	public Integer getAforo() {
 		return aforo;
 	}
