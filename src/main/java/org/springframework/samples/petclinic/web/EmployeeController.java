@@ -160,7 +160,7 @@ public class EmployeeController {
         	}
             return "salary/salaryForm";
         }else{
-        	Integer hours = employeeService.findById(employeeId).get().getHoursWorked(revenue.getDateStart(), revenue.getDateEnd());
+        	Integer hours = employeeService.findById(employeeId).get().getHoursWorked(revenue.getDateStart(), revenue.getDateEnd()).intValue();
         	revenue.setHoursWorked(hours);
             revenue.setEmployee(employeeService.findById(employeeId).get());
             employeeService.addSalaryToEmployee(employeeId, revenue);
