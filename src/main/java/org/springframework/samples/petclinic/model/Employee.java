@@ -73,15 +73,15 @@ public class Employee extends Individual {
         }
     }
 
-    public Integer getHoursWorked(LocalDate start, LocalDate end) {
+    public Double getHoursWorked(LocalDate start, LocalDate end) {
         return getHorarios().stream()
             .filter(h -> h.getFecha().isBefore(end) && h.getFecha().isAfter(start))
             .map(h -> h.getSesiones()
                 .stream()
-                .map(s -> (int)Duration.between(s.getHoraInicio(), s.getHoraFin()).toHours())
-                .mapToInt(Integer::intValue)
+                .map(s -> (double)Duration.between(s.getHoraInicio(), s.getHoraFin()).toMinutes() / 60)
+                .mapToDouble(Double::doubleValue)
                 .sum())
-            .mapToInt(Integer::intValue)
+            .mapToDouble(Double::doubleValue)
             .sum();
     }
     
