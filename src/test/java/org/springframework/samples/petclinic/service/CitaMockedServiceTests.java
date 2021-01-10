@@ -2,9 +2,8 @@ package org.springframework.samples.petclinic.service;
 
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -46,6 +45,7 @@ public class CitaMockedServiceTests {
 	private Horario h;
 	private Employee e;
 	private Sala sala;
+	Optional<Cita> citaopt;
 	
 	private Collection<Cita> citas;
 	
@@ -110,7 +110,10 @@ public class CitaMockedServiceTests {
 		citas = new HashSet<Cita>();
 		citas.add(cita);
 		
+		citaopt = Optional.of(cita);
+		
 		when(citaRepo.findAll()).thenReturn(citas);
+		when(citaRepo.findById(1)).thenReturn(citaopt);
 	}
 	
 	@Test
@@ -124,24 +127,22 @@ public class CitaMockedServiceTests {
 	@Test
 	public void shouldFindById() {
 		Optional<Cita> c1 = citaService.findById(1);
-		assertThat(c1.isPresent());
-		assertTrue(c1.get().equals(cita));
-//		assertThat(c1.get()).isEqualTo(cita);   //a saber porque salta la null exception
+		assertTrue(c1.isPresent());
+		assertThat(c1.get()).isEqualTo(cita);
 		
 		Optional<Cita> c2 = citaService.findById(2);
 		assertFalse(c2.isPresent());
 	}
 	
 	@Test
-	public void shouldDelete() {
-		citaService.delete(cita);
-
-		assertFalse(c.getCitas().contains(cita));  //poder cancelar la cita hasta x horas antes de ella o no poder borrar, no se elimina de la lista de citas del empleado
-	}
-
-	@Test
 	public void shouldSaveCita() {
 		citaService.save(cita);
-		assertThat(c.getCitas().contains(cita));
+		assertTrue(c.getCitas().contains(cita));
+	}
+	
+	@Test
+	public void shouldDelete() {
+		citaService.delete(cita);
+		assertFalse(c.getCitas().contains(cita));
 	}
 }

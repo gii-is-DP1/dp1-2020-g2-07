@@ -65,20 +65,12 @@ public class Sala extends NamedEntity{
 		return room_type;
 	}
 
-	public String getToken_code() {
-		return token_code;
-	}
-
 	public List<Sesion> getSesiones() {
 		return sesiones;
 	}
 
 	public void setRoom_type(RoomType room_type) {
 		this.room_type = room_type;
-	}
-
-	public void setToken_code(String token_code) {
-		this.token_code = token_code;
 	}
 
 	public void setSesiones(List<Sesion> sesiones) {

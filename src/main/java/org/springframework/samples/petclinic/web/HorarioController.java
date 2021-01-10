@@ -76,7 +76,7 @@ public class HorarioController {
 	@GetMapping("/pastSessions")
 	public ModelAndView showPastSessions(@PathVariable("employeeId") int employeeId) {
 		ModelAndView mav = new ModelAndView("employees/employeePastSessions");
-		mav.addObject("past", horarioService.pastDays(employeeId));
+		mav.addObject("past", horarioService.calcDays(employeeId,"past"));
 		return mav;
 		
 	}

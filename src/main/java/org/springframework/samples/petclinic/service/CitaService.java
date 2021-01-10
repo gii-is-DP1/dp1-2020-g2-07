@@ -31,10 +31,12 @@ public class CitaService {
 	@Transactional
 	public void delete(Cita c) {
 		citaRepo.deleteById(c.getId());
+		c.getCliente().getCitas().remove(c);
     }
     
 	@Transactional
     public void save(@Valid Cita c){
+//		c.getCliente().addApointment(c);
     	citaRepo.save(c);
     }
 }
