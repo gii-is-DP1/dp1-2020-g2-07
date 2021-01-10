@@ -112,7 +112,7 @@ public class EmployeeController {
         if (hasAuthority(employee, userService.findUser(auth.getName()).get())) {
             ModelAndView mav = new ModelAndView("employees/employeeDetails");
             mav.addObject(this.employeeService.findById(employeeId).get());
-            mav.addObject("horarios",horarioService.futureDays(employeeId));
+            mav.addObject("horarios",horarioService.calcDays(employeeId,"future"));
             //placeholder de las horas totales, es solo para comprobar que funciona dandole los parametros
             mav.addObject("horas", this.employeeService.findById(employeeId).get().getHoursWorked(LocalDate.of(2020, 12, 1), LocalDate.of(2021, 12, 31)));
             return mav;

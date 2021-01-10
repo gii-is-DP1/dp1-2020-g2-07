@@ -35,7 +35,7 @@ public class HorarioService {
 	public Collection<Horario> findAll(){
         return horarioRepo.findAll();
     }
-    public Optional<Horario> findById(Integer id){
+    public Optional<Horario> findById(int id){
         return horarioRepo.findById(id);
     }
     @Transactional
@@ -44,7 +44,7 @@ public class HorarioService {
     }
     @Transactional
     public void save(@Valid Horario horario) {
-         horarioRepo.save(horario);
+        horarioRepo.save(horario);
     }
         
     public void addSesion(int id, Sesion s){
@@ -95,22 +95,15 @@ public class HorarioService {
     }
     
     
-    public Collection<Horario> futureDays(int employee_id){
+    public Collection<Horario> calcDays(int employee_id, String time){
     	Collection<Horario> a = horarioRepo.getHorariosByEmployee(employee_id);
-    	a.removeIf(x->x.getFecha().isBefore(LocalDate.now()));
+    	if(time.equals("future")) a.removeIf(x->x.getFecha().isBefore(LocalDate.now()));
+    	else if(time.equals("past")) a.removeIf(x->x.getFecha().isAfter(LocalDate.now()));
     	List<Horario> future = new ArrayList<>(a);
     	Collections.sort(future, (x,y)->x.getFecha().compareTo(y.getFecha()));
     	return future;
     }
-    
-    public Collection<Horario> pastDays(int employee_id){
-    	Collection<Horario> a = horarioRepo.getHorariosByEmployee(employee_id);
-    	a.removeIf(x->x.getFecha().isAfter(LocalDate.now()));
-    	List<Horario> past = new ArrayList<>(a);
-    	Collections.sort(past, (x,y)->x.getFecha().compareTo(y.getFecha()));
-    	return past;
-    }
-    
+        
     public boolean checkDuplicatedSessions(Sesion s, int horarioId) {
     	boolean duplicated = false;
     	for(Horario h:horarioRepo.findAll()) {
