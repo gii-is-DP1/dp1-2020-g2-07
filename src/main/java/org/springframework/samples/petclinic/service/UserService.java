@@ -43,6 +43,10 @@ public class UserService {
     private EmployeeService employeeService;
 
 	@Autowired
+	public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+	}
+
 	public UserService(UserRepository userRepository, ClienteService clienteService, EmployeeService employeeService) {
         this.userRepository = userRepository;
         this.clienteService = clienteService;

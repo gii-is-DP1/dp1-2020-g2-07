@@ -20,7 +20,7 @@
             return false;
         }
 
-        if (fEmision < date) {
+        if (fEmision > date) {
             alert("Date must be set before current date")
             return false;
         }
