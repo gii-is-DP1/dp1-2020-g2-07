@@ -1,29 +1,19 @@
 package org.springframework.samples.petclinic.service;
-
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-
-import static org.mockito.ArgumentMatchers.*;
-
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.samples.petclinic.model.*;
-import org.springframework.samples.petclinic.repository.ClienteRepository;
 import org.springframework.samples.petclinic.repository.EmployeeRepository;
-
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
-
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -53,7 +43,6 @@ public class EmployeeMockTest {
         u = new User();
         e = new Employee();
         employees = new ArrayList<Employee>();
-        revenue = new EmployeeRevenue();
 
         u.setUsername("Lyle");
         u.setPassword("hola12345");
@@ -70,11 +59,8 @@ public class EmployeeMockTest {
         e.setSalaries(new ArrayList<EmployeeRevenue>());
         employees.add(e);
 
-        revenue.setEmployee(e);
-        revenue.setDateStart(LocalDate.parse("2020-11-05", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        revenue.setDateEnd(LocalDate.parse("2020-11-28", DateTimeFormatter.ofPattern("yyyy-MM-dd")));
-        revenue.setHoursWorked(60);
-        revenue.setQuantity(510);
+        revenue = new EmployeeRevenue(e, LocalDate.parse("2020-11-05", DateTimeFormatter.ofPattern("yyyy-MM-dd")), 
+        		LocalDate.parse("2020-11-28", DateTimeFormatter.ofPattern("yyyy-MM-dd")), 60, 510);
 
         eOptional = Optional.of(e);
 

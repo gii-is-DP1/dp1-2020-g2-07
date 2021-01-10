@@ -34,8 +34,23 @@ public class EmployeeRevenue extends BaseEntity{
     @Min(8)
     @Column(name = "quantity")
     private Integer quantity;
+    
+   
+    public EmployeeRevenue() {
+		super();
+	}
 
-    public void setQuantity(Integer quantity) {
+	public EmployeeRevenue(Employee employee, LocalDate dateStart, LocalDate dateEnd,
+			@Min(1) @Max(170) Integer hoursWorked, @Min(8) Integer quantity) {
+		super();
+		this.employee = employee;
+		this.dateStart = dateStart;
+		this.dateEnd = dateEnd;
+		this.hoursWorked = hoursWorked;
+		this.quantity = quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 

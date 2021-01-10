@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import javax.validation.Valid;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Categoria;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Pago;
@@ -24,12 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import javax.validation.ConstraintViolationException;
-import javax.validation.Valid;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -166,11 +159,19 @@ public class ClienteController {
 
     @PostMapping("/{clientId}/newPay")
     public String saveSalary(@PathVariable("clientId") int clientId,@Valid @ModelAttribute("pago") Pago pago, BindingResult binding, ModelMap model){
-        model.addAttribute("cliente",clientService.findById(clientId).get());
-        if(binding.hasErrors()){
+        Cliente cliente = clientService.findById(clientId).get();
+        model.addAttribute("cliente", cliente);
+
+        if (cliente.getPagos().stream()
+            .anyMatch(p -> p.getfEmision().getMonth().equals(pago.getfEmision().getMonth())
+            && p.getfEmision().getYear() == pago.getfEmision().getYear())) {
+            model.addAttribute("message", "There is already a payment for that month");
+            return "pay/payForm";
+        }
+        else if(binding.hasErrors()){
             return "pay/payForm";
         }else{
-            pago.setCliente(clientService.findById(clientId).get());
+            pago.setCliente(cliente);
             clientService.addPayToClient(clientId, pago);
             return "redirect:/clientes/" + String.valueOf(clientId);
         }

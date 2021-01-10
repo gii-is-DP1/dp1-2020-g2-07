@@ -33,13 +33,6 @@ public class BalanceServiceTests {
 	}
 	
 	@Test
-	void mostrarBalancesPorId() {
-		Integer id = 1;
-		List<Balance> balances = balanceservice.findByIdLista(id);
-		assertFalse(balances.size() == 0);
-	}
-	
-	@Test
 	void mostrarNumeroDeSubs() {
 		Integer subs = balanceservice.getSubs(LocalDate.parse("2020-03-21"), LocalDate.parse("2021-01-21"));
 		assertFalse(subs == 0);

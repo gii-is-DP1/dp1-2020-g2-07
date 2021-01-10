@@ -2,7 +2,6 @@ package org.springframework.samples.petclinic.web;
 import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
-import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Bono;
 import org.springframework.samples.petclinic.model.Cita;
@@ -12,12 +11,14 @@ import org.springframework.samples.petclinic.repository.BonoRepository;
 import org.springframework.samples.petclinic.service.BonoService;
 import org.springframework.samples.petclinic.service.CitaService;
 import org.springframework.samples.petclinic.service.ClienteService;
+import org.springframework.samples.petclinic.service.HorarioService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,20 +28,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BonoController {
 	public static final String BONOS_LISTING="bonos/BonosListing";
 	public static final String REEDEM_TOKEN="bonos/ReedemToken";
+	
 
 	private BonoService bonoservice;
 	private ClienteService clientservice;
 	private BonoRepository bonoRepo;
 	private CitaService citaService;
-
+	private HorarioService horarioService;
 
 	@Autowired
-	public BonoController(BonoService bonoservice, ClienteService clientservice, BonoRepository bonoRepo, CitaService citaService) {
+	public BonoController(BonoService bonoservice, ClienteService clientservice, BonoRepository bonoRepo, CitaService citaService, HorarioService horarioService) {
 		super();
 		this.bonoservice = bonoservice;
 		this.clientservice = clientservice;
 		this.bonoRepo = bonoRepo;
 		this.citaService = citaService;
+		this.horarioService = horarioService;
 	}
 
 	@GetMapping
@@ -73,41 +76,35 @@ public class BonoController {
     }
 
 	 @PostMapping("/redeem_token")
-	 public String chargeToken(@Valid TokenCode code, BindingResult binding,ModelMap model,@AuthenticationPrincipal User user) {
-		 if(binding.hasErrors()) {
+	 public String chargeToken(@ModelAttribute("tokencode") TokenCode code, BindingResult binding,ModelMap model,@AuthenticationPrincipal User user) {
+		 Optional<Cliente> c = clientservice.clientByUsername(user.getUsername());
+		 if(binding.hasErrors() || bonoRepo.findTokenExists(code.getCode()) == 0) {
+			 if(bonoRepo.findTokenExists(code.getCode()) == 0) {
+				 model.addAttribute("message", "This token doesn´t exist");
+			 }else {
+				 model.addAttribute("message", "There has been a problem");
+			 }
 			 return REEDEM_TOKEN;
 		 }else {
-	        String token_code = code.getCode();
-	        if(bonoRepo.findTokenExists(token_code) == 0) {
-	        	model.addAttribute("message", "This token doesn´t exist");
-	        }else {
-	        	Bono token = bonoRepo.findTokenByCode(token_code);
+	        	Bono token = bonoRepo.findTokenByCode(code.getCode());
 	    		LocalDate today = LocalDate.now();
 	    		if(token.getDate_start().isBefore(today) || token.getDate_start().isEqual(today) &&
 	    				token.getDate_end().isAfter(today) || token.getDate_start().isEqual(today) && token.getUsado() != true) {
-	    			Optional<Cliente> c = clientservice.clientByUsername(user.getUsername());
-	    			Cita apt = new Cita(c.get(), token.getSession());
-
+	    			  Cita apt = new Cita(c.get(), token.getSession());
 	    			Set<Cita> set = c.get().getCitas();
-	    			Boolean apt_not_exist = true;
-	    			for (Cita s : set) {
-	    			    if(s.getCliente().equals(apt.getCliente()) && s.getSesion().equals(s.getSesion())) {
-	    			    	apt_not_exist = false;
-	    			    }
-	    			}
-	    			if(apt_not_exist) {
+	    			if(!horarioService.checkTokenAptExist(apt, set)) {
 	    				token.setUsado(true);
 			    		bonoservice.save(token);
 			    		citaService.save(apt);
-			    		model.addAttribute("message", "Token reedemed, the appointment has been created");
 	    			}else {
-	    				model.addAttribute("message", "Appointment already exits");
+	    				model.addAttribute("message", "The appointment either already exists or interrupts another");
+	    				return REEDEM_TOKEN;
 	    			}
 		    	}else {
 		    		model.addAttribute("message", "This token has expired or has already been used");
+		    		return REEDEM_TOKEN;
 		    	}
-	        }
 	     }
-		 return listBonos(model); //Te tiene que devolver al perfil del cliente
+		 return "redirect:/clientes/" + String.valueOf(c.get().getId());
 	 }
 }

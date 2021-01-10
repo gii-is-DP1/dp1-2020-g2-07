@@ -5,7 +5,6 @@ INSERT INTO authorities(id,username,authority) VALUES (1,'admin1','admin');
 INSERT INTO users(username,password,enabled) VALUES ('juanma','hola',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (2,'juanma','client');
 
--- One employee user
 INSERT INTO users(username,password,enabled) VALUES ('miguel','hola',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (4,'miguel','employee');
 INSERT INTO employees(id, first_name, last_name, address, category, IBAN, profession, email, username) VALUES(1, 'Jhon', 'Smith', 'Sevilla C/Tangana 1º A',1, 'ES3912341234250123456789', 'LIFE_GUARD', 'miguel_molina2@hotmail.es', 'miguel');
@@ -24,11 +23,11 @@ INSERT INTO pagos(id, cliente_id, f_emision, cantidad) VALUES(2, 1, '2020-11-27'
 
 INSERT INTO balances(id, month, year, subs, bonos, salaries,mante) VALUES(1, 'JANUARY', '2020', 200,200,202,200);
 
-INSERT INTO salas(id, name, aforo, descripcion) VALUES(1, 'Jacuzzi', 7, 'A large circular bath which is fitted with a device that makes the water move around.');
-INSERT INTO salas(id, name, aforo, descripcion) VALUES(2, 'Relax pool', 15, 'Indoor heated pool where you can relax');
-INSERT INTO salas(id, name, aforo, descripcion) VALUES(3, 'Sauna', 5, 'A Finnish steam bath in which the steam is provided by water thrown on hot stones');
-INSERT INTO salas(id, name, aforo, descripcion) VALUES(4, 'Musical jacuzzi', 3, 'Have a wonderful bath in a jacuzzi while you listen to music.');
-INSERT INTO salas(id, name, aforo, descripcion) VALUES(5, 'Hot water pool', 7, 'Hot water');
+INSERT INTO salas(id, name, aforo, descripcion, room_type) VALUES(1, 'Jacuzzi', 7, 'A large circular bath which is fitted with a device that makes the water move around.', 'MASSAGIST');
+INSERT INTO salas(id, name, aforo, descripcion, room_type) VALUES(2, 'Relax pool', 15, 'Indoor heated pool where you can relax','LIFE_GUARD');
+INSERT INTO salas(id, name, aforo, descripcion, room_type) VALUES(3, 'Sauna', 5, 'A Finnish steam bath in which the steam is provided by water thrown on hot stones' , 'MASSAGIST');
+INSERT INTO salas(id, name, aforo, descripcion, room_type) VALUES(4, 'Musical jacuzzi', 3, 'Have a wonderful bath in a jacuzzi while you listen to music.', 'MASSAGIST');
+INSERT INTO salas(id, name, aforo, descripcion, room_type) VALUES(5, 'Hot water pool', 7, 'Hot water', 'MASSAGIST');
 
 INSERT INTO circuitos(id, name, descripcion) VALUES(1, 'Circuito1 ', 'Water circuit');
 INSERT INTO circuitos(id, name,descripcion) VALUES(2, 'Circuito2 ', 'Series of pools');
@@ -46,14 +45,20 @@ INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantit
 INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantity) VALUES(6, 1, '2020-11-16', '2020-11-20' , 34, 1000);
 
 INSERT INTO horario(id,fecha,employee_id) VALUES (1,'2020-12-05',1);
-INSERT INTO horario(id,fecha,employee_id) VALUES (2,'2020-12-05',1);
-INSERT INTO horario(id,fecha,employee_id) VALUES (3,'2020-12-06',1);
-INSERT INTO horario(id,fecha,employee_id) VALUES (4,'2021-01-25',1);
+INSERT INTO horario(id,fecha,employee_id) VALUES (2,'2020-12-06',1);
+INSERT INTO horario(id,fecha,employee_id) VALUES (3,'2021-01-25',1);
 
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (1,'10:00','12:00',1,1);
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (2,'12:00','14:00',2,1);
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (3,'10:00','12:00',4,1);
-INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (4,'10:00','12:00',3,2);
-INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (5,'10:00','12:00',1,4);
+INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (5,'10:00','12:00',1,3);
 
 INSERT INTO citas(id,cliente_id, sesion_id) VALUES (1,1,5);
+
+--Datos para balance Diciembre 2020
+INSERT INTO pagos(id, cliente_id, f_emision, cantidad) VALUES(3, 1, '2020-12-15', 32);
+INSERT INTO pagos(id, cliente_id, f_emision, cantidad) VALUES(4, 1, '2020-12-27', 40);
+
+INSERT INTO bonos(id, codigo, precio, date_start, date_end, descripcion, usado) VALUES (1,  'QWERT1', 5,  '2020-12-03', '2020-12-04', 'Token for a free Spa session.', 1);
+
+INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantity) VALUES(7, 1, '2020-12-02', '2020-12-29', 50, 700);

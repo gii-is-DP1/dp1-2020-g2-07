@@ -41,8 +41,20 @@ public class EmployeeController {
         else
             return empleado.get().getUser().equals(user) || user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("admin"));
     }
-
+    
     @GetMapping
+    public String listEmployees(ModelMap model, Authentication auth){
+        if (auth.isAuthenticated()) {
+            Optional<Employee> c = employeeService.findEmployeeByUsername(auth.getName());
+            if(c.isPresent()) {
+            	model.addAttribute("c", c.get());
+            }else model.addAttribute("employees", employeeService.findAll());
+            
+            return EMPLOYEES_LISTING;
+        }
+        else return "/login";
+    }
+ 
     public String listEmployees(ModelMap model){
         model.addAttribute("employees", employeeService.findAll());
         return EMPLOYEES_LISTING;
@@ -81,13 +93,16 @@ public class EmployeeController {
     public String deleteClient(@PathVariable("id") int id, ModelMap model){
         Optional<Employee> employee = employeeService.findById(id);
         if(employee.isPresent()){
-            employeeService.delete(employee.get());
-            model.addAttribute("message", "Employee deleted successfully!!");
-            return listEmployees(model);
+        	if(employee.get().getHorarios().size()!=0) {
+        		model.addAttribute("message", "The employee can´t be deleted if the have work left to do");
+        	}else {
+                employeeService.delete(employee.get());
+                model.addAttribute("message", "Employee deleted successfully!!");
+        	}
         }else {
             model.addAttribute("message", "Cant find the employee you are looking for");
-            return listEmployees(model);
         }
+        return listEmployees(model);
     }
 
     @GetMapping("/{employeeId}")
@@ -99,7 +114,7 @@ public class EmployeeController {
             mav.addObject(this.employeeService.findById(employeeId).get());
             mav.addObject("horarios",horarioService.futureDays(employeeId));
             //placeholder de las horas totales, es solo para comprobar que funciona dandole los parametros
-            mav.addObject("horas", this.employeeService.findById(employeeId).get().getHoursWorked(LocalDate.of(2020, 12, 1), LocalDate.of(2020, 12, 31)));
+            mav.addObject("horas", this.employeeService.findById(employeeId).get().getHoursWorked(LocalDate.of(2020, 12, 1), LocalDate.of(2021, 12, 31)));
             return mav;
         }
         else {
@@ -135,10 +150,18 @@ public class EmployeeController {
     @PostMapping("/{employeeId}/newSalary")
     public String saveSalary(@PathVariable("employeeId") int employeeId,@Valid @ModelAttribute("revenue") EmployeeRevenue revenue, BindingResult binding, ModelMap model){
         model.addAttribute("employee",employeeService.findById(employeeId).get());
-        if(binding.hasErrors()){
-            model.addAttribute("message", "hay un error capo");
+        if(binding.hasErrors() || !revenue.getDateStart().isBefore(revenue.getDateEnd()) || !revenue.getDateStart().getMonth().equals(revenue.getDateEnd().getMonth())){
+        	if(!revenue.getDateStart().isBefore(revenue.getDateEnd())) {
+        		model.addAttribute("message", "Start date must be before end date");
+        	}else if(!revenue.getDateStart().getMonth().equals(revenue.getDateEnd().getMonth())) {
+        		model.addAttribute("message", "Revenues must have a length of only 1 month");
+        	}else {
+        		model.addAttribute("message", "There has been a problem");
+        	}
             return "salary/salaryForm";
         }else{
+        	Integer hours = employeeService.findById(employeeId).get().getHoursWorked(revenue.getDateStart(), revenue.getDateEnd()).intValue();
+        	revenue.setHoursWorked(hours);
             revenue.setEmployee(employeeService.findById(employeeId).get());
             employeeService.addSalaryToEmployee(employeeId, revenue);
 

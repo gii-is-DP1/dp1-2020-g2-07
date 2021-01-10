@@ -1,10 +1,14 @@
 package org.springframework.samples.petclinic.model;
 import java.time.LocalDate;
-import javax.persistence.CascadeType;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -14,9 +18,10 @@ public class Bono extends  BaseEntity {
 	@Column(name = "codigo")
 	private String codigo;
 	
+	@NotNull(message = "Price must be filled")
 	@Column(name = "precio")
 	private Integer precio;
-
+	
 	@Column(name = "date_start")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date_start;
@@ -25,16 +30,35 @@ public class Bono extends  BaseEntity {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date_end;
 	 
-	 @Column(name = "descripcion")
-	 private String descripcion;
+    @Size(min = 3, max = 100, message="Description must be beetwen 3 and 100 characters")
+	@Column(name = "descripcion")
+	private String descripcion;
 
-	 @Column(name = "usado")
-	 private Boolean usado;
-	 
-	 @OneToOne(cascade=CascadeType.ALL)
+	@Column(name = "usado")
+	private Boolean usado;
+
+	 @OneToOne(mappedBy = "token")
 	 private Sesion session;
+	 
+	public Bono() {
+		super();
+	}
 
-	 public Boolean getUsado() {
+	public Bono(String codigo, @NotNull(message = "Price must be filled") Integer precio, LocalDate date_start,
+			LocalDate date_end,
+			@Size(min = 3, max = 100, message = "Description must be beetwen 3 and 100 characters") String descripcion,
+			Boolean usado, Sesion session) {
+		super();
+		this.codigo = codigo;
+		this.precio = precio;
+		this.date_start = date_start;
+		this.date_end = date_end;
+		this.descripcion = descripcion;
+		this.usado = usado;
+		this.session = session;
+	}
+
+	public Boolean getUsado() {
 		return this.usado;
 	}
 		
