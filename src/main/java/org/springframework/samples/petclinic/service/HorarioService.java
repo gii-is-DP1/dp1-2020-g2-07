@@ -11,10 +11,10 @@ import java.util.Set;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cita;
 import org.springframework.samples.petclinic.model.Cliente;
-import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.Horario;
 import org.springframework.samples.petclinic.model.Sesion;
 import org.springframework.samples.petclinic.model.SubType;
@@ -104,7 +104,7 @@ public class HorarioService {
     	return future;
     }
         
-    public boolean checkDuplicatedSessions(Sesion s, int horarioId) {
+    public boolean checkDuplicatedSessions(Sesion s) {
     	boolean duplicated = false;
     	for(Horario h:horarioRepo.findAll()) {
     		if(h.getFecha().equals(s.getHorario().getFecha())) {
@@ -135,9 +135,9 @@ public class HorarioService {
     	return times_op;
     }
     
-    public Boolean dayAlreadyInSchedule(Employee e,Horario horario) {
+    public Boolean dayAlreadyInSchedule(Horario horario) {
     	Boolean res = false;
-    	for (Horario h : e.getHorarios()) {
+    	for (Horario h : horarioRepo.getHorariosByEmployee(horario.getEmployee().getId())) {
     		if(horario.getFecha().equals(h.getFecha())) {
     			res=true;
     		}
