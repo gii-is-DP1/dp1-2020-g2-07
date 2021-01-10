@@ -7,6 +7,7 @@ import static org.mockito.Mockito.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -82,10 +83,7 @@ public class CitaMockedServiceTests {
         e.setIBAN("ES4131905864163572187270");
         e.setUser(u);
         
-        h = new Horario();
-        h.setFecha(LocalDate.of(2021, 3, 14));
-        h.setEmployee(e);
-        h.setId(1);
+        h = new Horario(LocalDate.of(2021, 3, 14),e,new ArrayList<Sesion>());
         
 		sala = new Sala();
 		sala.setAforo(12);
@@ -100,10 +98,7 @@ public class CitaMockedServiceTests {
         s.setHorario(h);
         s.setSala(sala);
 		
-        cita = new Cita();		
-		cita.setSesion(s);
-		cita.setId(1);
-		cita.setCliente(c);
+        cita = new Cita(c,s);		
 		
 		c.addApointment(cita);
         
@@ -137,7 +132,7 @@ public class CitaMockedServiceTests {
 	@Test
 	public void shouldSaveCita() {
 		citaService.save(cita);
-		assertTrue(c.getCitas().contains(cita));
+		assertTrue(citaService.findAll().contains(cita));
 	}
 	
 	@Test
