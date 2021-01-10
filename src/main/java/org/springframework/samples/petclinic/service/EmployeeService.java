@@ -4,11 +4,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
-import org.apache.taglibs.standard.lang.jstl.EmptyOperator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.EmployeeRevenue;
+import org.springframework.samples.petclinic.model.Horario;
 import org.springframework.samples.petclinic.model.Profession;
 import org.springframework.samples.petclinic.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
@@ -58,6 +56,11 @@ public class EmployeeService {
     public void addSalaryToEmployee(int id, EmployeeRevenue salary){
         employeeRepo.findById(id).get().addSalary(salary);
         this.save(employeeRepo.findById(id).get());
+    }
+    
+    public void addScheduletoEmployee(int id, Horario schedule) {
+    	employeeRepo.findById(id).get().addHorario(schedule);
+    	 this.save(employeeRepo.findById(id).get());
     }
     
     public Optional<Employee> findEmployeeByUsername(String username){

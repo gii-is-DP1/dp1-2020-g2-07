@@ -45,14 +45,20 @@ INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantit
 INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantity) VALUES(6, 1, '2020-11-16', '2020-11-20' , 34, 1000);
 
 INSERT INTO horario(id,fecha,employee_id) VALUES (1,'2020-12-05',1);
-INSERT INTO horario(id,fecha,employee_id) VALUES (2,'2020-12-05',1);
-INSERT INTO horario(id,fecha,employee_id) VALUES (3,'2020-12-06',1);
-INSERT INTO horario(id,fecha,employee_id) VALUES (4,'2021-01-25',1);
+INSERT INTO horario(id,fecha,employee_id) VALUES (2,'2020-12-06',1);
+INSERT INTO horario(id,fecha,employee_id) VALUES (3,'2021-01-25',1);
 
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (1,'10:00','12:00',1,1);
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (2,'12:00','14:00',2,1);
 INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (3,'10:00','12:00',4,1);
-INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (4,'10:00','12:00',3,2);
-INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (5,'10:00','12:00',1,4);
+INSERT INTO sesion(id,hora_inicio,hora_fin,sala_id,horario_id) VALUES (5,'10:00','12:00',1,3);
 
 INSERT INTO citas(id,cliente_id, sesion_id) VALUES (1,1,5);
+
+--Datos para balance Diciembre 2020
+INSERT INTO pagos(id, cliente_id, f_emision, cantidad) VALUES(3, 1, '2020-12-15', 32);
+INSERT INTO pagos(id, cliente_id, f_emision, cantidad) VALUES(4, 1, '2020-12-27', 40);
+
+INSERT INTO bonos(id, codigo, precio, date_start, date_end, descripcion, usado) VALUES (1,  'QWERT1', 5,  '2020-12-03', '2020-12-04', 'Token for a free Spa session.', 1);
+
+INSERT INTO revenue(id, employee_id, date_start, date_end, hours_worked, quantity) VALUES(7, 1, '2020-12-02', '2020-12-29', 50, 700);

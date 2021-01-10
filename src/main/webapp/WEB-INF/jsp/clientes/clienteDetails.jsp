@@ -8,8 +8,9 @@
 <petclinic:layout pageName="clients">
 
     <h2>Client Profile</h2>
+    <sec:authorize access="hasAuthority('client')">
     <button onclick="location.href = '/bonos/redeem_token';" id="myButton" class="float-left submit-button" >Reedem Token</button>
-
+	</sec:authorize>
 
     <table class="table table-striped" id="emploee_details">
         <tr>

@@ -31,6 +31,18 @@ public class Horario extends BaseEntity{
 	@OneToMany(mappedBy = "horario",cascade=CascadeType.ALL)
 	private List<Sesion> sesiones;
 	
+	public Horario() {
+		super();
+	}
+
+	public Horario(@NotNull(message = "Date can't be null") LocalDate fecha, @NotNull Employee employee,
+			List<Sesion> sesiones) {
+		super();
+		this.fecha = fecha;
+		this.employee = employee;
+		this.sesiones = sesiones;
+	}
+
 	public LocalDate getFecha() {
 		return fecha;
 	}

@@ -36,10 +36,27 @@ public class Bono extends  BaseEntity {
 
 	@Column(name = "usado")
 	private Boolean usado;
-	 
 
 	 @OneToOne(mappedBy = "token")
 	 private Sesion session;
+	 
+	public Bono() {
+		super();
+	}
+
+	public Bono(String codigo, @NotNull(message = "Price must be filled") Integer precio, LocalDate date_start,
+			LocalDate date_end,
+			@Size(min = 3, max = 100, message = "Description must be beetwen 3 and 100 characters") String descripcion,
+			Boolean usado, Sesion session) {
+		super();
+		this.codigo = codigo;
+		this.precio = precio;
+		this.date_start = date_start;
+		this.date_end = date_end;
+		this.descripcion = descripcion;
+		this.usado = usado;
+		this.session = session;
+	}
 
 	public Boolean getUsado() {
 		return this.usado;

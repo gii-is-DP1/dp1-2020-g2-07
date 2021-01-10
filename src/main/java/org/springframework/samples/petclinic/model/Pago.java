@@ -25,7 +25,18 @@ public class Pago extends BaseEntity{
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    public void setfEmision(LocalDate fEmision) {
+    public Pago() {
+		super();
+	}
+
+	public Pago(LocalDate fEmision, @NotNull @Min(30) @Max(50) Integer cantidad, Cliente cliente) {
+		super();
+		this.fEmision = fEmision;
+		this.cantidad = cantidad;
+		this.cliente = cliente;
+	}
+
+	public void setfEmision(LocalDate fEmision) {
         this.fEmision = fEmision;
     }
 

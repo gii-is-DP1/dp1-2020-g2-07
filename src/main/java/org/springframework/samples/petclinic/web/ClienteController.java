@@ -159,12 +159,19 @@ public class ClienteController {
 
     @PostMapping("/{clientId}/newPay")
     public String saveSalary(@PathVariable("clientId") int clientId,@Valid @ModelAttribute("pago") Pago pago, BindingResult binding, ModelMap model){
-        model.addAttribute("cliente",clientService.findById(clientId).get());
-        if(binding.hasErrors()){
-            model.addAttribute("message", "hay un error capo");
+        Cliente cliente = clientService.findById(clientId).get();
+        model.addAttribute("cliente", cliente);
+
+        if (cliente.getPagos().stream()
+            .anyMatch(p -> p.getfEmision().getMonth().equals(pago.getfEmision().getMonth())
+            && p.getfEmision().getYear() == pago.getfEmision().getYear())) {
+            model.addAttribute("message", "There is already a payment for that month");
+            return "pay/payForm";
+        }
+        else if(binding.hasErrors()){
             return "pay/payForm";
         }else{
-            pago.setCliente(clientService.findById(clientId).get());
+            pago.setCliente(cliente);
             clientService.addPayToClient(clientId, pago);
             return "redirect:/clientes/" + String.valueOf(clientId);
         }
