@@ -168,7 +168,6 @@ public class ClienteController {
     public String saveSalary(@PathVariable("clientId") int clientId,@Valid @ModelAttribute("pago") Pago pago, BindingResult binding, ModelMap model){
         model.addAttribute("cliente",clientService.findById(clientId).get());
         if(binding.hasErrors()){
-            model.addAttribute("message", "hay un error capo");
             return "pay/payForm";
         }else{
             pago.setCliente(clientService.findById(clientId).get());

@@ -14,10 +14,13 @@
     function validateForm(){
         var fEmision = document.forms["payForm"]["fEmision"].value;
 
+
         if(fEmision == "" || fEmision == null){
             alert("Date must be filled")
             return false;
         }
+
+
 
         return true;
     }

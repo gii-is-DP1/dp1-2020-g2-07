@@ -4,15 +4,18 @@ import org.springframework.context.annotation.Bean;
 
 import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 public class Email {
     @NotEmpty
     private String[] address;
 
     @NotEmpty
+    @Size(min = 3, max = 40)
     private String subject;
 
     @NotEmpty
+    @Size(min = 3, max = 400)
     private String body;
 
     public String[] getAddress() {
