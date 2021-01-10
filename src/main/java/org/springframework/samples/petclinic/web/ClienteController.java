@@ -169,7 +169,6 @@ public class ClienteController {
             return "pay/payForm";
         }
         else if(binding.hasErrors()){
-            model.addAttribute("message", "hay un error capo");
             return "pay/payForm";
         }else{
             pago.setCliente(cliente);
