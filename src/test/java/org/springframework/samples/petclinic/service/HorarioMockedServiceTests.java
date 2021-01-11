@@ -68,8 +68,7 @@ public class HorarioMockedServiceTests {
         e.setAddress("C/Pantomima");
         e.setEmail("jmgc@hotmail.com");
         e.setIBAN("ES4131905864163572187270");
-        e.setUser(u);
-        
+        e.setUser(u);      
         
         u.setUsername("juanma");
         u.setPassword("12345");
@@ -85,11 +84,7 @@ public class HorarioMockedServiceTests {
         c.setUser(u);
         c.setCitas(new HashSet<Cita>());
         
-        h = new Horario();
-        h.setFecha(LocalDate.of(2021, 3, 14));
-        h.setEmployee(e);
-        h.setId(1);
-        h.setSesiones(new ArrayList<Sesion>());
+        h = new Horario(LocalDate.of(2021, 3, 14),e,new ArrayList<Sesion>());
         
 		sala = new Sala();
 		sala.setAforo(12);
@@ -97,13 +92,7 @@ public class HorarioMockedServiceTests {
 		sala.setId(1);
 		sala.setName("Piscina");
         
-        s = new Sesion();
-        s.setHoraInicio(LocalTime.of(10, 00));
-        s.setHoraFin(LocalTime.of(12, 00));
-        s.setId(1);
-        s.setHorario(h);
-        s.setSala(sala);
-        s.setCitas(new HashSet<Cita>());
+        s = new Sesion(new HashSet<Cita>(),LocalTime.of(10, 00),LocalTime.of(12, 00),sala,h,null);
         
         sesiones = new HashSet<Sesion>();
         sesiones.add(s);
@@ -111,12 +100,16 @@ public class HorarioMockedServiceTests {
         horarios = new HashSet<Horario>();
         horarios.add(h);
         
+        h.addSesion(s);
+        
         hOptional = Optional.of(h);
         
         when(horarioRepo.findAll()).thenReturn(horarios);
         when(horarioRepo.findById(1)).thenReturn(hOptional);
         when(horarioRepo.save(h)).thenReturn(h);
         when(horarioRepo.getSesionBySala(1)).thenReturn(sesiones);
+        when(horarioRepo.getSesionByHorario(1)).thenReturn(h.getSesiones());
+        when(horarioRepo.getHorariosByEmployee(1)).thenReturn(horarios);
 	}
 	
 	@Test
@@ -146,45 +139,99 @@ public class HorarioMockedServiceTests {
         horarioService.delete(h);
     }
     
+    @Test
     public void shouldAddSession() {
     	/*Añadimos una sesion al horario ya creado*/
-    	horarioService.addSesion(1, s);
-    	assertThat(h.getSesiones()).hasSize(1);
-    	assertThat(h.getSesiones().get(1).getSala().getName()).isEqualTo("Piscina");
+    	Sesion s2 = new Sesion(new HashSet<Cita>(),LocalTime.of(12, 00),LocalTime.of(14, 00),sala,h,null);
+    	horarioService.addSesion(1, s2);
+    	assertThat(horarioService.findSesionesHorario(1)).hasSize(2);
+    	assertTrue(horarioService.findSesionesHorario(1).contains(s2));
     }
     
     @Test
     public void shouldFindSessionsByHorario() {
-    	
+    	/*Dado un horarioId (día) devuelve todas las sesiones que contiene*/
+    	Collection<Sesion> sh = horarioService.findSesionesHorario(1);
+    	assertThat(sh).hasSize(1);
+    	assertThat(sh.iterator().next().getSala().getName()).isEqualTo("Piscina");
     }
     
     @Test
     public void shouldfindActiveSessions() {
     	/*Test que devuelve solo las sesiones que superan la fecha de hoy y no han completado su aforo con citas para la sala indicada*/
-        Horario h2 = new Horario();
-        h2.setFecha(LocalDate.of(2020, 3, 14));
-        h2.setEmployee(e);
-        h2.setId(2);
-        h2.setSesiones(new ArrayList<Sesion>());
+        Horario h2 = new Horario(LocalDate.of(2020, 3, 14),e,new ArrayList<Sesion>());
         
-        Sesion s2 = new Sesion();
-        s2.setHoraInicio(LocalTime.of(10, 00));
-        s2.setHoraFin(LocalTime.of(12, 00));
-        s2.setId(1);
-        s2.setHorario(h2);
-        s2.setSala(sala);
-        s2.setCitas(new HashSet<Cita>());
+        Sesion s2 = new Sesion(new HashSet<Cita>(),LocalTime.of(10, 00),LocalTime.of(12, 00),sala,h2,null);       
         sesiones.add(s2);
         
+        /*Obtener la sesión que se realizará en el futuro*/        
         Collection<Sesion> activas = horarioService.activeSessions(1, c);
         assertThat(activas).hasSize(1); 
         
+        /*No se devolverá ninguna sesión ya que el aforo de la sala es igual al tamaño de las citas
+         * Es solo un supuesto, porque el aforo no puede ser 0*/        
         sala.setAforo(0);
         activas = horarioService.activeSessions(1, c);
-        assertThat(activas).isEmpty();; 
+        assertThat(activas).isEmpty(); 
     }
     
+    @Test
+    public void shouldFindInTimeSessions() {
+    	/*El cliente tiene suscripción de tarde, por lo que no aparecerá la sesión creada al ser de mañana*/
+    	
+    	Collection<Sesion> inTime = horarioService.inTimeSessions(sesiones, c);
+    	assertThat(inTime).isEmpty(); 
+    	
+        Sesion s2 = new Sesion(new HashSet<Cita>(),LocalTime.of(16, 00),LocalTime.of(17, 00),sala,h,null);
+        sesiones.add(s2);
+        
+        /*Si añadimos una nueva sesión de tarde, esta si se mostrará en las sesiones disponibles*/        
+        inTime = horarioService.inTimeSessions(sesiones, c);
+        assertThat(inTime).hasSize(1); 
+        assertThat(inTime.iterator().next().getHoraInicio()).isEqualTo(LocalTime.of(16, 00));
+    }
     
+    @Test
+    public void shouldCalcDays() {
+    	/*Se comprueba que la función sólo devuelve los días que se le pasan como parámetro y lo hacen de manera ordenada según la fecha*/
+    	Horario h2 = new Horario(LocalDate.of(2021, 2, 1),e,new ArrayList<Sesion>());
+    	horarios.add(h2);
+    	Collection<Horario> future = horarioService.calcDays(1, "future");
+    	assertThat(future).hasSize(2);
+    	assertThat(future.iterator().next()).isEqualTo(h2);
+    	
+    	Collection<Horario> past = horarioService.calcDays(1, "past");
+    	assertThat(past).isEmpty();
+    }
     
-
+    @Test
+    public void shouldCheckDuplicatedSessions() {
+    	/*Este test comprueba si una nueva sesion esta duplicada cuando se va a insertar*/
+    	Sesion s2 = new Sesion(new HashSet<Cita>(),LocalTime.of(11, 00),LocalTime.of(13, 00),sala,h,null);
+    	assertTrue(horarioService.checkDuplicatedSessions(s2));
+    	
+    	s2.setHoraInicio(LocalTime.of(12,00));
+    	assertFalse(horarioService.checkDuplicatedSessions(s2));	
+    }
+    
+    @Test
+    public void shouldCheckDayAlreadyInSchedule() {
+    	/*Comprueba que no se haya añadido ya ese día al listado de horarios*/
+    	Horario h2 = new Horario(LocalDate.of(2021, 3, 14),e,new ArrayList<Sesion>());    	    	
+    	assertTrue(horarioService.dayAlreadyInSchedule(h2));
+    	
+    	h2 = new Horario(LocalDate.of(2021, 3, 15),e,new ArrayList<Sesion>());
+    	assertFalse(horarioService.dayAlreadyInSchedule(h2));
+    }
+    
+    @Test
+    public void shouldCheckToken() {
+    	/*El método comprueba que no se haya pedido cita en la misma sesión en la que se pretende canjear el bono*/
+        Cita cita = new Cita(c,s);		
+        assertFalse(horarioService.checkTokenAptExist(cita, c.getCitas()));
+        
+        /*En este caso el cliente ya había pedido cita en esa sesión*/
+        c.addApointment(cita);
+        assertTrue(horarioService.checkTokenAptExist(cita, c.getCitas()));
+    }
 }
