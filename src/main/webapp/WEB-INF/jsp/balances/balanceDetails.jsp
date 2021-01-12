@@ -79,16 +79,6 @@
     </p>
 	</div>
 	
-	<th>Maintenance</th>
-    <button class="accordion"><c:out value="${balance.mante}$"/></button>
-	<div class="panel">
-  	<p>
-  		Electricity: 25$
-  		<br>
-  		Water: 75$
-    </p>
-	</div>
-	
 	<th>Salaries</th>
     <button class="accordion"><c:out value="${balance.salaries}$"/></button>
 	<div class="panel">

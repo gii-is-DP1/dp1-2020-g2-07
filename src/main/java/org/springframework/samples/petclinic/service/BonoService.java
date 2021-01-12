@@ -3,9 +3,7 @@ package org.springframework.samples.petclinic.service;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Bono;
@@ -16,30 +14,45 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class BonoService {
 	@Autowired
-	BonoRepository bonorepository;
+	BonoRepository tokenRepo;
 	
+	public BonoService(BonoRepository tokenRepo) {
+		super();
+		this.tokenRepo = tokenRepo;
+	}
+
 	public Collection<Bono> findAll(){
-		return bonorepository.findAll();
+		return tokenRepo.findAll();
 	}
 	
 	public List<Bono> findByIdLista(int id){
-		return bonorepository.findById(id);
+		return tokenRepo.findById(id);
 	}
 	
 	public void delete(Bono bono) {
-		bonorepository.deleteById(bono.getId());
+		tokenRepo.deleteById(bono.getId());
 	}
 	
 	public void save(@Valid Bono bono) {
-		bonorepository.save(bono);
+		tokenRepo.save(bono);
 	}
 	
 	public Optional<Bono> findById(Integer id) {
-		return bonorepository.findById(id);
+		return tokenRepo.findById(id);
 	}
 	
 	@Transactional(readOnly = true)
 	public Collection<Bono> findBonos() throws DataAccessException{
-		return bonorepository.findAll();
+		return tokenRepo.findAll();
+	}
+	
+	//---------------------------//
+	
+	public boolean findTokenNoExist(String code) {
+		return tokenRepo.findTokenExists(code) == 0;
+	}
+	
+	public Bono findTokenByCode(String code) {
+		return tokenRepo.findTokenByCode(code);
 	}
 }

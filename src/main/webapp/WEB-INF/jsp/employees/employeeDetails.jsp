@@ -20,6 +20,10 @@
             <td><b><c:out value="${employee.address}"/></b></td>
         </tr>
         <tr>
+            <th>Age</th>
+            <td><b><c:out value="${employee.age}"/></b></td>
+        </tr>
+        <tr>
             <th>IBAN</th>
             <td><b><c:out value="${employee.IBAN}"/></b></td>
         </tr>

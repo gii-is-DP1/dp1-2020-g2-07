@@ -18,7 +18,7 @@
             <td><b><c:out value="${cliente.first_name} ${cliente.last_name}"/></b></td>
         </tr>
         <tr>
-            <th>Addres</th>
+            <th>Address</th>
             <td><b><c:out value="${cliente.address}"/></b></td>
         </tr>
         <tr>
