@@ -6,6 +6,7 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="clientes">
     <h2>Income Statements</h2>
@@ -14,10 +15,6 @@
         <tr>
             <th>Month</th>
             <th>Year</th>
-            <th>Subscriptions</th>
-            <th>Bonos</th>
-            <th>Salaries</th>
-            <th>Manteinance</th>
         </tr>
         </thead>
         <tbody>
@@ -30,21 +27,16 @@
                     <c:out value="${balance.year}"/>
                 </td>
                 <td>
-                    <c:out value="${balance.subs}"/>
-                </td>
-                <td>
-                    <c:out value="${balance.bonos}"/>
-                </td>
-                <td>
-                    <c:out value="${balance.salaries}"/>
-                </td>
-                <td>
-                    <c:out value="${balance.mante}"/>
-                </td>
-                <td>
                     <a href="/balances/${balance.id}">
                         <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
                     </a>
+                </td>
+                <td>
+                	<sec:authorize access="hasAuthority('admin')">
+                    	<a href="/balances/${balance.id}/edit">
+                        	<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    	</a>
+                    </sec:authorize>
                 </td>
             </tr>
         </c:forEach>
