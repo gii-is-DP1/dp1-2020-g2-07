@@ -32,7 +32,7 @@
 
 <petclinic:layout pageName="pays">
     <h2>
-        <c:if test="${pago['new']}">New </c:if> Salary
+        <c:if test="${pago['new']}">New </c:if> Payment
     </h2>
     <form:form name="payForm" modelAttribute="pago" class="form-horizontal" id="add-employee-form"
                onsubmit="return validateForm()">

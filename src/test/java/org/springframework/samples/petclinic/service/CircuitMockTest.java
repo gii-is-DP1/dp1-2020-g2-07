@@ -1,11 +1,8 @@
 package org.springframework.samples.petclinic.service;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
-
 import java.util.ArrayList;
-//import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -22,7 +19,6 @@ import org.springframework.samples.petclinic.model.Sala;
 import org.springframework.samples.petclinic.repository.CircuitoRepository;
 import org.springframework.samples.petclinic.repository.SalaRepository;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedCircuitoNameException;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedSalaNameException;
 
 import static org.junit.Assert.*;
 
