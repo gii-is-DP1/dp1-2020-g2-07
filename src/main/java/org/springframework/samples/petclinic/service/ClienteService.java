@@ -1,10 +1,14 @@
 package org.springframework.samples.petclinic.service;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Optional;
+
 import javax.transaction.Transactional;
 import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Cita;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.Email;
 import org.springframework.samples.petclinic.model.Pago;
@@ -58,6 +62,7 @@ public class ClienteService {
             e.setBody("Have a petition of registrer from " + cliente.getFirst_name() + " " + cliente.getLast_name());
             emailService.sendMail(e);
             cliente.getUser().setEnabled(false);
+//            cliente.setCitas(new HashSet<Cita>());
         }
 
         clientRepo.save(cliente);

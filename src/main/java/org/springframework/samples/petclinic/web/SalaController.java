@@ -145,9 +145,8 @@ public class SalaController {
 			  model.addAttribute("sala", this.salaService.findById(salaId).get());
 			  if(c.isPresent()) {
 				  model.addAttribute("cliente", c.get().getId());
-          model.addAttribute("sesiones", hs.inTimeSessions(hs.activeSessions(salaId,c.get()),c.get()));
-			    model.put("cita", new Cita());
-
+				  model.addAttribute("sesiones", hs.inTimeSessions(hs.activeSessions(salaId,c.get()),c.get()));
+				  model.put("cita", new Cita());
 			  }	  
 			  return "salas/salaDetails";
 		  }

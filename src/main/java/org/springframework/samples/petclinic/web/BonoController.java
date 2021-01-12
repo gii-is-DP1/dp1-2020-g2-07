@@ -87,7 +87,7 @@ public class BonoController {
 	    		LocalDate today = LocalDate.now();
 	    		if(token.getDate_start().isBefore(today) || token.getDate_start().isEqual(today) &&
 	    				token.getDate_end().isAfter(today) || token.getDate_start().isEqual(today) && token.getUsado() != true) {
-	    			  Cita apt = new Cita(c.get(), token.getSession());
+	    			Cita apt = new Cita(c.get(), token.getSession());
 	    			Set<Cita> set = c.get().getCitas();
 	    			if(!horarioService.checkTokenAptExist(apt, set)) {
 	    				token.setUsado(true);
