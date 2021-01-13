@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
+<!-- Hola -->
 <petclinic:layout pageName="admin">
     <h2>Admins</h2>
     <table id="adminsTable" class="table table-striped">

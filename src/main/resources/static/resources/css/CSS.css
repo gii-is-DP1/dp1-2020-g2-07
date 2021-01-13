@@ -1,8 +1,9 @@
+/*========================================================================WELCOME.JSP===============================================================================*/
+body{
+	background-color: #D8FAF8;
+}
 
-
-
-
-/* Galería de Imágenes */
+																	/* Galería de Imágenes */
 div.polaroid {
   margin-top: 11%;
   margin-left:8%;
@@ -24,32 +25,263 @@ div.container {
 #imagen:hover {
   filter: opacity(.5);
 }
-
-/* Tabla de Tarifas */
-#tarifas {
-  margin-top:-40%;
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
+																		/*Tabla de Precios*/
+#tabla-precios {
+ display:inline-block;
+ width:100%;
 }
 
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
+/*Columnas*/
+
+.precio-col {
+ display:inline-block;
+ background-color:#f3f3f3;
+ width:100%;
+ max-width:500px;
+ border-radius:10px;
+ margin-bottom:50px;
+ box-shadow: 0px 2px 5px #ddd
 }
 
-tr:nth-child(even) {
-  background-color: #dddddd;
+@media screen and (min-width:768px) {
+ .precio-col {
+ width:32%;
+ float:left;
+ margin-right:2%
+ }
+ 
+ .precio-col:last-child {
+ margin-right:0
+ }
 }
 
+/*Headers*/
 
-/* About Us */
+.precio-col-header {
+ background-color:#333;
+ padding:20px;
+ border-top-left-radius:10px;
+ border-top-right-radius:10px
+}
+
+.precio-col:nth-child(2) .precio-col-header {
+ background-color:#dd9933
+}
+
+.precio-col-header h3 {
+ color:#f3f3f3;
+ text-align:center;
+ font-size:30px;
+ font-weight:600;
+ margin-bottom:0
+}
+
+.precio-col-header p {
+ text-align:center;
+ color:#f3f3f3;
+ font-size:14px;
+ margin-bottom:0
+}
+
+/*Características*/
+
+.precio-col-features {
+ padding: 0 20px 20px 20px
+}
+
+.precio-col-features p {
+ padding:20px 0;
+ margin:0;
+ text-align:center;
+ border-top:1px solid #ddd
+}
+
+.precio-col-features p:first-child,
+.precio-col-features p:last-child {
+ border-top:none
+}
+
+																		/* About Us */
 h1{margin-top: -40%;
 }
-
 
 iframe{
 	margin-left: 35%;
 	margin-top: -18%;
 } 
+
+/*====================================================================BALANCEDETAILS.JSP============================================================================*/
+.accordion {
+  background-color: #D8FAF8;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 30%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+.accordion:after {
+  content: '\002B';
+  color: #777;
+  font-weight: bold;
+  float: right;
+  margin-left: 5px;
+}
+.active:after {
+  content: "\2212";
+}
+.panel {
+  padding: 0 18px;
+  background-color: white;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+  width: 40%;
+}
+
+#detalles{
+	margin-right: 70%;
+	margin-left: -10%;
+	width: 70%
+}
+
+#grafica{
+	margin-right: -20%;
+	margin-left: 60%;
+	margin-top: -29%;
+}
+
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+div.table-title {
+   display: block;
+  margin: auto;
+  padding:5px;
+  width: 100%;
+}
+
+/*** Table Styles **/
+
+.table-fill {
+  background: white;
+  border-radius:3px;
+  border-collapse: collapse;
+  height: 300px;
+  margin: auto;
+  padding:5px;
+  width: 100%;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  animation: float 5s infinite;
+}
+ 
+th {
+  color:#D5DDE5;;
+  background:#1b1e24;
+  border-bottom:4px solid #9ea7af;
+  border-right: 1px solid #343a45;
+  font-size:23px;
+  font-weight: 100;
+  padding:24px;
+  text-align:left;
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+  vertical-align:middle;
+}
+
+th:first-child {
+  border-top-left-radius:3px;
+}
+ 
+th:last-child {
+  border-top-right-radius:3px;
+  border-right:none;
+}
+  
+tr {
+  border-top: 1px solid #C1C3D1;
+  border-bottom-: 1px solid #C1C3D1;
+  color:#666B85;
+  font-size:16px;
+  font-weight:normal;
+  text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+}
+ 
+tr:hover td {
+  background:#9AC1BE;
+  color:#FFFFFF;
+}
+ 
+tr:first-child {
+  border-top:none;
+}
+
+tr:last-child {
+  border-bottom:none;
+}
+ 
+tr:nth-child(odd) td {
+  background:#EBEBEB;
+}
+ 
+tr:nth-child(odd):hover td {
+  background:#9AC1BE;
+}
+
+tr:last-child td:first-child {
+  border-bottom-left-radius:3px;
+}
+ 
+tr:last-child td:last-child {
+  border-bottom-right-radius:3px;
+}
+ 
+td {
+  background:#FFFFFF;
+  padding:20px;
+  text-align:left;
+  vertical-align:middle;
+  font-weight:300;
+  font-size:18px;
+  text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+  border-right: 1px solid #C1C3D1;
+}
+
+td:last-child {
+  border-right: 0px;
+}
+
+th.text-left {
+  text-align: left;
+}
+
+th.text-center {
+  text-align: center;
+}
+
+th.text-right {
+  text-align: right;
+}
+
+td.text-left {
+  text-align: left;
+}
+
+td.text-center {
+  text-align: center;
+}
+
+td.text-right {
+  text-align: right;
+}
+
+#bonosTable{
+	height: 20%;
+}
+
+#balanceTable{
+	height: 20%;
+}
