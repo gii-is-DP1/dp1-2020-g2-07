@@ -20,7 +20,6 @@
                 <td>
                     <c:out value="${admin.getUser().username}"/>
                 </td>
-                </sec:authorize>
             </tr>
         </c:forEach>
         </tbody>
