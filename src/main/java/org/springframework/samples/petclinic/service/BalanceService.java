@@ -49,7 +49,7 @@ public class BalanceService {
 	public boolean diaDeBalance() {
 		Boolean tocaBalance = false;
 		Integer day_today = LocalDate.now().getDayOfMonth();
-		if(day_today.equals(9)) {
+		if(day_today.equals(13)) {
 			tocaBalance = true;
 		}
 		return tocaBalance;

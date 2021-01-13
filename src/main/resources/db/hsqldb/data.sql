@@ -21,7 +21,7 @@ INSERT INTO bonos(id, codigo, precio, date_available, descripcion, usado) VALUES
 INSERT INTO pagos(id, cliente_id, f_emision, cantidad) VALUES(1, 1, '2020-11-15', 32);
 INSERT INTO pagos(id, cliente_id, f_emision, cantidad) VALUES(2, 1, '2020-11-27', 40);
 
-INSERT INTO balances(id, month, year, subs, bonos, salaries,mante) VALUES(1, 'JANUARY', '2020', 200,200,202,200);
+INSERT INTO balances(id, month, year, subs, bonos, salaries) VALUES(1, 'JANUARY', '2020', 200,200,202);
 
 INSERT INTO salas(id, name, aforo, descripcion, room_type) VALUES(1, 'Jacuzzi', 7, 'A large circular bath which is fitted with a device that makes the water move around.', 'MASSAGIST');
 INSERT INTO salas(id, name, aforo, descripcion, room_type) VALUES(2, 'Relax pool', 15, 'Indoor heated pool where you can relax','LIFE_GUARD');

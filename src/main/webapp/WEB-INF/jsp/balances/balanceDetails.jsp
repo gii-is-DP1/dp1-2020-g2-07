@@ -5,58 +5,28 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 <%@ page import="com.google.gson.Gson"%>
 <%@ page import="com.google.gson.JsonObject"%>
-<style>
-.accordion {
-  background-color: #eee;
-  color: #444;
-  cursor: pointer;
-  padding: 18px;
-  width: 100%;
-  border: none;
-  text-align: left;
-  outline: none;
-  font-size: 15px;
-  transition: 0.4s;
-}
 
-.active, .accordion:hover {
-  background-color: #ccc;
-}
-
-.accordion:after {
-  content: '\002B';
-  color: #777;
-  font-weight: bold;
-  float: right;
-  margin-left: 5px;
-}
-
-.active:after {
-  content: "\2212";
-}
-
-.panel {
-  padding: 0 18px;
-  background-color: white;
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.2s ease-out;
-}
-</style>
 
 <petclinic:layout pageName="Income Statement">
+<!DOCTYPE html >
+	<html>
+		<head>
+			<link rel="stylesheet" href="/resources/css/CSS.css">
+		</head>	
+		<body>
+		 <div id="detalles">
     <h2>Income Statement Details</h2>
-    
+   
     <th>Subscriptions</th>
-    <button class="accordion"><c:out value="${balance.subs}$"/></button>
+    <button class="accordion" style="width: 35%"><c:out value="${balance.subs}$"/></button>
 	<div class="panel">
   	<p>
   		<c:forEach items="${subs}" var="sub">
   			<td>
-  				Client: <c:out value="${sub.cliente.first_name}"/>
+  				<strong>Client:</strong> <c:out value="${sub.cliente.first_name}"/>
   			</td>
   			<td>
-  				Quantity: <c:out value="${sub.cantidad}"/>$
+  				<strong>Quantity:</strong> <c:out value="${sub.cantidad}"/>$
   				<br>
   			</td>
         </c:forEach>
@@ -64,47 +34,38 @@
 	</div>
 	
 	<th>Tokens</th>
-    <button class="accordion"><c:out value="${balance.bonos}$"/></button>
+    <button class="accordion" style="width: 40%"><c:out value="${balance.bonos}$"/></button>
 	<div class="panel">
   	<p>
   		<c:forEach items="${tokens}" var="token">
   			 <td>
-                    Code: <c:out value="${token.codigo}"/>
+                    <strong>Code:</strong> <c:out value="${token.codigo}"/>
              </td>
              <td>
-                    Price: <c:out value="${token.precio}"/>$
+                    <strong>Price:</strong> <c:out value="${token.precio}"/>$
                     <br>
             </td>
         </c:forEach>
     </p>
 	</div>
 	
-	<th>Maintenance</th>
-    <button class="accordion"><c:out value="${balance.mante}$"/></button>
-	<div class="panel">
-  	<p>
-  		Electricity: 25$
-  		<br>
-  		Water: 75$
-    </p>
-	</div>
-	
 	<th>Salaries</th>
-    <button class="accordion"><c:out value="${balance.salaries}$"/></button>
+    <button class="accordion" style="width: 40%"><c:out value="${balance.salaries}$"/></button>
 	<div class="panel">
   	<p>
-  		<c:forEach items="${salaries}" var="salary">
+  		<c:forEach  items="${salaries}" var="salary">
   			<td>
-  				Employee: <c:out value="${salary.employee.first_name}"/>
+  				<strong>Employee:</strong> <c:out value="${salary.employee.first_name}"/>
   			</td>
   			<td>
-                Quantity: <c:out value="${salary.quantity}"/>$
+                <strong>Quantity:</strong> <c:out value="${salary.quantity}"/>$
                 <br>
             </td>
         </c:forEach>
     </p>
 	</div>
-    
+	</div>
+    <div id="grafica">
 <script>
 var acc = document.getElementsByClassName("accordion");
 var i;
@@ -141,8 +102,8 @@ window.onload = function() {
 			type: "waterfall",
 			yValueFormatString: "$#,##0",
 			indexLabel: "{y}",
-			risingColor: "#50cdc8",
-			fallingColor: "#ff6969",
+			risingColor: "#002CE1",
+			fallingColor: "#ed1515",
 			dataPoints: ${dataPoints}
 		}]
 	});
@@ -151,6 +112,7 @@ window.onload = function() {
 	}
 	
 </script>
-<div id="chartContainer" style="height: 370px; width: 80%;"></div>
+</div>
+<div id="chartContainer" style="height: 370px; width: 80%; margin-left: 40%; margin-top: 5%"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>   
 </petclinic:layout>

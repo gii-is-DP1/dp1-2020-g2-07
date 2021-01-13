@@ -54,7 +54,6 @@ public class BalanceMockTest {
 		IncStmServcice = new BalanceService(balanceRepo);
 		
 		//Create payment
-        p = new Pago();
         payments = new ArrayList<Pago>();
         
         p = new Pago(LocalDate.parse("2020-11-15", DateTimeFormatter.ofPattern("yyyy-MM-dd")), 30, null);
@@ -98,8 +97,8 @@ public class BalanceMockTest {
 		tokens.add(token);
 		
 		//Create Income Statement
-		b = new Balance("DECEMBER", "2009", 100, 200, 300, 400);
-		IncStmServcice.save(b);
+		b = new Balance("DECEMBER", "2009", 100, 200, 300,new ArrayList<Employee>());
+		
 		
 		when(balanceRepo.findUsedTokensByMonth(LocalDate.parse("2009-12-01"), LocalDate.parse("2009-12-31"), true)).thenReturn(tokens);
 		when(balanceRepo.findSalariesByMonth(LocalDate.parse("2009-12-01"), LocalDate.parse("2009-12-31"))).thenReturn(salaries);

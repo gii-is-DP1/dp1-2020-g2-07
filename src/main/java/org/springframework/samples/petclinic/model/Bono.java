@@ -15,6 +15,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Table(name = "bonos")
 public class Bono extends  BaseEntity {
 	
+	@Size(max = 12, message="Code must be 12 characters long or less")
 	@Column(name = "codigo")
 	private String codigo;
 	
