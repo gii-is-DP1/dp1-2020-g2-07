@@ -18,11 +18,11 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class UserService {
-
+	
 	private UserRepository userRepository;
-
+	@Autowired
     private ClienteService clienteService;
-
+	@Autowired
     private EmployeeService employeeService;
 
 	@Autowired
@@ -30,11 +30,11 @@ public class UserService {
         this.userRepository = userRepository;
 	}
 
-	public UserService(UserRepository userRepository, ClienteService clienteService, EmployeeService employeeService) {
-        this.userRepository = userRepository;
-        this.clienteService = clienteService;
-        this.employeeService = employeeService;
-	}
+//	public UserService(UserRepository userRepository, ClienteService clienteService, EmployeeService employeeService) {
+//        this.userRepository = userRepository;
+//        this.clienteService = clienteService;
+//        this.employeeService = employeeService;
+//	}
 
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {
