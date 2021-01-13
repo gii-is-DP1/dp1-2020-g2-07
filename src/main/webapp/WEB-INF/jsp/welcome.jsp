@@ -1,3 +1,4 @@
+
 <%@ page session="false" trimDirectiveWhitespaces="true" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -18,14 +19,12 @@
 	<style>
 .mySlides {display: none;}
 img {vertical-align: middle;}
-
 /* Slideshow container */
 .slideshow-container {
   max-width: 1000px;
   position: relative;
   margin: auto;
 }
-
 /* Number text (1/3 etc) */
 .numbertext {
   color: #f2f2f2;
@@ -34,7 +33,6 @@ img {vertical-align: middle;}
   position: absolute;
   top: 0;
 }
-
 /* The dots/bullets/indicators */
 .dot {
   height: 15px;
@@ -45,11 +43,9 @@ img {vertical-align: middle;}
   display: inline-block;
   transition: background-color 0.6s ease;
 }
-
 .active {
   background-color: #717171;
 }
-
 /* Fading animation */
 .fade {
   -webkit-animation-name: fade;
@@ -57,17 +53,14 @@ img {vertical-align: middle;}
   animation-name: fade;
   animation-duration: 3s;
 }
-
 @-webkit-keyframes fade {
   from {opacity: .4} 
   to {opacity: 1}
 }
-
 @keyframes fade {
   from {opacity: .4} 
   to {opacity: 1}
 }
-
 /* On smaller screens, decrease text size */
 @media only screen and (max-width: 300px) {
   .text {font-size: 11px}
@@ -103,7 +96,6 @@ img {vertical-align: middle;}
 <script>
 	var slideIndex = 0;
 	showSlides();
-
 	function showSlides() {
   		var i;
   		var slides = document.getElementsByClassName("mySlides");
@@ -122,8 +114,7 @@ img {vertical-align: middle;}
 	}
 </script>
 </body>
-</html> 
-
+</html>
 
 
 <!DOCTYPE html >
@@ -138,25 +129,25 @@ img {vertical-align: middle;}
 	</div>
 	<h2 id="uno"></h2>
 	<div class="polaroid" id="jacuzzi" style="margin-top:2%">
-  		<img id="imagen" src="/resources/images/jacuzzi.jpg" style="width:100%" >
+  		<a href="/salas"><img id="imagen" src="/resources/images/jacuzzi.jpg" style="width:100%" ></a>
   		<div class="container">
   			<p>Jacuzzi</p>
  		 </div>
 	</div>
 	<div class="polaroid" id="chorros" style="margin-top: 1%">
-  		<img id="imagen" src="/resources/images/piscinachorros.jpg" style="width:100%" >
+  		<a href="/salas"><img id="imagen" src="/resources/images/piscinachorros.jpg" style="width:100%" ></a>
   		<div class="container">
   			<p>Relaxing Pool</p>
   		</div>
 	</div>
 	<div class="polaroid" style="margin-left: 54%; margin-top: -68% " id="piscina">
-  		<img id="imagen" src="/resources/images/piscina.jpg" style="width:100%" >
+  		<a href="/salas"><img id="imagen" src="/resources/images/piscina.jpg" style="width:100%" ></a>
   		<div class="container">
   			<p>Swimming Pool </p>
   		</div>
 	</div>
 	<div class="polaroid" style="margin-left: 54%; margin-top: 1%" id="sauna">
-  		<img id="imagen" src="/resources/images/sauna.jpg" style="width:100%" >
+  		<a href="/salas"><img id="imagen" src="/resources/images/sauna.jpg" style="width:100%" ></a>
   		<div class="container">
   			<p>Sauna</p>
   		</div>
@@ -165,30 +156,52 @@ img {vertical-align: middle;}
 	<div>
 		<img id="divisor2" src="/resources/images/divisor2.png" style="width:100%" >
 	</div>
-	<div>
-		<table id="tarifas">
-  			<tr>
-    			<th>Subscription</th>
-    			<th>Monthly Fee (Euros) </th>
-    			<th>Description</th>
-  			</tr>
- 			 <tr>
-    			<td>Morning Subscription</td>
-    			<td>20</td>
-    			<td>You can access to spa in the morning.</td>
-  			</tr>
-  			<tr>
-    			<td>Afternoon Subscription</td>
-    			<td>20</td>
-    			<td>You can access to spa in the afternoon.</td>
-  			</tr>
- 			<tr>
-    			<td>Premium Subscription</td>
-    			<td>35</td>
-    			<td>You can access to spa when you want.</td>
-  			</tr>
-		</table>
-	</div>
+	<div id="tabla-precios" style="margin-top:-40%">
+
+<div class="precio-col" >
+ <div class="precio-col-header">
+ <h3>20 </h3>
+ <p>Pound sterlings/month</p>
+ </div>
+
+<div class="precio-col-features">
+ <p>Morning Subscription</p>
+ <p>You can access to spa in the morning</p>
+ <p>The best option if you have busy afternoons</p>
+ <p>Contact Us!</p>
+ </div>
+ </div>
+
+<div class="precio-col">
+ <div class="precio-col-header">
+ <h3>35</h3>
+ <p> Pound sterlings/month</p>
+ 
+ </div>
+
+<div class="precio-col-features">
+ <p>Premium Subscription</p>
+ <p>You can access to spa when you want</p>
+ <p>The best option if you want to enter the spa whenever you want</p>
+ <p>Contact Us!</p>
+ </div>
+ </div>
+
+<div class="precio-col">
+ <div class="precio-col-header">
+ <h3>20</h3>
+ <p>Pound sterlings/month</p>
+ </div>
+
+<div class="precio-col-features">
+ <p>Afternoon Subscription </p>
+ <p>You can access to spa when you want</p>
+ <p>The best option if you have busy mornings</p>
+ <p>Contact Us!</p>
+ </div>
+ </div>
+
+</div>
 	<div>
 		<img id="divisor3" src="/resources/images/divisor3.png" style="width:100%" >
 	</div>
@@ -213,3 +226,4 @@ img {vertical-align: middle;}
 </body>
 </html>
 </petclinic:layout>
+
