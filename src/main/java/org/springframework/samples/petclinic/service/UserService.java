@@ -18,10 +18,12 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 public class UserService {
-	
+
 	private UserRepository userRepository;
+
 	@Autowired
     private ClienteService clienteService;
+
 	@Autowired
     private EmployeeService employeeService;
 
