@@ -37,7 +37,7 @@ public class UserMockTest {
 
     @Before
     public void setUp(){
-        userService = new UserService(userRepository, clienteService, employeeService);
+      //  userService = new UserService(userRepository, clienteService, employeeService);
         c = new Cliente();
         u = new User();
         users = new ArrayList<User>();

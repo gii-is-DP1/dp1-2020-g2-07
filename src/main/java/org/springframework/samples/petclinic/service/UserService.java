@@ -19,21 +19,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
 
+
 	private UserRepository userRepository;
 
+	@Autowired
     private ClienteService clienteService;
 
+	@Autowired
     private EmployeeService employeeService;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-	}
-
-	public UserService(UserRepository userRepository, ClienteService clienteService, EmployeeService employeeService) {
-        this.userRepository = userRepository;
-        this.clienteService = clienteService;
-        this.employeeService = employeeService;
 	}
 
 	@Transactional

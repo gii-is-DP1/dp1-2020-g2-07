@@ -61,7 +61,7 @@ public class ClienteController {
 
             return CLIENTS_LISTING;
         }
-        else return "/login";
+        else return "/";
     }
 
     public String listClients(ModelMap model){
@@ -130,7 +130,7 @@ public class ClienteController {
                 return CLIENTS_FORM;
             }
 
-            cliente.setCategory(Categoria.EMPLEADO);
+            cliente.setCategory(Categoria.CLIENTE);
             clientService.save(cliente, "new");
             model.addAttribute("message", "The client was created successfully!");
             return listClients(model);
@@ -146,7 +146,8 @@ public class ClienteController {
             return mav;
         }
         else {
-            return new ModelAndView("/login");
+            return new ModelAndView("/clientes/"+
+            String.valueOf(clientService.clientByUsername(auth.getName()).get().getId()));
         }
     }
 
