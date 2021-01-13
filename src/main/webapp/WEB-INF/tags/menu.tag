@@ -46,7 +46,7 @@
                 </sec:authorize>
 
 
-                <sec:authorize access="hasAuthority('admin')">
+                <sec:authorize access="hasAnyAuthority('admin', 'employee')">
                     <petclinic:menuItem active="${name eq 'Income Statements'}" url="/balances" title="Income Statements">
                         <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"></span>
                         <span>Income Statements</span>

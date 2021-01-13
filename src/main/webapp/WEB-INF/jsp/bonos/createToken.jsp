@@ -9,10 +9,15 @@
 <petclinic:layout pageName="bonoForm">
 	<script>
     function validateForm(){
+    	var v_code = document.forms["createTokenForm"]["codigo"].value;
     	var v_price = document.forms["createTokenForm"]["precio"].value;
     	var v_priceRegex = /^[0-9]+$/;
     	var v_description = document.forms["createTokenForm"]["descripcion"].value;
-    	if (v_price == ""){
+    	if(v_code.length > 12){
+    		alert("Code must be 12 characters long or less");
+            return false;
+    	}
+    	else if (v_price == ""){
     		alert("Price must be filled");
             return false;
     	}else if(!v_priceRegex.test(v_price)){

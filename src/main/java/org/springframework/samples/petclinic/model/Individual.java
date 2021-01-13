@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.model;
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -18,6 +19,10 @@ public class Individual extends BaseEntity {
     @Size(min = 3, max = 20)
     @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$")
     private String last_name;
+    
+    @Min(value=18, message="Must be equal or greater than 18")  
+    @Column(name = "age")
+    private Integer age;
 
     @Column(name = "address")
     @NotEmpty(message = "Address must be filled")
@@ -96,5 +101,15 @@ public class Individual extends BaseEntity {
     public void setEmail(String email) {
         this.email = email;
     }
+
+	public Integer getAge() {
+		return age;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+    
+    
 }
 
