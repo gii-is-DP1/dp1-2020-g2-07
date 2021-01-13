@@ -17,7 +17,7 @@
     
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
-            	<button class="btn btn-default" type="submit">Add Employee</button>
+            	<button style="margin-left: 85%" class="btn btn-default" type="submit">Add Employee</button>
             </div>
         </div>
      </form:form>

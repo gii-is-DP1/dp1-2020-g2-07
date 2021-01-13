@@ -7,10 +7,16 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <petclinic:layout pageName="salaDetails">
+<!DOCTYPE html >
+<html>
+<head>
+	<link rel="stylesheet" href="/resources/css/CSS.css">
 
+</head>
+<body>
     <h2>Room details </h2>    
 
-    <table class="table table-striped" id="sala_details">
+    <table class="table-fill" id="sala_details">
         <tr>
             <th>Name</th>
             <td><b><c:out value="${sala.name}"/></b></td>

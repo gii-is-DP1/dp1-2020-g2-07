@@ -17,7 +17,7 @@
 		 <div id="detalles">
     <h2>Income Statement Details</h2>
    
-    <th>Subscriptions</th>
+    <th >Subscriptions</th>
     <button class="accordion" style="width: 35%"><c:out value="${balance.subs}$"/></button>
 	<div class="panel">
   	<p>
