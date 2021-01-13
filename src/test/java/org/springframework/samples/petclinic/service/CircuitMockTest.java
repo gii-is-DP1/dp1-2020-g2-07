@@ -22,7 +22,6 @@ import org.springframework.samples.petclinic.model.Sala;
 import org.springframework.samples.petclinic.repository.CircuitoRepository;
 import org.springframework.samples.petclinic.repository.SalaRepository;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedCircuitoNameException;
-import org.springframework.samples.petclinic.service.exceptions.DuplicatedSalaNameException;
 
 import static org.junit.Assert.*;
 
@@ -116,7 +115,7 @@ public class CircuitMockTest {
 	}
 	
 	@Test
-	public void shouldThrowExceptionInsertingRoomsWithTheSameName() {
+	public void shouldThrowExceptionInsertingCircuitsWithTheSameName() {
 		c = new Circuito();
 		s = new Sala();
 		s2 = new Sala();
