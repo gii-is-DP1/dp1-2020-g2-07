@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,6 +25,9 @@ public class Employee extends Individual {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     private List<Horario> horarios;
+    
+    /*@ManyToMany(mappedBy="incomest", cascade = CascadeType.ALL)
+	private List<Balance> incomest;*/
 
     public List<Horario> getHorarios() {
 		return horarios;

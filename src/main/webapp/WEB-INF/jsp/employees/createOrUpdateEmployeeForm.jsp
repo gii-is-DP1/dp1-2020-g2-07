@@ -10,6 +10,7 @@
     function validateForm(){
         var fName = document.forms["employeeForm"]["first_name"].value.trim();
         var lName = document.forms["employeeForm"]["last_name"].value.trim();
+        var age = document.forms["employeeForm"]["age"].value;
         var address = document.forms["employeeForm"]["address"].value;
         var IBAN = document.forms["employeeForm"]["IBAN"].value;
         var email = document.forms["employeeForm"]["email"].value;
@@ -27,6 +28,9 @@
             return false;
         }else if(lName.length < 3 || fName.length > 25){
             alert("Last name must be between 3 and 25 characters");
+            return false;
+        }else if(age < 18 || age==""){
+            alert("Age must filled and be greater or equal to 18");
             return false;
         }
         if(address.trim() == "" || address == null){
@@ -59,6 +63,7 @@
         <div class="form-group has-feedback">
             <petclinic:inputField label="First Name" name="first_name"/>
             <petclinic:inputField label="Last Name" name="last_name"/>
+            <petclinic:inputField label="Age" name="age"/>
             <petclinic:inputField label="Address" name="address"/>
             <petclinic:inputField label="IBAN" name="IBAN"/>
             <petclinic:inputField label="Email" name="email"/>

@@ -1,5 +1,11 @@
 package org.springframework.samples.petclinic.service;
 
+import java.time.LocalDate;
+import java.util.Collection;
+import java.util.HashSet;
+import static org.mockito.Mockito.when;
+
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

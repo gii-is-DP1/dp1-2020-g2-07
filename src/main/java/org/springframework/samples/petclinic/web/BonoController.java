@@ -7,7 +7,6 @@ import org.springframework.samples.petclinic.model.Bono;
 import org.springframework.samples.petclinic.model.Cita;
 import org.springframework.samples.petclinic.model.Cliente;
 import org.springframework.samples.petclinic.model.TokenCode;
-import org.springframework.samples.petclinic.repository.BonoRepository;
 import org.springframework.samples.petclinic.service.BonoService;
 import org.springframework.samples.petclinic.service.CitaService;
 import org.springframework.samples.petclinic.service.ClienteService;
@@ -32,16 +31,14 @@ public class BonoController {
 
 	private BonoService bonoservice;
 	private ClienteService clientservice;
-	private BonoRepository bonoRepo;
 	private CitaService citaService;
 	private HorarioService horarioService;
 
 	@Autowired
-	public BonoController(BonoService bonoservice, ClienteService clientservice, BonoRepository bonoRepo, CitaService citaService, HorarioService horarioService) {
+	public BonoController(BonoService bonoservice, ClienteService clientservice, CitaService citaService, HorarioService horarioService) {
 		super();
 		this.bonoservice = bonoservice;
 		this.clientservice = clientservice;
-		this.bonoRepo = bonoRepo;
 		this.citaService = citaService;
 		this.horarioService = horarioService;
 	}
@@ -78,15 +75,15 @@ public class BonoController {
 	 @PostMapping("/redeem_token")
 	 public String chargeToken(@ModelAttribute("tokencode") TokenCode code, BindingResult binding,ModelMap model,@AuthenticationPrincipal User user) {
 		 Optional<Cliente> c = clientservice.clientByUsername(user.getUsername());
-		 if(binding.hasErrors() || bonoRepo.findTokenExists(code.getCode()) == 0) {
-			 if(bonoRepo.findTokenExists(code.getCode()) == 0) {
+		 if(binding.hasErrors() || bonoservice.findTokenNoExist(code.getCode())) {
+			 if(bonoservice.findTokenNoExist(code.getCode())) {
 				 model.addAttribute("message", "This token doesn´t exist");
 			 }else {
 				 model.addAttribute("message", "There has been a problem");
 			 }
 			 return REEDEM_TOKEN;
 		 }else {
-	        	Bono token = bonoRepo.findTokenByCode(code.getCode());
+	        	Bono token = bonoservice.findTokenByCode(code.getCode());
 	    		LocalDate today = LocalDate.now();
 	    		if(token.getDate_start().isBefore(today) || token.getDate_start().isEqual(today) &&
 	    				token.getDate_end().isAfter(today) || token.getDate_start().isEqual(today) && token.getUsado() != true) {

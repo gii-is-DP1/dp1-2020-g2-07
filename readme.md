@@ -55,5 +55,16 @@ git clone https://github.com/gii-is-DP1/dp1-2020-g2-07.git
 2) Navigate to Mineral House
 Visit [http://localhost:80](http://localhost:80) in your browser.
 
+3) Introduce the Login Credentials
+* Admin:
+  * User: admin1
+  * Pass: 4dm1n
+* Employee:
+  * User: miguel
+  * Pass: hola
+* Client
+  * User: juanma
+  * Pass: hola
+  
 ## 📝 License
 The Spring PetClinic sample application is released under version 2.0 of the [Apache License](https://www.apache.org/licenses/LICENSE-2.0).

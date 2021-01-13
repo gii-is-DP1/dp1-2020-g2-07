@@ -1,11 +1,24 @@
 package org.springframework.samples.petclinic.model;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "balances")
 public class Balance extends BaseEntity{
+	
+	 @JoinTable(
+		        name = "rel_statement_employee",
+		        joinColumns = @JoinColumn(name="FK_Statement"),
+		        inverseJoinColumns = @JoinColumn(name="FK_Employee")
+		    )
+	
 	@Column(name = "month")
     private String month;
 	
@@ -20,24 +33,26 @@ public class Balance extends BaseEntity{
 	
 	@Column(name = "salaries")
     private Integer salaries;
-
-	@Column(name = "mante")
-    private Integer mante;	
+	
+	@ManyToMany(cascade = CascadeType.ALL)
+	private List<Employee> employee;
 
 	
 	public Balance() {
 		super();
 	}
 
-	public Balance(String month, String year, Integer subs, Integer bonos, Integer salaries, Integer mante) {
+	public Balance(String month, String year, Integer subs, Integer bonos, Integer salaries, List<Employee> employee) {
 		super();
 		this.month = month;
 		this.year = year;
 		this.subs = subs;
 		this.bonos = bonos;
 		this.salaries = salaries;
-		this.mante = mante;
+		this.employee = employee;
 	}
+
+
 
 	public String getMonth() {
 		return month;
@@ -70,14 +85,6 @@ public class Balance extends BaseEntity{
 	public void setSalaries(Integer salaries) {
 		this.salaries = salaries;
 	}
-
-	public Integer getMante() {
-		return mante;
-	}
-
-	public void setMante(Integer mante) {
-		this.mante = mante;
-	}
 	
 	public Integer getSubs() {
 		return subs;
@@ -85,6 +92,14 @@ public class Balance extends BaseEntity{
 
 	public void setSubs(Integer subs) {
 		this.subs = subs;
+	}
+
+	public List<Employee> getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(List<Employee> employee) {
+		this.employee = employee;
 	}
 	
 	
