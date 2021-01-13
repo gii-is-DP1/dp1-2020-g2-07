@@ -15,7 +15,7 @@
 			<link rel="stylesheet" href="/resources/css/CSS.css">
 		</head>	
 		<body>
-    <h2 style="margin-left: 34%">Income Statements</h2>
+    <h2>Income Statements</h2>
     <div class="table-title">
     <table id="clientesTable" style="vertical-align: middle" class="table-fill">
         <thead>
@@ -24,6 +24,7 @@
             <th class="text-left">Year</th>
             <th class="text-left" width="2%"></th>
             <th class="text-left" width="2%"></th>
+            
         </tr>
         </thead>
         <tbody class="table-hover">

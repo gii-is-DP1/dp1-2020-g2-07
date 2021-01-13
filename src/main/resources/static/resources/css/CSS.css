@@ -1,5 +1,9 @@
 /*========================================================================WELCOME.JSP===============================================================================*/
-																		/* Galería de Imágenes */
+body{
+	background-color: #D8FAF8;
+}
+
+																	/* Galería de Imágenes */
 div.polaroid {
   margin-top: 11%;
   margin-left:8%;
@@ -108,7 +112,7 @@ iframe{
 
 /*====================================================================BALANCEDETAILS.JSP============================================================================*/
 .accordion {
-  background-color: #f8f4f4;
+  background-color: #D8FAF8;
   color: #444;
   cursor: pointer;
   padding: 18px;
@@ -157,21 +161,9 @@ iframe{
 div.table-title {
    display: block;
   margin: auto;
-  max-width: 600px;
   padding:5px;
   width: 100%;
 }
-
-.table-title h3 {
-   color: #fafafa;
-   font-size: 30px;
-   font-weight: 400;
-   font-style:normal;
-   font-family: "Roboto", helvetica, arial, sans-serif;
-   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
-   text-transform:uppercase;
-}
-
 
 /*** Table Styles **/
 
@@ -179,11 +171,10 @@ div.table-title {
   background: white;
   border-radius:3px;
   border-collapse: collapse;
-  height: 75px;
+  height: 300px;
   margin: auto;
-  max-width: 150px;
   padding:5px;
-  width: 30%;
+  width: 100%;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
   animation: float 5s infinite;
 }
@@ -220,9 +211,8 @@ tr {
 }
  
 tr:hover td {
-  background:#4E5066;
+  background:#9AC1BE;
   color:#FFFFFF;
-  border-top: 1px solid #22262e;
 }
  
 tr:first-child {
@@ -238,7 +228,7 @@ tr:nth-child(odd) td {
 }
  
 tr:nth-child(odd):hover td {
-  background:#4E5066;
+  background:#9AC1BE;
 }
 
 tr:last-child td:first-child {
