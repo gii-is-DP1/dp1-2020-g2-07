@@ -278,3 +278,10 @@ td.text-right {
   text-align: right;
 }
 
+#bonosTable{
+	height: 20%;
+}
+
+#balanceTable{
+	height: 20%;
+}

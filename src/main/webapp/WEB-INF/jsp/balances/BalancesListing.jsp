@@ -17,7 +17,7 @@
 		<body>
     <h2>Income Statements</h2>
     <div class="table-title">
-    <table id="clientesTable" style="vertical-align: middle" class="table-fill">
+    <table id="balanceTable" style="vertical-align: middle" class="table-fill">
         <thead>
         <tr>
             <th class="text-left">Month</th>
