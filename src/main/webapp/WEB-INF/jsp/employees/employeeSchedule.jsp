@@ -9,7 +9,7 @@
 
 <h3>Details of the schedule of <c:out value="${employee.first_name} ${employee.last_name}"/> for <c:out value="${horario.fecha}"/></h3>
 
-    <table id="employeesTimeTable" class="table table-striped">
+    <table id="employeesSchedule" class="table table-striped">
  	  <thead>
         <tr>
         	<th>Rooms</th>
