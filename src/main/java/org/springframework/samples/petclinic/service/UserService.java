@@ -32,6 +32,12 @@ public class UserService {
         this.userRepository = userRepository;
 	}
 
+//	public UserService(UserRepository userRepository, ClienteService clienteService, EmployeeService employeeService) {
+//        this.userRepository = userRepository;
+//        this.clienteService = clienteService;
+//        this.employeeService = employeeService;
+//	}
+
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {
 		userRepository.save(user);

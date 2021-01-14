@@ -6,37 +6,44 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="bonos">
-    <h2>Tokens</h2>
+<html>
+<head>
+	<link rel="stylesheet" href="/resources/css/CSS.css">
 
-    <table id="bonosTable" class="table table-striped">
+</head>
+<body>    
+    <h2>Tokens</h2>
+	<div class="table-title">
+    <table id="bonosTable" class="table-fill">
         <thead>
         <tr>
-            <th style="width: 25%">Code </th>
-            <th style="width: 25%">Price</th>
-            <th style="width: 25%">Valid Start</th>
-            <th style="width: 25%">Valid End</th>
-            <th style="width: 25%">Description</th>
+            <th class="text-left">Code </th>
+            <th class="text-left">Price</th>
+            <th class="text-left">Valid Start</th>
+            <th class="text-left">Valid End</th>
+            <th class="text-left">Description</th>
+            <th class="text-left" width="2%"></th>
         </tr>
         </thead>
-        <tbody>
+        <tbody class="table-hover">
         <c:forEach items="${bonos}" var="bono">
             <tr>
-                <td>
+                <td class="text-left">
                 	<c:out value="${bono.codigo}"/>  
                 </td>
-                <td>
+                <td class="text-left">
                 	<c:out value="${bono.precio}"/>
                 </td>
-                <td>
+                <td class="text-left">
                     <c:out value="${bono.date_start}"/>
                 </td>
-                <td>
+                <td class="text-left">
                     <c:out value="${bono.date_end}"/>
                 </td>
-                <td>
+                <td class="text-left">
                     <c:out value="${bono.descripcion}"/>
                 </td>
-                <td>
+                <td class="text-left">
                     <a href="/bonos/${bono.id}/delete">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                     </a>
@@ -45,4 +52,5 @@
         </c:forEach>
         </tbody>
     </table>
+    </div>
 </petclinic:layout>
