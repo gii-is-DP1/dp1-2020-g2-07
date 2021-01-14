@@ -27,7 +27,7 @@
             <tr>
                 <td>
                 <c:choose>
-                    <c:when test="${cliente.user.enabled == false}">
+                    <c:when test="${cliente.suscripcion == null}">
                         <spring:url value="/clientes/{clientId}" var="clientUrl">
                             <spring:param name="clientId" value="${cliente.id}"/>
                         </spring:url>
