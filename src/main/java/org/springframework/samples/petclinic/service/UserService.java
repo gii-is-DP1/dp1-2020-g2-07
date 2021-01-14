@@ -32,12 +32,6 @@ public class UserService {
         this.userRepository = userRepository;
 	}
 
-//	public UserService(UserRepository userRepository, ClienteService clienteService, EmployeeService employeeService) {
-//        this.userRepository = userRepository;
-//        this.clienteService = clienteService;
-//        this.employeeService = employeeService;
-//	}
-
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {
 		userRepository.save(user);
@@ -93,7 +87,7 @@ public class UserService {
             }
         }
 
-        if (clienteService.findAll().stream().anyMatch(c -> c.getUser().getUsername().equals(username))){
+        if (this.findAll().stream().anyMatch(user -> user.getUsername().equals(username))){
             errorList.add("Username already chosen");
             allRight = false;
         }
