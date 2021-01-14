@@ -34,7 +34,7 @@ public class ClienteController {
     public static final String CLIENTS_LISTING="clientes/ClientsListing";
 
     public Boolean hasAuthority(Optional<Cliente> cliente, User user) {
-        if (user.equals(null))
+        if (user.equals(null) || cliente.equals(null))
             return false;
         else
             return cliente.get().getUser().equals(user) || user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("admin"));
@@ -73,26 +73,39 @@ public class ClienteController {
     public String editCliente(@PathVariable("clientId") int clientId, ModelMap model, Authentication auth) {
         Optional<Cliente> cliente = clientService.findById(clientId);
         User user = userService.findUser(auth.getName()).get();
-        if(cliente.isPresent() && hasAuthority(cliente, user)) {
-            model.addAttribute("cliente",cliente.get());
-            model.addAttribute("suscripcion",cliente.get().getSuscripcion());
-            return CLIENTS_FORM;
-        }
-        else if (!hasAuthority(cliente, user))
-            model.addAttribute("message","Acceso denegado");
-        else
+        if(cliente.isPresent()) {
+            if(hasAuthority(cliente, user)){
+                model.addAttribute("cliente",cliente.get());
+                model.addAttribute("suscripcion",cliente.get().getSuscripcion());
+                return CLIENTS_FORM;
+            }else{
+                model.addAttribute("message","Acceso denegado");
+            }
+        }else{
             model.addAttribute("message","No se encuentra el cliente que pretende editar");
+        }
         return listClients(model);
     }
 
     @PostMapping("/{clientId}/edit")
     public String editCliente(@PathVariable("clientId") int clientId, @Valid Cliente modifiedClient, BindingResult binding, ModelMap model) {
         Optional<Cliente> cliente = clientService.findById(clientId);
-        modifiedClient.setCategory(cliente.get().getCategory());
-        BeanUtils.copyProperties(modifiedClient, cliente.get(), "id");
-        clientService.save(cliente.get(), "edit");
-        model.addAttribute("message","Se ha modificado el cliente");
-        return listClients(model);
+        if (cliente.isPresent()){
+            if(binding.hasErrors()) {
+                return CLIENTS_FORM;
+            } else {
+                boolean enable = userService.findUser(cliente.get().getUser().getUsername()).get().isEnabled();
+                modifiedClient.setCategory(cliente.get().getCategory());
+                BeanUtils.copyProperties(modifiedClient, cliente.get(), "id");
+                cliente.get().getUser().setEnabled(enable);
+                clientService.save(cliente.get(), "edit");
+                model.addAttribute("message","Client modified");
+                return listClients(model);
+            }
+        }else{
+            model.addAttribute("message", "That client doesnt exist");
+            return listClients(model);
+        }
     }
 
     @GetMapping("/{clientId}/delete")
@@ -100,10 +113,10 @@ public class ClienteController {
         Optional<Cliente> cliente =clientService.findById(clientId);
         if(cliente.isPresent()) {
             clientService.delete(cliente.get());
-            model.addAttribute("message","Se ha borrado satisfactoriamente");
+            model.addAttribute("message","Client deleted");
             return listClients(model);
         }else {
-            model.addAttribute("message","No se encuentra ese cliente");
+            model.addAttribute("message","That client doesnt exist");
             return listClients(model);
         }
     }
@@ -129,7 +142,6 @@ public class ClienteController {
                 }
                 return CLIENTS_FORM;
             }
-
             cliente.setCategory(Categoria.CLIENTE);
             clientService.save(cliente, "new");
             model.addAttribute("message", "The client was created successfully!");
@@ -153,8 +165,8 @@ public class ClienteController {
 
     @GetMapping("/{clientId}/newPay")
     public String addSalary(@PathVariable("clientId") int clientId, ModelMap model) {
-        model.addAttribute("cliente",clientService.findById(clientId).get());
         model.addAttribute("pago",new Pago());
+        model.addAttribute("cliente",clientService.findById(clientId).get());
         return "pay/payForm";
     }
 
