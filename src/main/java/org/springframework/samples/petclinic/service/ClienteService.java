@@ -68,12 +68,10 @@ public class ClienteService {
             userService.saveUser(cliente.getUser());
             authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "client");
         }else{
+            cliente.getUser().setEnabled(cliente.getUser().isEnabled());
             clientRepo.save(cliente);
             userService.saveUser(cliente.getUser());
         }
-        //creating authorities
-
-
     }
 
     @Transactional
