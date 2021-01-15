@@ -194,8 +194,8 @@ public class ClientControllerMockTest {
     @Test
     public void showClientDetailsWithoutPermission() throws Exception {
         mockMvc.perform(get("/clientes/{clientId}", 2))
-            .andExpect(status().isOk())
-            .andExpect(view().name("/clientes/1"));
+            .andExpect(status().is3xxRedirection())
+            .andExpect(view().name("redirect:/clientes/1"));
     }
 
     @WithMockUser(value = "juanma")

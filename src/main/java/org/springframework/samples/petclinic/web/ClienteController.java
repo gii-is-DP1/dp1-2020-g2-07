@@ -56,7 +56,7 @@ public class ClienteController {
         if (auth.isAuthenticated()) {
             Optional<Cliente> c = clientService.clientByUsername(auth.getName());
             if(c.isPresent()) {
-            	model.addAttribute("c", c.get());
+            	return "redirect:/clientes/"+String.valueOf(c.get().getId());
             }else model.addAttribute("clientes", clientService.findAll());
 
             return CLIENTS_LISTING;
@@ -150,16 +150,19 @@ public class ClienteController {
     }
 
     @GetMapping("/{clientId}")
-    public ModelAndView showClient(@PathVariable("clientId") int clientId, Authentication auth) {
+    public String showClient(@PathVariable("clientId") int clientId, Authentication auth, ModelMap model) {
         Optional<Cliente> cliente = clientService.findById(clientId);
-        if (hasAuthority(cliente, userService.findUser(auth.getName()).get())) {
-            ModelAndView mav = new ModelAndView("clientes/clienteDetails");
-            mav.addObject("cliente",this.clientService.findById(clientId).get());
-            return mav;
-        }
-        else {
-            return new ModelAndView("/clientes/"+
-            String.valueOf(clientService.clientByUsername(auth.getName()).get().getId()));
+        if(cliente.isPresent()){
+            if (hasAuthority(cliente, userService.findUser(auth.getName()).get())) {
+                model.addAttribute("cliente", cliente.get());
+                return "clientes/clienteDetails";
+            } else {
+                model.addAttribute("message", "You aren't allowed");
+                return listClients(model,auth);
+            }
+        }else{
+            model.addAttribute("message","That employee doesn't exist");
+            return listClients(model,auth);
         }
     }
 
