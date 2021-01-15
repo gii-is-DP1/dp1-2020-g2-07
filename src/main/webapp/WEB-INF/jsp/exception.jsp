@@ -3,20 +3,19 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="error">
-<!DOCTYPE html >
-<html>
-<head>
-	<link rel="stylesheet" href="/resources/css/CSS.css">
-
-</head>
-<body>
-	<h2>Something happened...</h2>
+	<!DOCTYPE html >
+		<html>
+			<head>
+				<link rel="stylesheet" href="/resources/css/CSS.css">
+			</head>
+			<body>
+				<h2>Something happened...</h2>
 	
-    <spring:url value="/resources/images/error.jpg" var="error"/>
-    <img style="margin-left: 14%;" src="${error}"/>
-	<br>
-	<br>
-
-    <p>${exception.message}</p>
-
+    			<spring:url value="/resources/images/error.jpg" var="error"/>
+    			<img style="margin-left: 14%;" src="${error}"/>
+				<br>
+				<br>
+				<p>${exception.message}</p>
+			</body>
+		</html>
 </petclinic:layout>
