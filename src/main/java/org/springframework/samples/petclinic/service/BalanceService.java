@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class BalanceService {
-    
+
     private BalanceRepository balanceRepo;
 
     public BalanceService(BalanceRepository balanceRepo) {
@@ -96,7 +96,7 @@ public class BalanceService {
 		}
 		return res;
 	}
-	
+
 	public Integer getTokens (LocalDate date_start, LocalDate date_end, Boolean used) {
 		Collection<Bono> total = balanceRepo.findUsedTokensByMonth(date_start,date_end, used);
 		Iterator<Bono> iterator = total.iterator();
@@ -106,15 +106,15 @@ public class BalanceService {
         }
 		return res;
 	}
-	
+
 	public Collection<Bono> getTokensData (LocalDate date_start, LocalDate date_end) {
 		return balanceRepo.findUsedTokensByMonth(date_start,date_end, true);
 	}
-	
-	public Collection<Pago> getSubsData (LocalDate date_start, LocalDate date_end) {	
+
+	public Collection<Pago> getSubsData (LocalDate date_start, LocalDate date_end) {
 		return balanceRepo.findSubsByMonth(date_start, date_end);
 	}
-	
+
 	public Collection<EmployeeRevenue> getSalariesData (LocalDate date_start, LocalDate date_end) {
 		return balanceRepo.findSalariesByMonth(date_start, date_end);
 	}
