@@ -21,19 +21,15 @@ public class UserService {
 
 	private UserRepository userRepository;
 
+	@Autowired
     private ClienteService clienteService;
 
+	@Autowired
     private EmployeeService employeeService;
 
 	@Autowired
 	public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
-	}
-
-	public UserService(UserRepository userRepository, ClienteService clienteService, EmployeeService employeeService) {
-        this.userRepository = userRepository;
-        this.clienteService = clienteService;
-        this.employeeService = employeeService;
 	}
 
 	@Transactional
@@ -91,7 +87,7 @@ public class UserService {
             }
         }
 
-        if (clienteService.findAll().stream().anyMatch(c -> c.getUser().getUsername().equals(username))){
+        if (this.findAll().stream().anyMatch(user -> user.getUsername().equals(username))){
             errorList.add("Username already chosen");
             allRight = false;
         }

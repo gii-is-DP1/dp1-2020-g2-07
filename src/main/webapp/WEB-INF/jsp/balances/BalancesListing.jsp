@@ -9,37 +9,49 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="clientes">
-    <h2>Income Statements</h2>
-    <table id="clientesTable" class="table table-striped">
-        <thead>
-        <tr>
-            <th>Month</th>
-            <th>Year</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${balances}" var="balance">
-            <tr>
-                <td>
-                    <c:out value="${balance.month}"/>
-                </td>
-                <td>
-                    <c:out value="${balance.year}"/>
-                </td>
-                <td>
-                    <a href="/balances/${balance.id}">
-                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
-                    </a>
-                </td>
-                <td>
-                	<sec:authorize access="hasAuthority('admin')">
-                    	<a href="/balances/${balance.id}/edit">
-                        	<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-                    	</a>
-                    </sec:authorize>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+	<!DOCTYPE html >
+		<html>
+			<head>
+				<link rel="stylesheet" href="/resources/css/CSS.css">
+			</head>	
+			<body>
+    			<h2>Income Statements</h2>
+    			<div class="table-title">
+    				<table id="balanceTable" style="vertical-align: middle" class="table-fill">
+        				<thead>
+        					<tr>
+            					<th class="text-left">Month</th>
+           						<th class="text-left">Year</th>
+            					<th class="text-left" width="2%"></th>
+            					<th class="text-left" width="2%"></th>
+       						</tr>
+       					 </thead>
+        				<tbody class="table-hover">
+        					<c:forEach items="${balances}" var="balance">
+            					<tr>
+               						 <td class="text-left">
+                    					<c:out value="${balance.month}"/>
+                					</td>
+                					<td class="text-left">
+                    					<c:out value="${balance.year}"/>
+                					</td>
+                					<td class="text-left">
+                    					<a href="/balances/${balance.id}">
+                        					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                    					</a>
+               						 </td>
+                					<td class="text-left">
+                						<sec:authorize access="hasAuthority('admin')">
+                    						<a href="/balances/${balance.id}/edit">
+                        						<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    						</a>
+                    					</sec:authorize>
+                					</td>
+            					</tr>
+        					</c:forEach>
+        				</tbody>
+    				</table>
+    			</div>
+    		</body>
+    	</html>
 </petclinic:layout>
