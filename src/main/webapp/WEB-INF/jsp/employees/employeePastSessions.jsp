@@ -5,30 +5,38 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="pastSessions">
-
-<h3>Previous worked days of <c:out value="${employee.first_name} ${employee.last_name}"/></h3>
-    <table id="sesionesPrevias" class="table table-striped">
- 	  <thead>
-        <tr>
-        	<th>Date</th>
-        	<th width=5%></th>
-        </tr>
-        </thead>
-   	 	<tbody>
-        	<c:forEach items="${past}" var="horario">
-            <tr>
-            <td><c:out value="${horario.fecha}"/></td>
-            <td>
-            <spring:url value="/employees/{employeeId}/TimeTable/{horarioId}" var="employeePastSessionsViewUrl">
-       			 <spring:param name="employeeId" value="${employee.id}"/>
-       			 <spring:param name="horarioId" value="${horario.id}"/>
-    		</spring:url>
-   			<a href="${fn:escapeXml(employeePastSessionsViewUrl)}">
-    		<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
-    		</td>
-            </tr>
-            </c:forEach>
-        </tbody>
-    </table>
-    
+	<!DOCTYPE html >
+		<html>
+			<head>
+				<link rel="stylesheet" href="/resources/css/CSS.css">
+			</head>
+			<body>
+				<h2>Previous worked days of <c:out value="${employee.first_name} ${employee.last_name}"/></h2>
+    			<div class="table-title">
+    				<table style="height:20%;" id="sesionesPrevias" class="table-fill">
+ 	  					<thead>
+        					<tr>
+        						<th class="text-left">Date</th>
+        						<th class="text-left" width=2%></th>
+        					</tr>
+        				</thead>
+   	 					<tbody class="table-hover">
+        					<c:forEach items="${past}" var="horario">
+            					<tr>
+            						<td class="text-left"><c:out value="${horario.fecha}"/></td>
+            						<td class="text-left">
+            							<spring:url value="/employees/{employeeId}/TimeTable/{horarioId}" var="employeePastSessionsViewUrl">
+       			 							<spring:param name="employeeId" value="${employee.id}"/>
+       			 							<spring:param name="horarioId" value="${horario.id}"/>
+    									</spring:url>
+   										<a href="${fn:escapeXml(employeePastSessionsViewUrl)}">
+    									<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></a>
+    								</td>
+           	 					</tr>
+            				</c:forEach>
+        				</tbody>
+    				</table>
+    			</div>
+    		</body>
+    	</html>
 </petclinic:layout>
