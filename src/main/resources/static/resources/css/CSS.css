@@ -2,7 +2,6 @@
 body{
 	background-color: #D8FAF8;
 }
-
 																	/* Galería de Imágenes */
 div.polaroid {
   margin-top: 11%;
@@ -156,7 +155,7 @@ iframe{
 	margin-left: 60%;
 	margin-top: -29%;
 }
-
+/*=====================================================================================================================================================================*/
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 div.table-title {
    display: block;
@@ -285,3 +284,15 @@ td.text-right {
 #balanceTable{
 	height: 20%;
 }
+/*====================================================================ADMINHOME.JSP============================================================================*/
+.dashboard-piece {
+    min-height: 300px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    padding-bottom: 40px;
+}
+
