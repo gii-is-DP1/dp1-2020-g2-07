@@ -15,7 +15,7 @@
 			<body>
 				<h2>Add Employee to Income Statement</h2>
 				
-    			<form:form name="createTokenForm" modelAttribute="username" class="form-horizontal" id="add-owner-form">
+    			<form:form name="AddEmploy" modelAttribute="username" class="form-horizontal" id="add-owner-form">
     				<petclinic:inputField label="Username" name="username"/>
     					<div class="form-group">
             				<div class="col-sm-offset-2 col-sm-10">
