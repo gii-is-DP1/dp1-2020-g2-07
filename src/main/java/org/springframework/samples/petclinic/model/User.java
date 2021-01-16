@@ -16,6 +16,15 @@ public class User{
 
 	boolean enabled;
 
+	public User(){}
+
+	public User (String username, String password, boolean enabled, Set<Authorities> authorities){
+	    this.username = username;
+	    this.password = password;
+	    this.enabled = enabled;
+	    this.authorities = authorities;
+    }
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	private Set<Authorities> authorities;
 

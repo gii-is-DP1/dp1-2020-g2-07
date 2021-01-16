@@ -7,6 +7,7 @@ import java.util.Optional;
 import javax.transaction.Transactional;
 import javax.validation.Valid;
 
+import org.hibernate.annotations.Cascade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Cita;
 import org.springframework.samples.petclinic.model.Cliente;
@@ -44,7 +45,7 @@ public class ClienteService {
         return clientRepo.findById(id);
     }
 
-    @Transactional
+
     public void delete(Cliente cliente) {
         clientRepo.deleteById(cliente.getId());
         userService.delete(cliente.getUser());
@@ -63,14 +64,14 @@ public class ClienteService {
             emailService.sendMail(e);
             cliente.getUser().setEnabled(false);
 //            cliente.setCitas(new HashSet<Cita>());
+            clientRepo.save(cliente);
+            userService.saveUser(cliente.getUser());
+            authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "client");
+        }else{
+            cliente.getUser().setEnabled(cliente.getUser().isEnabled());
+            clientRepo.save(cliente);
+            userService.saveUser(cliente.getUser());
         }
-
-        clientRepo.save(cliente);
-
-        userService.saveUser(cliente.getUser());
-        //creating authorities
-        authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "client");
-
     }
 
     @Transactional

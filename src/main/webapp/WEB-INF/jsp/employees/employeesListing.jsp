@@ -7,48 +7,51 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="employees">
-    <h2>Employees</h2>
-
-    <table id="employeesTable" class="table table-striped">
-        <thead>
-        <tr>
-            <th>First and Last Name</th>
-            <th>Address</th>
-            <th>IBAN</th>
-            <th>Profession</th>
-            
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${employees}" var="employee">
-            <tr>
-                <td>
-                    <spring:url value="/employees/{employeeId}" var="employeeUrl">
-                        <spring:param name="employeeId" value="${employee.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(employeeUrl)}"><c:out value="${employee.first_name} ${employee.last_name}"/></a>
-                </td>
-                <td>
-                    <c:out value="${employee.address}"/>
-                </td>
-                <td>
-                    <c:out value="${employee.IBAN}"/>
-                </td>
-                <td>
-                    <c:out value="${employee.profession}"/>
-                </td>
-                
-               
-        </c:forEach>
-        </tbody>
-    </table>
-    <sec:authorize access="hasAuthority('admin')">
-        <p>
-            <a href="/employees/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add employee</a>
-        </p>
-    </sec:authorize>
-
-    <sec:authorize access="hasAuthority('employee')">
-    		<c:redirect url="/employees/${c.id}"/>
-    </sec:authorize>
+	<!DOCTYPE html >
+			<html>
+				<head>
+					<link rel="stylesheet" href="/resources/css/CSS.css">
+				</head>	
+				<body>      
+    				<h2>Employees</h2>
+					<div class="table-title">
+    					<table id="employeesTable" style="height: 20%;" class="table-fill">
+        					<thead>
+        						<tr>
+            						<th class="text-left">First and Last Name</th>
+            						<th class="text-left">Address</th>
+            						<th class="text-left">IBAN</th>
+            						<th class="text-left">Profession</th> 
+        						</tr>
+        					</thead>
+        					<tbody class="table-hover">
+        						<c:forEach items="${employees}" var="employee">
+            						<tr>
+                						<td class="text-left">
+                    						<spring:url value="/employees/{employeeId}" var="employeeUrl">
+                        						<spring:param name="employeeId" value="${employee.id}"/>
+                    						</spring:url>
+                    						<a href="${fn:escapeXml(employeeUrl)}"><c:out value="${employee.first_name} ${employee.last_name}"/></a>
+                						</td>
+                						<td class="text-left">
+                    						<c:out value="${employee.address}"/>
+                						</td>
+                						<td class="text-left">
+                    						<c:out value="${employee.IBAN}"/>
+                						</td>
+                						<td class="text-left">
+                    						<c:out value="${employee.profession}"/>
+                						</td> 
+                					</tr>        
+        						</c:forEach>
+        					</tbody>
+    					</table>
+    				</div>
+    				<sec:authorize access="hasAuthority('admin')">
+        				<p>
+            				<a style="margin-left: 85%; margin-top: 2%;" href="/employees/new" class="btn  btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add employee</a>
+        				</p>
+    				</sec:authorize>
+    			</body>
+    		</html>
 </petclinic:layout>
