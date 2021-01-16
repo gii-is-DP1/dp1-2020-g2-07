@@ -68,9 +68,6 @@
 						    </p>
     					</sec:authorize>
     				</sec:authorize>
-    				<sec:authorize access="hasAuthority('client')">
-    					<c:redirect url="/clientes/${c.id}"/>
-    				</sec:authorize>
     			</body>
     		</html>
 </petclinic:layout>

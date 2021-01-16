@@ -52,10 +52,6 @@
             				<a style="margin-left: 85%; margin-top: 2%;" href="/employees/new" class="btn  btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add employee</a>
         				</p>
     				</sec:authorize>
-
-    				<sec:authorize access="hasAuthority('employee')">
-    					<c:redirect url="/employees/${c.id}"/>
-    				</sec:authorize>
     			</body>
     		</html>
 </petclinic:layout>
