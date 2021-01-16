@@ -1,5 +1,4 @@
 package org.springframework.samples.petclinic.web;
-
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -7,8 +6,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +19,7 @@ import org.springframework.samples.petclinic.service.*;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
-import javax.swing.text.html.Option;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @WebMvcTest(controllers = EmployeeController.class,
@@ -62,7 +56,6 @@ public class EmployeeControllerMockTest {
     private Admin admin;
     private User uAdmin;
     private Optional<User> uOptionalAdmin;
-    private Optional<Employee> eOptionalAdmin;
     private Optional<User> uOptional;
     private Optional<Employee> eOptional;
     private Optional<User> uOptionalAux;
@@ -70,7 +63,6 @@ public class EmployeeControllerMockTest {
 
     private List<Horario> horarios;
     private Horario h;
-    private Integer horas;
 
     @BeforeEach
     public void setUp(){
@@ -137,7 +129,6 @@ public class EmployeeControllerMockTest {
         admin.setId(1);
         admin.setUser(uAdmin);
         uOptionalAdmin = Optional.of(uAdmin);
-        eOptionalAdmin = Optional.of(new Employee());
 
 
         given(this.horarioService.calcDays(e.getId(),"future")).willReturn(horarios);
