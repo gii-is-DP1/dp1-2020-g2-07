@@ -65,10 +65,6 @@ public class BonoController {
 	@GetMapping("/redeem_token")
     public String redeemToken(ModelMap model,@AuthenticationPrincipal User user) {
         model.addAttribute("tokencode",new TokenCode());
-        if(user==null) {
-			  model.addAttribute("message", "You need to log in to access this view");
-			  return listBonos(model);
-		  }
         return REEDEM_TOKEN;
     }
 
@@ -85,8 +81,8 @@ public class BonoController {
 		 }else {
 	        	Bono token = bonoservice.findTokenByCode(code.getCode());
 	    		LocalDate today = LocalDate.now();
-	    		if(token.getDate_start().isBefore(today) || token.getDate_start().isEqual(today) &&
-	    				token.getDate_end().isAfter(today) || token.getDate_start().isEqual(today) && token.getUsado() != true) {
+	    		if((token.getDate_start().isBefore(today) || token.getDate_start().isEqual(today)) &&
+	    				(token.getDate_end().isAfter(today) || token.getDate_end().isEqual(today)) && token.getUsado() != true) {
 	    			Cita apt = new Cita(c.get(), token.getSession());
 	    			Set<Cita> set = c.get().getCitas();
 	    			if(!horarioService.checkTokenAptExist(apt, set)) {

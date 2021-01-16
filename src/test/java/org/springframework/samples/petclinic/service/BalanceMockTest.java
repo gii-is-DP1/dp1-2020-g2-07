@@ -107,6 +107,11 @@ public class BalanceMockTest {
 	}
 	
 	 @Test //Checks that the IncStm saves successfully
+	    public void shouldCreateStatement() {
+		IncStmServcice.createBalance(LocalDate.parse("2009-12-01"), "DECEMBER", "2009");
+	 }
+	 
+	 @Test //Checks that the IncStm saves successfully
 	    public void shouldSave() {
 		 IncStmServcice.save(b);
 	 }
