@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +36,11 @@ public class CircuitoControllerTest {
 	
 	@Autowired
 	private MockMvc mockMvc;
+	private Circuito c;
 	private Optional<Circuito> circuitoOpt;
+	private Sala s;
+	private Sala s2;
+	private Collection<Circuito> circuitos;
 	
 	@MockBean
 	private CircuitoService circuitoService;
@@ -48,9 +53,9 @@ public class CircuitoControllerTest {
 	@BeforeEach
 	private void setUp() {
 		
-		Circuito c = new Circuito();
-		Sala s = new Sala();
-		Sala s2 = new Sala();
+		 c = new Circuito();
+		 s = new Sala();
+		 s2 = new Sala();
 		List<Sala> salas= new ArrayList<Sala>();
 		//circuitos=new ArrayList<Circuito>();
 		
@@ -73,7 +78,7 @@ public class CircuitoControllerTest {
 		c.setAforo(circuitoService.getAforo(c));
 		c.setId(1);
 		
-		List<Circuito> circuitos = new ArrayList<Circuito>();
+		circuitos = new ArrayList<Circuito>();
 		circuitos.add(c);
 		circuitoOpt=Optional.of(c);
 		given(this.circuitoService.findAll()).willReturn(circuitos);
@@ -95,7 +100,7 @@ public class CircuitoControllerTest {
 	@Test
 	public void testCreationCircuitSuccess() throws Exception{
 		mockMvc.perform(post("/circuitos/new").with(csrf()).param("name", "Circuito")
-				.param("salas", "Jacuzzi").param("salas", "Relax Pool")
+				.param("salas","Jacuzzi,Relax Pool")
 				.param("aforo", "7")
 				.param("descripcion", "Circuito lleno de relajacion"))
 		.andExpect(status().isOk())
@@ -107,7 +112,7 @@ public class CircuitoControllerTest {
 	@Test
 	public void testCreationCircuitHasErrors() throws Exception{
 		mockMvc.perform(post("/circuitos/new").with(csrf()).param("name", "Circuito")
-		.param("salas", "Jacuzzi").param("salas", "Relax Pool")
+				.param("salas","Jacuzzi,Relax Pool")
 		.param("aforo", "siete").param("descripcion", "Circuito lleno de relajacion"))	
 		.andExpect(model().attributeHasErrors("circuito"))
 		.andExpect(model().attributeHasFieldErrors("circuito", "aforo"))
@@ -128,7 +133,9 @@ public class CircuitoControllerTest {
 	@WithMockUser(value="spring")
 	@Test
 	public void testEditCircuitSuccess() throws Exception{
-		mockMvc.perform(post("/circuitos/{id}/edit",TEST_CIRCUITO_ID).with(csrf()))
+		mockMvc.perform(post("/circuitos/{id}/edit",TEST_CIRCUITO_ID).with(csrf()).param("name", "Circuito")
+				.param("salas","Jacuzzi,Sauna")
+				.param("aforo", "6").param("descripcion", "Circuito lleno de relajacion"))
 		.andExpect(status().isOk())
 		.andExpect(model().attribute("message","The circuit was updated successfully."))
 		.andExpect(view().name("circuitos/CircuitosListing"));
@@ -163,6 +170,7 @@ public class CircuitoControllerTest {
 		.andExpect(model().attribute("message","We could not find the circuit you are trying to delete."));
 	}
 	
+//	FALTAN EL GET Y EL POST DE LA CITA 
 
 	
 }

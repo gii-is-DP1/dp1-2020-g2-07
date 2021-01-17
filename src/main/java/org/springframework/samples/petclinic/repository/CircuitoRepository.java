@@ -15,7 +15,7 @@ public interface CircuitoRepository extends Repository<Circuito, Integer>, CrudR
 	Optional<Circuito> findById(int id);
 	Optional<Circuito> findById(Integer id);
 	
-	@Query("SELECT salas FROM Circuito circuito WHERE circuito.circuito.id = :circuito_id")
+	@Query("SELECT salas FROM Circuito rel_circuito_salas WHERE FK_Circuito = :circuito_id")
     public Collection<Sala> getRoomsByCircuito(@Param("circuito_id") int circuito_id);
 	
 //	@Query("SELECT salas")

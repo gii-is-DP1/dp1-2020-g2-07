@@ -35,7 +35,7 @@ public class CircuitoService {
 	public Collection<Sala> findRoomByCircuit(int circuito_id){
 		return circuitoRepo.getRoomsByCircuito(circuito_id);
 	}
-	
+//	
 //	@Transactional
 //	public void addRooms(List<Sala> salas) {
 //		
