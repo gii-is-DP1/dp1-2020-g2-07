@@ -43,8 +43,8 @@ public class HorarioController {
 		return this.employeeService.findById(employeeId).get();
 	}
 	
-    @GetMapping("/newSchedule")
-    public String addTimeTable(Employee employee, ModelMap model) {
+    @GetMapping(value = "/newSchedule")
+    public String addDaySchedule(Employee employee, ModelMap model) {
     	Horario h = new Horario();
     	employee.addHorario(h);
         model.addAttribute("horario",h);
@@ -52,7 +52,7 @@ public class HorarioController {
     }
 
     @PostMapping("/newSchedule")
-    public String saveTimeTable(Employee e,@Valid @ModelAttribute("horario") Horario horario, BindingResult binding, ModelMap model){
+    public String saveDaySchedule(Employee e,@Valid @ModelAttribute("horario") Horario horario, BindingResult binding, ModelMap model){
         if(binding.hasErrors()){
             return HORARIO_FORM;
         }else if(LocalDate.now().isAfter(horario.getFecha())) {
@@ -68,7 +68,7 @@ public class HorarioController {
     }
     
     @GetMapping("/schedule/{horarioId}")
-    public ModelAndView showEmployeeTimeTable(@PathVariable("horarioId") int horarioId) {
+    public ModelAndView showEmployeeSchedule(@PathVariable("horarioId") int horarioId) {
         ModelAndView mav = new ModelAndView("employees/employeeSchedule");
         mav.addObject("sesion",this.horarioService.findSesionesHorario(horarioId));
         mav.addObject("horario", this.horarioService.findById(horarioId).get());
