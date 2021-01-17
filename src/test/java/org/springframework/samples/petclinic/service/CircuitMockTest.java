@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -77,7 +78,6 @@ public class CircuitMockTest {
 		 when(circuitoRepo.findAll()).thenReturn(circuitos);
 		 when(circuitoRepo.findById(1)).thenReturn(circuitoOpt);
 		 when(circuitoRepo.save(c)).thenReturn(c);
-	
 		
 	}
 	@Test
@@ -101,6 +101,37 @@ public class CircuitMockTest {
 	}
 	
 	@Test
+	public void aforoCorrect() {
+		c = new Circuito();
+		s = new Sala();
+		s2 = new Sala();
+		salas= new ArrayList<Sala>();
+		circuitos=new ArrayList<Circuito>();
+		
+		s.setName("Jacuzzi");
+		s.setAforo(7);
+		s.setDescripcion("Prueba sobre las salas");
+		s.setId(1);
+		
+		s2.setName("Relax Pool");
+		s2.setAforo(7);
+		s2.setDescripcion("Prueba sobre las salas");
+		s2.setId(2);
+		
+		salas.add(s);salas.add(s2);
+		c.setSalas(salas);
+
+		c.setName("Circuito");
+		c.setDescripcion("Circuito lleno de relajacion");
+		c.setAforo(circuitoService.getAforo(c));
+		c.setId(1);
+		
+		assertEquals(7, 7);
+		
+	
+	}
+	
+	@Test
 	public void shouldSave() {
 		circuitoService.save(c);
 		
@@ -112,7 +143,7 @@ public class CircuitMockTest {
 	}
 	
 	@Test
-	public void shouldThrowExceptionInsertingRoomsWithTheSameName() {
+	public void shouldThrowExceptionInsertingCircuitsWithTheSameName() {
 		c = new Circuito();
 		s = new Sala();
 		s2 = new Sala();
