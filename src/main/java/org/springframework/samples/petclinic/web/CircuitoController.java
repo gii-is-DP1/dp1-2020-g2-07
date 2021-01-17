@@ -112,7 +112,6 @@ public class CircuitoController {
 			
 		}else {
 			 try{
-				
 				circuito.setAforo(circuitosServices.getAforo(circuito));
 				this.circuitosServices.saveCircuito(circuito);
              }catch(DuplicatedCircuitoNameException ex){

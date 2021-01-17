@@ -78,7 +78,6 @@ public class CircuitMockTest {
 		 when(circuitoRepo.findAll()).thenReturn(circuitos);
 		 when(circuitoRepo.findById(1)).thenReturn(circuitoOpt);
 		 when(circuitoRepo.save(c)).thenReturn(c);
-	
 		
 	}
 	@Test

@@ -78,12 +78,13 @@ public class CircuitoControllerTest {
 		c.setAforo(circuitoService.getAforo(c));
 		c.setId(1);
 		
+		
 		circuitos = new ArrayList<Circuito>();
 		circuitos.add(c);
 		circuitoOpt=Optional.of(c);
 		given(this.circuitoService.findAll()).willReturn(circuitos);
 		given(this.circuitoService.findById(TEST_CIRCUITO_ID)).willReturn(circuitoOpt);
-		given(this.circuitoService.findRoomByCircuit(TEST_CIRCUITO_ID)).willReturn(salas);
+		given(this.circuitoService.findRoomByCircuit()).willReturn(salas);
 		
 	}
 	
@@ -100,7 +101,7 @@ public class CircuitoControllerTest {
 	@Test
 	public void testCreationCircuitSuccess() throws Exception{
 		mockMvc.perform(post("/circuitos/new").with(csrf()).param("name", "Circuito")
-				.param("salas","Jacuzzi,Relax Pool")
+				.param("salas","Jacuzzi","Relax Pool")
 				.param("aforo", "7")
 				.param("descripcion", "Circuito lleno de relajacion"))
 		.andExpect(status().isOk())
@@ -112,10 +113,11 @@ public class CircuitoControllerTest {
 	@Test
 	public void testCreationCircuitHasErrors() throws Exception{
 		mockMvc.perform(post("/circuitos/new").with(csrf()).param("name", "Circuito")
-				.param("salas","Jacuzzi,Relax Pool")
+				.param("salas","")
 		.param("aforo", "siete").param("descripcion", "Circuito lleno de relajacion"))	
 		.andExpect(model().attributeHasErrors("circuito"))
 		.andExpect(model().attributeHasFieldErrors("circuito", "aforo"))
+		.andExpect(model().attributeHasFieldErrors("circuito", "salas"))
 		.andExpect(status().isOk())
 		.andExpect(view().name("circuitos/createOrUpdateCircuitosForm"));
 	}
@@ -134,7 +136,7 @@ public class CircuitoControllerTest {
 	@Test
 	public void testEditCircuitSuccess() throws Exception{
 		mockMvc.perform(post("/circuitos/{id}/edit",TEST_CIRCUITO_ID).with(csrf()).param("name", "Circuito")
-				.param("salas","Jacuzzi,Sauna")
+				.param("salas","Jacuzzi","Sauna")
 				.param("aforo", "6").param("descripcion", "Circuito lleno de relajacion"))
 		.andExpect(status().isOk())
 		.andExpect(model().attribute("message","The circuit was updated successfully."))
