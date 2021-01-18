@@ -32,6 +32,10 @@ public class CircuitoService {
 	public Optional<Circuito> findById(int id){
     	return circuitoRepo.findById(id);
     }
+	public Collection<Sala> findRoomByCircuit(){
+		return circuitoRepo.getRoomsByCircuito();
+	}
+	
 	
 	public void delete(Circuito c) {
 		circuitoRepo.deleteById(c.getId());
