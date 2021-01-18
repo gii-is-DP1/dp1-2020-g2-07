@@ -1,6 +1,11 @@
 /*========================================================================WELCOME.JSP===============================================================================*/
-body{
-	background-color: #D8FAF8;
+body{	
+  background: linear-gradient(#D8FAF8, #A2BDF9);
+
+}
+
+h2{
+  font-size:x-large; 
 }
 																	/* Galería de Imágenes */
 div.polaroid {
@@ -57,7 +62,7 @@ div.container {
 /*Headers*/
 
 .precio-col-header {
- background-color:#333;
+ background-color:#F3DBB0;
  padding:20px;
  border-top-left-radius:10px;
  border-top-right-radius:10px
@@ -65,6 +70,10 @@ div.container {
 
 .precio-col:nth-child(2) .precio-col-header {
  background-color:#dd9933
+}
+
+.precio-col:hover{
+	transform: scale(1.07);
 }
 
 .precio-col-header h3 {
@@ -92,7 +101,7 @@ div.container {
  padding:20px 0;
  margin:0;
  text-align:center;
- border-top:1px solid #ddd
+ border-bottom:1px solid #ddd;
 }
 
 .precio-col-features p:first-child,
@@ -111,7 +120,7 @@ iframe{
 
 /*====================================================================BALANCEDETAILS.JSP============================================================================*/
 .accordion {
-  background-color: #D8FAF8;
+  background-color: white;
   color: #444;
   cursor: pointer;
   padding: 18px;

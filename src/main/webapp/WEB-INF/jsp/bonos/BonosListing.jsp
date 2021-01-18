@@ -12,7 +12,7 @@
 				<link rel="stylesheet" href="/resources/css/CSS.css">
 			</head>
 			<body>    
-    			<h2>Tokens</h2>
+    			<h2 style="margin-top: -4%">Tokens</h2>
 					<div class="table-title">
     					<table id="bonosTable" class="table-fill">
         					<thead>

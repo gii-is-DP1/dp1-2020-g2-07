@@ -14,9 +14,8 @@
 			</head>	
 			<body>
 		 		<div id="detalles">
-    				<h2>Income Statement Details</h2>
-    				
-    				<th >Subscriptions</th>
+    				<h2 style="margin-top: -4%">Income Statement Details</h2>
+    				<th style="background-color: white">Subscriptions</th>
     				<button class="accordion" style="width: 35%"><c:out value="${balance.subs}$"/></button>
 					<div class="panel">
   						<p>
@@ -112,7 +111,7 @@
 	
 				</script>
 			</div>
-			<div id="chartContainer" style="height: 370px; width: 80%; margin-left: 40%; margin-top: 5%"></div>
+			<div id="chartContainer" style="height: 370px; width: 80%; margin-left: 40%; margin-top: 5%; position:inherit;"></div>
 			<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>  
 		</body>
 	</html>
