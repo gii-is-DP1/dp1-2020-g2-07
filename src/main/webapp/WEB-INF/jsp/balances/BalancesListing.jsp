@@ -15,7 +15,7 @@
 				<link rel="stylesheet" href="/resources/css/CSS.css">
 			</head>	
 			<body>
-    			<h2>Income Statements</h2>
+    			<h2 style="margin-top: -4%">Income Statements</h2>
     			<div class="table-title">
     				<table id="balanceTable" style="vertical-align: middle" class="table-fill">
         				<thead>

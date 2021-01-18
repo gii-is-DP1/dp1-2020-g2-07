@@ -21,7 +21,7 @@
 					<link rel="stylesheet" href="/resources/css/CSS.css">
 				</head>
 				<body>
-    				<h2> New TimeTable</h2>
+    				<h2 style="margin-top: -4%"> New TimeTable</h2>
 
    					 <form:form modelAttribute="horario" class="form-horizontal" id="add-timetable-form">
         				<div class="form-group has-feedback">
