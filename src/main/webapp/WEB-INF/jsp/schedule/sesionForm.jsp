@@ -7,31 +7,13 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="sesiones">
-  <jsp:attribute name="customScript">
-        <script>
-            $(function () {
-				$('.horaInicio').timepicker({
-				    timeFormat: 'h:mm p',
-				    interval: 60,
-				    minTime: '10',
-				    maxTime: '6:00pm',
-				    defaultTime: '11',
-				    startTime: '10:00',
-				    dynamic: false,
-				    dropdown: true,
-				    scrollbar: true
-				}); 
-            });
-        </script> 
-    </jsp:attribute>
-   	<jsp:body>
 		<!DOCTYPE html >
 			<html>
 				<head>
 					<link rel="stylesheet" href="/resources/css/CSS.css">
 				</head>
 				<body>
-    				<h2>New session</h2>
+    				<h2 style="margin-top: -4%">New session</h2>
     				
     				<form:form modelAttribute="newSesion" class="form-horizontal" id="add-sesion-form">
         				<div class="form-group has-feedback">
@@ -62,13 +44,11 @@
    	 						<tbody>
         						<c:forEach items="${sesion}" var="sesion">
         							<c:if test="${sesion.horario.getId()==horarioID}">
-<%--         	<c:if test="${!sesion['new']}"> --%>
             							<tr>
 								            <td><c:out value="${sesion.sala}"/></td>
 								            <td><c:out value="${sesion.horaInicio}"/></td>
 								            <td><c:out value="${sesion.horaFin}"/></td>
             							</tr>
-<%--             </c:if> --%>
             						</c:if>
             					</c:forEach>
         					</tbody>
@@ -76,5 +56,4 @@
     				</div>
     			</body>
     		</html>
-     </jsp:body>
 </petclinic:layout>

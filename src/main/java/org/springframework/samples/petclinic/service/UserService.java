@@ -1,4 +1,5 @@
 package org.springframework.samples.petclinic.service;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.samples.petclinic.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * Mostly used as a facade for all Petclinic controllers Also a placeholder
@@ -16,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Michael Isvy
  */
+@Slf4j
 @Service
 public class UserService {
 
@@ -34,7 +38,7 @@ public class UserService {
 
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {
-		userRepository.save(user);
+        userRepository.save(user);
 	}
 
     public Integer notEnableAdvice(){

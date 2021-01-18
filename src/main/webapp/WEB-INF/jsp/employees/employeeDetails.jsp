@@ -12,7 +12,7 @@
 				<link rel="stylesheet" href="/resources/css/CSS.css">
 			</head>
 			<body>
-    			<h2>Employee Profile</h2>
+    			<h2 style="margin-top: -4%">Employee Profile</h2>
     				<div class="table-title">
     					<table style="height: 20%;" class="table-fill" id="emploee_details">
         					<tr>
@@ -102,53 +102,55 @@
 				    <br/>
 				    <br/>
                                                        
-    				<h2>Schedule of <c:out value="${employee.first_name} ${employee.last_name}"/></h2>
-    				
-    					<c:choose>
-    						<c:when test="${!horarios.isEmpty()}">
-    							<table id="employeesTimeTable" class="table table-striped">
-		 	  						<thead>
-		        						<tr>
-		            						<th width=80%>Date</th>
-		            						<th></th>
-		        						</tr>
-		        					</thead>
-		   	 						<tbody>
-		        						<c:forEach items="${horarios}" var="horario">
-		            						<tr>
-		                						<td>
-		                							<spring:url value="/employees/{employeeId}/TimeTable/{horarioId}" var="employeeUrl">
-		                        						<spring:param name="employeeId" value="${employee.id}"/>
-		                        						<spring:param name="horarioId" value="${horario.id}"/>
-		                    						</spring:url>
-		                    						<a href="${fn:escapeXml(employeeUrl)}"><c:out value="${horario.fecha}" /></a>
-		                						</td>
-		                						<td>
-		                							<spring:url value="/employees/{employeeId}/TimeTable/{horarioId}/newSesion" var="employeeSesionUrl">
-		        										<spring:param name="employeeId" value="${employee.id}"/>
-		        										<spring:param name="horarioId" value="${horario.id}"/>
-		   											</spring:url>
-		    										<a href="${fn:escapeXml(employeeSesionUrl)}"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add a session to this day</a>
-		                						</td>
-		            						</tr>
-		        						</c:forEach>
-		        					</tbody>
-		    					</table>
-    						</c:when>
-    						<c:otherwise>
-    							<b style="color:red;">- This employee doesn't have scheduled days ahead<br><br></b>
-    						</c:otherwise>
-    					</c:choose>
-    						<spring:url value="/employees/{employeeId}/newTimeTable" var="employeeTimeTableUrl">
-        						<spring:param name="employeeId" value="${employee.id}"/>
-    						</spring:url>
-    						<a href="${fn:escapeXml(employeeTimeTableUrl)}"class="btn btn-default"><span class="glyphicon glyphicon-time" aria-hidden="true"></span> New day to the schedule</a>
-    						<spring:url value="/employees/{employeeId}/pastSessions" var="employeePastSessionsUrl">
-    							<spring:param name="employeeId" value="${employee.id}"/>
-    						</spring:url>
-    						<a href="${fn:escapeXml(employeePastSessionsUrl)}"class="btn btn-default"> <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>  Past sessions</a>
-     						<spring:url value="/employees/{employeeId}/newTimeTable" var="employeeTimeTableUrl"></spring:url>
-    					</body>
-    				</html>
+				    <h2>Schedule of <c:out value="${employee.first_name} ${employee.last_name}"/></h2>
+				    <c:choose>
+				    	<c:when test="${!horarios.isEmpty()}">
+				    		<table id="employeesSchedule" class="table table-striped">
+						 	  <thead>
+						        <tr>
+						            <th width=80%>Date</th>
+						            <th></th>
+						        </tr>
+						        </thead>
+						   	 	<tbody>
+						        <c:forEach items="${horarios}" var="horario">
+						            <tr>
+						                <td>
+						                <spring:url value="/employees/{employeeId}/schedule/{horarioId}" var="employeeUrl">
+						                        <spring:param name="employeeId" value="${employee.id}"/>
+						                        <spring:param name="horarioId" value="${horario.id}"/>
+						                    </spring:url>
+						                    <a href="${fn:escapeXml(employeeUrl)}"><c:out value="${horario.fecha}" /></a>
+						                </td>
+						                <td>
+						                <spring:url value="/employees/{employeeId}/schedule/{horarioId}/newSesion" var="employeeSesionUrl">
+						        			<spring:param name="employeeId" value="${employee.id}"/>
+						        			<spring:param name="horarioId" value="${horario.id}"/>
+						   				</spring:url>
+						    			<a href="${fn:escapeXml(employeeSesionUrl)}"><span class="glyphicon glyphicon-plus"
+						                                                       aria-hidden="true"></span>Add a session to this day</a>
+						                </td>
+						            </tr>
+						        </c:forEach>
+						        </tbody>
+						    </table>
+				    	</c:when>
+				    	<c:otherwise>
+				    		<b style="color:red;">- This employee doesn't have scheduled days ahead<br><br></b>
+				    	</c:otherwise>
+				    </c:choose>
+				    
+				    <spring:url value="/employees/{employeeId}/newSchedule" var="employeeScheduleUrl">
+				        <spring:param name="employeeId" value="${employee.id}"/>
+				    </spring:url>
+				    <a href="${fn:escapeXml(employeeScheduleUrl)}"class="btn btn-default">
+				    <span class="glyphicon glyphicon-time" aria-hidden="true"></span> New day to the schedule</a>
+				    
+				    <spring:url value="/employees/{employeeId}/pastSessions" var="employeePastSessionsUrl">
+				    <spring:param name="employeeId" value="${employee.id}"/>
+				    </spring:url>
+				    <a href="${fn:escapeXml(employeePastSessionsUrl)}"class="btn btn-default">
+				    <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>  Past sessions</a>
+
 </petclinic:layout>
 

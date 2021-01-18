@@ -36,7 +36,7 @@
 			    }
 		    </script>
 			<body>
-    			<h2>New Token</h2>
+    			<h2 style="margin-top: -4%">New Token</h2>
     				<form:form name="createTokenForm" modelAttribute="bono" class="form-horizontal" id="add-owner-form" onsubmit="return validateForm();">
         				<div class="form-group has-feedback"> 
             				<petclinic:inputField label="Code" name="codigo"/> 

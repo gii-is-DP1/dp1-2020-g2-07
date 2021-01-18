@@ -1,4 +1,5 @@
 package org.springframework.samples.petclinic.service;
+
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
@@ -16,7 +17,9 @@ import org.springframework.samples.petclinic.model.Pago;
 import org.springframework.samples.petclinic.repository.ClienteRepository;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class ClienteService {
 
@@ -49,6 +52,7 @@ public class ClienteService {
     public void delete(Cliente cliente) {
         clientRepo.deleteById(cliente.getId());
         userService.delete(cliente.getUser());
+        log.info(String.format("Client with username %s and ID %d has been deleted", cliente.getUser().getUsername(), cliente.getId()));
     }
 
     @Transactional
@@ -67,10 +71,14 @@ public class ClienteService {
             clientRepo.save(cliente);
             userService.saveUser(cliente.getUser());
             authoritiesService.saveAuthorities(cliente.getUser().getUsername(), "client");
+
+            log.info(String.format("New client with username %s and ID %d has been created", cliente.getUser().getUsername(), cliente.getId()));
         }else{
             cliente.getUser().setEnabled(cliente.getUser().isEnabled());
             clientRepo.save(cliente);
             userService.saveUser(cliente.getUser());
+
+            log.info(String.format("Client with username %s and ID %d has been edited", cliente.getUser().getUsername(), cliente.getId()));
         }
     }
 
