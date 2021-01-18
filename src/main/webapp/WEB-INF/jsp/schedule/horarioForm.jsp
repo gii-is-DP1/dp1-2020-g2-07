@@ -21,16 +21,15 @@
 					<link rel="stylesheet" href="/resources/css/CSS.css">
 				</head>
 				<body>
-    				<h2> New TimeTable</h2>
-
-   					 <form:form modelAttribute="horario" class="form-horizontal" id="add-timetable-form">
+    				<h2 style="margin-top: -4%">New Schedule</h2>
+   					<form:form modelAttribute="horario" class="form-horizontal" id="add-schedule-form">
         				<div class="form-group has-feedback">
           					<petclinic:inputField label="Date" name="fecha"/>
           					<input type="hidden" name="employee" value="${employee.id}">
         				</div>
         				<div class="form-group">
             				<div class="col-sm-offset-2 col-sm-10">
-                  				<button style=" margin-top:-2%; margin-left: 87%;" class="btn btn-default" type="submit">Add TimeTable</button>
+                  				<button style=" margin-top:-2%; margin-left: 87%;" class="btn btn-default" type="submit">Add Day</button>
             				</div>
         				</div>
     				</form:form>

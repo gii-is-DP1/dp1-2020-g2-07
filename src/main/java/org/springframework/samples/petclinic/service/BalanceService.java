@@ -2,21 +2,28 @@ package org.springframework.samples.petclinic.service;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.samples.petclinic.model.Balance;
 import org.springframework.samples.petclinic.model.Bono;
+import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.model.Pago;
 import org.springframework.samples.petclinic.repository.BalanceRepository;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+
 @Service
 public class BalanceService {
-    
+
     private BalanceRepository balanceRepo;
 
     public BalanceService(BalanceRepository balanceRepo) {
@@ -49,7 +56,7 @@ public class BalanceService {
 	public boolean diaDeBalance() {
 		Boolean tocaBalance = false;
 		Integer day_today = LocalDate.now().getDayOfMonth();
-		if(day_today.equals(14)) {
+		if(day_today.equals(17)) {
 			tocaBalance = true;
 		}
 		return tocaBalance;
@@ -96,7 +103,7 @@ public class BalanceService {
 		}
 		return res;
 	}
-	
+
 	public Integer getTokens (LocalDate date_start, LocalDate date_end, Boolean used) {
 		Collection<Bono> total = balanceRepo.findUsedTokensByMonth(date_start,date_end, used);
 		Iterator<Bono> iterator = total.iterator();
@@ -106,17 +113,42 @@ public class BalanceService {
         }
 		return res;
 	}
-	
+
 	public Collection<Bono> getTokensData (LocalDate date_start, LocalDate date_end) {
 		return balanceRepo.findUsedTokensByMonth(date_start,date_end, true);
 	}
-	
-	public Collection<Pago> getSubsData (LocalDate date_start, LocalDate date_end) {	
+
+	public Collection<Pago> getSubsData (LocalDate date_start, LocalDate date_end) {
 		return balanceRepo.findSubsByMonth(date_start, date_end);
 	}
-	
+
 	public Collection<EmployeeRevenue> getSalariesData (LocalDate date_start, LocalDate date_end) {
 		return balanceRepo.findSalariesByMonth(date_start, date_end);
+	}
+	
+	public void createBalance(LocalDate day_one, String month, String year) {
+    	LocalDate day_last = getUltimoDiaMes(day_one);
+    	List<Employee> l_e = new ArrayList<Employee>();
+    	
+    	Integer subs = getSubs(day_one, day_last);
+    	Integer tokens = getTokens(day_one, day_last, true);
+    	Integer salaries = getSalaries(day_one, day_last);
+    	Balance b = new Balance(month, year, subs, tokens, salaries, l_e);
+    	save(b);
+    }
+	
+	public String createStats(Balance b) {
+	    Gson gsonObj = new Gson();
+	    Map<Object,Object> map = null;
+	    List<Map<Object,Object>> list = new ArrayList<Map<Object,Object>>();
+	    	
+	    map = new HashMap<Object,Object>(); map.put("label", "Subs"); map.put("y", b.getSubs()); list.add(map);
+	    map = new HashMap<Object,Object>(); map.put("label", "Tokens"); map.put("y", b.getBonos()); list.add(map);
+	    map = new HashMap<Object,Object>(); map.put("label", "Salaries"); map.put("y", -b.getSalaries()); list.add(map);
+	    map = new HashMap<Object,Object>(); map.put("label", "Gross Income"); map.put("isIntermediateSum", true); map.put("color", "#55646e"); list.add(map);
+	    	
+	    String dataPoints = gsonObj.toJson(list);
+	    return dataPoints;
 	}
 
 }

@@ -20,8 +20,16 @@
 			    function validateForm(){
 			        var fEmision = document.forms["payForm"]["fEmision"].value;
 			        var date = new Date().toISOString().slice(0,10);
+			        var cant = document.forms["payForm"]["cantidad"].value;
 			
-			
+					if(cant == ""){
+						alert("Quantity must be filled")
+			            return false;
+					}
+					if(cant <30 || cant >50 ){
+						alert("Quantity must be beetwen 30 and 50")
+			            return false;
+					}
 			        if(fEmision == "" || fEmision == null){
 			            alert("Date must be filled")
 			            return false;
@@ -36,7 +44,7 @@
 			    }
 			</script>
 			<body>    
-    			<h2>
+    			<h2 style="margin-top: -4%">
         			<c:if test="${pago['new']}">New </c:if> Payment
     			</h2>
     			

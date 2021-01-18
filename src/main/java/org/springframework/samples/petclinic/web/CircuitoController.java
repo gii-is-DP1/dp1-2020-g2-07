@@ -20,11 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/circuitos")
 public class CircuitoController {
 	
-	public static final String CIRCUITOS_FORM ="/circuitos/createOrUpdateCircuitosForm";
-	public static final String CIRCUITOS_LISTING ="/circuitos/CircuitosListing";
+	public static final String CIRCUITOS_FORM ="circuitos/createOrUpdateCircuitosForm";
+	public static final String CIRCUITOS_LISTING ="circuitos/CircuitosListing";
 	
 	private final CircuitoService circuitosServices;
     private final SalaService salasServices;
+    
 
     @Autowired
     public CircuitoController(CircuitoService circuitosServices, SalaService salasServices) {
@@ -96,7 +97,7 @@ public class CircuitoController {
 	
 	
 	@GetMapping("/new")
-	public String editNewCircuito(ModelMap model) {
+	public String newCircuito(ModelMap model) {
 		model.addAttribute("circuito",new Circuito());
 		model.addAttribute("salas", salasServices.findAll());
 		return CIRCUITOS_FORM;
@@ -105,7 +106,6 @@ public class CircuitoController {
 	@PostMapping("/new")
 	public String saveNewCircuito(@Valid Circuito circuito, BindingResult binding,ModelMap model) {
 		if(binding.hasErrors()) {
-
 			model.put("circuito", circuito);
 			model.put("salas", salasServices.findAll());
 			return CIRCUITOS_FORM;
@@ -119,8 +119,7 @@ public class CircuitoController {
      			model.put("salas", salasServices.findAll());
             	binding.rejectValue("name", "duplicate", "already exists");
                 return  CIRCUITOS_FORM;
-             }
-			
+             }			
 			model.addAttribute("message", "The circuit was created successfully.");
 			return cicuitosListing(model);
 			

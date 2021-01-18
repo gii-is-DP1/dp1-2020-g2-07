@@ -11,6 +11,9 @@ import org.springframework.samples.petclinic.model.Profession;
 import org.springframework.samples.petclinic.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class EmployeeService {
 
@@ -46,21 +49,30 @@ public class EmployeeService {
         //creating authorities
         authoritiesService.saveAuthorities(employee.getUser().getUsername(), "employee");
 
+        log.info(String.format("Employee with username %s and ID %d has been created or updated", employee.getUser().getUsername(), employee.getId()));
+
     }
 
     public void delete(Employee employee) {
         employeeRepo.deleteById(employee.getId());
         userService.delete(employee.getUser());
+        log.info(String.format("Employee with username %s and ID %d has been deleted", employee.getUser().getUsername(), employee.getId()));
     }
 
     public void addSalaryToEmployee(int id, EmployeeRevenue salary){
-        employeeRepo.findById(id).get().addSalary(salary);
-        this.save(employeeRepo.findById(id).get());
+        Employee employee = employeeRepo.findById(id).get();
+        employee.addSalary(salary);
+        this.save(employee);
+
+        log.info(String.format("A salary with ID %d has been added to employee with username %s and ID %d", salary.getId(), employee.getUser().getUsername(), employee.getId()));
     }
     
     public void addScheduletoEmployee(int id, Horario schedule) {
-    	employeeRepo.findById(id).get().addHorario(schedule);
-    	 this.save(employeeRepo.findById(id).get());
+        Employee employee = employeeRepo.findById(id).get();
+    	employee.addHorario(schedule);
+        this.save(employee);
+        
+        log.info(String.format("A schedule with ID %d has been added to employee with username %s and ID %d", schedule.getId(), employee.getUser().getUsername(), employee.getId()));
     }
     
     public Optional<Employee> findEmployeeByUsername(String username){
