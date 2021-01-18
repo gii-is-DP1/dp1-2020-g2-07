@@ -44,7 +44,7 @@
 			    }
 			</script>
 			<body>    
-    			<h2>
+    			<h2 style="margin-top: -4%">
         			<c:if test="${pago['new']}">New </c:if> Payment
     			</h2>
     			

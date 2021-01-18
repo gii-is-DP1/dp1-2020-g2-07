@@ -14,7 +14,7 @@
 			</head>	
 			<body>
 				<sec:authorize access="hasAuthority('admin')">
-    				<h2>Clients</h2>
+    				<h2 style="margin-top: -4%">Clients</h2>
     					<div class="table-title">
     					<table style="height: 20%" id="clientesTable" class="table-fill">
         					<thead>

@@ -13,7 +13,7 @@
 					<link rel="stylesheet" href="/resources/css/CSS.css">
 				</head>
 				<body>
-    				<h2>New session</h2>
+    				<h2 style="margin-top: -4%">New session</h2>
     				
     				<form:form modelAttribute="newSesion" class="form-horizontal" id="add-sesion-form">
         				<div class="form-group has-feedback">

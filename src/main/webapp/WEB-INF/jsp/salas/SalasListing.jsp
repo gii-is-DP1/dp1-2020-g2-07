@@ -13,7 +13,7 @@
 				<link rel="stylesheet" href="/resources/css/CSS.css">
 			</head>
 			<body>
-     			<h2>Rooms</h2>
+     			<h2 style="margin-top: -4%">Rooms</h2>
  				<div class="table-title">
     				<table id="salasTable" class="table-fill">
         				<thead>
