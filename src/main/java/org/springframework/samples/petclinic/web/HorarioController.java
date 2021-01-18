@@ -25,7 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/employees/{employeeId}")
 public class HorarioController {
 	
-	public static final String HORARIO_FORM ="timetable/horarioForm";
+	public static final String HORARIO_FORM ="schedule/horarioForm";
 	
 	EmployeeService employeeService;
 	HorarioService horarioService;
@@ -43,16 +43,16 @@ public class HorarioController {
 		return this.employeeService.findById(employeeId).get();
 	}
 	
-    @GetMapping("/newTimeTable")
-    public String addTimeTable(Employee employee, ModelMap model) {
+    @GetMapping(value = "/newSchedule")
+    public String addDaySchedule(Employee employee, ModelMap model) {
     	Horario h = new Horario();
     	employee.addHorario(h);
         model.addAttribute("horario",h);
         return HORARIO_FORM;
     }
 
-    @PostMapping("/newTimeTable")
-    public String saveTimeTable(Employee e,@Valid @ModelAttribute("horario") Horario horario, BindingResult binding, ModelMap model){
+    @PostMapping("/newSchedule")
+    public String saveDaySchedule(Employee e,@Valid @ModelAttribute("horario") Horario horario, BindingResult binding, ModelMap model){
         if(binding.hasErrors()){
             return HORARIO_FORM;
         }else if(LocalDate.now().isAfter(horario.getFecha())) {
@@ -60,16 +60,16 @@ public class HorarioController {
         	return HORARIO_FORM;
         }else if(horarioService.dayAlreadyInSchedule(horario)){
         	model.addAttribute("message", "The day you picked already exist in the employee schedule");
-        	return "timetable/horarioForm";	
+        	return HORARIO_FORM;	
         }else{
         	horarioService.save(horario);
             return "redirect:/employees/" + String.valueOf(e.getId());
         }
     }
     
-    @GetMapping("/TimeTable/{horarioId}")
-    public ModelAndView showEmployeeTimeTable(@PathVariable("horarioId") int horarioId) {
-        ModelAndView mav = new ModelAndView("employees/employeeTimeTable");
+    @GetMapping("/schedule/{horarioId}")
+    public ModelAndView showEmployeeSchedule(@PathVariable("horarioId") int horarioId) {
+        ModelAndView mav = new ModelAndView("employees/employeeSchedule");
         mav.addObject("sesion",this.horarioService.findSesionesHorario(horarioId));
         mav.addObject("horario", this.horarioService.findById(horarioId).get());
         return mav;
@@ -83,7 +83,7 @@ public class HorarioController {
 		
 	}
 	
-    @GetMapping("/TimeTable/{horarioId}/newSesion")
+    @GetMapping("/schedule/{horarioId}/newSesion")
     public String addSession(ModelMap model,@PathVariable("horarioId") int horarioId) {
         model.addAttribute("horarioID", horarioId);
         model.addAttribute("sesion", this.horarioService.findSesionesHorario(horarioId));     
@@ -93,10 +93,10 @@ public class HorarioController {
         if(!model.containsKey("newSesion")) {
         	model.addAttribute("newSesion", new Sesion());
         }
-        return "timetable/sesionForm";
+        return "schedule/sesionForm";
     }
     
-    @PostMapping("/TimeTable/{horarioId}/newSesion")
+    @PostMapping("/schedule/{horarioId}/newSesion")
     public String saveTimeTable(Employee e, @PathVariable("horarioId") int horarioId,@Valid @ModelAttribute("newSesion") Sesion sesion, BindingResult binding, ModelMap model){ 	   	
     	if(binding.hasErrors()||!sesion.validate()||horarioService.checkDuplicatedSessions(sesion) || !e.validEmployee(e.getProfession().toString(), sesion.getSala().getRoom_type().toString())){
             if(!sesion.validate()) {

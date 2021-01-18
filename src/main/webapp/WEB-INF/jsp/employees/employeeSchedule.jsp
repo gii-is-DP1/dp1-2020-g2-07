@@ -13,7 +13,7 @@
 			<body>   
 				<h2 style="margin-top: -4%">Details of the schedule of <c:out value="${employee.first_name} ${employee.last_name}"/> for <c:out value="${horario.fecha}"/></h2>
 				<div class="table-title">
-    				<table style="height: 20%" id="employeesTimeTable" class="table-fill">
+    				<table style="height: 20%" id="employeesSchedule" class="table-fill">
  	 					<thead>
         					<tr>
         						<th class="text-left">Rooms</th>
@@ -42,4 +42,5 @@
 			</div>
 		</body>
 	</html>
+
 </petclinic:layout>
