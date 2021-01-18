@@ -20,6 +20,7 @@
 					  max-width: 1000px;
 					  position: relative;
 					  margin: auto;
+					  border-style: solid;
 					}
 					/* Number text (1/3 etc) */
 					.numbertext {
@@ -155,63 +156,64 @@
 					<div id="tabla-precios" style="margin-top:-40%">
 						<div class="precio-col" >
  							<div class="precio-col-header">
- 								<h3>20 </h3>
- 								<p>Pound sterlings/month</p>
+ 							<img style="width: 50%; margin-left: 22%; margin-top: -10%" src="/resources/images/mañana.png">
+ 								
  							</div>
 							<div class="precio-col-features">
 								<p>Morning Subscription</p>
 								<p>You can access to spa in the morning</p>
 							 	<p>The best option if you have busy afternoons</p>
-							 	<p>Contact Us!</p>
+							 	<p>20 pound sterlings/month</p>
+							 	<h3 style="text-align: center; margin-top: 4%">Contact Us!</h3>
 	 						</div>
  						</div>
 
 						<div class="precio-col">
  							<div class="precio-col-header">
- 								<h3>35</h3>
- 								<p> Pound sterlings/month</p>
+ 								<img style="width: 50%; margin-left: 22%;" src="/resources/images/lingote.png">
  							</div>
 							<div class="precio-col-features">
  								<p>Premium Subscription</p>
 								<p>You can access to spa when you want</p>
 								<p>The best option if you want to enter the spa whenever you want</p>
-								<p>Contact Us!</p>
+								<p>35 Pound sterlings/month</p>
+								<h3 style="text-align: center; margin-top: 4%">Contact Us!</h3>
  							</div>
  						</div>
 
 						<div class="precio-col">
  							<div class="precio-col-header">
- 								<h3>20</h3>
- 								<p>Pound sterlings/month</p>
+ 								<img style="width: 40%; margin-left: 30%; " src="/resources/images/tarde.png">
  							</div>
 							<div class="precio-col-features">
 								<p>Afternoon Subscription </p>
 								<p>You can access to spa when you want</p>
 								<p>The best option if you have busy mornings</p>
-								<p>Contact Us!</p>
+								<p>20 Pound sterlings/month</p>
+								<h3 style="text-align: center; margin-top: 4%">Contact Us!</h3>
  							</div>
  						</div>
 					</div>
 					
 					<div><img id="divisor3" src="/resources/images/divisor3.png" style="width:100%" ></div>
 					
-					<div>
-						<h1></h1>
-    					<p></p>
-    					<table>
-				    		<tr>
-				    			<h2>You can Find Us in:</h2>
-				        		<p>35 Forth St<br>
+					<div style="margin-top: -35%; margin-left: 9%">
+				    			<div style="border-style: solid; width: 30%">
+				    			<h2 style="margin-left: 2%">You can Find Us in:</h2>
+				        		<p style="margin-left: 2%">35 Forth St<br>
 				          			United Kingdom
 				        		<br>
 				        		<br>
-				        		<h2>Contact Us:</h2>
-				        		<p> Tel: +44 955 22 22 22 / +44 600 50 50 55<br>
+				        		<h2 style="margin-left: 2%">Contact Us:</h2>
+				        		<p style="margin-left: 2%"> Tel: +44 955 22 22 22 / +44 600 50 50 55<br>
 				  				E-Mail:info@spa.es
 				        		</p>
-				        	</tr>
+				        		</div>
+				        	
+				     		<div>
         					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d36647.313471115915!2d-1.6087626896064664!3d54.965082887178305!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0xbf6003de25b50c7b!2sMineral%20House%20Spa%2C%20Pool%20%26%20Gymnasium!5e0!3m2!1ses!2ses!4v1607182668435!5m2!1ses!2ses" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
-						</table>
+							</div>
+						
 					</div>
 				</body>
 			</html>
