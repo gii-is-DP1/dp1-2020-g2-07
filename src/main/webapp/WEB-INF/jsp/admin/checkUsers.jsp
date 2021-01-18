@@ -8,99 +8,103 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="userNotEnable">
-    <h2>Client users</h2>
-
-    <table id="usersTable" class="table table-striped">
-        <thead>
-        <tr>
-            <th>Username</th>
-            <th>Password</th>
-            <th>Enable</th>
-            <th>Turn on/Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${clientUsers}" var="user">
-            <tr>
-                <td>
-                    <c:out value="${user.username}"/>
-                </td>
-                <td>
-                    <c:out value="${user.password}"/>
-                </td>
-                <td>
-                    <c:out value="${user.enabled}"/>
-                </td>
-                <td>
-                    <c:choose>
-                        <c:when test="${user.enabled == false}">
-                            <spring:url value="/admin/users/{username}/turn_on" var="userUrl">
-                                <spring:param name="username" value="${user.username}"/>
-                            </spring:url>
-                            <a href="${fn:escapeXml(userUrl)}">
-                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                            </a>
-                        </c:when>
-                        <c:otherwise>
-                            <spring:url value="/admin/users/{username}/delete" var="userUrl">
-                                <spring:param name="username" value="${user.username}"/>
-                            </spring:url>
-                            <a href="${fn:escapeXml(userUrl)}">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </a>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
-
-    <h2>Employee users</h2>
-
-    <table id="usersTable" class="table table-striped">
-        <thead>
-        <tr>
-            <th>Username</th>
-            <th>Password</th>
-            <th>Enabled</th>
-            <th>Turn on/Delete</th>
-        </tr>
-        </thead>
-        <tbody>
-        <c:forEach items="${employeeUsers}" var="user">
-            <tr>
-                <td>
-                    <c:out value="${user.username}"/>
-                </td>
-                <td>
-                    <c:out value="${user.password}"/>
-                </td>
-                <td>
-                    <c:out value="${user.enabled}"/>
-                </td>
-                <td>
-                    <c:choose>
-                        <c:when test="${user.enabled == false}">
-                            <spring:url value="/admin/users/{username}/turn_on" var="userUrl">
-                                <spring:param name="username" value="${user.username}"/>
-                            </spring:url>
-                            <a href="${fn:escapeXml(userUrl)}">
-                                <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
-                            </a>
-                        </c:when>
-                        <c:otherwise>
-                            <spring:url value="/admin/users/{username}/delete" var="userUrl">
-                                <spring:param name="username" value="${user.username}"/>
-                            </spring:url>
-                            <a href="${fn:escapeXml(userUrl)}">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </a>
-                        </c:otherwise>
-                    </c:choose>
-                </td>
-            </tr>
-        </c:forEach>
-        </tbody>
-    </table>
+	<!DOCTYPE html >
+		<html>
+			<head>
+				<link rel="stylesheet" href="/resources/css/CSS.css">
+			</head>	
+			<body>    
+    			<h2>Client users</h2>
+    			
+				<div class="table-title">
+    				<table style="height: 20%" id="usersTable" class="table-fill">
+        				<thead>
+        					<tr>
+					            <th class="text-left">Username</th>
+					            <th class="text-left">Password</th>
+					            <th class="text-left">Enable</th>
+					            <th width="20%" class="text-left">Turn on/Delete</th>
+					        </tr>
+        				</thead>
+        				<tbody class="table-hover">
+        					<c:forEach items="${clientUsers}" var="user">
+            					<tr>
+					                <td class="text-left">
+					                    <c:out value="${user.username}"/>
+					                </td>
+					                <td class="text-left">
+					                    <c:out value="${user.password}"/>
+					                </td>
+					                <td class="text-left">
+					                    <c:out value="${user.enabled}"/>
+					                </td>
+                					<td class="text-center">
+					                    <c:choose>
+					                        <c:when test="${user.enabled == false}">
+					                            <spring:url value="/admin/users/{username}/turn_on" var="userUrl">
+					                                <spring:param name="username" value="${user.username}"/>
+					                            </spring:url>
+                            					<a href="${fn:escapeXml(userUrl)}"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></a>
+                        					</c:when>
+                        					<c:otherwise>
+                            					<spring:url value="/admin/users/{username}/delete" var="userUrl">
+					                                <spring:param name="username" value="${user.username}"/>
+					                            </spring:url>
+                            					<a href="${fn:escapeXml(userUrl)}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        					</c:otherwise>
+                    					</c:choose>
+                					</td>
+            					</tr>
+        					</c:forEach>
+        				</tbody>
+    				</table>
+				</div>
+	
+    			<h2 style="margin-top: 5%">Employee users</h2>
+    			
+				<div class="table-title">
+    				<table style="height: 20%" id="usersTable" class="table-fill">
+        				<thead>
+        					<tr>
+					            <th class="text-left">Username</th>
+					            <th class="text-left">Password</th>
+					            <th class="text-left">Enabled</th>
+					            <th width="20%" class="text-left">Turn on/Delete</th>
+					        </tr>
+        				</thead>
+       	 				<tbody class="table-hover">
+					        <c:forEach items="${employeeUsers}" var="user">
+					            <tr>
+					                <td class="text-left">
+					                    <c:out value="${user.username}"/>
+					                </td>
+					                <td class="text-left">
+					                    <c:out value="${user.password}"/>
+					                </td>
+					                <td class="text-left">
+					                    <c:out value="${user.enabled}"/>
+					                </td>
+					                <td class="text-center">
+                    					<c:choose>
+                        					<c:when test="${user.enabled == false}">
+					                            <spring:url value="/admin/users/{username}/turn_on" var="userUrl">
+					                                <spring:param name="username" value="${user.username}"/>
+					                            </spring:url>
+                            					<a href="${fn:escapeXml(userUrl)}"><span class="glyphicon glyphicon-off" aria-hidden="true"></span></a>
+                        					</c:when>
+                        				<c:otherwise>
+				                            <spring:url value="/admin/users/{username}/delete" var="userUrl">
+				                                <spring:param name="username" value="${user.username}"/>
+				                            </spring:url>
+                            				<a href="${fn:escapeXml(userUrl)}"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                        				</c:otherwise>
+                    				</c:choose>
+                				</td>
+           	 				</tr>
+        				</c:forEach>
+        			</tbody>
+    			</table>
+    		</div>
+    	</body>
+    </html>
 </petclinic:layout>

@@ -5,36 +5,42 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="employees">
-
-
-<h3>Details of the schedule of <c:out value="${employee.first_name} ${employee.last_name}"/> for <c:out value="${horario.fecha}"/></h3>
-
-    <table id="employeesSchedule" class="table table-striped">
- 	  <thead>
-        <tr>
-        	<th>Rooms</th>
-            <th>From</th>
-            <th>To</th>
-            
-        </tr>
-        </thead>
-   	 	<tbody>
-        	<c:forEach items="${sesion}" var="sesion">
-        	<c:if test="${sesion.horario.getId()==horario.id}">
-            <tr>
-            <td>
-            <c:out value="${sesion.sala}"/>
-            </td>
-            <td>
-            <c:out value="${sesion.horaInicio}"/>
-            </td>
-            <td>
-            <c:out value="${sesion.horaFin}"/>
-            </td>
-            </tr>
-            </c:if>
-            </c:forEach>
-        </tbody>
-    </table>
+	<!DOCTYPE html >
+		<html>
+			<head>
+				<link rel="stylesheet" href="/resources/css/CSS.css">
+			</head>	
+			<body>   
+				<h2>Details of the schedule of <c:out value="${employee.first_name} ${employee.last_name}"/> for <c:out value="${horario.fecha}"/></h2>
+				<div class="table-title">
+    				<table style="height: 20%" id="employeesSchedule" class="table-fill">
+ 	 					<thead>
+        					<tr>
+        						<th class="text-left">Rooms</th>
+            					<th class="text-left">From</th>
+            					<th class="text-left">To</th>  
+        					</tr>
+        				</thead>
+   	 					<tbody>
+        					<c:forEach items="${sesion}" var="sesion">
+        					<c:if test="${sesion.horario.getId()==horario.id}">
+            					<tr>
+            						<td class="text-left">
+            							<c:out value="${sesion.sala}"/>
+            						</td>
+            						<td class="text-left">
+            							<c:out value="${sesion.horaInicio}"/>
+            						</td>
+            						<td class="text-left">
+            							<c:out value="${sesion.horaFin}"/>
+            						</td>
+            					</tr>
+            				</c:if>
+            			</c:forEach>
+        			</tbody>
+    			</table>
+			</div>
+		</body>
+	</html>
 
 </petclinic:layout>

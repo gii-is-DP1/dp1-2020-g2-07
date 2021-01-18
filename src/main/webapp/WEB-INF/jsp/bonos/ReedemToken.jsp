@@ -7,15 +7,20 @@
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
 <petclinic:layout pageName="bonos">
-    <h2>Redeem Token</h2>
-    
-    <c:out value="${cliente}"/>
-
-    <form:form modelAttribute="tokencode" class="form-horizontal" id="add-token-form">
-        <div class="form-group has-feedback">
-            <petclinic:inputField label="Code" name="code"/>
-        </div>
-        <button class="btn btn-default" type="submit">Redeem</button>
-    </form:form>
-	
+	<!DOCTYPE html >
+		<html>
+			<head>
+				<link rel="stylesheet" href="/resources/css/CSS.css">
+			</head>
+			<body>    
+    		<h2>Redeem Token</h2>
+    		<c:out value="${cliente}"/>
+    		<form:form modelAttribute="tokencode" class="form-horizontal" id="add-token-form">
+        		<div class="form-group has-feedback">
+            		<petclinic:inputField label="Code" name="code"/>
+        		</div>
+        		<button style="margin-left: 88%" class="btn btn-default" type="submit">Redeem</button>
+   			 </form:form>
+			</body>
+		</html>
 </petclinic:layout>

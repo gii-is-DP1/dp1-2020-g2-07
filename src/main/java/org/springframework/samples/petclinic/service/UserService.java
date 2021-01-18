@@ -1,4 +1,5 @@
 package org.springframework.samples.petclinic.service;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,8 @@ import org.springframework.samples.petclinic.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
 
 /**
  * Mostly used as a facade for all Petclinic controllers Also a placeholder
@@ -16,13 +19,16 @@ import org.springframework.transaction.annotation.Transactional;
  *
  * @author Michael Isvy
  */
+@Slf4j
 @Service
 public class UserService {
 
 	private UserRepository userRepository;
 
+	@Autowired
     private ClienteService clienteService;
 
+	@Autowired
     private EmployeeService employeeService;
 
 	@Autowired
@@ -30,15 +36,9 @@ public class UserService {
         this.userRepository = userRepository;
 	}
 
-	public UserService(UserRepository userRepository, ClienteService clienteService, EmployeeService employeeService) {
-        this.userRepository = userRepository;
-        this.clienteService = clienteService;
-        this.employeeService = employeeService;
-	}
-
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {
-		userRepository.save(user);
+        userRepository.save(user);
 	}
 
     public Integer notEnableAdvice(){
@@ -91,7 +91,7 @@ public class UserService {
             }
         }
 
-        if (clienteService.findAll().stream().anyMatch(c -> c.getUser().getUsername().equals(username))){
+        if (this.findAll().stream().anyMatch(user -> user.getUsername().equals(username))){
             errorList.add("Username already chosen");
             allRight = false;
         }

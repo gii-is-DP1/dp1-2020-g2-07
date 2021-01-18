@@ -11,6 +11,9 @@ import org.springframework.samples.petclinic.repository.BonoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class BonoService {
 	@Autowired
@@ -31,10 +34,12 @@ public class BonoService {
 	
 	public void delete(Bono bono) {
 		tokenRepo.deleteById(bono.getId());
+		log.info(String.format("Token with code %s and ID %d has been deleted", bono.getCodigo(), bono.getId()));
 	}
 	
 	public void save(@Valid Bono bono) {
 		tokenRepo.save(bono);
+		log.info(String.format("Token with code %s and ID %d has been created or updated", bono.getCodigo(), bono.getId()));
 	}
 	
 	public Optional<Bono> findById(Integer id) {

@@ -1,10 +1,7 @@
 package org.springframework.samples.petclinic.web;
-
 import java.time.LocalDate;
 import java.util.Optional;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.*;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/employees")
@@ -34,34 +30,34 @@ public class EmployeeController {
     HorarioService horarioService;
     @Autowired
     UserService userService;
-    
+
     public Boolean hasAuthority(Optional<Employee> empleado, User user) {
-        if (user.equals(null))
+        if (user.equals(null)||empleado.equals(null))
             return false;
         else
             return empleado.get().getUser().equals(user) || user.getAuthorities().stream().anyMatch(a -> a.getAuthority().equals("admin"));
     }
-    
+
     @GetMapping
     public String listEmployees(ModelMap model, Authentication auth){
         if (auth.isAuthenticated()) {
-            Optional<Employee> c = employeeService.findEmployeeByUsername(auth.getName());
-            if(c.isPresent()) {
-            	model.addAttribute("c", c.get());
+            Optional<Employee> e = employeeService.findEmployeeByUsername(auth.getName());
+            if(e.isPresent()) {
+            	return "redirect:/employees/"+String.valueOf(e.get().getId());
             }else model.addAttribute("employees", employeeService.findAll());
-            
+
             return EMPLOYEES_LISTING;
         }
         else return "/login";
     }
- 
+
     public String listEmployees(ModelMap model){
         model.addAttribute("employees", employeeService.findAll());
         return EMPLOYEES_LISTING;
     }
 
-    @GetMapping("/{id}/edit")
-    public String editEmployee(@PathVariable("id") int id, ModelMap model, Authentication auth){
+    @GetMapping("/{employeeId}/edit")
+    public String editEmployee(@PathVariable("employeeId") int id, ModelMap model, Authentication auth){
         Optional<Employee> employee = employeeService.findById(id);
         User user = userService.findUser(auth.getName()).get();
         if(employee.isPresent() && hasAuthority(employee, user)) {
@@ -71,18 +67,18 @@ public class EmployeeController {
         }
         else if (!hasAuthority(employee, user))
             model.addAttribute("message","Acceso denegado");
-        else 
+        else
             model.addAttribute("message", "Cant find the employee you are looking for");
-        return listEmployees(model);
+        return listEmployees(model,auth);
     }
 
-    @PostMapping("/{id}/edit")
-    public String editEmployee(@PathVariable("id") int id, ModelMap model, @Valid Employee modifiedEmployee, BindingResult binding){
+    @PostMapping("/{employeeId}/edit")
+    public String editEmployee(@PathVariable("employeeId") int id, ModelMap model, @Valid Employee modifiedEmployee, BindingResult binding){
         Optional<Employee> employee = employeeService.findById(id);
         if(binding.hasErrors()){
             return EMPLOYEES_FORM;
         }else{
-            BeanUtils.copyProperties(modifiedEmployee, employee.get(), "id,category");
+            BeanUtils.copyProperties(modifiedEmployee, employee.get(), "id","category");
             employeeService.save(employee.get());
             model.addAttribute("message", "Employee updated succesfully!!");
             return "redirect:/employees/" + employee.get().getId();
@@ -94,7 +90,7 @@ public class EmployeeController {
         Optional<Employee> employee = employeeService.findById(id);
         if(employee.isPresent()){
         	if(employee.get().getHorarios().size()!=0) {
-        		model.addAttribute("message", "The employee can´t be deleted if the have work left to do");
+        		model.addAttribute("message", "The employee can´t be deleted if they have work left to do");
         	}else {
                 employeeService.delete(employee.get());
                 model.addAttribute("message", "Employee deleted successfully!!");
@@ -106,19 +102,20 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}")
-    public ModelAndView showEmployee(@PathVariable("employeeId") int employeeId, Authentication auth) {
+    public String showEmployee(@PathVariable("employeeId") int employeeId, Authentication auth,ModelMap model) {
         Optional<Employee> employee = employeeService.findById(employeeId);
-
-        if (hasAuthority(employee, userService.findUser(auth.getName()).get())) {
-            ModelAndView mav = new ModelAndView("employees/employeeDetails");
-            mav.addObject(this.employeeService.findById(employeeId).get());
-            mav.addObject("horarios",horarioService.calcDays(employeeId,"future"));
-            //placeholder de las horas totales, es solo para comprobar que funciona dandole los parametros
-            mav.addObject("horas", this.employeeService.findById(employeeId).get().getHoursWorked(LocalDate.of(2020, 12, 1), LocalDate.of(2021, 12, 31)));
-            return mav;
-        }
-        else {
-            return new ModelAndView("/login");
+        if (employee.isPresent()){
+            if (hasAuthority(employee, userService.findUser(auth.getName()).get())) {
+                model.addAttribute("employee", employee.get());
+                model.addAttribute("horarios",horarioService.calcDays(employeeId,"future"));
+                return "employees/employeeDetails";
+            }else{
+                model.addAttribute("message", "You aren't allowed");
+                return listEmployees(model,auth);
+            }
+        }else{
+            model.addAttribute("message","That employee doesn't exist");
+            return listEmployees(model,auth);
         }
     }
 
@@ -129,14 +126,14 @@ public class EmployeeController {
     }
 
     @PostMapping("/new")
-    public String saveNewEmployee(@Valid Employee employee, BindingResult binding,ModelMap model) {
+    public String saveNewEmployee(@Valid Employee employee, BindingResult binding,ModelMap model, Authentication auth) {
         if(binding.hasErrors()) {
             return EMPLOYEES_FORM;
         }else {
             employee.setCategory(Categoria.EMPLEADO);
             employeeService.save(employee);
             model.addAttribute("message", "The employee was created successfully!");
-            return "redirect:/employees/" + employee.getId();
+            return listEmployees(model, auth);
         }
     }
 
@@ -168,6 +165,6 @@ public class EmployeeController {
             return "redirect:/employees/" + String.valueOf(employeeId);
         }
     }
-     
-    
+
+
 }
