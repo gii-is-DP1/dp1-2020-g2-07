@@ -17,7 +17,9 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -41,7 +43,7 @@ public class AdminController {
 
     @Autowired
     EmployeeService employeeService;
-    
+
     @GetMapping("/new")
     public String editNewAdmin(ModelMap model) {
         model.addAttribute("admin",new Admin());
@@ -100,6 +102,7 @@ public class AdminController {
                 u.get().setEnabled(true);
                 model.addAttribute("message", "State of user " + u.get().getUsername() + " has been changed");
                 userService.saveUser(u.get());
+                log.info(String.format("User with username %s is now enabled", u.get().getUsername()));
             }else{
                 model.addAttribute("message","This user is already enable, delete it if you wont use it anymore.");
             }
@@ -139,8 +142,10 @@ public class AdminController {
     @PostMapping("/newEmail")
     public String sendNewEmail(@Valid Email email, BindingResult binding, ModelMap model){
         if (binding.hasErrors()){
+            log.info(String.format("Someone tried to send an email with errors"));
             model.addAttribute("message", "The email couldnt be send");
         }else{
+            log.info(String.format("Email sent"));
             model.addAttribute("message", "Email sent succesfully");
             emailService.sendMail(email);
         }
@@ -156,7 +161,8 @@ public class AdminController {
     @PostMapping("/newAnnouncement")
     public String sendNewAnnouncement(@Valid Email email, BindingResult binding, ModelMap model){
         if (binding.hasErrors()){
-            model.addAttribute("message", "The email couldnt be send");
+            log.info(String.format("Someone tried to send an announcement with errors"));
+            model.addAttribute("message", "The announcement couldnt be send");
         }else{
             /*Segun el tipo de subject que haya escogido adjuntara todos los emails de cliente,empleado
             o ambos. Tambien parsearemos a String[] ya que es el formato usado por la API de email*/
@@ -171,7 +177,7 @@ public class AdminController {
             all_names.addAll(employee_names);
 
             String[] all_arr = parsetoArray(all_names);
-
+            log.info(String.format("Announcement sent"));
             model.addAttribute("message", "Email sent succesfully");
             if(email.getAddress()[0].equals("ALL")){
                 email.setAddress(all_arr);
