@@ -25,7 +25,9 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/clientes")
 public class ClienteController {
@@ -92,6 +94,8 @@ public class ClienteController {
         Optional<Cliente> cliente = clientService.findById(clientId);
         if (cliente.isPresent()){
             if(binding.hasErrors()) {
+                log.info(String.format("Client with username %s and ID %d wasn't able to be updated",
+                    cliente.get().getUser().getUsername(), cliente.get().getId()));
                 return CLIENTS_FORM;
             } else {
                 boolean enable = userService.findUser(cliente.get().getUser().getUsername()).get().isEnabled();
@@ -185,6 +189,8 @@ public class ClienteController {
             return "pay/payForm";
         }
         else if(binding.hasErrors()){
+            log.info(String.format("Pay of client with username %s and ID %d wasn't able to be created",
+                cliente.getUser().getUsername(), cliente.getId()));
             return "pay/payForm";
         }else{
             pago.setCliente(cliente);
