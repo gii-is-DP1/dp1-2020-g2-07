@@ -26,7 +26,7 @@ Mineral House is a spa located in Newcastle, UK. This project is a website progr
 <img width="1042" alt="petclinic-screenshot" src="https://i.postimg.cc/Y9qnPPZv/Captura-de-pantalla-2021-01-20-121400.png">
 
 ## 📓 External libraries
-This project uses the [Canvas JS - JSP Charts library](https://canvasjs.com/jsp-charts/), which at the same times requires [Google´s GSon library](https://github.com/google/gson). These both libraries are used in the Income Statements.
+This project uses the [Canvas JS - JSP Charts library](https://canvasjs.com/jsp-charts/), which at the same times requires [Google´s GSon library](https://github.com/google/gson). These both libraries are used for Income Statements.
 By default, this file is added in the build path of the project, but commonly it unsets by itself when the project is downloaded. In case this happens, follow this steps
 ### Steps (Using Eclipse):
 1) Right click on the project
