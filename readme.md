@@ -23,7 +23,7 @@ Mineral House is a spa located in Newcastle, UK. This project is a website progr
 * Assign work to each employee, creating schedules and sessions in their profiles
 * Check the earnings the bussines makes by consulting auto-generated income statements, breaking down the money in different categories. These statements contain charts for an easier reading
 
-<img width="1042" alt="petclinic-screenshot" src="https://cloud.githubusercontent.com/assets/838318/19727082/2aee6d6c-9b8e-11e6-81fe-e889a5ddfded.png">
+<img width="1042" alt="petclinic-screenshot" src="https://i.postimg.cc/Y9qnPPZv/Captura-de-pantalla-2021-01-20-121400.png">
 
 ## 📓 External libraries
 This project uses the [Canvas JS - JSP Charts library](https://canvasjs.com/jsp-charts/), which at the same times requires [Google´s GSon library](https://github.com/google/gson). These both libraries are used in the Income Statements.
