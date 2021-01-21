@@ -101,7 +101,7 @@ public class BalanceControllerMockTest {
         e.setCategory(Categoria.EMPLEADO);
         e.setProfession(Profession.MASSAGIST);
         e.setId(TEST_EMPLOYEE_ID);
-        e.setAge(21);
+        e.setDOB(LocalDate.of(2000, 1, 1));
         e.setAddress("C/Pantomima");
         e.setEmail("jmgc101099@hotmail.com");
         e.setIBAN("ES4131905864163572187269");
