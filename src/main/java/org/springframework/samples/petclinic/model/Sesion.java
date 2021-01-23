@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -42,10 +41,6 @@ public class Sesion extends BaseEntity{
 	@ManyToOne
 	@JoinColumn(name = "horario_id")
 	private Horario horario;
-	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name = "bono_id")
-	private Bono token;
 
 	public Sesion() {
 		super();
@@ -60,7 +55,6 @@ public class Sesion extends BaseEntity{
 		this.horaFin = horaFin;
 		this.sala = sala;
 		this.horario = horario;
-		this.token = token;
 	}
 
 	public Horario getHorario() {
@@ -110,13 +104,5 @@ public class Sesion extends BaseEntity{
 	
 	public Boolean validate() {
 		return horaInicio.isBefore(horaFin);
-	}
-
-	public Bono getToken() {
-		return token;
-	}
-
-	public void setToken(Bono token) {
-		this.token = token;
 	}
 }

@@ -188,7 +188,7 @@ public class SalaController {
 			}
 			if(code_not_rpt) {
 				bono.setUsado(false);
-				bono.getSession().setToken(bono);
+				//bono.getSession().setToken(bono);
 				bono.setDate_start(LocalDate.now());
 				bono.setDate_end(bono.getSession().getHorario().getFecha().minusDays(1));
 				if (bono.getCodigo().isEmpty())

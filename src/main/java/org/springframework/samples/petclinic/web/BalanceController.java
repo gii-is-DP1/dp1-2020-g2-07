@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/balances")
 public class BalanceController {
@@ -45,9 +48,9 @@ public class BalanceController {
 
     	if(balanceService.diaDeBalance() && !balanceService.balanceExists(month, year)) {
     		balanceService.createBalance(day_one,month,year);
+    		log.info(String.format("Income Statement of previous month has been created"));
     	}
         model.addAttribute("balances", balanceService.findAll());
-        
         return BALANCE_LISTING;
     }
     
@@ -59,7 +62,7 @@ public class BalanceController {
 			return BALANCE_EMPLOYEE_EDIT;
     	}else {
 			model.addAttribute("message", "We could not find the statement you are trying to edit.");
-			return BALANCE_LISTING;
+			return listStatement(model);
 		}
     }
     
@@ -72,47 +75,58 @@ public class BalanceController {
     		inc.getEmployee().add(emp.get());
     		balanceService.save(inc);
     		model.addAttribute("message", "Employee is now able to consult the income statement");
+    		log.info("Employee with username "+ emp.get().getUser().getUsername() +" and ID "+ emp.get().getId() +" is now able to consult the statement with ID" +inc.getId());
     	}else {
     		model.addAttribute("message", "Either the employee or the statement can´t be found, try again");
+    		log.warn("Either the employee or the statement can´t be found, try again");
     	}
 		return listStatement(model);
     }
     
     @GetMapping("/{balancesId}")
 	public String showBalance(@PathVariable("balancesId") int balanceId, ModelMap model, @AuthenticationPrincipal User user) {
-    	Balance b = balanceService.findById(balanceId).get();
-    	List<Employee> l = b.getEmployee();
-    	Boolean able = false;
-    	if(user.getUsername().equals("admin1")) {
-    		able=true;
-    	}else {
-        	for(Employee e: l) {
-        		if(e.getUser().getUsername().equals(user.getUsername())) {
-        			able=true;
-        		}
+    	Optional<Balance> ob = balanceService.findById(balanceId);
+    	if(ob.isPresent()) {
+    		Balance b = ob.get();
+    		List<Employee> l = b.getEmployee();
+        	Boolean able = false;
+        	if(user.getUsername().equals("admin1")) {
+        		able=true;
+        	}else {
+            	for(Employee e: l) {
+            		if(e.getUser().getUsername().equals(user.getUsername())) {
+            			able=true;
+            		}
+            	}
         	}
-    	}
-    	if(!able) {
-    		model.addAttribute("message", "Employee not cualified to see this information");
-    		return listStatement(model);
+        	if(!able) {
+        		model.addAttribute("message", "Employee not cualified to see this information");
+        		log.info("Employee with username "+ user.getUsername() +" is not able to consult the statement with ID "+balanceId);
+        		return listStatement(model);
+        	}else {
+        		String dataPoints = balanceService.createStats(b);
+            	model.addAttribute("dataPoints", dataPoints);
+            	
+            	Integer year = Integer.valueOf(b.getYear());
+        		Integer int_month = Month.valueOf(b.getMonth()).getValue();
+        		LocalDate date_start = LocalDate.of(year, int_month, 1);
+        		LocalDate date_end = date_start.withDayOfMonth(date_start.getMonth().length(date_start.isLeapYear()));
+            	
+            	Collection<Bono> tokens = balanceService.getTokensData(date_start, date_end);
+            	Collection<Pago> subs = balanceService.getSubsData(date_start, date_end);
+            	Collection<EmployeeRevenue> salaries = balanceService.getSalariesData(date_start, date_end);
+            	model.addAttribute("tokens",tokens);
+            	model.addAttribute("subs",subs);
+            	model.addAttribute("salaries",salaries);
+            	
+        		model.addAttribute("balance", this.balanceService.findById(balanceId).get());
+        		log.info("Employee with username %s consults the statement with ID %d",user.getUsername(), balanceId);
+        		return BALANCE_DETAILS;
+        	}
     	}else {
-    		String dataPoints = balanceService.createStats(b);
-        	model.addAttribute("dataPoints", dataPoints);
-        	
-        	Integer year = Integer.valueOf(b.getYear());
-    		Integer int_month = Month.valueOf(b.getMonth()).getValue();
-    		LocalDate date_start = LocalDate.of(year, int_month, 1);
-    		LocalDate date_end = date_start.withDayOfMonth(date_start.getMonth().length(date_start.isLeapYear()));
-        	
-        	Collection<Bono> tokens = balanceService.getTokensData(date_start, date_end);
-        	Collection<Pago> subs = balanceService.getSubsData(date_start, date_end);
-        	Collection<EmployeeRevenue> salaries = balanceService.getSalariesData(date_start, date_end);
-        	model.addAttribute("tokens",tokens);
-        	model.addAttribute("subs",subs);
-        	model.addAttribute("salaries",salaries);
-        	
-    		model.addAttribute("balance", this.balanceService.findById(balanceId).get());
-    	}
-		return BALANCE_DETAILS;
+    		model.addAttribute("message", "We could not find the statement you are trying to see");
+    		log.warn("Statement with ID "+ balanceId +" does not exist");
+    		return listStatement(model);
+    	}	
 	}
 }
