@@ -96,11 +96,6 @@ public class Sesion extends BaseEntity{
 	public void setCitas(Set<Cita> citas) {
 		this.citas = citas;
 	}
-
-	@Override
-	public String toString() {
-		return horario.getFecha() + ": From " + this.getHoraInicio() + " to " + this.getHoraFin();
-	}
 	
 	public Boolean validate() {
 		return horaInicio.isBefore(horaFin);
