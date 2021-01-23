@@ -1,5 +1,4 @@
 package org.springframework.samples.petclinic.web;
-import java.time.LocalDate;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -78,7 +77,7 @@ public class EmployeeController {
     public String editEmployee(@PathVariable("employeeId") int id, ModelMap model, @Valid Employee modifiedEmployee, BindingResult binding){
         Optional<Employee> employee = employeeService.findById(id);
         if(binding.hasErrors()){
-            log.info(String.format("Employee with username %s and ID %d wasn't able to be updated",
+            log.warn(String.format("Employee with username %s and ID %d wasn't able to be updated",
                 employee.get().getUser().getUsername(), employee.get().getId()));
             return EMPLOYEES_FORM;
         }else{
@@ -159,7 +158,7 @@ public class EmployeeController {
         		model.addAttribute("message", "Revenues must have a length of only 1 month");
         	}else {
         		model.addAttribute("message", "There has been a problem");
-                log.info(String.format("Salary of employee with username %s and ID %d wasn't able to be created",
+                log.warn(String.format("Salary of employee with username %s and ID %d wasn't able to be created",
                     employee.get().getUser().getUsername(), employee.get().getId()));
         	}
             return "salary/salaryForm";

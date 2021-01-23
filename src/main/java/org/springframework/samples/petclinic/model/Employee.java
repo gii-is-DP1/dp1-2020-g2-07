@@ -26,8 +26,8 @@ public class Employee extends Individual {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
     private List<Horario> horarios;
     
-    /*@ManyToMany(mappedBy="incomest", cascade = CascadeType.ALL)
-	private List<Balance> incomest;*/
+    @ManyToMany(cascade = CascadeType.ALL)
+	private List<Balance> incomest;
 
     public List<Horario> getHorarios() {
 		return horarios;
