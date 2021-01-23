@@ -81,7 +81,7 @@ public class EmployeeControllerMockTest {
         e.setCategory(Categoria.EMPLEADO);
         e.setProfession(Profession.MASSAGIST);
         e.setId(TEST_EMPLOYEE_ID);
-        e.setAge(21);
+        e.setDOB(LocalDate.of(2000, 1, 1));
         e.setAddress("C/Pantomima");
         e.setEmail("jmgc101099@hotmail.com");
         e.setIBAN("ES4131905864163572187269");
@@ -182,7 +182,7 @@ public class EmployeeControllerMockTest {
             .param("address", "C/From the hood ma boy")
             .param("IBAN", "ES2620952473193739231755")
             .param("email", "pikachu_1@gmail.com")
-            .param("age","21")
+            .param("DOB","2000-01-01")
             .param("profession","LIFE_GUARD")
             .param("user.username", "hola")
             .param("user.password", "12345"))
