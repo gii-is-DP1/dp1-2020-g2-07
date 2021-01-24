@@ -71,7 +71,7 @@
     		</div>
     		</sec:authorize>
     		
-    		<sec:authorize access="hasAuthority('employee')">
+    		<sec:authorize access="hasAnyAuthority('employee','client')">
  				<div class="table-title">
     				<table id="salasTable" class="table-fill">
         				<thead>
@@ -104,7 +104,7 @@
     		</div>
     		</sec:authorize>
     		
-    		<sec:authorize access="hasAuthority('client')">
+    		<sec:authorize access="!isAuthenticated()">
  				<div class="table-title">
     				<table id="salasTable" class="table-fill">
         				<thead>

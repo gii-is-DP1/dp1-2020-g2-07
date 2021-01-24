@@ -66,7 +66,7 @@
     			}
 			</script>
 			<body>   
-    			<h2 style="margin-top: -4%"><c:if test="${employee['new']}">New </c:if> Employee</h2>
+    			<h2><c:if test="${employee['new']}">New </c:if> Employee</h2>
     				<form:form name="employeeForm" modelAttribute="employee" class="form-horizontal" id="add-employee-form" onsubmit="return validateForm()">
         				<div class="form-group has-feedback">
            					<petclinic:inputField label="First Name" name="first_name"/>
