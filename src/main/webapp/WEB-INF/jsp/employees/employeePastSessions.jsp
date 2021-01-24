@@ -25,7 +25,7 @@
             					<tr>
             						<td class="text-left"><c:out value="${horario.fecha}"/></td>
             						<td class="text-left">
-            							<spring:url value="/employees/{employeeId}/TimeTable/{horarioId}" var="employeePastSessionsViewUrl">
+            							<spring:url value="/employees/{employeeId}/schedule/{horarioId}" var="employeePastSessionsViewUrl">
        			 							<spring:param name="employeeId" value="${employee.id}"/>
        			 							<spring:param name="horarioId" value="${horario.id}"/>
     									</spring:url>

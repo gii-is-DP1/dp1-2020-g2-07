@@ -87,9 +87,9 @@ public class HorarioController {
     public String addSession(ModelMap model,@PathVariable("horarioId") int horarioId) {
         model.addAttribute("horarioID", horarioId);
         model.addAttribute("sesion", this.horarioService.findSesionesHorario(horarioId));     
-        model.addAttribute("salas",salaService.findAll());
-        model.addAttribute("hours_op",horarioService.SesionHours(LocalTime.parse("09:00")));
-        model.addAttribute("hours_end",horarioService.SesionHours(LocalTime.parse("10:00")));
+        model.addAttribute("sala",salaService.findAll());
+        model.addAttribute("horaInicio",horarioService.SesionHours(LocalTime.parse("09:00")));
+        model.addAttribute("horaFin",horarioService.SesionHours(LocalTime.parse("10:00")));
         if(!model.containsKey("newSesion")) {
         	model.addAttribute("newSesion", new Sesion());
         }
@@ -97,7 +97,7 @@ public class HorarioController {
     }
     
     @PostMapping("/schedule/{horarioId}/newSesion")
-    public String saveTimeTable(Employee e, @PathVariable("horarioId") int horarioId,@Valid @ModelAttribute("newSesion") Sesion sesion, BindingResult binding, ModelMap model){ 	   	
+    public String saveNewSession(Employee e, @PathVariable("horarioId") int horarioId,@Valid @ModelAttribute("newSesion") Sesion sesion, BindingResult binding, ModelMap model){ 	   	
     	if(binding.hasErrors()||!sesion.validate()||horarioService.checkDuplicatedSessions(sesion) || !e.validEmployee(e.getProfession().toString(), sesion.getSala().getRoom_type().toString())){
             if(!sesion.validate()) {
             	model.addAttribute("message", "Start time must be before end time");
@@ -110,7 +110,6 @@ public class HorarioController {
             }
             return addSession(model,horarioId);
         }else{
-        	sesion.setHorario(horarioService.findById(horarioId).get());
             horarioService.addSesion(horarioId, sesion);
 
             return "redirect:/employees/" + String.valueOf(e.getId());
