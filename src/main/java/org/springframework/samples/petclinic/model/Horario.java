@@ -68,7 +68,7 @@ public class Horario extends BaseEntity{
 	}
 
 	public void addSesion(Sesion s){
-        this.sesiones.add(s);
+        this.getSesiones().add(s);
     }
 	
 	@Override

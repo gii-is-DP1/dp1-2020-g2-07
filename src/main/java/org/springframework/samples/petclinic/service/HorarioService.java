@@ -47,9 +47,9 @@ public class HorarioService {
         horarioRepo.save(horario);
     }
         
-    public void addSesion(int id, Sesion s){
-        horarioRepo.findById(id).get().addSesion(s);
-        this.save(horarioRepo.findById(id).get());
+    public void addSesion(int horarioId, Sesion s){
+        horarioRepo.findById(horarioId).get().addSesion(s);
+        this.save(horarioRepo.findById(horarioId).get());
     }
     
     public Collection<Sesion> findSesionesHorario(int id){
