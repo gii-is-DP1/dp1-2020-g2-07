@@ -11,7 +11,7 @@
 				<link rel="stylesheet" href="/resources/css/CSS.css">
 			</head>
 			<body>
-				<h2 style="margin-top: -4%">Previous worked days of <c:out value="${employee.first_name} ${employee.last_name}"/></h2>
+				<h2>Previous worked days of <c:out value="${employee.first_name} ${employee.last_name}"/></h2>
     			<div class="table-title">
     				<table style="height:20%;" id="sesionesPrevias" class="table-fill">
  	  					<thead>

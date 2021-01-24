@@ -13,7 +13,7 @@
 				<link rel="stylesheet" href="/resources/css/CSS.css">
 			</head>
 			<body>    
-    		<h2 style="margin-top: -4%">Redeem Token</h2>
+    		<h2>Redeem Token</h2>
     		<c:out value="${cliente}"/>
     		<form:form modelAttribute="tokencode" class="form-horizontal" id="add-token-form">
         		<div class="form-group has-feedback">

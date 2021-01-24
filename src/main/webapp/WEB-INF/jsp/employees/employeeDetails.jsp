@@ -12,7 +12,7 @@
 				<link rel="stylesheet" href="/resources/css/CSS.css">
 			</head>
 			<body>
-				<h2 style="margin-top: -4%">Employee Profile</h2>
+				<h2>Employee Profile</h2>
 					<c:choose>
 						<c:when test="${employee.isBirthday()}">
 							<h3>Today is ${employee.first_name}'s birthday! Happy birthday from the Mineral House Spa team!</h3>

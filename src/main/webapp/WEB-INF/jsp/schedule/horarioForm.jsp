@@ -21,7 +21,7 @@
 					<link rel="stylesheet" href="/resources/css/CSS.css">
 				</head>
 				<body>
-    				<h2 style="margin-top: -4%">New Schedule</h2>
+    				<h2>New Schedule</h2>
    					<form:form modelAttribute="horario" class="form-horizontal" id="add-schedule-form">
         				<div class="form-group has-feedback">
           					<petclinic:inputField label="Date" name="fecha"/>
