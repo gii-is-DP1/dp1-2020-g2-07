@@ -31,7 +31,7 @@ public class Employee extends Individual {
     
     @ManyToMany(cascade = CascadeType.ALL)
 	private List<Balance> incomest;
-   
+
     public List<Horario> getHorarios() {
 		return horarios;
 	}

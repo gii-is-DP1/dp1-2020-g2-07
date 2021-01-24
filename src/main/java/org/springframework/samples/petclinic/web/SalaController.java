@@ -3,9 +3,12 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 import javax.validation.Valid;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Bono;
@@ -44,6 +47,7 @@ public class SalaController {
 	private CitaService cs;
 	private ClienteService cls;
 	private BonoService bonoservice;
+	private SesionesFormatter sf;
   
     @ModelAttribute("room_type")
     public List<RoomType> getRoomType(){
@@ -51,12 +55,13 @@ public class SalaController {
     }
 
 	@Autowired
-	public SalaController(SalaService salaService,HorarioService hs,CitaService cs, ClienteService cls, BonoService bonoservice) {
+	public SalaController(SalaService salaService,HorarioService hs,CitaService cs, ClienteService cls, BonoService bonoservice,SesionesFormatter sf) {
 		this.salaService = salaService;
 		this.hs = hs;
 		this.cs = cs;
 		this.cls = cls;
 		this.bonoservice = bonoservice;
+		this.sf = sf;
 	}
 
 	@GetMapping
@@ -161,7 +166,8 @@ public class SalaController {
 				return "salas/salaDetails";
 			}else {
 				cs.save(cita);
-				model.addAttribute("message", "You now have an appointment in " + sala.getName() + " " + cita.getSesion());
+				
+				model.addAttribute("message", "You now have an appointment in " + sala.getName() + " " + sf.print(cita.getSesion(), Locale.getDefault()));
 				return salasListing(model);
 			}
 		}
@@ -184,11 +190,12 @@ public class SalaController {
 			for(Bono b:x) {
 				if(b.getCodigo().equals(bono.getCodigo())) {
 					code_not_rpt = false;
+					break;
 				}
 			}
 			if(code_not_rpt) {
 				bono.setUsado(false);
-				bono.getSession().setToken(bono);
+				//bono.getSession().setToken(bono);
 				bono.setDate_start(LocalDate.now());
 				bono.setDate_end(bono.getSession().getHorario().getFecha().minusDays(1));
 				if (bono.getCodigo().isEmpty())
@@ -197,7 +204,7 @@ public class SalaController {
 				
 				model.addAttribute("message", "The token has been created successfully");
 			}else {
-				model.addAttribute("message", "The token code already exits");
+				model.addAttribute("message", "The token code already exists");
 			}
 		}
 		return salasListing(model);

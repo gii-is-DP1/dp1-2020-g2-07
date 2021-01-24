@@ -18,9 +18,10 @@ import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.model.Pago;
 import org.springframework.samples.petclinic.repository.BalanceRepository;
 import org.springframework.stereotype.Service;
-
 import com.google.gson.Gson;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 public class BalanceService {
 
@@ -56,8 +57,9 @@ public class BalanceService {
 	public boolean diaDeBalance() {
 		Boolean tocaBalance = false;
 		Integer day_today = LocalDate.now().getDayOfMonth();
-		if(day_today.equals(17)) {
+		if(day_today.equals(23)) {
 			tocaBalance = true;
+			log.info("Today a new Income Statement is created");
 		}
 		return tocaBalance;
 	   }
@@ -114,6 +116,7 @@ public class BalanceService {
 		return res;
 	}
 
+	//Collections for the income breakdown
 	public Collection<Bono> getTokensData (LocalDate date_start, LocalDate date_end) {
 		return balanceRepo.findUsedTokensByMonth(date_start,date_end, true);
 	}
@@ -135,6 +138,7 @@ public class BalanceService {
     	Integer salaries = getSalaries(day_one, day_last);
     	Balance b = new Balance(month, year, subs, tokens, salaries, l_e);
     	save(b);
+    	log.info("Income Statement with ID "+b.getId()+" created");
     }
 	
 	public String createStats(Balance b) {
@@ -148,6 +152,7 @@ public class BalanceService {
 	    map = new HashMap<Object,Object>(); map.put("label", "Gross Income"); map.put("isIntermediateSum", true); map.put("color", "#55646e"); list.add(map);
 	    	
 	    String dataPoints = gsonObj.toJson(list);
+	    log.info("GSON object created for Income Statement with ID "+ b.getId());
 	    return dataPoints;
 	}
 

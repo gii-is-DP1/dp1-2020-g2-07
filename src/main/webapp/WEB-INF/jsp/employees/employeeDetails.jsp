@@ -12,7 +12,14 @@
 				<link rel="stylesheet" href="/resources/css/CSS.css">
 			</head>
 			<body>
-    			<h2 style="margin-top: -4%">Employee Profile</h2>
+				<h2>Employee Profile</h2>
+					<c:choose>
+						<c:when test="${employee.isBirthday()}">
+							<h3>Today is ${employee.first_name}'s birthday! Happy birthday from the Mineral House Spa team!</h3>
+							<img name="honk" src="/resources/images/honkhonk.gif" alt="Honk honk!" width="100" height="100">
+						</c:when>
+					</c:choose>
+
     				<div class="table-title">
     					<table style="height: 20%;" class="table-fill" id="emploee_details">
         					<tr>
@@ -24,8 +31,8 @@
             					<td><b><c:out value="${employee.address}"/></b></td>
         					</tr>
         					<tr>
-            					<th>Age</th>
-            					<td><b><c:out value="${employee.age}"/></b></td>
+            					<th>Date of Birth</th>
+            					<td><b><c:out value="${employee.DOB} (Age: ${employee.age})"/></b></td>
         					</tr>
         					<tr>
             					<th>IBAN</th>

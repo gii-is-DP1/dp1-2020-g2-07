@@ -1,5 +1,4 @@
 package org.springframework.samples.petclinic.web;
-import java.time.LocalDate;
 import java.util.Optional;
 import javax.validation.Valid;
 import org.springframework.beans.BeanUtils;
@@ -15,7 +14,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/employees")
 public class EmployeeController {
@@ -76,6 +77,8 @@ public class EmployeeController {
     public String editEmployee(@PathVariable("employeeId") int id, ModelMap model, @Valid Employee modifiedEmployee, BindingResult binding){
         Optional<Employee> employee = employeeService.findById(id);
         if(binding.hasErrors()){
+            log.warn(String.format("Employee with username %s and ID %d wasn't able to be updated",
+                employee.get().getUser().getUsername(), employee.get().getId()));
             return EMPLOYEES_FORM;
         }else{
             BeanUtils.copyProperties(modifiedEmployee, employee.get(), "id","category");
@@ -146,7 +149,8 @@ public class EmployeeController {
 
     @PostMapping("/{employeeId}/newSalary")
     public String saveSalary(@PathVariable("employeeId") int employeeId,@Valid @ModelAttribute("revenue") EmployeeRevenue revenue, BindingResult binding, ModelMap model){
-        model.addAttribute("employee",employeeService.findById(employeeId).get());
+        Optional<Employee> employee = employeeService.findById(employeeId);
+        model.addAttribute("employee",employee.get());
         if(binding.hasErrors() || !revenue.getDateStart().isBefore(revenue.getDateEnd()) || !revenue.getDateStart().getMonth().equals(revenue.getDateEnd().getMonth())){
         	if(!revenue.getDateStart().isBefore(revenue.getDateEnd())) {
         		model.addAttribute("message", "Start date must be before end date");
@@ -154,6 +158,8 @@ public class EmployeeController {
         		model.addAttribute("message", "Revenues must have a length of only 1 month");
         	}else {
         		model.addAttribute("message", "There has been a problem");
+                log.warn(String.format("Salary of employee with username %s and ID %d wasn't able to be created",
+                    employee.get().getUser().getUsername(), employee.get().getId()));
         	}
             return "salary/salaryForm";
         }else{

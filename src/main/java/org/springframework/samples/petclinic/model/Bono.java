@@ -1,8 +1,10 @@
 package org.springframework.samples.petclinic.model;
 import java.time.LocalDate;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -38,7 +40,9 @@ public class Bono extends  BaseEntity {
 	@Column(name = "usado")
 	private Boolean usado;
 
-	 @OneToOne(mappedBy = "token")
+	 
+	 @OneToOne(cascade=CascadeType.ALL)
+	 @JoinColumn(name = "sesion_id", referencedColumnName = "id")
 	 private Sesion session;
 	 
 	public Bono() {
@@ -134,6 +138,13 @@ public class Bono extends  BaseEntity {
 	public void setDate_end(LocalDate date_end) {
 		this.date_end = date_end;
 	}
+
+	@Override
+	public String toString() {
+		return  this.getCodigo();
+	}
+	
+	
 	
 	
 }
