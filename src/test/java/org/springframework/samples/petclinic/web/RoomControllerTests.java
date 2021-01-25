@@ -292,18 +292,18 @@ public class RoomControllerTests {
 	
 //	NO ES CAPAZ DE LEERME LA SESION
 	
-//	@WithMockUser(value = "admin")
-//	@Test
-//	public void testCreateTokenPost() throws Exception{
-//		mockMvc.perform(post("/salas/{id}/createtoken", ID)
-//				.with(csrf())
-//				.param("codigo", "Test")
-//				.param("precio", "10")
-//				.param("descripcion", "this is a test")
-//				.param("session", h.getFecha() + ": From " + s.getHoraInicio() + " to " + s.getHoraFin()))
-//			.andExpect(status().isOk())
-//			.andExpect(view().name(SALAS_LISTING));
-//	}
+	@WithMockUser(value = "admin")
+	@Test
+	public void testCreateTokenPost() throws Exception{
+		mockMvc.perform(post("/salas/{id}/createtoken", ID)
+				.with(csrf())
+				.param("codigo", "Test")
+				.param("precio", "10")
+				.param("descripcion", "this is a test")
+				.param("session", h.getFecha() + ": From " + s.getHoraInicio() + " to " + s.getHoraFin()))
+			.andExpect(status().isOk())
+			.andExpect(view().name(SALAS_LISTING));
+	}
 	
 	
 	

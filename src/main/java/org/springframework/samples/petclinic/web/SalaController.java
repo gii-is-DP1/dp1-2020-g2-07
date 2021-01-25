@@ -33,7 +33,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import jdk.internal.jline.internal.Log;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -203,7 +202,6 @@ public class SalaController {
 			}
 			if(code_not_rpt) {
 				bono.setUsado(false);
-				//bono.getSession().setToken(bono);
 				bono.setDate_start(LocalDate.now());
 				bono.setDate_end(bono.getSession().getHorario().getFecha().minusDays(1));
 				if (bono.getCodigo().isEmpty())
