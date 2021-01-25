@@ -10,6 +10,7 @@
     <h2>
         <c:if test="${circuito['new']}">New </c:if> Circuit
     </h2>
+    <link rel="stylesheet" href="/resources/css/CSS.css">
     <form:form modelAttribute="circuito" class="form-horizontal" id="add-circuito-form">
         <div class="form-group has-feedback">
             <petclinic:inputField label="Name " name="name"/>

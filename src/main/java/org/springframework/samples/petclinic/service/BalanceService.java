@@ -57,7 +57,7 @@ public class BalanceService {
 	public boolean diaDeBalance() {
 		Boolean tocaBalance = false;
 		Integer day_today = LocalDate.now().getDayOfMonth();
-		if(day_today.equals(17)) {
+		if(day_today.equals(23)) {
 			tocaBalance = true;
 			log.info("Today a new Income Statement is created");
 		}

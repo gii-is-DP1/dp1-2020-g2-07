@@ -60,7 +60,7 @@
 			    }
 			</script>
 			<body>    
-    			<h2 style="margin-top: -4%"><c:if test="${cliente['new']}">New </c:if> Cliente</h2>
+    			<h2><c:if test="${cliente['new']}">New </c:if> Cliente</h2>
     			
     				<form:form name="clientForm" modelAttribute="cliente" class="form-horizontal" id="add-cliente-form" onsubmit="return validateForm()">
         				<div class="form-group has-feedback">

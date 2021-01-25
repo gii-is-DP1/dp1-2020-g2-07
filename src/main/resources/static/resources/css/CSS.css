@@ -1,7 +1,15 @@
 /*========================================================================WELCOME.JSP===============================================================================*/
 body{	
   background: linear-gradient(#D8FAF8, #A2BDF9);
+  height: 100%;
+  margin: 0;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 
+}
+
+html {
+    height: 100%;
 }
 
 h2{
@@ -167,7 +175,7 @@ iframe{
 /*=====================================================================================================================================================================*/
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 div.table-title {
-   display: block;
+  display: block;
   margin: auto;
   padding:5px;
   width: 100%;
