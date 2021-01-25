@@ -289,6 +289,9 @@ public class RoomControllerTests {
 			.andExpect(view().name("bonos/createToken"));
 	}
 	
+	
+//	NO ES CAPAZ DE LEERME LA SESION
+	
 	@WithMockUser(value = "admin")
 	@Test
 	public void testCreateTokenPost() throws Exception{
