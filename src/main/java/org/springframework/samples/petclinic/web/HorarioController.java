@@ -21,8 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import jdk.internal.jline.internal.Log;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/employees/{employeeId}")
 public class HorarioController {
@@ -61,11 +62,12 @@ public class HorarioController {
         	model.addAttribute("message", "The day you picked can't be in the past");
         	return HORARIO_FORM;
         }else if(horarioService.dayAlreadyInSchedule(horario)){
+        	log.warn("Day already created");
         	model.addAttribute("message", "The day you picked already exist in the employee schedule");
         	return HORARIO_FORM;	
         }else{
         	horarioService.save(horario);
-        	Log.info("Day " + horario.getFecha() + " for the employee " + e.getFirst_name() + " has been created");
+        	log.info("Day " + horario.getFecha() + " for the employee " + e.getFirst_name() + " has been created");
             return "redirect:/employees/" + String.valueOf(e.getId());
         }
     }
@@ -106,15 +108,17 @@ public class HorarioController {
             	model.addAttribute("message", "Start time must be before end time");
             }
             if(horarioService.checkDuplicatedSessions(sesion)) {
+            	log.warn("Somebody is working in the room now, try some new hours");
             	model.addAttribute("message", "This room is already in use at this time");
             }
             if(!e.validEmployee(e.getProfession().toString(), sesion.getSala().getRoom_type().toString())) {
+            	log.warn("Employee profession: " + e.getProfession().toString() + " does not let him work as a " + sesion.getSala().getRoom_type().toString());
             	model.addAttribute("message", "The employee is not qualified to work in this room");
             }
             return addSession(model,horarioId);
         }else{
             horarioService.addSesion(horarioId, sesion);
-
+            log.info("New session created for " + e.getFirst_name() + " in the " + sesion.getSala());
             return "redirect:/employees/" + String.valueOf(e.getId());
         }
     }
