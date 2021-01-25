@@ -8,8 +8,10 @@
 
 <petclinic:layout pageName="circuitos">
     <h2>Circuits</h2>
-
-    <table id="circuitosTable" class="table table-striped">
+	<link rel="stylesheet" href="/resources/css/CSS.css">
+	
+	<sec:authorize access="hasAuthority('admin')">
+    <table id="circuitosTable" class="table-fill">
         <thead>
         <tr>
             <th>Name</th>
@@ -59,9 +61,81 @@
         </c:forEach>
         </tbody>
     </table>
+    </sec:authorize>
+    
+    <sec:authorize access="hasAnyAuthority('employee','client')">
+    <table id="circuitosTable" class="table-fill">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Capacity</th>
+            <th>Description</th>
+            <th>Rooms</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${circuitos}" var="circuito">
+            <tr>
+                <td>
+                    <c:out value="${circuito.name} "/>
+                </td>
+                <td>
+                    <c:out value="${circuito.aforo}"/>
+                </td>
+                <td>
+                    <c:out value="${circuito.descripcion}"/>
+                </td>
+                <td>
+                	<ul>
+                		<c:forEach items="${circuito.salas}" var="Sala">
+                    		<li>${Sala.name}</li>
+                		</c:forEach>
+                	</ul>
+                </td>         
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    </sec:authorize>
+    
+    <sec:authorize access="!isAuthenticated()">
+    <table id="circuitosTable" class="table-fill">
+        <thead>
+        <tr>
+            <th>Name</th>
+            <th>Capacity</th>
+            <th>Description</th>
+            <th>Rooms</th>
+        </tr>
+        </thead>
+        <tbody>
+        <c:forEach items="${circuitos}" var="circuito">
+            <tr>
+                <td>
+                    <c:out value="${circuito.name} "/>
+                </td>
+                <td>
+                    <c:out value="${circuito.aforo}"/>
+                </td>
+                <td>
+                    <c:out value="${circuito.descripcion}"/>
+                </td>
+                <td>
+                	<ul>
+                		<c:forEach items="${circuito.salas}" var="Sala">
+                    		<li>${Sala.name}</li>
+                		</c:forEach>
+                	</ul>
+                </td>         
+            </tr>
+        </c:forEach>
+        </tbody>
+    </table>
+    </sec:authorize>
+    
     <sec:authorize access="hasAuthority('admin')">
         <p>
-            <a href="/circuitos/new" class="btn  btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add circuit</a>
+            <a style="margin-left: 87%;margin-top: 2%" href="/circuitos/new" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>Add circuit</a>
         </p>
     </sec:authorize>
 </petclinic:layout>
