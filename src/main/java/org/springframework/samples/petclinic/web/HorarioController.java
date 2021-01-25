@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import jdk.internal.jline.internal.Log;
+
 @Controller
 @RequestMapping("/employees/{employeeId}")
 public class HorarioController {
@@ -63,6 +65,7 @@ public class HorarioController {
         	return HORARIO_FORM;	
         }else{
         	horarioService.save(horario);
+        	Log.info("Day " + horario.getFecha() + " for the employee " + e.getFirst_name() + " has been created");
             return "redirect:/employees/" + String.valueOf(e.getId());
         }
     }
