@@ -130,7 +130,7 @@ public class ClientMockTest {
 
         assertTrue(c.getPagos().size() == 1);
 
-        verify(authoritiesService).saveAuthorities("juanma", "client");
+
         verify(userService).saveUser(c.getUser());
     }
 
