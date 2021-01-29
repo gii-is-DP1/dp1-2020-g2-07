@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/employees/{employeeId}")
 public class HorarioController {
@@ -59,10 +62,12 @@ public class HorarioController {
         	model.addAttribute("message", "The day you picked can't be in the past");
         	return HORARIO_FORM;
         }else if(horarioService.dayAlreadyInSchedule(horario)){
+        	log.warn("Day already created");
         	model.addAttribute("message", "The day you picked already exist in the employee schedule");
         	return HORARIO_FORM;	
         }else{
         	horarioService.save(horario);
+        	log.info("Day " + horario.getFecha() + " for the employee " + e.getFirst_name() + " has been created");
             return "redirect:/employees/" + String.valueOf(e.getId());
         }
     }
@@ -87,9 +92,9 @@ public class HorarioController {
     public String addSession(ModelMap model,@PathVariable("horarioId") int horarioId) {
         model.addAttribute("horarioID", horarioId);
         model.addAttribute("sesion", this.horarioService.findSesionesHorario(horarioId));     
-        model.addAttribute("salas",salaService.findAll());
-        model.addAttribute("hours_op",horarioService.SesionHours(LocalTime.parse("09:00")));
-        model.addAttribute("hours_end",horarioService.SesionHours(LocalTime.parse("10:00")));
+        model.addAttribute("sala",salaService.findAll());
+        model.addAttribute("horaInicio",horarioService.SesionHours(LocalTime.parse("09:00")));
+        model.addAttribute("horaFin",horarioService.SesionHours(LocalTime.parse("10:00")));
         if(!model.containsKey("newSesion")) {
         	model.addAttribute("newSesion", new Sesion());
         }
@@ -97,22 +102,23 @@ public class HorarioController {
     }
     
     @PostMapping("/schedule/{horarioId}/newSesion")
-    public String saveTimeTable(Employee e, @PathVariable("horarioId") int horarioId,@Valid @ModelAttribute("newSesion") Sesion sesion, BindingResult binding, ModelMap model){ 	   	
+    public String saveNewSession(Employee e, @PathVariable("horarioId") int horarioId,@Valid @ModelAttribute("newSesion") Sesion sesion, BindingResult binding, ModelMap model){ 	   	
     	if(binding.hasErrors()||!sesion.validate()||horarioService.checkDuplicatedSessions(sesion) || !e.validEmployee(e.getProfession().toString(), sesion.getSala().getRoom_type().toString())){
             if(!sesion.validate()) {
             	model.addAttribute("message", "Start time must be before end time");
             }
             if(horarioService.checkDuplicatedSessions(sesion)) {
+            	log.warn("Somebody is working in the room now, try some new hours");
             	model.addAttribute("message", "This room is already in use at this time");
             }
             if(!e.validEmployee(e.getProfession().toString(), sesion.getSala().getRoom_type().toString())) {
+            	log.warn("Employee profession: " + e.getProfession().toString() + " does not let him work as a " + sesion.getSala().getRoom_type().toString());
             	model.addAttribute("message", "The employee is not qualified to work in this room");
             }
             return addSession(model,horarioId);
         }else{
-        	sesion.setHorario(horarioService.findById(horarioId).get());
             horarioService.addSesion(horarioId, sesion);
-
+            log.info("New session created for " + e.getFirst_name() + " in the " + sesion.getSala());
             return "redirect:/employees/" + String.valueOf(e.getId());
         }
     }

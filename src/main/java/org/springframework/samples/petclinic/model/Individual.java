@@ -1,9 +1,16 @@
 package org.springframework.samples.petclinic.model;
+
+import java.time.LocalDate;
+import java.time.Period;
+
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @MappedSuperclass
 public class Individual extends BaseEntity {
@@ -20,9 +27,12 @@ public class Individual extends BaseEntity {
     @Pattern(regexp = "^[A-Za-z]+((\\s)?((\\'|\\-|\\.)?([A-Za-z])+))*$")
     private String last_name;
     
-    @Min(value=18, message="Must be equal or greater than 18")  
-    @Column(name = "age")
+    @Min(value=18, message="Must be equal or greater than 18")
     private Integer age;
+
+    @Column(name = "DOB")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate DOB;
 
     @Column(name = "address")
     @NotEmpty(message = "Address must be filled")
@@ -103,13 +113,19 @@ public class Individual extends BaseEntity {
     }
 
 	public Integer getAge() {
-		return age;
+		return Period.between(DOB, LocalDate.now()).getYears();
 	}
+    
+    public LocalDate getDOB() {
+        return DOB;
+    }
+    
+    public void setDOB(LocalDate DOB) {
+        this.DOB = DOB;
+    }
 
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-    
-    
+    public Boolean isBirthday() {
+        return DOB.getMonthValue() == LocalDate.now().getMonthValue() && DOB.getDayOfMonth() == LocalDate.now().getDayOfMonth();
+    }
 }
 

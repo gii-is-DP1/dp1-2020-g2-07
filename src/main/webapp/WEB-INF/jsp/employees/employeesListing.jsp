@@ -13,7 +13,7 @@
 					<link rel="stylesheet" href="/resources/css/CSS.css">
 				</head>	
 				<body>      
-    				<h2 style="margin-top: -4%">Employees</h2>
+    				<h2>Employees</h2>
 					<div class="table-title">
     					<table id="employeesTable" style="height: 20%;" class="table-fill">
         					<thead>

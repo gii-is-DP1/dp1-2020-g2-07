@@ -25,7 +25,7 @@ public class EmployeeRevenue extends BaseEntity{
     private LocalDate dateEnd;
 
     @NotNull
-    @Min(1)
+    @Min(0)
     @Max(170)
     @Column(name = "hours_worked")
     private Integer hoursWorked;

@@ -13,15 +13,15 @@
 					<link rel="stylesheet" href="/resources/css/CSS.css">
 				</head>
 				<body>
-    				<h2 style="margin-top: -4%">New session</h2>
+    				<h2>New session</h2>
     				
     				<form:form modelAttribute="newSesion" class="form-horizontal" id="add-sesion-form">
         				<div class="form-group has-feedback">
-          					<petclinic:selectField label="From" name="horaInicio" names="${hours_op}" size="1"/>
-          					<petclinic:selectField label="To" name="horaFin" names="${hours_end}" size="1"/>
+          					<petclinic:selectField label="From" name="horaInicio" names="${horaInicio}" size="1"/>
+          					<petclinic:selectField label="To" name="horaFin" names="${horaFin}" size="1"/>
           					<input type="hidden" name="horario" value="${horarioID}">
            						<div class="control-group">
-                    				<petclinic:selectField name="sala" label="Rooms " names="${salas}" size="5"/>
+                    				<petclinic:selectField name="sala" label="Rooms " names="${sala}" size="5"/>
                 				</div>  
         				</div>
         				<div class="form-group">

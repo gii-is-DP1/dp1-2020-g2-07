@@ -15,7 +15,8 @@
 				<link rel="stylesheet" href="/resources/css/CSS.css">
 			</head>	
 			<body>
-    			<h2 style="margin-top: -4%">Income Statements</h2>
+    			<h2>Income Statements</h2>
+    			<sec:authorize access="hasAuthority('admin')">
     			<div class="table-title">
     				<table id="balanceTable" style="vertical-align: middle" class="table-fill">
         				<thead>
@@ -52,6 +53,38 @@
         				</tbody>
     				</table>
     			</div>
+    			</sec:authorize>
+    			
+    			<sec:authorize access="hasAuthority('employee')">
+    			<div class="table-title">
+    				<table id="balanceTable" style="vertical-align: middle" class="table-fill">
+        				<thead>
+        					<tr>
+            					<th class="text-left">Month</th>
+           						<th class="text-left">Year</th>
+            					<th class="text-left" width="2%"></th>
+       						</tr>
+       					 </thead>
+        				<tbody class="table-hover">
+        					<c:forEach items="${balances}" var="balance">
+            					<tr>
+               						 <td class="text-left">
+                    					<c:out value="${balance.month}"/>
+                					</td>
+                					<td class="text-left">
+                    					<c:out value="${balance.year}"/>
+                					</td>
+                					<td class="text-left">
+                    					<a href="/balances/${balance.id}">
+                        					<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                    					</a>
+               						</td>
+            					</tr>
+        					</c:forEach>
+        				</tbody>
+    				</table>
+    			</div>
+    			</sec:authorize>
     		</body>
     	</html>
 </petclinic:layout>

@@ -13,8 +13,8 @@
 				<link rel="stylesheet" href="/resources/css/CSS.css">
 			</head>	
 			<body>
-				<sec:authorize access="hasAuthority('admin')">
-    				<h2 style="margin-top: -4%">Clients</h2>
+				<sec:authorize access="hasAnyAuthority('admin','employee')">
+    				<h2>Clients</h2>
     					<div class="table-title">
     					<table style="height: 20%" id="clientesTable" class="table-fill">
         					<thead>

@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Controller
 @RequestMapping("/bonos")
 public class BonoController {
@@ -55,9 +58,11 @@ public class BonoController {
 		if(bono.isPresent()) {
 			bonoservice.delete(bono.get());
 			model.addAttribute("message","The token has been deleted");
-			return listBonos(model);
+			log.info("Token with ID "+ id +" was deleted");
+			return listBonos(model);		
 		}else {
 			model.addAttribute("message","The token you are trying to delete doesn´t exist");
+			log.warn("Token with ID "+ id +" does not exist");
 			return listBonos(model);
 		}
 	}
@@ -74,6 +79,7 @@ public class BonoController {
 		 if(binding.hasErrors() || bonoservice.findTokenNoExist(code.getCode())) {
 			 if(bonoservice.findTokenNoExist(code.getCode())) {
 				 model.addAttribute("message", "This token doesn´t exist");
+				 log.warn("Token with code "+ code +" does not exist");
 			 }else {
 				 model.addAttribute("message", "There has been a problem");
 			 }
@@ -91,10 +97,12 @@ public class BonoController {
 			    		citaService.save(apt);
 	    			}else {
 	    				model.addAttribute("message", "The appointment either already exists or interrupts another");
+	    				log.info("The appointment either already exists or interrupts another");
 	    				return REEDEM_TOKEN;
 	    			}
 		    	}else {
 		    		model.addAttribute("message", "This token has expired or has already been used");
+		    		log.info("Token with code " +code+ " has expired or has already been used");
 		    		return REEDEM_TOKEN;
 		    	}
 	     }

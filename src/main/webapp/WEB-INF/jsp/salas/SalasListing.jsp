@@ -14,6 +14,7 @@
 			</head>
 			<body>
      			<h2 style="margin-top: -4%">Rooms</h2>
+     			<sec:authorize access="hasAuthority('admin')">
  				<div class="table-title">
     				<table id="salasTable" class="table-fill">
         				<thead>
@@ -68,6 +69,75 @@
         			</tbody>
     			</table>
     		</div>
+    		</sec:authorize>
+    		
+    		<sec:authorize access="hasAnyAuthority('employee','client')">
+ 				<div class="table-title">
+    				<table id="salasTable" class="table-fill">
+        				<thead>
+        					<tr>
+            					<th class="text-left">Name</th>
+            					<th class="text-left">Capacity</th>
+            					<th class="text-left">Description</th>
+        					</tr>
+        				</thead>
+        				<tbody class="table-hover">
+        					<c:forEach items="${salas}" var="sala">
+            				<tr>
+                				<td class="text-left">
+                    				<spring:url value="/salas/{salaId}" var="salaUrl">
+                        				<spring:param name="salaId" value="${sala.id}"/>
+                    				</spring:url>
+                					<a href="${fn:escapeXml(salaUrl)}"><c:out value="${sala.name}"/></a>
+                				</td>
+               
+                				<td class="text-left">
+                    				<c:out value="${sala.aforo}"/>
+                				</td>
+                				<td class="text-left">
+                    				<c:out value="${sala.descripcion}"/>
+                				</td>   
+            				</tr>
+        				</c:forEach>
+        			</tbody>
+    			</table>
+    		</div>
+
+    		</sec:authorize>
+    		
+    		<sec:authorize access="!isAuthenticated()">
+ 				<div class="table-title">
+    				<table id="salasTable" class="table-fill">
+        				<thead>
+        					<tr>
+            					<th class="text-left">Name</th>
+            					<th class="text-left">Capacity</th>
+            					<th class="text-left">Description</th>
+        					</tr>
+        				</thead>
+        				<tbody class="table-hover">
+        					<c:forEach items="${salas}" var="sala">
+            				<tr>
+                				<td class="text-left">
+                    				<spring:url value="/salas/{salaId}" var="salaUrl">
+                        				<spring:param name="salaId" value="${sala.id}"/>
+                    				</spring:url>
+                					<a href="${fn:escapeXml(salaUrl)}"><c:out value="${sala.name}"/></a>
+                				</td>
+               
+                				<td class="text-left">
+                    				<c:out value="${sala.aforo}"/>
+                				</td>
+                				<td class="text-left">
+                    				<c:out value="${sala.descripcion}"/>
+                				</td>   
+            				</tr>
+        				</c:forEach>
+        			</tbody>
+    			</table>
+    		</div>
+    		</sec:authorize>
+    		
     		<div class="form-group">
    	    		<p>
            	 		<sec:authorize access="hasAuthority('admin')"> 
