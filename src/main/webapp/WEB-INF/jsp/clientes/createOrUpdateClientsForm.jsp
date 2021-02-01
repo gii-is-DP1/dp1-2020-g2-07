@@ -22,7 +22,8 @@
 			        var email = document.forms["clientForm"]["email"].value;
 			        var username = document.forms["clientForm"]["user.username"].value;
 			        var password = document.forms["clientForm"]["user.password"].value;
-			        var nameRegex = /^[a-zA-Z ]*$/;
+					var nameRegex = /^[a-zA-Z ]*$/;
+					var userRegex = /^[a-zA-Z0-9]+$/;
 			        var IBANRegex = /([a-zA-Z]{2})\s*\t*(\d{2})\s*\t*(\d{4})\s*\t*(\d{4})\s*\t*(\d{2})\s*\t*(\d{10})/;
 			        var emailRegex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
 			        if(fName == "" || fName == null || lName == "" || lName == null){
@@ -31,7 +32,13 @@
 			        }else if(!nameRegex.test(fName) || !nameRegex.test(lName)){
 			            alert("First and last name cant have numbers or special characters");
 			            return false;
-			        }else if(fName.length < 3 || fName.length > 20){
+					} else if(!userRegex.test(username)){
+			            alert("Username can't have special characters");
+						return false;
+					}else if(username == "" || username == null || password == "" || password == null){
+						alert("Username and password must be filled");
+						return false;
+			        } else if(fName.length < 3 || fName.length > 20){
 			            alert("First name must be between 3 and 20 characters");
 			            return false;
 			        }else if(lName.length < 3 || fName.length > 25){
