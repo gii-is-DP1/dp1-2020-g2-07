@@ -43,7 +43,7 @@
             <li><a href="/admin">Admin</a></li>
             </sec:authorize>
             
-            <sec:authorize access="hasAuthority('admin')">
+            <sec:authorize access="hasAnyAuthority('admin','client')">
             <li><a href="/bonos">Tokens</a></li>
             </sec:authorize>
           </ul>

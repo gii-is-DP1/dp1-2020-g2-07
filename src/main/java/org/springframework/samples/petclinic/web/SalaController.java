@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Bono;
@@ -32,7 +30,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -178,7 +175,6 @@ public class SalaController {
 				return salasListing(model);
 			}
 		}
-
 
 	@GetMapping("/{salaId}/createtoken")
 	public String createtoken(@PathVariable("salaId") int salaId,ModelMap model) {
