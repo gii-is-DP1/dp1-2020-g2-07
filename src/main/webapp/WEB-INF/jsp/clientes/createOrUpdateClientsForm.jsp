@@ -21,7 +21,8 @@
 			        var IBAN = document.forms["clientForm"]["IBAN"].value;
 			        var email = document.forms["clientForm"]["email"].value;
 			        var username = document.forms["clientForm"]["user.username"].value;
-			        var password = document.forms["clientForm"]["user.password"].value;
+					var password = document.forms["clientForm"]["user.password"].value;
+					var DOB = document.forms["clientForm"]["DOB"].value;
 					var nameRegex = /^[a-zA-Z ]*$/;
 					var userRegex = /^[a-zA-Z0-9]+$/;
 			        var IBANRegex = /([a-zA-Z]{2})\s*\t*(\d{2})\s*\t*(\d{4})\s*\t*(\d{4})\s*\t*(\d{2})\s*\t*(\d{10})/;
@@ -62,17 +63,26 @@
 			        }else if(!emailRegex.test(email)){
 			            alert("IBAN must be spelled appropriately");
 			            return false;
-			        }
+					}
+					else if(DOB == null){
+           				alert("Date of birth must be filled");
+            			return false;
+					}
+					else if((new Date(new Date() - new Date(DOB)).getFullYear() - 1970) < 18){
+           				alert("You must be over 18 years old");
+            			return false;
+        			}
 			        return true;
 			    }
 			</script>
 			<body>    
-    			<h2><c:if test="${cliente['new']}">New </c:if> Cliente</h2>
+    			<h2><c:if test="${cliente['new']}">New </c:if> Client</h2>
     			
     				<form:form name="clientForm" modelAttribute="cliente" class="form-horizontal" id="add-cliente-form" onsubmit="return validateForm()">
         				<div class="form-group has-feedback">
             				<petclinic:inputField label="First Name" name="first_name"/>
-            				<petclinic:inputField label="Last Name" name="last_name"/>
+							<petclinic:inputField label="Last Name" name="last_name"/>
+							<petclinic:localDate pattern="yyyy-MM-dd" label="Date of Birth" name="DOB"/>
             				<petclinic:inputField label="Address" name="address"/>
             				<petclinic:inputField label="IBAN" name="IBAN"/>
             				<petclinic:inputField label="Email" name="email"/>

@@ -41,6 +41,7 @@ public class AdminControllerMockTest {
     public static final String ADMIN_ANNOUNCEMENT = "admin/newAnnouncement";
     public static final String ADMIN_USERS = "admin/checkUsers";
     public static final String ADMINS_FORM ="admin/createOrUpdateAdminsForm";
+    public static final String ADMIN_BDAYS ="admin/checkBirthdays";
     @MockBean
     private AdminService adminService;
 
@@ -195,5 +196,17 @@ public class AdminControllerMockTest {
             .param("body", "prueba"))
             .andExpect(status().isOk())
             .andExpect(view().name(ADMIN_HOME));
+    }
+
+    @WithMockUser(value="admin")
+    @Test
+    public void postBirthdaysSuccess() throws Exception {
+        mockMvc.perform(post("/admin/birthdays")
+        .with(csrf())
+        .param("month", "JANUARY"))
+        .andExpect(model().attributeExists("clientBdays"))
+        .andExpect(model().attributeExists("employeeBdays"))
+        .andExpect(status().isOk())
+        .andExpect(view().name(ADMIN_BDAYS));
     }
 }
