@@ -194,7 +194,7 @@ public class HorarioMockedServiceTests {
     @Test
     public void shouldCalcDays() {
     	/*Se comprueba que la función sólo devuelve los días que se le pasan como parámetro y lo hacen de manera ordenada según la fecha*/
-    	Horario h2 = new Horario(LocalDate.of(2021, 2, 1),e,new ArrayList<Sesion>());
+    	Horario h2 = new Horario(LocalDate.of(2021, 3, 14),e,new ArrayList<Sesion>());
     	horarios.add(h2);
     	Collection<Horario> future = horarioService.calcDays(1, "future");
     	assertThat(future).hasSize(2);
