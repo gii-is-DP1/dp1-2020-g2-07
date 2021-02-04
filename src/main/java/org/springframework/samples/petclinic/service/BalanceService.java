@@ -54,13 +54,13 @@ public class BalanceService {
 	}
 
 	//Comprueba si hoy es dia 1 del mes a las 00:00
-	@Scheduled(cron = "0 38 14 4 1/1 *")
+	@Scheduled(cron = "0 0 0 1 */1 *")
     public void checkStmDay() {
-    	LocalDate day_one = getPrimerDiaMesPrevio();
-    	String month = day_one.getMonth().toString();
-    	String year = getAnyo(day_one);
+    	LocalDate day = getPrimerDiaMesPrevio();
+    	String month = day.getMonth().toString();
+    	String year = getAnyo(day);
     	
-    	createBalance(day_one,month,year);
+    	createBalance(day,month,year);
     	log.info(String.format("Income Statement of previous month has been created"));
     }
 
