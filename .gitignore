@@ -1,5 +1,6 @@
 target/*
 !target/pit-reports/
+!target/generated-test-sources/
 .settings/*
 .classpath
 .project

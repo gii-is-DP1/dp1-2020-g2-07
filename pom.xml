@@ -180,12 +180,9 @@
                 <version>2.1.0</version>
                 <configuration>
                     <packages>
-                        <param>org.springframework.samples.petclinic.service</param>
+                        <param>org.springframework.samples.petclinic.model.Cliente</param>
+                        <param>org.springframework.samples.petclinic.model.Employee</param>
                     </packages>
-                    <classes>
-                        <param>org.springframework.samples.petclinic.service.*</param>
-                    </classes>
-                    <targetDir>src\test\java\org\springframework\samples\petclinic\assertj-assertions</targetDir>
                 </configuration>
             </plugin>
             <plugin>
