@@ -1,9 +1,11 @@
 package org.springframework.samples.petclinic.service;
 
+import java.time.Month;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -48,6 +50,12 @@ public class ClienteService {
         return clientRepo.findById(id);
     }
 
+    public Collection<Cliente> findClientByBirthdayMonth(Month month) {
+        return this.findAll()
+            .stream()
+            .filter(u -> u.getDOB().getMonth().equals(month))
+            .collect(Collectors.toList());
+    }
 
     public void delete(Cliente cliente) {
         clientRepo.deleteById(cliente.getId());

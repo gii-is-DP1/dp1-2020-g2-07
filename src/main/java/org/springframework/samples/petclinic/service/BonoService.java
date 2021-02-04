@@ -1,5 +1,4 @@
 package org.springframework.samples.petclinic.service;
-
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -10,7 +9,6 @@ import org.springframework.samples.petclinic.model.Bono;
 import org.springframework.samples.petclinic.repository.BonoRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

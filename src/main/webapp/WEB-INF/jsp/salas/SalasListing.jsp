@@ -102,6 +102,7 @@
         			</tbody>
     			</table>
     		</div>
+
     		</sec:authorize>
     		
     		<sec:authorize access="!isAuthenticated()">

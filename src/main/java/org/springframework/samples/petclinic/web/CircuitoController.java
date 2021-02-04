@@ -8,6 +8,7 @@ import org.springframework.samples.petclinic.model.Circuito;
 import org.springframework.samples.petclinic.service.CircuitoService;
 import org.springframework.samples.petclinic.service.SalaService;
 import org.springframework.samples.petclinic.service.exceptions.DuplicatedCircuitoNameException;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import lombok.extern.slf4j.Slf4j;
+
+
+@Slf4j
 @Controller
 @RequestMapping("/circuitos")
 public class CircuitoController {
@@ -54,6 +59,7 @@ public class CircuitoController {
 			return CIRCUITOS_FORM;
 		}else {
 			model.addAttribute("message","We could not find the circuit you are trying to edit.");
+			
 			return CIRCUITOS_LISTING;
 		}
 	}
@@ -63,6 +69,7 @@ public class CircuitoController {
 		if(binding.hasErrors()) {
 			model.put("circuito", modifiedCircuito);
 			model.put("salas", salasServices.findAll());
+			log.warn("Some mistakes here..");
 			return CIRCUITOS_FORM;
 		}else {
 			
@@ -74,9 +81,10 @@ public class CircuitoController {
             	model.put("circuito", modifiedCircuito);
      			model.put("salas", salasServices.findAll());
             	binding.rejectValue("name", "duplicate", "already exists");
+            	log.warn("Circuit with ID "+ id +" has a ducplicate name");
                 return  CIRCUITOS_FORM;
              }
-			
+			log.info("Circuit with ID "+ id + " was edit");
 			model.addAttribute("message", "The circuit was updated successfully.");
 			return cicuitosListing(model);
 		}
@@ -88,9 +96,11 @@ public class CircuitoController {
 		if(circuito.isPresent()) {
 			circuitosServices.delete(circuito.get());
 			model.addAttribute("message", "The circuit was deleted successfully.");
+			log.info("Circuit with ID "+ id + " was deleted");
 			return cicuitosListing(model);
 		}else {
 			model.addAttribute("message", "We could not find the circuit you are trying to delete.");
+			log.warn("Circuit with ID "+ id +" does not exit");
 			return cicuitosListing(model);
 		}
 	}
@@ -108,6 +118,7 @@ public class CircuitoController {
 		if(binding.hasErrors()) {
 			model.put("circuito", circuito);
 			model.put("salas", salasServices.findAll());
+			log.warn("Some mistakes here..");
 			return CIRCUITOS_FORM;
 			
 		}else {
@@ -118,9 +129,11 @@ public class CircuitoController {
             	model.put("circuito", circuito);
      			model.put("salas", salasServices.findAll());
             	binding.rejectValue("name", "duplicate", "already exists");
+            	log.warn("This circuit  has a duplicate name");
                 return  CIRCUITOS_FORM;
              }			
 			model.addAttribute("message", "The circuit was created successfully.");
+			log.info("You have created a new circuit!");
 			return cicuitosListing(model);
 			
 		}

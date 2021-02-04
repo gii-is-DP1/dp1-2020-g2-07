@@ -104,7 +104,9 @@
         				</c:forEach>
         			</tbody>
     			</table>
-    		</div>
+			</div>
+			
+			<a href="birthdays"><img id="imagen" src="/resources/images/cake.png" alt="Check birthdays" style="width:10%; height:10%;"></a>
     	</body>
     </html>
 </petclinic:layout>

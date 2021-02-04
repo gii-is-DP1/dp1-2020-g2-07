@@ -7,11 +7,19 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.validation.Valid;
+
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -28,6 +36,7 @@ public class AdminController {
     public static final String ADMIN_ANNOUNCEMENT = "admin/newAnnouncement";
     public static final String ADMIN_USERS = "admin/checkUsers";
     public static final String ADMINS_FORM ="admin/createOrUpdateAdminsForm";
+    public static final String ADMIN_BDAYS ="admin/checkBirthdays";
 
     @Autowired
     AdminService adminService;
@@ -67,7 +76,7 @@ public class AdminController {
             }
 
             adminService.save(admin);
-            model.addAttribute("message", "The client was created successfully!");
+            model.addAttribute("message", "The admin was created successfully!");
             return getHomeAdmin(model);
         }
     }
@@ -107,7 +116,7 @@ public class AdminController {
                 model.addAttribute("message","This user is already enable, delete it if you wont use it anymore.");
             }
         }else{
-            model.addAttribute("Ups that username doesnt exist, there must be a problem");
+            model.addAttribute("message", "Ups that username doesnt exist, there must be a problem");
         }
 
         return getUsers(model);
@@ -120,16 +129,49 @@ public class AdminController {
             Optional<Cliente> c = clienteService.clientByUsername(username);
             if (c.isPresent()){
                 clienteService.delete(c.get());
-                model.addAttribute("message", "Client deleted succesfully");
             }else {
                 Optional<Employee> e = employeeService.employeeByUsername(username);
                 e.ifPresent(employee -> employeeService.delete(employee));
-                model.addAttribute("message", "Employee deleted succesfully");
             }
+            model.addAttribute("message", "User deleted succesfully");
         }else{
             model.addAttribute("message","Ups that username doesnt exist, there must be a problem");
         }
         return getUsers(model);
+    }
+
+    @ModelAttribute("months")
+    public List<Month> getMonths(){
+        return Arrays.stream(Month.class.getEnumConstants()).collect(Collectors.toList());
+    }
+
+    @GetMapping("/birthdays")
+    public String viewBirthdays(ModelMap model) {
+        //aquí NO está pasando nada raro, no mirar... ¿no tienes sueño? zzzz, qué sueño...
+        Object tempBean = new Object(){
+            public String month = "";
+            public String getMonth() { return month; }
+            public void setMonth(String month) { this.month = month; }
+        };
+    
+        model.addAttribute("tempBean", tempBean);
+        return ADMIN_BDAYS;
+    }
+
+    @PostMapping("/birthdays")
+    public String viewBirthdays(@RequestParam("month") String month, ModelMap model) {
+        Object tempBean = new Object(){
+            public String month = "";
+            public String getMonth() { return month; }
+            public void setMonth(String month) { this.month = month; }
+        };
+    
+        model.addAttribute("tempBean", tempBean);
+        model.addAttribute("month", month);
+
+        model.addAttribute("clientBdays", clienteService.findClientByBirthdayMonth(Month.valueOf(month)));
+        model.addAttribute("employeeBdays", employeeService.findEmployeeByBirthdayMonth(Month.valueOf(month)));
+        return ADMIN_BDAYS;
     }
 
 

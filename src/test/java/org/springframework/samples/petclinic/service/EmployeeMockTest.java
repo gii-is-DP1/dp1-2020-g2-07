@@ -1,4 +1,5 @@
 package org.springframework.samples.petclinic.service;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.Before;
 import org.junit.Test;
@@ -10,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.repository.EmployeeRepository;
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,6 +53,7 @@ public class EmployeeMockTest {
         e.setLast_name("Walt");
         e.setCategory(Categoria.EMPLEADO);
         e.setProfession(Profession.MASSAGIST);
+        e.setDOB(LocalDate.of(2000, 1, 1));
         e.setId(1);
         e.setAddress("C/Pantomima");
         e.setEmail("jmgc101099@hotmail.com");
@@ -99,6 +102,17 @@ public class EmployeeMockTest {
 
         Optional<Employee> eOptionalExample2 = this.employeeService.findById(2);
         assertFalse(eOptionalExample2.isPresent());
+    }
+
+    @Test
+    public void shouldFindByBdayMonth(){
+        /*Comprobamos que al llamar a la función con JANUARY nos devuelva un Collection<Employee> no vacio, y al llamarla con JUNE nos devuelva un
+        Collection<Employee> vacio*/
+        Collection<Employee> e1 = employeeService.findEmployeeByBirthdayMonth(Month.JANUARY);
+        assertFalse(e1.isEmpty());
+
+        Collection<Employee> e2 = employeeService.findEmployeeByBirthdayMonth(Month.JUNE);
+        assertTrue(e2.isEmpty());
     }
 
     @Test

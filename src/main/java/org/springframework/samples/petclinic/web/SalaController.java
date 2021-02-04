@@ -6,9 +6,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 import javax.validation.Valid;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Bono;
@@ -32,7 +30,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Controller
 @RequestMapping("/salas")
 public class SalaController {
@@ -87,6 +87,7 @@ public class SalaController {
 	public String editSala(@PathVariable("id") int id,@Valid Sala modifiedSala, BindingResult binding,ModelMap model) {
 		Optional<Sala> sala = salaService.findById(id);
 		if(binding.hasErrors()) {
+			log.warn(binding.getFieldError().getDefaultMessage());
 			return SALAS_FORM;
 		}else {
 			BeanUtils.copyProperties(modifiedSala, sala.get(),"id","aforo","descripcion");
@@ -96,7 +97,7 @@ public class SalaController {
             	binding.rejectValue("name", "duplicate", "already exists");
                 return  SALAS_FORM;
             }
-			
+			log.info("The room was updated successfully.");
 			model.addAttribute("message", "The room was updated successfully.");
 			return salasListing(model);
 		}
@@ -107,6 +108,7 @@ public class SalaController {
 		Optional<Sala> sala = salaService.findById(id);
 		if(sala.isPresent()) {
 			salaService.delete(sala.get());
+			log.info("Room " + sala.get().getName() + " deleted successfully");
 			model.addAttribute("message", "The room was deleted successfully.");
 			return salasListing(model);
 		}else {
@@ -123,18 +125,20 @@ public class SalaController {
 	}
 
 	@PostMapping(value = "/new")
-	public String processCreationForm(@Valid Sala sala, BindingResult result, ModelMap model) {
-		if (result.hasErrors()) {
+	public String processCreationForm(@Valid Sala sala, BindingResult binding, ModelMap model) {
+		if (binding.hasErrors()) {
+			log.warn(binding.getFieldError().getDefaultMessage());
 			return SALAS_FORM;
 		}
 		else {
                try{
-              	this.salaService.saveSala(sala);
+            	 this.salaService.saveSala(sala);
                 }catch(DuplicatedSalaNameException ex){
-                 result.rejectValue("name", "duplicate", "already exists");
-                return  SALAS_FORM;
-              }
-           model.addAttribute("message", "The room was created successfully.");
+                 binding.rejectValue("name", "duplicate", "already exists");
+                 return  SALAS_FORM;
+                }
+            log.info("The room was updated successfully.");
+            model.addAttribute("message", "The room was created successfully.");
         	return salasListing(model);
 		}
 	}
@@ -166,12 +170,11 @@ public class SalaController {
 				return "salas/salaDetails";
 			}else {
 				cs.save(cita);
-				
+				log.info("You now have an appointment in " + sala.getName() + " " + sf.print(cita.getSesion(), Locale.getDefault()));
 				model.addAttribute("message", "You now have an appointment in " + sala.getName() + " " + sf.print(cita.getSesion(), Locale.getDefault()));
 				return salasListing(model);
 			}
 		}
-
 
 	@GetMapping("/{salaId}/createtoken")
 	public String createtoken(@PathVariable("salaId") int salaId,ModelMap model) {
@@ -195,15 +198,16 @@ public class SalaController {
 			}
 			if(code_not_rpt) {
 				bono.setUsado(false);
-				//bono.getSession().setToken(bono);
 				bono.setDate_start(LocalDate.now());
 				bono.setDate_end(bono.getSession().getHorario().getFecha().minusDays(1));
 				if (bono.getCodigo().isEmpty())
 					bono.setCodigo();
 				bonoservice.save(bono);
 				
+				log.info("Token with code " + bono.getCodigo() + " created successfully");
 				model.addAttribute("message", "The token has been created successfully");
 			}else {
+				log.warn("The code " + bono.getCodigo() + " already exists");
 				model.addAttribute("message", "The token code already exists");
 			}
 		}

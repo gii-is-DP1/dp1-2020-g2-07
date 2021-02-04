@@ -11,11 +11,11 @@ import org.springframework.samples.petclinic.service.SalaService;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SalaTypeFormatter implements Formatter<Sala> {
+public class SalaFormatter implements Formatter<Sala> {
     private final SalaService salaService;
 
     @Autowired
-    public SalaTypeFormatter(SalaService salaService) {
+    public SalaFormatter(SalaService salaService) {
         this.salaService = salaService;
     }
 
