@@ -101,7 +101,6 @@ public class BalanceMockTest {
 		
 		when(balanceRepo.findUsedTokensByMonth(LocalDate.parse("2009-12-01"), LocalDate.parse("2009-12-31"), true)).thenReturn(tokens);
 		when(balanceRepo.findSalariesByMonth(LocalDate.parse("2009-12-01"), LocalDate.parse("2009-12-31"))).thenReturn(salaries);
-		when(balanceRepo.findBalanceExists("DECEMBER", "2009")).thenReturn(1);
 		when(balanceRepo.findSubsByMonth(LocalDate.parse("2009-12-01"), LocalDate.parse("2009-12-31"))).thenReturn(payments);
 	}
 	
@@ -138,12 +137,5 @@ public class BalanceMockTest {
 		 LocalDate init = LocalDate.parse("2009-12-01");
 		 LocalDate last = LocalDate.parse("2009-12-31");
 		 assertTrue(IncStmServcice.getTokens(init, last, true).equals(token.getPrecio()));
-	 }
-	 
-	 @Test //Checks if the IncStm already exits
-	 public void shouldBalanceExist() {
-		 String month = "DECEMBER";
-		 String year = "2009";
-		 assertTrue(IncStmServcice.balanceExists(month, year));
 	 }
 }
