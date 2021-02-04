@@ -30,17 +30,17 @@ public class BonoController {
 	private ClienteService clientservice;
 	private CitaService citaService;
 	private HorarioService horarioService;
-
-	@Autowired
 	private EmailService emailService;
 
 	@Autowired
-	public BonoController(BonoService bonoservice, ClienteService clientservice, CitaService citaService, HorarioService horarioService) {
+	public BonoController(BonoService bonoservice, ClienteService clientservice, CitaService citaService, 
+			HorarioService horarioService, EmailService emailService) {
 		super();
 		this.bonoservice = bonoservice;
 		this.clientservice = clientservice;
 		this.citaService = citaService;
 		this.horarioService = horarioService;
+		this.emailService = emailService;
 	}
 
 	@GetMapping

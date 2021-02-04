@@ -150,6 +150,15 @@ public class BalanceControllerMockTest {
 	
 	@WithMockUser(value = "admin1")
     @Test
+    public void showIncStmListing() throws Exception{
+        mockMvc.perform(get("/balances/"))
+            .andExpect(model().attributeExists("balances"))
+            .andExpect(status().isOk())
+            .andExpect(view().name(BALANCE_LISTING));
+    }
+	
+	@WithMockUser(value = "admin1")
+    @Test
 	public void getAddEmployeetFormSucces() throws Exception{
         mockMvc.perform(get("/balances/{balancesId}/edit", TEST_STATEMENT_ID))
             .andExpect(status().isOk())
