@@ -34,7 +34,7 @@ public class TokenMockTest {
 	}
 	
 	@Test
-	//Checks that the IncStm saves successfully
+	//Checks that the token saves successfully
     public void shouldSave() {
 	 tokenService.save(token);
 	}

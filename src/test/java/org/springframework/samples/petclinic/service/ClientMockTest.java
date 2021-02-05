@@ -15,8 +15,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.samples.petclinic.model.*;
 import org.springframework.samples.petclinic.repository.ClienteRepository;
 
-
 import java.time.LocalDate;
+import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -63,6 +63,7 @@ public class ClientMockTest {
         c.setCategory(Categoria.CLIENTE);
         c.setSuscripcion(SubType.AFTERNOON);
         c.setId(1);
+        c.setDOB(LocalDate.of(2000, 1, 1));
         c.setAddress("C/Pantomima");
         c.setEmail("jmgc101099@hotmail.com");
         c.setIBAN("ES4131905864163572187269");
@@ -100,6 +101,15 @@ public class ClientMockTest {
     }
 
     @Test
+    public void shouldFindByBdayMonth(){
+        Collection<Cliente> c1 = clienteService.findClientByBirthdayMonth(Month.JANUARY);
+        assertFalse(c1.isEmpty());
+
+        Collection<Cliente> c2 = clienteService.findClientByBirthdayMonth(Month.JUNE);
+        assertTrue(c2.isEmpty());
+    }
+
+    @Test
     public void shouldSave(){
         clienteService.save(c, "new");
         verify(authoritiesService).saveAuthorities("juanma", "client");
@@ -130,7 +140,7 @@ public class ClientMockTest {
 
         assertTrue(c.getPagos().size() == 1);
 
-        verify(authoritiesService).saveAuthorities("juanma", "client");
+
         verify(userService).saveUser(c.getUser());
     }
 

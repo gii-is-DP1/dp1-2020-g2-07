@@ -22,9 +22,6 @@ public interface BalanceRepository  extends Repository<Balance,Integer>,  CrudRe
     @Query("SELECT bono FROM Bono bono WHERE bono.date_start >= :init_date and bono.date_end <= :last_date and bono.usado = :used")
    	public Collection<Bono> findUsedTokensByMonth(@Param("init_date") LocalDate init_date,@Param("last_date") LocalDate last_date,@Param("used") Boolean used);
     
-    @Query("SELECT COUNT(*) FROM Balance balance WHERE balance.month = :month and balance.year = :year")
-	public Integer findBalanceExists(@Param("month") String month,@Param("year") String year);
-    
     @Query("SELECT balance FROM Balance balance WHERE balance.id =:id")
 	public Balance findBalanceById(@Param("id") int id);
 }

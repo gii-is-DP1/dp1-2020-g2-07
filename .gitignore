@@ -1,4 +1,6 @@
 target/*
+!target/pit-reports/
+!target/generated-test-sources/
 .settings/*
 .classpath
 .project
@@ -6,7 +8,6 @@ target/*
 .attach_pid*
 .idea
 *.iml
-/target
 .sts4-cache/
 .vscode/*
 !.vscode/settings.json

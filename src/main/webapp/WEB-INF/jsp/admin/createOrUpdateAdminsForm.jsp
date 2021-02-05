@@ -17,12 +17,17 @@
 			<script>
 				 function validateForm(){
 				        var username = document.forms["adminForm"]["user.username"].value;
-				        var password = document.forms["adminForm"]["user.password"].value;
+						var password = document.forms["adminForm"]["user.password"].value;
+						var userRegex = /^[a-zA-Z0-9]+$/;
 	
 				        if(username == "" || username == null || password == "" || password == null){
 				            alert("User and password must be filled");
 				            return false;
-				        }
+						}
+						else if(!userRegex.test(username)){
+			            	alert("Username can't have special characters");
+							return false;
+						}
 				        return true;
 				    }
 			</script>    

@@ -3,14 +3,8 @@ import java.time.LocalDate;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Bono;
-import org.springframework.samples.petclinic.model.Cita;
-import org.springframework.samples.petclinic.model.Cliente;
-import org.springframework.samples.petclinic.model.TokenCode;
-import org.springframework.samples.petclinic.service.BonoService;
-import org.springframework.samples.petclinic.service.CitaService;
-import org.springframework.samples.petclinic.service.ClienteService;
-import org.springframework.samples.petclinic.service.HorarioService;
+import org.springframework.samples.petclinic.model.*;
+import org.springframework.samples.petclinic.service.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -30,20 +24,23 @@ import lombok.extern.slf4j.Slf4j;
 public class BonoController {
 	public static final String BONOS_LISTING="bonos/BonosListing";
 	public static final String REEDEM_TOKEN="bonos/ReedemToken";
-	
+
 
 	private BonoService bonoservice;
 	private ClienteService clientservice;
 	private CitaService citaService;
 	private HorarioService horarioService;
+	private EmailService emailService;
 
 	@Autowired
-	public BonoController(BonoService bonoservice, ClienteService clientservice, CitaService citaService, HorarioService horarioService) {
+	public BonoController(BonoService bonoservice, ClienteService clientservice, CitaService citaService, 
+			HorarioService horarioService, EmailService emailService) {
 		super();
 		this.bonoservice = bonoservice;
 		this.clientservice = clientservice;
 		this.citaService = citaService;
 		this.horarioService = horarioService;
+		this.emailService = emailService;
 	}
 
 	@GetMapping
@@ -59,7 +56,7 @@ public class BonoController {
 			bonoservice.delete(bono.get());
 			model.addAttribute("message","The token has been deleted");
 			log.info("Token with ID "+ id +" was deleted");
-			return listBonos(model);		
+			return listBonos(model);
 		}else {
 			model.addAttribute("message","The token you are trying to delete doesn´t exist");
 			log.warn("Token with ID "+ id +" does not exist");
@@ -108,4 +105,23 @@ public class BonoController {
 	     }
 		 return "redirect:/clientes/" + String.valueOf(c.get().getId());
 	 }
+
+	 @GetMapping("/{bonoId}/buy")
+     public String bonoBuyEmail(@PathVariable("bonoId") int bonoId, ModelMap model, @AuthenticationPrincipal User user){
+         Optional<Cliente> c = clientservice.clientByUsername(user.getUsername());
+         Optional<Bono> b = bonoservice.findById(bonoId);
+         if(!c.isPresent() || !b.isPresent()){
+             return listBonos(model);
+         }else{
+             Email e = new Email();
+             String[] addres = {c.get().getEmail()};
+             e.setAddress(addres);
+             e.setSubject("Purchased token by " + c.get().getLast_name() + ", " + c.get().getFirst_name());
+             e.setBody("Token with code: " + b.get().getCodigo() + ". \nFor " + b.get().getSession().getSala().getName() +" addressed at " +
+                 b.get().getSession().getHorario().toString() + ". \n Remember to use it in your profile page.");
+             emailService.sendMail(e);
+         }
+         model.addAttribute("message", "Your token has been sended to your email");
+         return listBonos(model);
+     }
 }
