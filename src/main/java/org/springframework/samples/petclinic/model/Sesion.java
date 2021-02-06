@@ -97,6 +97,8 @@ public class Sesion extends BaseEntity{
 		this.citas = citas;
 	}
 	
+	
+	
 	public Boolean validate() {
 		return horaInicio.isBefore(horaFin);
 	}

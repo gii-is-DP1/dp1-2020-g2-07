@@ -90,7 +90,7 @@ public class HorarioController {
 	
     @GetMapping("/schedule/{horarioId}/newSesion")
     public String addSession(ModelMap model,@PathVariable("horarioId") int horarioId) {
-        model.addAttribute("horarioID", horarioId);
+        model.addAttribute("horario", horarioId);
         model.addAttribute("sesion", this.horarioService.findSesionesHorario(horarioId));     
         model.addAttribute("sala",salaService.findAll());
         model.addAttribute("horaInicio",horarioService.SesionHours(LocalTime.parse("09:00")));
