@@ -48,7 +48,7 @@ public class Sesion extends BaseEntity{
 
 	public Sesion(Set<Cita> citas, @NotNull(message = "Start time can't be null") LocalTime horaInicio,
 			@NotNull(message = "End time can't be null") LocalTime horaFin,
-			@NotNull(message = "The room can't be null") Sala sala, @NotNull Horario horario, Bono token) {
+			@NotNull(message = "The room can't be null") Sala sala, @NotNull Horario horario) {
 		super();
 		this.citas = citas;
 		this.horaInicio = horaInicio;

@@ -100,7 +100,7 @@ public class HorarioControllerTests {
 		
 		h = new Horario(LocalDate.of(2021, 3, 14),e,new ArrayList<Sesion>());
 		
-		s = new Sesion(new HashSet<Cita>(),LocalTime.of(10, 00),LocalTime.of(12, 00),sala,h,null);
+		s = new Sesion(new HashSet<Cita>(),LocalTime.of(10, 00),LocalTime.of(12, 00),sala,h);
 		
 		h.addSesion(s);
 		
