@@ -12,9 +12,37 @@
 		<html>
 			<head>
 				<link rel="stylesheet" href="/resources/css/CSS.css">
-			</head>	
+			</head>
 			<body>
-    			<form:form modelAttribute="email" class="form-horizontal" id="send email form">
+            <script>
+                function validateForm(){
+                    var address = document.forms["send email form"]["address"].value;
+                    var subject = document.forms["send email form"]["subject"].value;
+                    var body = document.forms["send email form"]["body"].value;
+
+                    var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+
+                    if(address == "" || address == null){
+                        alert("Wrong email format")
+                        return false;
+                    } else if(!emailRegex.test(address)){
+                        alert("Address cant be empty")
+                        return false;
+                    }
+
+                    if (subject == "" || subject == null || subject.length >= 40 || subject.length <= 3){
+                        alert("Subject cant be null, contain more than 40 characters or less than 3")
+                        return false;
+                    }
+
+                    if (body == "" || body == null || body.length >= 40 || body.length <= 3){
+                        alert("Body cant be null, contain more than 400 charcters or less than 3")
+                        return false;
+                    }
+
+                }
+            </script>
+    			<form:form modelAttribute="email" class="form-horizontal" id="send email form" onsubmit="return validateForm()">
         			<div class="form-group has-feedback">
 			            <petclinic:inputField label="To:" name="address"/>
 			            <petclinic:inputField label="Subject:" name="subject"/>

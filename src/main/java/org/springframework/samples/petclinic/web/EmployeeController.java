@@ -49,7 +49,7 @@ public class EmployeeController {
 
             return EMPLOYEES_LISTING;
         }
-        else return "/login";
+        else return "redirect:http://localhost/";
     }
 
     public String listEmployees(ModelMap model){
