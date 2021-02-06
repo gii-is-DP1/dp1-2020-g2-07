@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -39,17 +38,9 @@ public class BalanceController {
     
     @Autowired
     EmployeeService employeeService;
-    
+	
     @GetMapping
     public String listStatement(ModelMap model){
-    	LocalDate day_one = balanceService.getPrimerDiaMesPrevio();
-    	String month = day_one.getMonth().toString();
-    	String year = balanceService.getAnyo(day_one);
-
-    	if(balanceService.diaDeBalance() && !balanceService.balanceExists(month, year)) {
-    		balanceService.createBalance(day_one,month,year);
-    		log.info(String.format("Income Statement of previous month has been created"));
-    	}
         model.addAttribute("balances", balanceService.findAll());
         return BALANCE_LISTING;
     }

@@ -72,20 +72,22 @@ public class HorarioService {
     	}
     	a.removeAll(toRemove);
     	return a;
-    }
+    }  
     
     public Collection<Sesion> inTimeSessions(Collection<Sesion> available_sessions,Cliente c){ //Sessions deleting the ones the client can´t access due to they subscription type
     	List<Sesion> toRemove = new ArrayList<Sesion>();
     	SubType sub_type = c.getSuscripcion();
     	if(sub_type.toString().equals("MORNING")) {
     		for(Sesion s: available_sessions) {
-    			if((s.getHoraInicio().isAfter(LocalTime.parse("14:00")) || s.getHoraInicio().equals(LocalTime.parse("14:00")))  && (s.getHoraFin().isBefore(LocalTime.parse("21:00")) || s.getHoraFin().equals(LocalTime.parse("21:00")))) {
+    			if((s.getHoraInicio().isAfter(LocalTime.parse("14:00")) || s.getHoraInicio().equals(LocalTime.parse("14:00"))) &&
+    					(s.getHoraFin().isBefore(LocalTime.parse("21:00")) || s.getHoraFin().equals(LocalTime.parse("21:00")))) {
     				toRemove.add(s);
     			}
     		}
     	}else if(sub_type.toString().equals("AFTERNOON")) {
     		for(Sesion s: available_sessions) {
-    			if((s.getHoraInicio().isAfter(LocalTime.parse("09:00")) || s.getHoraInicio().equals(LocalTime.parse("09:00")) )  && (s.getHoraFin().isBefore(LocalTime.parse("14:00")) || s.getHoraFin().equals(LocalTime.parse("14:00"))) ){
+    			if((s.getHoraInicio().isAfter(LocalTime.parse("09:00")) || s.getHoraInicio().equals(LocalTime.parse("09:00")) ) &&
+    					(s.getHoraFin().isBefore(LocalTime.parse("14:00")) || s.getHoraFin().equals(LocalTime.parse("14:00"))) ){
     				toRemove.add(s);
     			}
     		}
@@ -103,7 +105,7 @@ public class HorarioService {
     	Collections.sort(future, (x,y)->x.getFecha().compareTo(y.getFecha()));
     	return future;
     }
-        
+    
     public boolean checkDuplicatedSessions(Sesion s) {
     	boolean duplicated = false;
     	for(Horario h:horarioRepo.findAll()) {
@@ -111,13 +113,13 @@ public class HorarioService {
     			for(Sesion sc:h.getSesiones()) {
     				boolean checkprevio = s.getHoraInicio().isBefore(sc.getHoraInicio()) && s.getHoraFin().isBefore(sc.getHoraInicio().plusMinutes(1));
     				boolean checkpost = s.getHoraInicio().isAfter(sc.getHoraFin().minusMinutes(1)) && s.getHoraFin().isAfter(sc.getHoraFin());
-    				if(sc.getSala().equals(s.getSala())&&!(checkprevio||checkpost)) {
+    				boolean checkcompleto = s.getHoraInicio().isBefore(sc.getHoraInicio()) && s.getHoraFin().isAfter(sc.getHoraFin());
+    				if(sc.getSala().equals(s.getSala())&&!(checkprevio||checkpost||!checkcompleto)) {
     					duplicated=true;
     					break;	
     				}
     			}
-    		}
-    		if(duplicated) {
+    		}if(duplicated) {
     			break;
     		}
     	}
@@ -155,7 +157,8 @@ public class HorarioService {
     		Sesion sc = c.getSesion();
     		boolean checkprevio = s.getHoraInicio().isBefore(sc.getHoraInicio()) && s.getHoraFin().isBefore(sc.getHoraInicio().plusMinutes(1));
     		boolean checkpost = s.getHoraInicio().isAfter(sc.getHoraFin().minusMinutes(1)) && s.getHoraFin().isAfter(sc.getHoraFin());
-    		if(!(checkprevio||checkpost)) {
+    		boolean checkcompleto = s.getHoraInicio().isBefore(sc.getHoraInicio()) && s.getHoraFin().isAfter(sc.getHoraFin());
+    		if(!(checkprevio||checkpost||!checkcompleto)) {
     			ok=true;
     			break;
     		}

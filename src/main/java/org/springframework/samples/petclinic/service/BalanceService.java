@@ -17,6 +17,7 @@ import org.springframework.samples.petclinic.model.Employee;
 import org.springframework.samples.petclinic.model.EmployeeRevenue;
 import org.springframework.samples.petclinic.model.Pago;
 import org.springframework.samples.petclinic.repository.BalanceRepository;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
@@ -52,17 +53,16 @@ public class BalanceService {
 		return anyo_text;
 	}
 
-
-	//Comprueba si hoy es día 1, para calcular el balance del mes pasado
-	public boolean diaDeBalance() {
-		Boolean tocaBalance = false;
-		Integer day_today = LocalDate.now().getDayOfMonth();
-		if(day_today.equals(23)) {
-			tocaBalance = true;
-			log.info("Today a new Income Statement is created");
-		}
-		return tocaBalance;
-	   }
+	//Comprueba si hoy es dia 1 del mes a las 00:00
+	@Scheduled(cron = "0 0 0 1 */1 *")
+    public void checkStmDay() {
+    	LocalDate day = getPrimerDiaMesPrevio();
+    	String month = day.getMonth().toString();
+    	String year = getAnyo(day);
+    	
+    	createBalance(day,month,year);
+    	log.info(String.format("Income Statement of previous month has been created"));
+    }
 
 	//Devuelve el día 1 del mes previo (Inicio del rango)
 	public LocalDate getPrimerDiaMesPrevio() {
@@ -94,15 +94,6 @@ public class BalanceService {
         while (iterator.hasNext()) {
         	res = res + iterator.next().getQuantity();
         }
-		return res;
-	}
-
-	public Boolean balanceExists (String month, String year) {
-		Integer x = balanceRepo.findBalanceExists(month, year);
-		Boolean res = false;
-		if(x==1) {
-			res=true;
-		}
 		return res;
 	}
 

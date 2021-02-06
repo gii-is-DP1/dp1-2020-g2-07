@@ -92,7 +92,7 @@ public class HorarioMockedServiceTests {
 		sala.setId(1);
 		sala.setName("Piscina");
         
-        s = new Sesion(new HashSet<Cita>(),LocalTime.of(10, 00),LocalTime.of(12, 00),sala,h,null);
+        s = new Sesion(new HashSet<Cita>(),LocalTime.of(10, 00),LocalTime.of(12, 00),sala,h);
         
         sesiones = new HashSet<Sesion>();
         sesiones.add(s);
@@ -142,7 +142,7 @@ public class HorarioMockedServiceTests {
     @Test
     public void shouldAddSession() {
     	/*Añadimos una sesion al horario ya creado*/
-    	Sesion s2 = new Sesion(new HashSet<Cita>(),LocalTime.of(12, 00),LocalTime.of(14, 00),sala,h,null);
+    	Sesion s2 = new Sesion(new HashSet<Cita>(),LocalTime.of(12, 00),LocalTime.of(14, 00),sala,h);
     	horarioService.addSesion(1, s2);
     	assertThat(horarioService.findSesionesHorario(1)).hasSize(2);
     	assertTrue(horarioService.findSesionesHorario(1).contains(s2));
@@ -161,7 +161,7 @@ public class HorarioMockedServiceTests {
     	/*Test que devuelve solo las sesiones que superan la fecha de hoy y no han completado su aforo con citas para la sala indicada*/
         Horario h2 = new Horario(LocalDate.of(2020, 3, 14),e,new ArrayList<Sesion>());
         
-        Sesion s2 = new Sesion(new HashSet<Cita>(),LocalTime.of(10, 00),LocalTime.of(12, 00),sala,h2,null);       
+        Sesion s2 = new Sesion(new HashSet<Cita>(),LocalTime.of(10, 00),LocalTime.of(12, 00),sala,h2);       
         sesiones.add(s2);
         
         /*Obtener la sesión que se realizará en el futuro*/        
@@ -182,7 +182,7 @@ public class HorarioMockedServiceTests {
     	Collection<Sesion> inTime = horarioService.inTimeSessions(sesiones, c);
     	assertThat(inTime).isEmpty(); 
     	
-        Sesion s2 = new Sesion(new HashSet<Cita>(),LocalTime.of(16, 00),LocalTime.of(17, 00),sala,h,null);
+        Sesion s2 = new Sesion(new HashSet<Cita>(),LocalTime.of(16, 00),LocalTime.of(17, 00),sala,h);
         sesiones.add(s2);
         
         /*Si añadimos una nueva sesión de tarde, esta si se mostrará en las sesiones disponibles*/        
@@ -194,7 +194,7 @@ public class HorarioMockedServiceTests {
     @Test
     public void shouldCalcDays() {
     	/*Se comprueba que la función sólo devuelve los días que se le pasan como parámetro y lo hacen de manera ordenada según la fecha*/
-    	Horario h2 = new Horario(LocalDate.of(2021, 2, 1),e,new ArrayList<Sesion>());
+    	Horario h2 = new Horario(LocalDate.of(2021, 3, 14),e,new ArrayList<Sesion>());
     	horarios.add(h2);
     	Collection<Horario> future = horarioService.calcDays(1, "future");
     	assertThat(future).hasSize(2);
@@ -207,7 +207,7 @@ public class HorarioMockedServiceTests {
     @Test
     public void shouldCheckDuplicatedSessions() {
     	/*Este test comprueba si una nueva sesion esta duplicada cuando se va a insertar*/
-    	Sesion s2 = new Sesion(new HashSet<Cita>(),LocalTime.of(11, 00),LocalTime.of(13, 00),sala,h,null);
+    	Sesion s2 = new Sesion(new HashSet<Cita>(),LocalTime.of(11, 00),LocalTime.of(13, 00),sala,h);
     	assertTrue(horarioService.checkDuplicatedSessions(s2));
     	
     	s2.setHoraInicio(LocalTime.of(12,00));

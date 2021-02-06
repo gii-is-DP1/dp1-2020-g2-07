@@ -88,7 +88,7 @@ public class BalanceMockTest {
         //Create schedule, room, session and token
 		horario = new Horario(LocalDate.parse("2009-12-04"), null, new ArrayList<Sesion>());
 		sala = new Sala(RoomType.LIFE_GUARD, 12, "text", null, new ArrayList<Sesion>());
-		sesion = new Sesion(null, LocalTime.parse("10:00"), LocalTime.parse("12:00"), sala, horario, null);
+		sesion = new Sesion(null, LocalTime.parse("10:00"), LocalTime.parse("12:00"), sala, horario);
 		token = new Bono("Prueba", 10, LocalDate.parse("2009-12-01"), LocalDate.parse("2009-12-03"), "Texto", true, sesion);
 		sala.getSesiones().add(sesion);
 		horario.getSesiones().add(sesion);
@@ -101,7 +101,6 @@ public class BalanceMockTest {
 		
 		when(balanceRepo.findUsedTokensByMonth(LocalDate.parse("2009-12-01"), LocalDate.parse("2009-12-31"), true)).thenReturn(tokens);
 		when(balanceRepo.findSalariesByMonth(LocalDate.parse("2009-12-01"), LocalDate.parse("2009-12-31"))).thenReturn(salaries);
-		when(balanceRepo.findBalanceExists("DECEMBER", "2009")).thenReturn(1);
 		when(balanceRepo.findSubsByMonth(LocalDate.parse("2009-12-01"), LocalDate.parse("2009-12-31"))).thenReturn(payments);
 	}
 	
@@ -138,12 +137,5 @@ public class BalanceMockTest {
 		 LocalDate init = LocalDate.parse("2009-12-01");
 		 LocalDate last = LocalDate.parse("2009-12-31");
 		 assertTrue(IncStmServcice.getTokens(init, last, true).equals(token.getPrecio()));
-	 }
-	 
-	 @Test //Checks if the IncStm already exits
-	 public void shouldBalanceExist() {
-		 String month = "DECEMBER";
-		 String year = "2009";
-		 assertTrue(IncStmServcice.balanceExists(month, year));
 	 }
 }

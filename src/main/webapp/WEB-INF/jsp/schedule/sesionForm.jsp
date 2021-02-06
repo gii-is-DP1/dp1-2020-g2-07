@@ -19,7 +19,7 @@
         				<div class="form-group has-feedback">
           					<petclinic:selectField label="From" name="horaInicio" names="${horaInicio}" size="1"/>
           					<petclinic:selectField label="To" name="horaFin" names="${horaFin}" size="1"/>
-          					<input type="hidden" name="horario" value="${horarioID}">
+          					<input type="hidden" name="horario" value="${horario}">
            						<div class="control-group">
                     				<petclinic:selectField name="sala" label="Rooms " names="${sala}" size="5"/>
                 				</div>  
@@ -43,7 +43,7 @@
         					</thead>
    	 						<tbody>
         						<c:forEach items="${sesion}" var="sesion">
-        							<c:if test="${sesion.horario.getId()==horarioID}">
+        							<c:if test="${sesion.horario.getId()==horario}">
             							<tr>
 								            <td><c:out value="${sesion.sala}"/></td>
 								            <td><c:out value="${sesion.horaInicio}"/></td>

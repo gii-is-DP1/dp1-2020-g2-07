@@ -1,4 +1,6 @@
 package org.springframework.samples.petclinic.service;
+
+import java.time.Month;
 import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
@@ -40,6 +42,13 @@ public class EmployeeService {
     public List<Employee> findEmployeeByProfession(String profession){
         Profession prof = Profession.valueOf(profession);
         return employeeRepo.findAll().stream().filter(e -> e.getProfession().equals(prof)).collect(Collectors.toList());
+    }
+
+    public Collection<Employee> findEmployeeByBirthdayMonth(Month month) {
+        return this.findAll()
+            .stream()
+            .filter(u -> u.getDOB().getMonth().equals(month))
+            .collect(Collectors.toList());
     }
 
     public void save(@Valid Employee employee){

@@ -1,5 +1,4 @@
 package org.springframework.samples.petclinic.web;
-
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -7,7 +6,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +23,6 @@ import org.springframework.samples.petclinic.service.EmailService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -41,6 +36,7 @@ public class AdminControllerMockTest {
     public static final String ADMIN_ANNOUNCEMENT = "admin/newAnnouncement";
     public static final String ADMIN_USERS = "admin/checkUsers";
     public static final String ADMINS_FORM ="admin/createOrUpdateAdminsForm";
+    public static final String ADMIN_BDAYS ="admin/checkBirthdays";
     @MockBean
     private AdminService adminService;
 
@@ -195,5 +191,17 @@ public class AdminControllerMockTest {
             .param("body", "prueba"))
             .andExpect(status().isOk())
             .andExpect(view().name(ADMIN_HOME));
+    }
+
+    @WithMockUser(value="admin")
+    @Test
+    public void postBirthdaysSuccess() throws Exception {
+        mockMvc.perform(post("/admin/birthdays")
+        .with(csrf())
+        .param("month", "JANUARY"))
+        .andExpect(model().attributeExists("clientBdays"))
+        .andExpect(model().attributeExists("employeeBdays"))
+        .andExpect(status().isOk())
+        .andExpect(view().name(ADMIN_BDAYS));
     }
 }

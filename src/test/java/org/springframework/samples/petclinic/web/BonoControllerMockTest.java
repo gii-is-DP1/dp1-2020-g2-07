@@ -30,6 +30,7 @@ import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.BonoService;
 import org.springframework.samples.petclinic.service.CitaService;
 import org.springframework.samples.petclinic.service.ClienteService;
+import org.springframework.samples.petclinic.service.EmailService;
 import org.springframework.samples.petclinic.service.HorarioService;
 import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -52,6 +53,9 @@ public class BonoControllerMockTest {
 	
 	@MockBean
 	private CitaService citaService;
+	
+	@MockBean
+	private EmailService emailservice;
 	
 	@MockBean
 	private HorarioService horarioService;
@@ -113,6 +117,15 @@ public class BonoControllerMockTest {
 		given(this.bonoservice.findTokenByCode(token.getCodigo())).willReturn(token);
 		given(this.horarioService.checkTokenAptExist(apt, c.getCitas())).willReturn(true);
 	}
+	
+	@WithMockUser(value = "admin1")
+    @Test
+    public void showTokenListing() throws Exception{
+        mockMvc.perform(get("/bonos/"))
+            .andExpect(model().attributeExists("bonos"))
+            .andExpect(status().isOk())
+            .andExpect(view().name(BONOS_LISTING));
+    }
 	
 	@WithMockUser(value = "admin1")
     @Test

@@ -140,16 +140,22 @@ public class BalanceControllerMockTest {
 		given(this.IncStmServcice.findById(TEST_STATEMENT_ID)).willReturn(bOptional);
 		given(this.employeeService.findEmployeeByUsername(TEST_EMPLOYEE_USERNAME)).willReturn(eOptional);
 		given(this.IncStmServcice.getPrimerDiaMesPrevio()).willReturn(init);
-		given(this.IncStmServcice.getAnyo(init)).willReturn("2009");
-		given(this.IncStmServcice.diaDeBalance()).willReturn(true);
-		given(this.IncStmServcice.balanceExists("DECEMBER", "2009")).willReturn(true);
-		
+		given(this.IncStmServcice.getAnyo(init)).willReturn("2009");	
 		given(this.IncStmServcice.getTokensData(init, end)).willReturn(tokens);
 		given(this.IncStmServcice.getSalariesData(init, end)).willReturn(salaries);
 		given(this.IncStmServcice.getSubsData(init, end)).willReturn(pay);
 		given(this.IncStmServcice.createStats(b)).willReturn("prueba");
 		
 	}
+	
+	@WithMockUser(value = "admin1")
+    @Test
+    public void showIncStmListing() throws Exception{
+        mockMvc.perform(get("/balances/"))
+            .andExpect(model().attributeExists("balances"))
+            .andExpect(status().isOk())
+            .andExpect(view().name(BALANCE_LISTING));
+    }
 	
 	@WithMockUser(value = "admin1")
     @Test
