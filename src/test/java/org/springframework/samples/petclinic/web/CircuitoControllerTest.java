@@ -57,7 +57,6 @@ public class CircuitoControllerTest {
 		 s = new Sala();
 		 s2 = new Sala();
 		List<Sala> salas= new ArrayList<Sala>();
-		//circuitos=new ArrayList<Circuito>();
 		
 		s.setName("Jacuzzi");
 		s.setAforo(7);
@@ -171,8 +170,5 @@ public class CircuitoControllerTest {
 		.andExpect(view().name("circuitos/CircuitosListing"))
 		.andExpect(model().attribute("message","We could not find the circuit you are trying to delete."));
 	}
-	
-//	FALTAN EL GET Y EL POST DE LA CITA 
-
-	
+		
 }

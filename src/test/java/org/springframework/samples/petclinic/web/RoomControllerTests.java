@@ -6,12 +6,15 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
+
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -89,7 +92,7 @@ public class RoomControllerTests {
 	private Collection<Bono> bonos;
 	
 	@BeforeEach
-	public void setup() {
+	public void setup() throws ParseException {
 		salas = new ArrayList<Sala>();
 		sala = new Sala();
 		sala.setAforo(12);
@@ -137,11 +140,9 @@ public class RoomControllerTests {
 		
 		h = new Horario(LocalDate.of(2021, 3, 14),e,new ArrayList<Sesion>());
 		
+		s = new Sesion(new HashSet<Cita>(),LocalTime.of(10, 00),LocalTime.of(12, 00),sala,h);
 		
-		
-		s = new Sesion(new HashSet<Cita>(),LocalTime.of(10, 00),LocalTime.of(12, 00),sala,h,null);
-		
-//		bono = new Bono("Prueba", 10, LocalDate.parse("2009-12-01"), LocalDate.parse("2100-12-03"), "Texto", false, null);
+		bono = new Bono("Prueba", 10, LocalDate.parse("2009-12-01"), LocalDate.parse("2100-12-03"), "Texto", false, null);
 		
 		h.addSesion(s);
 		sala.getSesiones().add(s);
@@ -150,17 +151,21 @@ public class RoomControllerTests {
 		horarios.add(h);
 		e.setHorarios(horarios);
 		
-//		bono.setSession(s);
+		bono.setSession(s);
 		
-//		bonos = new ArrayList<Bono>();
-//		bonos.add(bono);
+		bonos = new ArrayList<Bono>();
+		bonos.add(bono);
 		
 		given(salaService.findAll()).willReturn(salas);
 		given(salaService.findById(ID)).willReturn(Optional.of(sala));
 		
+		given(this.horarioService.findAll()).willReturn(horarios);
 		given(this.horarioService.activeSessions(ID, c)).willReturn(h.getSesiones());
 		given(this.horarioService.activeSessions(ID, null)).willReturn(h.getSesiones());
 		given(this.horarioService.inTimeSessions(h.getSesiones(), c)).willReturn(h.getSesiones());
+		
+		given(this.sesionesFormatter.print(s, Locale.getDefault())).willReturn(h.getFecha() + ": From " + s.getHoraInicio() + " to " + s.getHoraFin());
+		given(this.sesionesFormatter.parse(h.getFecha() + ": From " + s.getHoraInicio() + " to " + s.getHoraFin(), Locale.getDefault())).willReturn(s);
 		
 		given(this.bonoService.findAll()).willReturn(bonos);
 		
@@ -252,29 +257,22 @@ public class RoomControllerTests {
 	@Test
 	public void testShowSalaCita() throws Exception{
 		mockMvc.perform(get("/salas/{id}", ID))
-			.andExpect(model().attributeExists("sesiones"))
+			.andExpect(model().attributeExists("sesion"))
 			.andExpect(model().attributeExists("cita"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("salas/salaDetails"));
 	}
-	
-//	@WithMockUser(value = "pepe")
-//	@Test
-//	public void testShowSalaCitaFail() throws Exception{
-//		mockMvc.perform(get("/salas/{id}", ID))
-//			.andExpect(status().isOk())
-//			.andExpect(view().name(SALAS_LISTING));
-//	}
-	
+		
 	@WithMockUser(value = "juanma")
 	@Test
 	public void testShowSalaCitaPost() throws Exception{
 		mockMvc.perform(post("/salas/{id}", ID)
 				.with(csrf())
-				.param("sesiones", h.getFecha() + ": From " + s.getHoraInicio() + " to " + s.getHoraFin())
+				.param("sesion", "2021-03-14: From 10:00 to 12:00")
 				.param("cliente","1"))
-			.andExpect(status().isOk())
-			.andExpect(view().name(SALAS_LISTING));
+			.andExpect(model().attributeHasFieldErrors("cita", "sesion"))
+			.andExpect(status().isOk());
+//			.andExpect(view().name(SALAS_LISTING));
 	}
 	
 	@WithMockUser(value = "admin")
@@ -301,13 +299,5 @@ public class RoomControllerTests {
 			.andExpect(status().isOk())
 			.andExpect(view().name(SALAS_LISTING));
 	}
-	
-	
-	
-	
-	
-	
-//	FALTAN EL GET Y EL POST DE LA CITA Y VER SI SE PODRIAN TESTEAR LAS EXCEPCIONES
-	
 	
 }

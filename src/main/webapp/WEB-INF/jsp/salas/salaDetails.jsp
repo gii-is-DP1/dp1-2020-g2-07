@@ -34,10 +34,10 @@
         					<th>Next Sessions</th>
         						<td>
         							<c:choose>
-        								<c:when test="${!sesiones.isEmpty()}">
+        								<c:when test="${!sesion.isEmpty()}">
        		        						<form:form modelAttribute="cita" class="form-horizontal" id="apuntarseASesion">
 				        						<div class="form-group has-feedback">
-				            						<petclinic:selectField label="Select a session" name="sesion" names="${sesiones}" size="1"/>
+				            						<petclinic:selectField label="Select a session" name="sesion" names="${sesion}" size="1"/>
 				            						<input type="hidden" name="cliente" value="${cliente}">
 				        						</div>
 				        						<div class="form-group">
