@@ -63,7 +63,7 @@ public class ClienteController {
 
             return CLIENTS_LISTING;
         }
-        else return "/";
+        else return "redirect:http://localhost/";
     }
 
     public String listClients(ModelMap model){
@@ -171,10 +171,21 @@ public class ClienteController {
     }
 
     @GetMapping("/{clientId}/newPay")
-    public String addSalary(@PathVariable("clientId") int clientId, ModelMap model) {
-        model.addAttribute("pago",new Pago());
-        model.addAttribute("cliente",clientService.findById(clientId).get());
-        return "pay/payForm";
+    public String addSalary(@PathVariable("clientId") int clientId, ModelMap model, Authentication auth) {
+        Optional<Cliente> c = clientService.findById(clientId);
+        if(!c.isPresent()){
+            model.addAttribute("message","That client doesnt exists");
+            return listClients(model,auth);
+        }else{
+            if (hasAuthority(c, userService.findUser(auth.getName()).get())) {
+                model.addAttribute("pago",new Pago());
+                model.addAttribute("cliente",clientService.findById(clientId).get());
+                return "pay/payForm";
+            } else {
+                model.addAttribute("message", "You aren't allowed");
+                return listClients(model,auth);
+            }
+        }
     }
 
     @PostMapping("/{clientId}/newPay")
