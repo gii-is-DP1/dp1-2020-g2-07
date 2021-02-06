@@ -18,5 +18,5 @@ public interface CircuitoRepository extends Repository<Circuito, Integer>, CrudR
 	@Query("SELECT sala FROM Sala sala ORDER BY sala.name")
     public Collection<Sala> getRoomsByCircuito();
 	
-//	@Query("SELECT salas")
+
 }
