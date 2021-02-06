@@ -100,7 +100,14 @@ public class HorarioControllerTests {
 		
 		h = new Horario(LocalDate.of(2021, 3, 14),e,new ArrayList<Sesion>());
 		
-		s = new Sesion(new HashSet<Cita>(),LocalTime.of(10, 00),LocalTime.of(12, 00),sala,h);
+		s = new Sesion();
+		s.setId(1);
+		s.setHoraInicio(LocalTime.of(10, 00));
+		s.setHoraFin(LocalTime.of(12, 00));
+		s.setHorario(h);
+		s.setSala(sala);
+		s.setCitas(new HashSet<Cita>());
+
 		
 		h.addSesion(s);
 		
@@ -160,22 +167,7 @@ public class HorarioControllerTests {
 					.param("employee.id", "1"))
 			.andExpect(model().attribute("message","The day you picked can't be in the past"))
 			.andExpect(view().name(HORARIO_FORM));
-	}
-	
-//	@WithMockUser(value = "spring")
-//	@Test
-//	public void testAddDayScheduleHasErrorsDayAlreadyInSchedule() throws Exception{
-//		/*Comprobamos que al añadir un día al horario este no pueda estar en el pasado*/
-//		
-//		given(this.horarioService.dayAlreadyInSchedule(h)).willReturn(true);
-//		mockMvc.perform(post("/employees/{employeeId}/newSchedule", TEST_EMPLOYEE_ID)
-//					.with(csrf())
-//					.param("fecha", "2021/03/14")
-//					.param("employee.id", "1"))
-////			.andExpect(model().attribute("message","The day you picked already exist in the employee schedule"))
-//			.andExpect(view().name(HORARIO_FORM));
-//	}
-	
+	}	
 	
 	@WithMockUser(value = "admin")
 	@Test
@@ -215,16 +207,15 @@ public class HorarioControllerTests {
 		/*Comprobamos las sesiones que tiene un empleado para cierto día*/
 		mockMvc.perform(post("/employees/{employeeId}/schedule/{horarioId}/newSesion", TEST_EMPLOYEE_ID, TEST_HORARIO_ID)
 				.with(csrf())
-				.param("horaInicio", "13:00")
-				.param("horaFin", "14:00")
+				.param("horaInicio", "12:00")
+				.param("horaFin", "13:00")
 				.param("horario","1")
 				.param("sala","Piscina"))
 //			.andExpect(model().attribute("message", "The employee is not qualified to work in this room"))
-			.andExpect(model().attributeHasFieldErrors("newSesion","horaInicio"))
 //			.andExpect(model().attributeHasFieldErrors("newSesion","horaFin"))
 //			.andExpect(view().name("schedule/sesionForm"));
-			.andExpect(status().is3xxRedirection());
-//			.andExpect(view().name("redirect:/employees/1"));
+			.andExpect(status().is3xxRedirection())
+			.andExpect(view().name("redirect:/employees/1"));
 	}
 	
 	
