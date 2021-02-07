@@ -51,12 +51,7 @@ public class EmployeeController {
 
             return EMPLOYEES_LISTING;
         }
-        else return "redirect:http://localhost/";
-    }
-
-    public String listEmployees(ModelMap model){
-        model.addAttribute("employees", employeeService.findAll());
-        return EMPLOYEES_LISTING;
+        else return "redirect:/login-error";
     }
 
     @GetMapping("/{employeeId}/edit")
@@ -96,7 +91,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/{id}/delete")
-    public String deleteClient(@PathVariable("id") int id, ModelMap model){
+    public String deleteClient(@PathVariable("id") int id, ModelMap model,Authentication auth){
         Optional<Employee> employee = employeeService.findById(id);
         if(employee.isPresent()){
         	if(employee.get().getHorarios().size()!=0) {
@@ -108,7 +103,7 @@ public class EmployeeController {
         }else {
             model.addAttribute("message", "Cant find the employee you are looking for");
         }
-        return listEmployees(model);
+        return listEmployees(model,auth);
     }
 
     @GetMapping("/{employeeId}")
@@ -148,16 +143,28 @@ public class EmployeeController {
     }
 
     @GetMapping("/{employeeId}/newSalary")
-    public String addSalary(@PathVariable("employeeId") int employeeId, ModelMap model) {
+    public String addSalary(@PathVariable("employeeId") int employeeId, ModelMap model, Authentication auth) {
+        Optional<Employee> e = employeeService.findById(employeeId);
+        if(!e.isPresent()){
+            model.addAttribute("message", "That employee doesnt exists");
+            return listEmployees(model,auth);
+        }
+
         model.addAttribute("employee",employeeService.findById(employeeId).get());
         model.addAttribute("revenue",new EmployeeRevenue());
         return "salary/salaryForm";
     }
 
     @PostMapping("/{employeeId}/newSalary")
-    public String saveSalary(@PathVariable("employeeId") int employeeId,@Valid @ModelAttribute("revenue") EmployeeRevenue revenue, BindingResult binding, ModelMap model){
+    public String saveSalary(@PathVariable("employeeId") int employeeId,@Valid @ModelAttribute("revenue") EmployeeRevenue revenue,
+                             BindingResult binding, ModelMap model, Authentication auth){
         Optional<Employee> employee = employeeService.findById(employeeId);
         model.addAttribute("employee",employee.get());
+        if(!employee.isPresent()){
+            model.addAttribute("message", "That employee doesnt exists");
+            return listEmployees(model,auth);
+        }
+
         if(binding.hasErrors() || !revenue.getDateStart().isBefore(revenue.getDateEnd()) || !revenue.getDateStart().getMonth().equals(revenue.getDateEnd().getMonth())){
         	if(!revenue.getDateStart().isBefore(revenue.getDateEnd())) {
         		model.addAttribute("message", "Start date must be before end date");
