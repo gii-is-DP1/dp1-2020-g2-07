@@ -72,7 +72,7 @@ public class EmployeeController {
 
     @PostMapping("/{employeeId}/edit")
     public String editEmployee(@PathVariable("employeeId") int id, ModelMap model, @Valid Employee modifiedEmployee,
-    		BindingResult binding,@RequestParam(value="version", required=false) Integer version){
+    		BindingResult binding,@RequestParam(value="version", required=false) Integer version, Authentication auth){
         Optional<Employee> employee = employeeService.findById(id);
         if(binding.hasErrors()){
             log.warn(String.format("Employee with username %s and ID %d wasn't able to be updated",
@@ -80,7 +80,7 @@ public class EmployeeController {
             return EMPLOYEES_FORM;
         }else if(employee.get().getVersion()!=version) {
         	model.addAttribute("message", "Concurrent modification of client, try again later");
-        	return listEmployees(model);
+        	return listEmployees(model, auth);
         }
         else{
             BeanUtils.copyProperties(modifiedEmployee, employee.get(), "id","category");
