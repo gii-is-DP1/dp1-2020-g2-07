@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -74,13 +76,18 @@ public class EmployeeController {
     }
 
     @PostMapping("/{employeeId}/edit")
-    public String editEmployee(@PathVariable("employeeId") int id, ModelMap model, @Valid Employee modifiedEmployee, BindingResult binding){
+    public String editEmployee(@PathVariable("employeeId") int id, ModelMap model, @Valid Employee modifiedEmployee,
+    		BindingResult binding,@RequestParam(value="version", required=false) Integer version){
         Optional<Employee> employee = employeeService.findById(id);
         if(binding.hasErrors()){
             log.warn(String.format("Employee with username %s and ID %d wasn't able to be updated",
                 employee.get().getUser().getUsername(), employee.get().getId()));
             return EMPLOYEES_FORM;
-        }else{
+        }else if(employee.get().getVersion()!=version) {
+        	model.addAttribute("message", "Concurrent modification of client, try again later");
+        	return listEmployees(model);
+        }
+        else{
             BeanUtils.copyProperties(modifiedEmployee, employee.get(), "id","category");
             employeeService.save(employee.get());
             model.addAttribute("message", "Employee updated succesfully!!");

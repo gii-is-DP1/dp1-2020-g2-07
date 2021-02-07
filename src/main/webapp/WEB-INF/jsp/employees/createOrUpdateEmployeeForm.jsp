@@ -127,6 +127,7 @@
                 					</c:choose>
             					</div>
         					</div>
+        					<input type="hidden" name="version" value="${employee.version}"/>
     					</form:form>
     				</body>
     			</html>

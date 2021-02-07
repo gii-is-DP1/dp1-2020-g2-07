@@ -14,11 +14,12 @@
  * limitations under the License.
  */
 package org.springframework.samples.petclinic.model;
-
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+
+import org.springframework.data.annotation.Version;
 
 /**
  * Simple JavaBean domain object with an id property. Used as a base class for objects
@@ -33,6 +34,9 @@ public class BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	protected Integer id;
+	
+	@Version
+	private Integer version;
 
 	public Integer getId() {
 		return id;
@@ -46,4 +50,7 @@ public class BaseEntity {
 		return this.id == null;
 	}
 
+	public Integer getVersion() {
+		return version;
+	}	
 }

@@ -21,10 +21,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Arrays;
 import java.util.stream.Collectors;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -90,14 +89,18 @@ public class ClienteController {
     }
 
     @PostMapping("/{clientId}/edit")
-    public String editCliente(@PathVariable("clientId") int clientId, @Valid Cliente modifiedClient, BindingResult binding, ModelMap model) {
+    public String editCliente(@PathVariable("clientId") int clientId, @Valid Cliente modifiedClient,
+    		BindingResult binding, ModelMap model, @RequestParam(value="version", required=false) Integer version) {
         Optional<Cliente> cliente = clientService.findById(clientId);
         if (cliente.isPresent()){
             if(binding.hasErrors()) {
                 log.info(String.format("Client with username %s and ID %d wasn't able to be updated",
                     cliente.get().getUser().getUsername(), cliente.get().getId()));
                 return CLIENTS_FORM;
-            } else {
+            }else if(cliente.get().getVersion()!=version){
+            	model.addAttribute("message", "Concurrent modification of client, try again later");
+            	return listClients(model);
+            }else {
                 boolean enable = userService.findUser(cliente.get().getUser().getUsername()).get().isEnabled();
                 modifiedClient.setCategory(cliente.get().getCategory());
                 BeanUtils.copyProperties(modifiedClient, cliente.get(), "id");
