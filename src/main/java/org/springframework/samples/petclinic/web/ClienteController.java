@@ -94,7 +94,7 @@ public class ClienteController {
                 return CLIENTS_FORM;
             }else if(cliente.get().getVersion()!=version){
             	model.addAttribute("message", "Concurrent modification of client, try again later");
-            	return listClients(model);
+            	return listClients(model,auth);
             }else {
                 boolean enable = userService.findUser(cliente.get().getUser().getUsername()).get().isEnabled();
                 modifiedClient.setCategory(cliente.get().getCategory());
