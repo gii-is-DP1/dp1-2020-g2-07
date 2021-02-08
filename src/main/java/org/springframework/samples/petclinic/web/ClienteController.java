@@ -87,20 +87,16 @@ public class ClienteController {
 
     @PostMapping("/{clientId}/edit")
     public String editCliente(@PathVariable("clientId") int clientId, @Valid Cliente modifiedClient,
-    		BindingResult binding, ModelMap model, @RequestParam(value="version", required=false) Integer version, Authentication auth) {
+    		BindingResult binding, ModelMap model, Authentication auth) {
         Optional<Cliente> cliente = clientService.findById(clientId);
         if (cliente.isPresent()){
             if(binding.hasErrors()) {
                 log.info(String.format("Client with username %s and ID %d wasn't able to be updated",
                     cliente.get().getUser().getUsername(), cliente.get().getId()));
                 return CLIENTS_FORM;
-            }else if(cliente.get().getVersion()!=version){
-            	model.addAttribute("message", "Concurrent modification of client, try again later");
-            	return listClients(model,auth);
             }else {
                 boolean enable = userService.findUser(cliente.get().getUser().getUsername()).get().isEnabled();
                 modifiedClient.setCategory(cliente.get().getCategory());
-                modifiedClient.setVersion(modifiedClient.getVersion()+1); //@Version no se incrementa solo
                 BeanUtils.copyProperties(modifiedClient, cliente.get(), "id");
                 cliente.get().getUser().setEnabled(enable);
                 clientService.save(cliente.get(), "edit");

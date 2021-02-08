@@ -211,12 +211,12 @@ public class ClientControllerMockTest {
             .andExpect(view().name("redirect:/clientes/1"));
     }
 
-    @WithMockUser(value = "admin")
+    @WithMockUser(value = "juanma")
     @Test
     public void getUpdateClientFormNotExist() throws Exception{
         mockMvc.perform(get("/clientes/{clienteId}/edit", 3))
-            .andExpect(status().isOk())
-            .andExpect(view().name(CLIENTS_LISTING));
+            .andExpect(status().is3xxRedirection())
+            .andExpect(view().name("redirect:/clientes/1"));
     }
 
     @WithMockUser(value = "juanma")
@@ -224,13 +224,13 @@ public class ClientControllerMockTest {
     public void postUpdateClientSucces() throws Exception{
         mockMvc.perform(post("/clientes/{clienteId}/edit", TEST_CLIENT_ID)
             .param("first_name", "Celes").param("last_name", "Walt")
-            .with(csrf())
             .param("address", "C/From the hood ma boy")
             .param("IBAN", "ES2620952473193739231755")
             .param("suscripcion","AFTERNOON")
             .param("email", "pikachu_1@gmail.com")
             .param("user.username", "hola")
-            .param("user.password", "12345"))
+            .param("user.password", "12345")
+            .with(csrf()))
             .andExpect(status().is3xxRedirection())
             .andExpect(view().name("redirect:/clientes/1"));
     }
@@ -240,13 +240,13 @@ public class ClientControllerMockTest {
     public void postUpdateClientFail() throws Exception{
         mockMvc.perform(post("/clientes/{clienteId}/edit", TEST_CLIENT_ID)
             .param("first_name", "Celes4").param("last_name", "Walt")
-            .with(csrf())
             .param("address", "C/From the hood ma boy")
             .param("IBAN", "ES2620952473193739231755")
             .param("suscripcion","AFTERNOON")
             .param("email", "xxxxxxx_xxxxx")
             .param("user.username", "hola")
-            .param("user.password", "12345"))
+            .param("user.password", "12345")
+            .with(csrf()))
             .andExpect(model().attributeHasErrors("cliente"))
             .andExpect(model().attributeHasFieldErrors("cliente","first_name"))
             .andExpect(model().attributeHasFieldErrors("cliente","email"))

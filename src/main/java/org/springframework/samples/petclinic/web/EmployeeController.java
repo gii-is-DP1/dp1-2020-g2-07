@@ -58,21 +58,24 @@ public class EmployeeController {
     public String editEmployee(@PathVariable("employeeId") int id, ModelMap model, Authentication auth){
         Optional<Employee> employee = employeeService.findById(id);
         User user = userService.findUser(auth.getName()).get();
-        if(employee.isPresent() && hasAuthority(employee, user)) {
-            model.addAttribute("employee", employee.get());
-            model.addAttribute("profession", employee.get().getProfession());
-            return EMPLOYEES_FORM;
+        if(employee.isPresent()) {
+            if(hasAuthority(employee, user)){
+                model.addAttribute("employee", employee.get());
+                model.addAttribute("profession", employee.get().getProfession());
+                return EMPLOYEES_FORM;
+            }else{
+                model.addAttribute("message","Acceso denegado");
+            }
+        }else{
+            model.addAttribute("message","There is no employee with that id");
+            return listEmployees(model,auth);
         }
-        else if (!hasAuthority(employee, user))
-            model.addAttribute("message","Acceso denegado");
-        else
-            model.addAttribute("message", "Cant find the employee you are looking for");
         return listEmployees(model,auth);
     }
 
     @PostMapping("/{employeeId}/edit")
     public String editEmployee(@PathVariable("employeeId") int id, ModelMap model, @Valid Employee modifiedEmployee,
-    		BindingResult binding,@RequestParam(value="version", required=false) Integer version, Authentication auth){
+    		BindingResult binding, Authentication auth){
         Optional<Employee> employee = employeeService.findById(id);
         if(!employee.isPresent()){
             model.addAttribute("message","That employee doesnt exist");
@@ -82,12 +85,8 @@ public class EmployeeController {
             log.warn(String.format("Employee with username %s and ID %d wasn't able to be updated",
                 employee.get().getUser().getUsername(), employee.get().getId()));
             return EMPLOYEES_FORM;
-        }else if(employee.get().getVersion()!=version) {
-        	model.addAttribute("message", "Concurrent modification of client, try again later");
-        	return listEmployees(model, auth);
         }
         else{
-        	modifiedEmployee.setVersion(modifiedEmployee.getVersion()+1); //@Version no se incrementa solo
             BeanUtils.copyProperties(modifiedEmployee, employee.get(), "id","category");
             employeeService.save(employee.get());
             model.addAttribute("message", "Employee updated succesfully!!");
