@@ -79,6 +79,7 @@ public class ClienteController {
             }
         }else{
             model.addAttribute("message","No se encuentra el cliente que pretende editar");
+            return CLIENTS_LISTING;
         }
         return listClients(model,auth);
     }
@@ -102,7 +103,7 @@ public class ClienteController {
                 cliente.get().getUser().setEnabled(enable);
                 clientService.save(cliente.get(), "edit");
                 model.addAttribute("message","Client modified");
-                return listClients(model,auth);
+                return CLIENTS_LISTING;
             }
         }else{
             model.addAttribute("message", "That client doesnt exist");
@@ -116,10 +117,10 @@ public class ClienteController {
         if(cliente.isPresent()) {
             clientService.delete(cliente.get());
             model.addAttribute("message","Client deleted");
-            return listClients(model,auth);
+            return CLIENTS_LISTING;
         }else {
             model.addAttribute("message","That client doesnt exist");
-            return listClients(model,auth);
+            return CLIENTS_LISTING;
         }
     }
 

@@ -207,8 +207,8 @@ public class ClientControllerMockTest {
     @Test
     public void getUpdateClientFormNoAccess() throws Exception{
         mockMvc.perform(get("/clientes/{clienteId}/edit", 2))
-            .andExpect(status().isOk())
-            .andExpect(view().name(CLIENTS_LISTING));
+            .andExpect(status().is3xxRedirection())
+            .andExpect(view().name("redirect:/clientes/1"));
     }
 
     @WithMockUser(value = "admin")
