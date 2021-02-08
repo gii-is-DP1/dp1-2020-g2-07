@@ -62,12 +62,7 @@ public class ClienteController {
 
             return CLIENTS_LISTING;
         }
-        else return "redirect:http://localhost/";
-    }
-
-    public String listClients(ModelMap model){
-        model.addAttribute("clientes", clientService.findAll());
-        return CLIENTS_LISTING;
+        else return "redirect:/login-error";
     }
 
     @GetMapping("/{clientId}/edit")
@@ -85,12 +80,12 @@ public class ClienteController {
         }else{
             model.addAttribute("message","No se encuentra el cliente que pretende editar");
         }
-        return listClients(model);
+        return listClients(model,auth);
     }
 
     @PostMapping("/{clientId}/edit")
     public String editCliente(@PathVariable("clientId") int clientId, @Valid Cliente modifiedClient,
-    		BindingResult binding, ModelMap model, @RequestParam(value="version", required=false) Integer version) {
+    		BindingResult binding, ModelMap model, @RequestParam(value="version", required=false) Integer version, Authentication auth) {
         Optional<Cliente> cliente = clientService.findById(clientId);
         if (cliente.isPresent()){
             if(binding.hasErrors()) {
@@ -99,7 +94,7 @@ public class ClienteController {
                 return CLIENTS_FORM;
             }else if(cliente.get().getVersion()!=version){
             	model.addAttribute("message", "Concurrent modification of client, try again later");
-            	return listClients(model);
+            	return listClients(model,auth);
             }else {
                 boolean enable = userService.findUser(cliente.get().getUser().getUsername()).get().isEnabled();
                 modifiedClient.setCategory(cliente.get().getCategory());
@@ -108,24 +103,24 @@ public class ClienteController {
                 cliente.get().getUser().setEnabled(enable);
                 clientService.save(cliente.get(), "edit");
                 model.addAttribute("message","Client modified");
-                return listClients(model);
+                return listClients(model,auth);
             }
         }else{
             model.addAttribute("message", "That client doesnt exist");
-            return listClients(model);
+            return listClients(model,auth);
         }
     }
 
     @GetMapping("/{clientId}/delete")
-    public String deleteCliente(@PathVariable("clientId") int clientId,ModelMap model) {
+    public String deleteCliente(@PathVariable("clientId") int clientId,ModelMap model, Authentication auth) {
         Optional<Cliente> cliente =clientService.findById(clientId);
         if(cliente.isPresent()) {
             clientService.delete(cliente.get());
             model.addAttribute("message","Client deleted");
-            return listClients(model);
+            return listClients(model,auth);
         }else {
             model.addAttribute("message","That client doesnt exist");
-            return listClients(model);
+            return listClients(model,auth);
         }
     }
 
@@ -137,7 +132,7 @@ public class ClienteController {
     }
 
     @PostMapping("/new")
-    public String saveNewCliente(@Valid Cliente cliente, BindingResult binding,ModelMap model) {
+    public String saveNewCliente(@Valid Cliente cliente, BindingResult binding,ModelMap model,Authentication auth) {
         if(binding.hasErrors()) {
             return CLIENTS_FORM;
         } else {
@@ -153,7 +148,7 @@ public class ClienteController {
             cliente.setCategory(Categoria.CLIENTE);
             clientService.save(cliente, "new");
             model.addAttribute("message", "The client was created successfully!");
-            return listClients(model);
+            return listClients(model,auth);
         }
     }
 
