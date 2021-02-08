@@ -103,6 +103,7 @@ public class ClienteController {
             }else {
                 boolean enable = userService.findUser(cliente.get().getUser().getUsername()).get().isEnabled();
                 modifiedClient.setCategory(cliente.get().getCategory());
+                modifiedClient.setVersion(modifiedClient.getVersion()+1); //@Version no se incrementa solo
                 BeanUtils.copyProperties(modifiedClient, cliente.get(), "id");
                 cliente.get().getUser().setEnabled(enable);
                 clientService.save(cliente.get(), "edit");

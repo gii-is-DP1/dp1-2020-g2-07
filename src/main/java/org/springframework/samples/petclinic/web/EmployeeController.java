@@ -88,6 +88,7 @@ public class EmployeeController {
         	return listEmployees(model);
         }
         else{
+        	modifiedEmployee.setVersion(modifiedEmployee.getVersion()+1); //@Version no se incrementa solo
             BeanUtils.copyProperties(modifiedEmployee, employee.get(), "id","category");
             employeeService.save(employee.get());
             model.addAttribute("message", "Employee updated succesfully!!");
