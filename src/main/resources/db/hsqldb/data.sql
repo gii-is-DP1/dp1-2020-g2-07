@@ -7,9 +7,9 @@ INSERT INTO authorities(id,username,authority) VALUES (2,'juanma','client');
 
 INSERT INTO users(username,password,enabled) VALUES ('miguel','hola',TRUE);
 INSERT INTO authorities(id,username,authority) VALUES (4,'miguel','employee');
-INSERT INTO employees(id, first_name, last_name, DOB, address, category, IBAN, profession, email, username) VALUES(1, 'Jhon', 'Smith', '2000-01-01', 'Sevilla C/Tangana 1º A',1, 'ES3912341234250123456789', 'LIFE_GUARD', 'miguel_molina2@hotmail.es', 'miguel');
+INSERT INTO employees(id, first_name, last_name, DOB, address, category, IBAN, profession, email, username, version) VALUES(1, 'Jhon', 'Smith', '2000-01-01', 'Sevilla C/Tangana 1º A',1, 'ES3912341234250123456789', 'LIFE_GUARD', 'miguel_molina2@hotmail.es', 'miguel',0);
 
-INSERT INTO clientes(id, first_name, last_name, DOB, address, category, IBAN, suscripcion, email, username) VALUES(1, 'Juan Manuel', 'Garcia Criado', '2000-01-01', 'C/ Pedro Sanchez', 0, 'ES3912341234250123456789', 'MORNING', 'juanma101099@gmail.com','juanma');
+INSERT INTO clientes(id, first_name, last_name, DOB, address, category, IBAN, suscripcion, email, username, version) VALUES(1, 'Juan Manuel', 'Garcia Criado', '2000-01-01', 'C/ Pedro Sanchez', 0, 'ES3912341234250123456789', 'MORNING', 'juanma101099@gmail.com','juanma',0);
 
 /*INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion) VALUES(2, 'Pepe', 'Díaz Oslo', 'Sevilla C/Inventada 2',0, 'ES72 2223 2334 3422', 'VESPERTINO');
 INSERT INTO clientes(id, first_name, last_name, address, category, IBAN, suscripcion) VALUES(3, 'Manuel', 'Osuna Moreno', 'Sevilla C/Tangana 1º A',0, 'ES72 6789 4839 3928 2143', 'PREMIUM');
