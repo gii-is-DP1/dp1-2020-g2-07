@@ -219,7 +219,7 @@ public class ClientControllerMockTest {
             .andExpect(view().name(CLIENTS_LISTING));
     }
 
-    @WithMockUser(value = "admin")
+    @WithMockUser(value = "juanma")
     @Test
     public void postUpdateClientSucces() throws Exception{
         mockMvc.perform(post("/clientes/{clienteId}/edit", TEST_CLIENT_ID)
@@ -231,8 +231,8 @@ public class ClientControllerMockTest {
             .param("email", "pikachu_1@gmail.com")
             .param("user.username", "hola")
             .param("user.password", "12345"))
-            .andExpect(status().isOk())
-            .andExpect(view().name(CLIENTS_LISTING));
+            .andExpect(status().is3xxRedirection())
+            .andExpect(view().name("redirect:/clientes/1"));
     }
 
     @WithMockUser(value = "admin")

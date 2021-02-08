@@ -74,6 +74,10 @@ public class EmployeeController {
     public String editEmployee(@PathVariable("employeeId") int id, ModelMap model, @Valid Employee modifiedEmployee,
     		BindingResult binding,@RequestParam(value="version", required=false) Integer version, Authentication auth){
         Optional<Employee> employee = employeeService.findById(id);
+        if(!employee.isPresent()){
+            model.addAttribute("message","That employee doesnt exist");
+            return listEmployees(model,auth);
+        }
         if(binding.hasErrors()){
             log.warn(String.format("Employee with username %s and ID %d wasn't able to be updated",
                 employee.get().getUser().getUsername(), employee.get().getId()));
@@ -86,7 +90,7 @@ public class EmployeeController {
             BeanUtils.copyProperties(modifiedEmployee, employee.get(), "id","category");
             employeeService.save(employee.get());
             model.addAttribute("message", "Employee updated succesfully!!");
-            return "redirect:/employees/" + employee.get().getId();
+            return listEmployees(model,auth);
         }
     }
 

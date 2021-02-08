@@ -58,9 +58,10 @@ public class ClienteController {
             Optional<Cliente> c = clientService.clientByUsername(auth.getName());
             if(c.isPresent()) {
             	return "redirect:/clientes/"+String.valueOf(c.get().getId());
-            }else model.addAttribute("clientes", clientService.findAll());
-
-            return CLIENTS_LISTING;
+            }else {
+                model.addAttribute("clientes", clientService.findAll());
+                return CLIENTS_LISTING;
+            }
         }
         else return "redirect:/login-error";
     }
@@ -78,8 +79,8 @@ public class ClienteController {
                 model.addAttribute("message","Acceso denegado");
             }
         }else{
-            model.addAttribute("message","No se encuentra el cliente que pretende editar");
-            return CLIENTS_LISTING;
+            model.addAttribute("message","There is no client with that id");
+            return listClients(model,auth);
         }
         return listClients(model,auth);
     }
@@ -103,7 +104,7 @@ public class ClienteController {
                 cliente.get().getUser().setEnabled(enable);
                 clientService.save(cliente.get(), "edit");
                 model.addAttribute("message","Client modified");
-                return CLIENTS_LISTING;
+                return listClients(model,auth);
             }
         }else{
             model.addAttribute("message", "That client doesnt exist");
@@ -117,6 +118,7 @@ public class ClienteController {
         if(cliente.isPresent()) {
             clientService.delete(cliente.get());
             model.addAttribute("message","Client deleted");
+            model.addAttribute("clientes", clientService.findAll());
             return CLIENTS_LISTING;
         }else {
             model.addAttribute("message","That client doesnt exist");
@@ -143,6 +145,7 @@ public class ClienteController {
                 for (int i = 0; i < ls.size(); i++){
                     model.addAttribute("message", ls);
                 }
+                model.addAttribute("clientes", clientService.findAll());
                 return CLIENTS_FORM;
             }
             cliente.setCategory(Categoria.CLIENTE);
@@ -164,7 +167,7 @@ public class ClienteController {
                 return listClients(model,auth);
             }
         }else{
-            model.addAttribute("message","That employee doesn't exist");
+            model.addAttribute("message","That client doesn't exist");
             return listClients(model,auth);
         }
     }

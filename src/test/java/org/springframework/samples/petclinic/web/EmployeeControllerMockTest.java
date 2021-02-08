@@ -239,8 +239,8 @@ public class EmployeeControllerMockTest {
             .param("email", "pikachu_1@gmail.com")
             .param("user.username", "hola")
             .param("user.password", "12345"))
-            .andExpect(status().is3xxRedirection())
-            .andExpect(view().name("redirect:/employees/1"));
+            .andExpect(status().isOk())
+            .andExpect(view().name(EMPLOYEES_LISTING));
     }
 
     @WithMockUser(value = "admin")
