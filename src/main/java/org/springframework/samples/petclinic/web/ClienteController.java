@@ -58,9 +58,10 @@ public class ClienteController {
             Optional<Cliente> c = clientService.clientByUsername(auth.getName());
             if(c.isPresent()) {
             	return "redirect:/clientes/"+String.valueOf(c.get().getId());
-            }else model.addAttribute("clientes", clientService.findAll());
-
-            return CLIENTS_LISTING;
+            }else {
+                model.addAttribute("clientes", clientService.findAll());
+                return CLIENTS_LISTING;
+            }
         }
         else return "redirect:/login-error";
     }
@@ -78,33 +79,29 @@ public class ClienteController {
                 model.addAttribute("message","Acceso denegado");
             }
         }else{
-            model.addAttribute("message","No se encuentra el cliente que pretende editar");
-            return CLIENTS_LISTING;
+            model.addAttribute("message","There is no client with that id");
+            return listClients(model,auth);
         }
         return listClients(model,auth);
     }
 
     @PostMapping("/{clientId}/edit")
     public String editCliente(@PathVariable("clientId") int clientId, @Valid Cliente modifiedClient,
-    		BindingResult binding, ModelMap model, @RequestParam(value="version", required=false) Integer version, Authentication auth) {
+    		BindingResult binding, ModelMap model, Authentication auth) {
         Optional<Cliente> cliente = clientService.findById(clientId);
         if (cliente.isPresent()){
             if(binding.hasErrors()) {
                 log.info(String.format("Client with username %s and ID %d wasn't able to be updated",
                     cliente.get().getUser().getUsername(), cliente.get().getId()));
                 return CLIENTS_FORM;
-            }else if(cliente.get().getVersion()!=version){
-            	model.addAttribute("message", "Concurrent modification of client, try again later");
-            	return listClients(model,auth);
             }else {
                 boolean enable = userService.findUser(cliente.get().getUser().getUsername()).get().isEnabled();
                 modifiedClient.setCategory(cliente.get().getCategory());
-                modifiedClient.setVersion(modifiedClient.getVersion()+1); //@Version no se incrementa solo
                 BeanUtils.copyProperties(modifiedClient, cliente.get(), "id");
                 cliente.get().getUser().setEnabled(enable);
                 clientService.save(cliente.get(), "edit");
                 model.addAttribute("message","Client modified");
-                return CLIENTS_LISTING;
+                return listClients(model,auth);
             }
         }else{
             model.addAttribute("message", "That client doesnt exist");
@@ -118,6 +115,7 @@ public class ClienteController {
         if(cliente.isPresent()) {
             clientService.delete(cliente.get());
             model.addAttribute("message","Client deleted");
+            model.addAttribute("clientes", clientService.findAll());
             return CLIENTS_LISTING;
         }else {
             model.addAttribute("message","That client doesnt exist");
@@ -144,6 +142,7 @@ public class ClienteController {
                 for (int i = 0; i < ls.size(); i++){
                     model.addAttribute("message", ls);
                 }
+                model.addAttribute("clientes", clientService.findAll());
                 return CLIENTS_FORM;
             }
             cliente.setCategory(Categoria.CLIENTE);
@@ -165,7 +164,7 @@ public class ClienteController {
                 return listClients(model,auth);
             }
         }else{
-            model.addAttribute("message","That employee doesn't exist");
+            model.addAttribute("message","That client doesn't exist");
             return listClients(model,auth);
         }
     }
