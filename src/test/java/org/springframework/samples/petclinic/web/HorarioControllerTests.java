@@ -110,6 +110,7 @@ public class HorarioControllerTests {
 		s.setHorario(h);
 		s.setSala(sala);
 		s.setCitas(new HashSet<Cita>());
+
 		
 		h.addSesion(s);
 		

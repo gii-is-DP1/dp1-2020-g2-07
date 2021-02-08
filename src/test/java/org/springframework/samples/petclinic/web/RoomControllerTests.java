@@ -143,7 +143,7 @@ public class RoomControllerTests {
 		s = new Sesion(new HashSet<Cita>(),LocalTime.of(10, 00),LocalTime.of(12, 00),sala,h);
 		
 		bono = new Bono("Prueba", 10, LocalDate.parse("2009-12-01"), LocalDate.parse("2100-12-03"), "Texto", false, null);
-		
+
 		h.addSesion(s);
 		sala.getSesiones().add(s);
 		
