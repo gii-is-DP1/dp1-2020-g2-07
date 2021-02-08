@@ -175,6 +175,7 @@ public class RoomControllerTests {
 	@WithMockUser(value = "admin")
 	@Test
 	public void testSalasListing() throws Exception{
+		/*Muestra el listado de todas las salas*/
 		mockMvc.perform(get("/salas")).andExpect(status().isOk())
 			.andExpect(model().attributeExists("salas"))
 			.andExpect(view().name(SALAS_LISTING));
@@ -182,7 +183,8 @@ public class RoomControllerTests {
 	
 	@WithMockUser(value = "admin")
 	@Test
-	public void testEditSalaListing() throws Exception{
+	public void testEditSala() throws Exception{
+		/*Get del edit de sala como administrador*/
 		mockMvc.perform(get("/salas/{id}/edit", ID)).andExpect(status().isOk())
 			.andExpect(model().attributeExists("sala"))
 			.andExpect(view().name(SALAS_FORM));
@@ -191,6 +193,7 @@ public class RoomControllerTests {
 	@WithMockUser(value = "admin")
 	@Test
 	public void testEditSalaSuccess() throws Exception{
+		/*Sala editada con éxito*/
 		mockMvc.perform(post("/salas/{id}/edit", ID)
 					.with(csrf())
 					.param("name", "Piscina")
@@ -203,6 +206,7 @@ public class RoomControllerTests {
 	@WithMockUser(value = "admin")
 	@Test
 	public void testEditSalaErrors() throws Exception{
+		/*Fallo al editar la sala debido al tamaño del nombre*/
 		mockMvc.perform(post("/salas/{id}/edit", ID)
 					.with(csrf())
 					.param("name", "Pi")
@@ -217,6 +221,7 @@ public class RoomControllerTests {
 	@WithMockUser(value = "admin")
 	@Test
 	public void testDeleteSala() throws Exception{
+		/*Sala eliminada con éxito*/
 		mockMvc.perform(get("/salas/{id}/delete",ID)).andExpect(status().isOk())
 				.andExpect(view().name(SALAS_LISTING));
 	}
@@ -224,6 +229,7 @@ public class RoomControllerTests {
 	@WithMockUser(value = "admin")
 	@Test
 	public void testNewSala() throws Exception{
+		/*Get del formulario de nueva sala como administrador*/
 		mockMvc.perform(get("/salas/new")).andExpect(status().isOk())
 			.andExpect(model().attributeExists("sala"))
 			.andExpect(view().name(SALAS_FORM));
@@ -232,6 +238,7 @@ public class RoomControllerTests {
 	@WithMockUser(value = "admin")
 	@Test
 	public void testNewSalaSuccess() throws Exception{
+		/*Sala creada con éxito*/
 		mockMvc.perform(post("/salas/new").with(csrf())
 				.param("name", "Jacuzzi")
 				.param("aforo", "6")
@@ -243,6 +250,7 @@ public class RoomControllerTests {
 	@WithMockUser(value = "admin")
 	@Test
 	public void testNewSalaErrors() throws Exception{
+		/*Fallo al crear la sala debido al aforo*/
 		mockMvc.perform(post("/salas/new").with(csrf())
 				.param("name", "Jacuzzi")
 				.param("aforo", "0")
@@ -256,9 +264,20 @@ public class RoomControllerTests {
 	@WithMockUser(value = "juanma")
 	@Test
 	public void testShowSalaCita() throws Exception{
+		/*Sala mostrada de forma individual como cliente, por lo que se incluyen las citas*/
 		mockMvc.perform(get("/salas/{id}", ID))
 			.andExpect(model().attributeExists("sesion"))
 			.andExpect(model().attributeExists("cita"))
+			.andExpect(status().isOk())
+			.andExpect(view().name("salas/salaDetails"));
+	}
+	
+	@WithMockUser(value = "admin")
+	@Test
+	public void testShowSalaCitaAdmin() throws Exception{
+		/*Sala mostrada de forma individual al administrador, por lo que no se incluyen las citas*/
+		mockMvc.perform(get("/salas/{id}", ID))
+			.andExpect(model().attributeDoesNotExist("cita","sesion"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("salas/salaDetails"));
 	}
@@ -266,38 +285,39 @@ public class RoomControllerTests {
 	@WithMockUser(value = "juanma")
 	@Test
 	public void testShowSalaCitaPost() throws Exception{
+		/*Creación de una cita para el cliente*/
 		mockMvc.perform(post("/salas/{id}", ID)
 				.with(csrf())
-				.param("sesion", "2021-03-14: From 10:00 to 12:00")
+				.flashAttr("sesion", s)
 				.param("cliente","1"))
-			.andExpect(model().attributeHasFieldErrors("cita", "sesion"))
-			.andExpect(status().isOk());
-//			.andExpect(view().name(SALAS_LISTING));
+			.andExpect(status().isOk())
+			.andExpect(view().name(SALAS_LISTING));
 	}
+	
 	
 	@WithMockUser(value = "admin")
 	@Test
 	public void testCreateTokenGet() throws Exception{
+		/*Get de creación de bono*/
 		mockMvc.perform(get("/salas/{id}/createtoken", ID))
 			.andExpect(model().attributeExists("bono"))
 			.andExpect(status().isOk())
 			.andExpect(view().name("bonos/createToken"));
 	}
 	
-	
-//	NO ES CAPAZ DE LEERME LA SESION
-	
 	@WithMockUser(value = "admin")
 	@Test
 	public void testCreateTokenPost() throws Exception{
+		/*Creación de un bono con precio 0*/
 		mockMvc.perform(post("/salas/{id}/createtoken", ID)
 				.with(csrf())
 				.param("codigo", "Test")
-				.param("precio", "10")
-				.param("descripcion", "this is a test")
+				.param("precio", "0")
+				.param("descripcion", "Texto")
 				.param("session", h.getFecha() + ": From " + s.getHoraInicio() + " to " + s.getHoraFin()))
+			.andExpect(model().attributeHasErrors("bono"))
 			.andExpect(status().isOk())
-			.andExpect(view().name(SALAS_LISTING));
+			.andExpect(view().name("bonos/createToken"));
 	}
 	
 }
