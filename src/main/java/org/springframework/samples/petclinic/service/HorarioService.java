@@ -114,7 +114,7 @@ public class HorarioService {
     				boolean checkprevio = s.getHoraInicio().isBefore(sc.getHoraInicio()) && s.getHoraFin().isBefore(sc.getHoraInicio().plusMinutes(1));
     				boolean checkpost = s.getHoraInicio().isAfter(sc.getHoraFin().minusMinutes(1)) && s.getHoraFin().isAfter(sc.getHoraFin());
     				boolean checkcompleto = s.getHoraInicio().isBefore(sc.getHoraInicio()) && s.getHoraFin().isAfter(sc.getHoraFin());
-    				if(sc.getSala().equals(s.getSala())&&!(checkprevio||checkpost||!checkcompleto)) {
+    				if(sc.getSala().equals(s.getSala())&&(!(checkprevio||checkpost)||checkcompleto)) {
     					duplicated=true;
     					break;	
     				}
@@ -158,7 +158,7 @@ public class HorarioService {
     		boolean checkprevio = s.getHoraInicio().isBefore(sc.getHoraInicio()) && s.getHoraFin().isBefore(sc.getHoraInicio().plusMinutes(1));
     		boolean checkpost = s.getHoraInicio().isAfter(sc.getHoraFin().minusMinutes(1)) && s.getHoraFin().isAfter(sc.getHoraFin());
     		boolean checkcompleto = s.getHoraInicio().isBefore(sc.getHoraInicio()) && s.getHoraFin().isAfter(sc.getHoraFin());
-    		if(!(checkprevio||checkpost||!checkcompleto)) {
+    		if(!(checkprevio||checkpost)||checkcompleto) {
     			ok=true;
     			break;
     		}
