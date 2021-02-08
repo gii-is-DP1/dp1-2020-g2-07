@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.ArgumentMatchers.any;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -71,6 +72,8 @@ public class HorarioControllerTests {
 	private List<Horario> horarios;
 	private Collection<Sala> salas;
 	
+	private List<LocalTime> horasFin;
+	
 	@BeforeEach
 	private void setup() {
 		
@@ -120,13 +123,15 @@ public class HorarioControllerTests {
 		
 		e.setHorarios(horarios);
 		
+		horasFin = Lists.newArrayList(LocalTime.of(10,00),LocalTime.of(11,00),LocalTime.of(12,00),LocalTime.of(13,00));
+		
 		given(this.horarioService.findAll()).willReturn(horarios);
 		given(this.horarioService.findById(TEST_HORARIO_ID)).willReturn(Optional.of(h));
 		given(this.horarioService.findSesionesHorario(TEST_HORARIO_ID)).willReturn(h.getSesiones());
 		given(this.horarioService.calcDays(TEST_EMPLOYEE_ID, "past")).willReturn(new ArrayList<Horario>());
 		given(this.horarioService.SesionHours(LocalTime.parse("09:00"))).willReturn(Lists.newArrayList(LocalTime.of(9,00),LocalTime.of(10,00),LocalTime.of(11,00),LocalTime.of(12,00)));
-		given(this.horarioService.SesionHours(LocalTime.parse("10:00"))).willReturn(Lists.newArrayList(LocalTime.of(10,00),LocalTime.of(11,00),LocalTime.of(12,00),LocalTime.of(13,00)));
-		given(this.horarioService.checkDuplicatedSessions(s)).willReturn(false);
+		given(this.horarioService.SesionHours(LocalTime.parse("10:00"))).willReturn(horasFin);
+		given(this.horarioService.checkDuplicatedSessions(any(Sesion.class))).willReturn(false);
 		
 		given(this.employeeService.findById(TEST_EMPLOYEE_ID)).willReturn(Optional.of(e));
 		given(this.salaService.findAll()).willReturn(salas);
@@ -168,6 +173,7 @@ public class HorarioControllerTests {
 			.andExpect(view().name(HORARIO_FORM));
 	}	
 	
+	
 	@WithMockUser(value = "admin")
 	@Test
 	public void testShowSesiones() throws Exception{
@@ -197,26 +203,11 @@ public class HorarioControllerTests {
 			.andExpect(status().isOk())
 			.andExpect(model().attributeExists("newSesion"))
 			.andExpect(model().attributeExists("sesion"))
+			.andExpect(model().attributeExists("horaInicio"))
+			.andExpect(model().attributeExists("horaFin"))
+			.andExpect(model().attributeExists("employee"))
+			.andExpect(model().attribute("horaFin", horasFin))
 			.andExpect(view().name("schedule/sesionForm"));
 	}
-	
-	@WithMockUser(value = "admin")
-	@Test
-	public void testNewSesionPost() throws Exception{
-		/*Comprobamos las sesiones que tiene un empleado para cierto día*/
-		mockMvc.perform(post("/employees/{employeeId}/schedule/{horarioId}/newSesion", TEST_EMPLOYEE_ID, TEST_HORARIO_ID)
-				.with(csrf())
-				.param("horaInicio", "12:00")
-				.param("horaFin", "13:00")
-				.param("horario","1")
-				.param("sala","Piscina"))
-//			.andExpect(model().attribute("message", "The employee is not qualified to work in this room"))
-//			.andExpect(model().attributeHasFieldErrors("newSesion","horaFin"))
-//			.andExpect(view().name("schedule/sesionForm"));
-			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:/employees/1"));
-	}
-	
-	
 
 }
