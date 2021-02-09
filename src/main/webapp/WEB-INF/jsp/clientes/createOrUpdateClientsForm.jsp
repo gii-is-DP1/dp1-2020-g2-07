@@ -120,7 +120,6 @@
                 				</c:choose>
            		 			</div>
         				</div>
-        				<input type="hidden" name="version" value="${cliente.version}"/>
     				</form:form>
     			</body>
     		</html>
