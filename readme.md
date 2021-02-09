@@ -38,7 +38,7 @@ By default, this file is added in the build path of the project, but commonly it
 ## 📥 Database configuration
 In its default configuration, Mineral House Spa uses an in-memory database (H2) which gets populated at startup with data. 
 
-## 👨🏻‍💻 Working with Petclinic in your IDE
+## 👨🏻‍💻 Working with Mineral House Spa in your IDE
 ### Prerequisites
 The following items should be installed in your system:
 * Java 8 or newer
