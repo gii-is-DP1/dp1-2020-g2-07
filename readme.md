@@ -52,7 +52,7 @@ The following items should be installed in your system:
 ```
 git clone https://github.com/gii-is-DP1/dp1-2020-g2-07.git
 ```
-2) Navigate to Mineral House
+2) Navigate to Mineral House  
 Visit [http://localhost:80](http://localhost:80) in your browser.
 
 3) Introduce the Login Credentials
