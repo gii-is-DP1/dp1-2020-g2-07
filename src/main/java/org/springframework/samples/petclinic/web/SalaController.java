@@ -179,8 +179,13 @@ public class SalaController {
 	@GetMapping("/{salaId}/createtoken")
 	public String createtoken(@PathVariable("salaId") int salaId,ModelMap model) {
 		model.addAttribute("bono", new Bono());
-		model.addAttribute("session", hs.activeSessions(salaId, null));
-		return BONOS_FORM;
+		if(hs.activeSessions(salaId, null).isEmpty()) {
+			model.addAttribute("message", "There are not any sessions for this room");
+			return salasListing(model);
+		}else {
+			model.addAttribute("session", hs.activeSessions(salaId, null));
+			return BONOS_FORM;
+		}
 	}
 
 	@PostMapping("/{salaId}/createtoken")
