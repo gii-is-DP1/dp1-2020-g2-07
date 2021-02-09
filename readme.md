@@ -66,5 +66,9 @@ Visit [http://localhost:80](http://localhost:80) in your browser.
   * User: juanma
   * Pass: hola
   
+ In order to enable new employees and clients, you will need the spa email, where the new user alert will be sent
+ * Email: spa.dp2020 _at_ gmail _dot_ com
+ * Pass: hola_12345
+  
 ## 📝 License
 The Spring PetClinic sample application is released under version 2.0 of the [Apache License](https://www.apache.org/licenses/LICENSE-2.0).
