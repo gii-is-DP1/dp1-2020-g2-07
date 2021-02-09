@@ -8,8 +8,9 @@ Mineral House is a spa located in Newcastle, UK. This project is a website progr
 
 ### As a client
 * Personal editable profile listing all the appointments booked
-* Can redeem tokens, which allows you to access appointments in time frames your subscription wouldn´t allow you to book
+* Can buy and redeem tokens, which allows you to access appointments in time frames your subscription wouldn´t allow you to book
 * Receive mails from the owner of the spa
+* Book rooms
 
 ### As an employee
 * Personal profile listing your daily schedule
